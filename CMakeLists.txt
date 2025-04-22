@@ -119,6 +119,9 @@ add_subdirectory(interfaces/cxx)
 add_library(dace SHARED $<TARGET_OBJECTS:c_core> $<TARGET_OBJECTS:c_core_contrib> $<TARGET_OBJECTS:dacecxx>)
 add_library(dace_s STATIC $<TARGET_OBJECTS:c_core_s> $<TARGET_OBJECTS:c_core_contrib_s> $<TARGET_OBJECTS:dacecxx_s>)
 
+set_property(TARGET dace PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+set_property(TARGET dace_s PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+
 # hard code all required include directories when building from source (C++ includes, core includes, config.h include)
 target_include_directories(dace INTERFACE $<INSTALL_INTERFACE:include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/interfaces/cxx/include>

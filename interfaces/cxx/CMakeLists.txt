@@ -7,9 +7,12 @@ if(WITH_ALGEBRAICMATRIX)
 endif(WITH_ALGEBRAICMATRIX)
 
 # Build object files for static and dynamic libraries of C++ interface
-add_library(dacecxx_s OBJECT ${SRCCXXIF})
 add_library(dacecxx OBJECT ${SRCCXXIF})
+add_library(dacecxx_s OBJECT ${SRCCXXIF})
 set_target_properties(dacecxx PROPERTIES POSITION_INDEPENDENT_CODE True)
+set_target_properties(dacecxx PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+set_target_properties(dacecxx_s PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+
 if(WIN32)
   target_compile_definitions(dacecxx PRIVATE "DACE_API=__declspec(dllexport)")
   target_compile_definitions(dacecxx_s PRIVATE "DACE_API=")
