@@ -345,7 +345,7 @@ int DA::degree() const{
    \return Highest order of the non-zero monomials or INT_MIN if it is the zero DA.
    \throw DACE::DACEException
  */
-    const unsigned int res = daceGetDegree(m_index);
+    const int res = daceGetDegree(m_index);
     if(daceGetError()) DACEException();
 
     return res;
