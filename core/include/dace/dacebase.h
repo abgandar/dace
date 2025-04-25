@@ -137,7 +137,7 @@ DACE_API void daceSetCoefficient0(DACEDA REF(ina), const unsigned int ic, const 
 DACE_API void daceGetCoefficientAt(const DACEDA REF(ina), const unsigned int npos, unsigned int jj[], double REF(cjj));
 DACE_API unsigned int daceGetLength(const DACEDA REF(ina));
 DACE_API unsigned int daceGetOrder(const DACEDA REF(ina));
-DACE_API unsigned int daceGetDegree(const DACEDA REF(ina));
+DACE_API int daceGetDegree(const DACEDA REF(ina));
 
 /********************************************************************************
 *     DACE DA copying and filtering

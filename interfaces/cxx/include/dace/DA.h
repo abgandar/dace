@@ -103,7 +103,7 @@ public:
     *********************************************************************************/
     unsigned int size() const;                                              //!< Number of non-zero coefficients
     unsigned int order() const;                                             //!< Get order
-    unsigned int degree() const;                                            //!< Get degree
+    int degree() const;                                                     //!< Get degree
     int isnan() const;                                                      //!< Check if any coefficients are NaNs
     int isinf() const;                                                      //!< Check if any coefficients are Inf
     double cons() const;                                                    //!< Get constant part
@@ -264,6 +264,9 @@ public:
 /********************************************************************************
 *     DACE non-member functions
 *********************************************************************************/
+DACE_API unsigned int size(const DA &da);
+DACE_API unsigned int order(const DA &da);
+DACE_API int degree(const DA &da);
 DACE_API int isnan(const DA &da);
 DACE_API int isinf(const DA &da);
 DACE_API double cons(const DA &da);
@@ -322,7 +325,6 @@ DACE_API DA GammaFunction(const DA &da);
 DACE_API DA LogGammaFunction(const DA &da);
 DACE_API DA PsiFunction(const unsigned int n, const DA &da);
 
-DACE_API unsigned int size(const DA &da);
 DACE_API double norm(const DA &da, unsigned int type = 0);
 DACE_API std::vector<double> orderNorm(const DA &da, unsigned int var = 0, unsigned int type = 0);
 DACE_API std::vector<double> estimNorm(const DA &da, unsigned int var = 0, unsigned int type = 0, unsigned int nc = DA::getMaxOrder());
