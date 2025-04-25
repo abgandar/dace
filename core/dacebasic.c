@@ -462,6 +462,44 @@ unsigned int daceGetLength(const DACEDA *ina)
     return illa;
 }
 
+/*! Return the order of a DA object.
+   \param[in] ina Pointer to DA object to get order of
+   \return Lowest order of the non-zero monomials or NOMAX+1 if ina is the zero DA.
+*/
+unsigned int daceGetOrder(const DACEDA *ina)
+{
+    monomial *ipoa; unsigned int ilma, illa;
+
+    daceVariableInformation(ina, &ipoa, &ilma, &illa);
+
+    unsigned int order = DACECom.nomax+1;
+    for(monomial *ia = ipoa; ia < ipoa+illa; ia++)
+    {
+        if(DACECom.ieo[ia->ii] < order && !(fabs(ia->cc) <= DACECom_t.eps))
+            order = DACECom.ieo[ia->ii];
+    }
+    return order;
+}
+
+/*! Return the degree of a DA object.
+   \param[in] ina Pointer to DA object to get degree of
+   \return Highest order of the non-zero monomials or 0 if ina is the zero DA.
+*/
+unsigned int daceGetDegree(const DACEDA *ina)
+{
+    monomial *ipoa; unsigned int ilma, illa;
+
+    daceVariableInformation(ina, &ipoa, &ilma, &illa);
+
+    unsigned int degree = 0;
+    for(monomial *ia = ipoa; ia < ipoa+illa; ia++)
+    {
+        if(DACECom.ieo[ia->ii] > degree && !(fabs(ia->cc) <= DACECom_t.eps))
+            degree = DACECom.ieo[ia->ii];
+    }
+    return degree;
+}
+
 /*! Copy content of one DA object into another DA object.
    \param[in] ina Pointer to DA object to copy from
    \param[in] inb Pointer to DA object to copy to

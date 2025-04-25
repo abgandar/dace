@@ -315,8 +315,42 @@ DA::~DA() throw(){
 }
 
 /********************************************************************************
-*     Coefficient access routines
+*     Coefficient information, access, and extraction routines
 *********************************************************************************/
+
+unsigned int DA::size() const{
+/*! Return the number of non-zero coefficients of a DA object.
+   \return The number of non-zero coefficients stored in the DA object.
+   \throw DACE::DACEException
+ */
+    const unsigned int res = daceGetLength(m_index);
+    if(daceGetError()) DACEException();
+
+    return res;
+}
+
+unsigned int DA::order() const{
+/*! Return the order of a DA object.
+   \return Lowest order of the non-zero monomials or NOMAX+1 if it is the zero DA.
+   \throw DACE::DACEException
+ */
+    const unsigned int res = daceGetOrder(m_index);
+    if(daceGetError()) DACEException();
+
+    return res;
+}
+
+unsigned int DA::degree() const{
+/*! Return the degree of a DA object.
+   \return Highest order of the non-zero monomials or 0 if it is the zero DA.
+   \throw DACE::DACEException
+ */
+    const unsigned int res = daceGetDegree(m_index);
+    if(daceGetError()) DACEException();
+
+    return res;
+}
+
 int DA::isnan() const{
 /*! Check if a DA object has any NAN coefficients.
    \return True is any coefficients of the DA object are NAN.
@@ -1529,17 +1563,6 @@ DA DA::PsiFunction(const unsigned int n) const{
 /********************************************************************************
 *    Norm and estimation routines
 *********************************************************************************/
-unsigned int DA::size() const{
-/*! Return the number of non-zero coefficients of a DA object.
-   \return The number of non-zero coefficients stored in the DA object.
-   \throw DACE::DACEException
- */
-    const unsigned int res = daceGetLength(m_index);
-    if(daceGetError()) DACEException();
-
-    return res;
-}
-
 double DA::norm(const unsigned int type) const{
 /*! Compute different types of norms for a DA object.
    \param[in] type type of norm to be computed. Possible norms are:\n
