@@ -495,7 +495,7 @@ int daceGetDegree(const DACEDA *ina)
     int degree = INT_MIN;
     for(monomial *ia = ipoa; ia < ipoa+illa; ia++)
     {
-        if(DACECom.ieo[ia->ii] > degree && !(fabs(ia->cc) <= DACECom_t.eps))
+        if((int)DACECom.ieo[ia->ii] > degree && !(fabs(ia->cc) <= DACECom_t.eps))
             degree = DACECom.ieo[ia->ii];
     }
     return degree;
