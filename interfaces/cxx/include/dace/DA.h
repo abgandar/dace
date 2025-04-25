@@ -99,17 +99,20 @@ public:
     ~DA() throw();                                                          //!< Destructor
 
     /********************************************************************************
-    *     Coefficient access and extraction routines
+    *     Coefficient information, access, and extraction routines
     *********************************************************************************/
+    unsigned int size() const;                                              //!< Number of non-zero coefficients
+    unsigned int order() const;                                             //!< Get order
+    unsigned int degree() const;                                            //!< Get degree
     int isnan() const;                                                      //!< Check if any coefficients are NaNs
     int isinf() const;                                                      //!< Check if any coefficients are Inf
-    double cons() const;                                                    //!< Get constant part of a DA
-    AlgebraicVector<double> linear() const;                                 //!< Get linear part of a DA
+    double cons() const;                                                    //!< Get constant part
+    AlgebraicVector<double> linear() const;                                 //!< Get linear part
     AlgebraicVector<DA> gradient() const;                                   //!< Gradient vector with respect to all independent DA variables
     double getCoefficient(const std::vector<unsigned int> &jj) const;                //!< Get specific coefficient
     void setCoefficient(const std::vector<unsigned int> &jj, const double coeff);    //!< Set specific coefficient
     Monomial getMonomial(const unsigned int npos) const;                    //!< Get the Monomial at given position
-    void getMonomial(const unsigned int npos, Monomial &m) const;           //!< Extract the Monomial at given position
+    void getMonomial(const unsigned int npos, Monomial &m) const;           //!< Get the Monomial at given position
     std::vector<Monomial> getMonomials() const;                             //!< Get std::vector of all non-zero Monomials
 
     /********************************************************************************
@@ -209,7 +212,6 @@ public:
     /********************************************************************************
     *    Norm and estimation routines
     *********************************************************************************/
-    unsigned int size() const;                                              //!< Number of non-zero coefficients
     double norm(const unsigned int type = 0) const;                         //!< Different types of norms over all coefficients
     std::vector<double> orderNorm(const unsigned int var = 0, const unsigned int type = 0) const;
                                                                             //!< Different types of norms over coefficients of each order separately
