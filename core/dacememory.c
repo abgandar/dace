@@ -50,9 +50,9 @@ DACE_THREAD_LOCAL dacedbg DACEDbg = { 0 };      // !< DACE common block for erro
 
 
 // The DACE has three types of memory allocators
-//   * DACE_MEMORY_HYBRID: malloc/free a block of DAs (default)
+//   * DACE_MEMORY_HYBRID: malloc/free a block of DAs
 //   * DACE_MEMORY_STATIC: compile time allocation of a fixed size block of DAs
-//   * DACE_MEMORY_DYNAMIC: malloc/free each individual DA
+//   * DACE_MEMORY_DYNAMIC: malloc/free each individual DA (default)
 
 #if DACE_MEMORY_MODEL == DACE_MEMORY_HYBRID || DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
 
@@ -151,7 +151,7 @@ void daceAllocateDA(DACEDA *inc, const unsigned int len)
          DACEMem.mda++;
 
      // Find the next free variable of appropriate size
-    for( unsigned int i = DACEMem.mda; i < DACEMem.nda; i++ )
+    for(unsigned int i = DACEMem.mda; i < DACEMem.nda; i++)
     {
         if(DACEMem.var[i].max <= -((int)ilen))
         {
