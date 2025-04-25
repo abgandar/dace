@@ -66,6 +66,9 @@ public:
     static const DASimpleFormat FORTRAN_POW;
     static const DASimpleFormat MATLAB;
     static const DASimpleFormat MATLAB_POW;
+    static const DASimpleFormat PYTHON;
+    static const DASimpleFormat PYTHON_NP;
+    static const DASimpleFormat PYTHON_POW;
     static const DASimpleFormat LATEX;
 
     DASimpleFormat sf;
