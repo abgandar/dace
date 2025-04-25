@@ -331,7 +331,7 @@ unsigned int DA::size() const{
 
 unsigned int DA::order() const{
 /*! Return the order of a DA object.
-   \return Lowest order of the non-zero monomials or NOMAX+1 if it is the zero DA.
+   \return Lowest order of the non-zero monomials or UINT_MAX if it is the zero DA.
    \throw DACE::DACEException
  */
     const unsigned int res = daceGetOrder(m_index);
@@ -340,9 +340,9 @@ unsigned int DA::order() const{
     return res;
 }
 
-unsigned int DA::degree() const{
+int DA::degree() const{
 /*! Return the degree of a DA object.
-   \return Highest order of the non-zero monomials or 0 if it is the zero DA.
+   \return Highest order of the non-zero monomials or INT_MIN if it is the zero DA.
    \throw DACE::DACEException
  */
     const unsigned int res = daceGetDegree(m_index);
@@ -1975,6 +1975,33 @@ void DA::memdump(){
 /********************************************************************************
 *     DACE non-member functions
 *********************************************************************************/
+unsigned int size(const DA &da){
+/*! Return the number of non-zero coefficients of a DA object.
+   \param[in] da a given DA object.
+   \return The number of non-zero coefficients of the DA object.
+   \throw DACE::DACEException
+   \sa DA::size
+ */
+    return da.size();}
+
+unsigned int order(const DA &da){
+/*! Return the order of a DA object.
+   \param[in] da a given DA object.
+   \return Lowest order of the non-zero monomials or UINT_MAX if it is the zero DA.
+   \throw DACE::DACEException
+   \sa DA::order
+ */
+    return da.order();}
+
+int degree(const DA &da){
+/*! Return the degree of a DA object.
+   \param[in] da a given DA object.
+   \return Highest order of the non-zero monomials or INT_MIN if it is the zero DA.
+   \throw DACE::DACEException
+   \sa DA::degree
+ */
+    return da.degree();}
+
 int isnan(const DA &da) {
 /*! Check if a DA object has any NAN coefficients.
    \param[in] da a given DA object.
@@ -2581,15 +2608,6 @@ DA PsiFunction(const unsigned int n, const DA &da){
    \sa DA::PsiFunction
  */
     return da.PsiFunction(n);}
-
-unsigned int size(const DA &da){
-/*! Return the number of non-zero coefficients of a DA object.
-   \param[in] da a given DA object.
-   \return The number of non-zero coefficients of the DA object.
-   \throw DACE::DACEException
-   \sa DA::size
- */
-    return da.size();}
 
 double norm(const DA &da, unsigned int type){
 /*! Compute different types of norms for a DA object.

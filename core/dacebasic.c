@@ -30,6 +30,7 @@
  *  @{
  */
 
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -464,7 +465,7 @@ unsigned int daceGetLength(const DACEDA *ina)
 
 /*! Return the order of a DA object.
    \param[in] ina Pointer to DA object to get order of
-   \return Lowest order of the non-zero monomials or NOMAX+1 if ina is the zero DA.
+   \return Lowest order of the non-zero monomials or UINT_MAX if ina is the zero DA.
 */
 unsigned int daceGetOrder(const DACEDA *ina)
 {
@@ -472,7 +473,7 @@ unsigned int daceGetOrder(const DACEDA *ina)
 
     daceVariableInformation(ina, &ipoa, &ilma, &illa);
 
-    unsigned int order = DACECom.nomax+1;
+    unsigned int order = UINT_MAX;
     for(monomial *ia = ipoa; ia < ipoa+illa; ia++)
     {
         if(DACECom.ieo[ia->ii] < order && !(fabs(ia->cc) <= DACECom_t.eps))
@@ -483,15 +484,15 @@ unsigned int daceGetOrder(const DACEDA *ina)
 
 /*! Return the degree of a DA object.
    \param[in] ina Pointer to DA object to get degree of
-   \return Highest order of the non-zero monomials or 0 if ina is the zero DA.
+   \return Highest order of the non-zero monomials or INT_MIN if ina is the zero DA.
 */
-unsigned int daceGetDegree(const DACEDA *ina)
+int daceGetDegree(const DACEDA *ina)
 {
     monomial *ipoa; unsigned int ilma, illa;
 
     daceVariableInformation(ina, &ipoa, &ilma, &illa);
 
-    unsigned int degree = 0;
+    int degree = INT_MIN;
     for(monomial *ia = ipoa; ia < ipoa+illa; ia++)
     {
         if(DACECom.ieo[ia->ii] > degree && !(fabs(ia->cc) <= DACECom_t.eps))
