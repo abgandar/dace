@@ -42,7 +42,7 @@
 
 #include "dace/dacecore.h"
 
-namespace DACE{
+namespace DACE {
 
 // forward declarations
 class compiledDA;

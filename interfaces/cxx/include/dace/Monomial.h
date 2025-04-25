@@ -34,7 +34,7 @@
 #include <string>
 #include <ostream>
 
-namespace DACE{
+namespace DACE {
 
 /*! Monomial class */
 class DACE_API Monomial

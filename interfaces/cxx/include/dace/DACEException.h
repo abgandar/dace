@@ -34,7 +34,7 @@
 #include <string>
 #include <ostream>
 
-namespace DACE{
+namespace DACE {
 
 /*! DACEException class containing methods for error handling within the DACE C++ interface. */
 class DACE_API DACEException : public std::exception

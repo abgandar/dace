@@ -29,7 +29,7 @@
 #ifndef DINAMICA_PROMOTIONTRAIT_H_
 #define DINAMICA_PROMOTIONTRAIT_H_
 
-namespace DACE{
+namespace DACE {
 
 // forward declaration
 class DA;

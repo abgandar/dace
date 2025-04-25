@@ -29,7 +29,7 @@
 #ifndef DINAMICA_MATHEXTENSION_H_
 #define DINAMICA_MATHEXTENSION_H_
 
-namespace DACE{
+namespace DACE {
 
 DACE_API double absolute(const double x);                        //!< Absolute value
 DACE_API double cons(const double x);                            //!< Constant part (i.e. the value x)

@@ -33,7 +33,7 @@
 #include <vector>
 #include <initializer_list>
 
-namespace DACE{
+namespace DACE {
 
 class DA;   // forward declaration
 

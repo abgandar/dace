@@ -32,12 +32,12 @@
 #include "dace/DA.h"
 #include "dace/DACEException.h"
 
-namespace DACE{
+namespace DACE {
 
 /********************************************************************************
 *     Constructors & Destructors
 *********************************************************************************/
-compiledDA::compiledDA(const compiledDA &cda){
+compiledDA::compiledDA(const compiledDA &cda) {
 /*! Create a copy of a compiledDA object.
    \param[in] cda compiled DA object to be copied.
  */
@@ -49,7 +49,7 @@ compiledDA::compiledDA(const compiledDA &cda){
     for(int i=terms*(dim+2)-1; i>=0; i--) ac[i] = cda.ac[i];
 }
 
-compiledDA::compiledDA(const std::vector<DA> &da){
+compiledDA::compiledDA(const std::vector<DA> &da) {
 /*! Create a vector of compiledDA objects from a vector of DA objects.
    \param[in] da vector of DA objects.
    \throw DACE::DACEException
@@ -69,7 +69,7 @@ compiledDA::compiledDA(const std::vector<DA> &da){
     if(daceGetError()) DACEException();
 }
 
-compiledDA::compiledDA(const DA &da){
+compiledDA::compiledDA(const DA &da) {
 /*! Create a compiledDA object from a DA object.
    \param[in] da vector.
    \throw DACE::DACEException
@@ -85,7 +85,7 @@ compiledDA::compiledDA(const DA &da){
     if(daceGetError()) DACEException();
 }
 
-compiledDA::~compiledDA() throw(){
+compiledDA::~compiledDA() throw() {
 /*! Destructor.
  */
     delete[] ac;
@@ -94,7 +94,7 @@ compiledDA::~compiledDA() throw(){
 /********************************************************************************
 *     Assignments
 *********************************************************************************/
-compiledDA& compiledDA::operator=(const compiledDA &cda){
+compiledDA& compiledDA::operator=(const compiledDA &cda) {
 /*! Copy the content of a given compiledDA object into the current
     compiledDA (the one the method belongs to).
    \param[in] cda compiledDA vector to be copied.
@@ -115,7 +115,7 @@ compiledDA& compiledDA::operator=(const compiledDA &cda){
 *     Evaluation overloads and template specialization
 *********************************************************************************/
 // double evaluation
-template<> void compiledDA::eval(const std::vector<double> &args, std::vector<double> &res) const{
+template<> void compiledDA::eval(const std::vector<double> &args, std::vector<double> &res) const {
     const size_t narg = args.size();
     double *p = ac+2;
     double *xm = new double[ord+1];
@@ -141,7 +141,7 @@ template<> void compiledDA::eval(const std::vector<double> &args, std::vector<do
 }
 
 // DA evaluation
-template<> void compiledDA::eval(const std::vector<DA> &args, std::vector<DA> &res) const{
+template<> void compiledDA::eval(const std::vector<DA> &args, std::vector<DA> &res) const {
     const size_t narg = args.size();
     unsigned int jlskip = ord+1;
     double *p = ac+2;
@@ -192,23 +192,23 @@ template<> void compiledDA::eval(const std::vector<DA> &args, std::vector<DA> &r
 /********************************************************************************
 *     Member access routines
 *********************************************************************************/
-const double* compiledDA::getAc() const{
+const double* compiledDA::getAc() const {
     return this->ac;
 }
 
-unsigned int compiledDA::getDim() const{
+unsigned int compiledDA::getDim() const {
     return this->dim;
 }
 
-unsigned int compiledDA::getOrd() const{
+unsigned int compiledDA::getOrd() const {
     return this->ord;
 }
 
-unsigned int compiledDA::getVars() const{
+unsigned int compiledDA::getVars() const {
     return this->vars;
 }
 
-unsigned int compiledDA::getTerms() const{
+unsigned int compiledDA::getTerms() const {
     return this->terms;
 }
 

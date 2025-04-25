@@ -29,7 +29,7 @@
 #ifndef DINAMICA_INTERVAL_H_
 #define DINAMICA_INTERVAL_H_
 
-namespace DACE{
+namespace DACE {
 
 /*! Class representing an interval. */
 class DACE_API Interval
