@@ -43,6 +43,9 @@ const DASimpleFormat DASimpleFormatter::FORTRAN =     { "+",  "-",  "*",        
 const DASimpleFormat DASimpleFormatter::FORTRAN_POW = { "+",  "-",  "*",        "",     "x", "(",  ")", "**(", ")", " &\n     &",  1,  0, 20, true  };
 const DASimpleFormat DASimpleFormatter::MATLAB =      { "+",  "-",  ".*",       "",     "p", "(",  "",  ",",   ")", " ...\n\t",    1,  0, 20, false };
 const DASimpleFormat DASimpleFormatter::MATLAB_POW =  { "+",  "-",  ".*",       "",     "x", "(",  ")", ".^(", ")", " ...\n\t",    1,  0, 20, true  };
+const DASimpleFormat DASimpleFormatter::PYTHON =      { "+",  "-",  "*",        "",     "p", "[",  "",  "][",  "]", " \\\n\t",     0, -1, 20, false };
+const DASimpleFormat DASimpleFormatter::PYTHON_NP =   { "+",  "-",  "*",        "",     "p", "[",  "",  ",",   "]", " \\\n\t",     0, -1, 20, false };
+const DASimpleFormat DASimpleFormatter::PYTHON_POW =  { "+",  "-",  "*",        "",     "x", "[",  "]", "**(", ")", " \\\n\t",     0,  0, 20, true  };
 const DASimpleFormat DASimpleFormatter::LATEX =       { " +", " -", " \\cdot ", "",     "x", "_{", "}", "^{",  "}", " \n\t",       1,  0, 20, true  };
 
 std::string DASimpleFormatter::format(const DA &da){
