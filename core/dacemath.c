@@ -250,10 +250,13 @@ void daceMultiplyMonomials(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
 void daceDivide(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
 {
     DACEDA idadiv;
+    const double cons = daceGetConstant(ina)/daceGetConstant(inb);
 
     daceAllocateDA(&idadiv, 0);
     daceMultiplicativeInverse(inb, &idadiv);
     daceMultiply(ina, &idadiv, inc);
+    if(daceGetConstant(inc) != 0.0)      // set constant part explicitly to ensure correct FP rounding
+        daceSetCoefficient0(inc, 0, cons);
     daceFreeDA(&idadiv);
 }
 
@@ -377,7 +380,54 @@ void daceDivideDouble(const DACEDA *ina, const double ckon, DACEDA *inb)
         return;
     }
 
-    daceMultiplyDouble(ina, 1.0/ckon, inb);
+    monomial *ipoa; unsigned int ilma, illa;
+    monomial *ipob; unsigned int ilmb, illb;
+
+    daceVariableInformation(ina, &ipoa, &ilma, &illa);
+    daceVariableInformation(inb, &ipob, &ilmb, &illb);
+
+    monomial *ib = ipob;
+
+    if(illa <= ilmb)
+    {
+        for(monomial *ia = ipoa; ia < ipoa+illa; ia++)
+        {
+            if(UNLIKELY(DACECom.ieo[ia->ii] > DACECom_t.nocut))
+                continue;
+
+            const double c = ia->cc/ckon;
+            if(LIKELY(!(fabs(c) <= DACECom_t.eps)))
+            {
+                ib->cc = c;
+                ib->ii = ia->ii;
+                ib++;
+            }
+        }
+    }
+    else
+    {
+        monomial *const ibmax = ipob+ilmb;
+        for(monomial *ia = ipoa; ia < ipoa+illa; ia++)
+        {
+            if(UNLIKELY(DACECom.ieo[ia->ii] > DACECom_t.nocut))
+                continue;
+
+            const double c = ia->cc/ckon;
+            if(LIKELY(!(fabs(c) <= DACECom_t.eps)))
+            {
+                if(UNLIKELY(ib >= ibmax))
+                {
+                    daceSetError(__func__, DACE_ERROR, 21);
+                    break;
+                }
+                ib->cc = c;
+                ib->ii = ia->ii;
+                ib++;
+            }
+        }
+    }
+
+    daceSetLength(inb, ib-ipob);
 }
 
 /*! Divide constant by DA object.
@@ -388,8 +438,11 @@ void daceDivideDouble(const DACEDA *ina, const double ckon, DACEDA *inb)
  */
 void daceDoubleDivide(const DACEDA *ina, const double ckon, DACEDA *inc)
 {
+    const double cons = ckon/daceGetConstant(ina);
     daceMultiplicativeInverse(ina, inc);
     daceMultiplyDouble(inc, ckon, inc);
+    if(daceGetConstant(inc) != 0.0)      // set constant part explicitly to ensure correct FP rounding
+        daceSetCoefficient0(inc, 0, cons);
 }
 
 /*! Divide a DA vector by a single variable to some power, if possible.
@@ -1067,7 +1120,7 @@ void daceLogarithmBase(const DACEDA *ina, const double b, DACEDA *inc)
     }
 
     daceLogarithm(ina, inc);
-    daceMultiplyDouble(inc, 1.0/log(b), inc);
+    daceDivideDouble(inc, log(b), inc);
 }
 
 /*! Compute the decadic logarithm of a DA object.
