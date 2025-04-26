@@ -255,7 +255,8 @@ void daceDivide(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
     daceAllocateDA(&idadiv, 0);
     daceMultiplicativeInverse(inb, &idadiv);
     daceMultiply(ina, &idadiv, inc);
-    if(daceGetConstant(inc) != 0.0)      // set constant part explicitly to ensure correct FP rounding
+    // set constant part explicitly to ensure correct FP rounding
+    if(daceGetConstant(inc) != 0.0)
         daceSetCoefficient0(inc, 0, cons);
     daceFreeDA(&idadiv);
 }
@@ -441,7 +442,8 @@ void daceDoubleDivide(const DACEDA *ina, const double ckon, DACEDA *inc)
     const double cons = ckon/daceGetConstant(ina);
     daceMultiplicativeInverse(ina, inc);
     daceMultiplyDouble(inc, ckon, inc);
-    if(daceGetConstant(inc) != 0.0)      // set constant part explicitly to ensure correct FP rounding
+    // set constant part explicitly to ensure correct FP rounding
+    if(daceGetConstant(inc) != 0.0)
         daceSetCoefficient0(inc, 0, cons);
 }
 
