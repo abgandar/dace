@@ -342,15 +342,15 @@ void dacePack(double *restrict cc, DACEDA *restrict inc)
 
     monomial* ic = ipoc;
 #ifdef DACE_FILTERING
-    if(LIKELY(DACECom.lfi == 0))
+    if(DACECom.lfi == 0)
 #endif
     {
         // provide loop without error checking for big enough target DA
-        if(LIKELY(ilmc >= DACECom.nmmax))
+        if(ilmc >= DACECom.nmmax)
         {
             for(unsigned int i = 0; i < DACECom.nmmax; i++)
             {
-                if(LIKELY(!(fabs(cc[i]) <= DACECom_t.eps)))  //  && (DACECom.ieo[i] <= DACECom_t.nocut) is avoided for performance
+                if(!(fabs(cc[i]) <= DACECom_t.eps))  //  && (DACECom.ieo[i] <= DACECom_t.nocut) is avoided for performance
                 {
                     ic->ii = i;
                     ic->cc = cc[i];
@@ -363,9 +363,9 @@ void dacePack(double *restrict cc, DACEDA *restrict inc)
         {
             for(unsigned int i = 0; i < DACECom.nmmax; i++)
             {
-                if(LIKELY(!(fabs(cc[i]) <= DACECom_t.eps) && DACECom.ieo[i] <= DACECom_t.nocut))     // here we remove also cut orders to save as much space as possible
+                if(!(fabs(cc[i]) <= DACECom_t.eps) && DACECom.ieo[i] <= DACECom_t.nocut)     // here we remove also cut orders to save as much space as possible
                 {
-                    if(UNLIKELY(ic >= ipoc+ilmc))
+                    if(ic >= ipoc+ilmc)
                     {
                         daceSetError(__func__, DACE_ERROR, 21);
                         for(unsigned int j = i; j < DACECom.nmmax; j++) cc[j] = 0.0;
@@ -384,9 +384,9 @@ void dacePack(double *restrict cc, DACEDA *restrict inc)
     {
         for(unsigned int i = 0; i < DACECom.nmmax; i++)
         {
-            if(LIKELY((DACECom.ifi[i] != 0) && !(fabs(cc[i]) <= DACECom_t.eps) && (DACECom.ieo[i] <= DACECom_t.nocut)))
+            if((DACECom.ifi[i] != 0) && !(fabs(cc[i]) <= DACECom_t.eps) && (DACECom.ieo[i] <= DACECom_t.nocut))
             {
-                if(UNLIKELY(ic >= ipoc+ilmc))
+                if(ic >= ipoc+ilmc)
                 {
                     daceSetError(__func__, DACE_ERROR, 21);
                     for(unsigned int j = 0; j < DACECom.nmmax; j++) cc[j] = 0.0;
