@@ -715,7 +715,7 @@ DA operator+(const DA &da1, const DA &da2){
     return temp;
 }
 
-DA operator + (const DA &da, const double c){
+DA operator+(const DA &da, const double c){
 /*! Compute the addition between a DA object and a given constant.
     The result is copied in a new DA object.
    \param[in] da DA object.
@@ -730,7 +730,7 @@ DA operator + (const DA &da, const double c){
     return temp;
 }
 
-DA operator + (const double c, const DA &da){
+DA operator+(const double c, const DA &da){
 /*! Compute the addition between a given constant and a DA object.
     The result is copied in a new DA object.
    \param[in] c given constant.
