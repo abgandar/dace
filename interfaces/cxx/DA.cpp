@@ -1042,11 +1042,10 @@ DA DA::round() const{
 }
 
 DA DA::mod(const double p) const{
-/*! Compute the floating-point remainder of c/p (c modulo p),
-    where c is the constant part of the current DA object.
+/*! Take floating-point remainder of constant part divided by p.
     The result is copied in a new DA object.
-   \param[in] p costant with respect to which the modulo function is computed.
-   \return A new DA object containing the result of the operation.
+   \param[in] p the divisor.
+   \return A new DA object with constant part modulo p.
    \throw DACE::DACEException
  */
     DA temp;
