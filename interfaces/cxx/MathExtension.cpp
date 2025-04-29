@@ -85,6 +85,14 @@ double minv(const double x) {
     return 1.0/x;
 }
 
+double mod(const double x, const double p) {
+/*! Modulo function (remainder of x/p).
+   \param[in] x the dividend.
+   \param[in] p the divisor.
+ */
+    return std::fmod(x, p);
+}
+
 double root(const double x, const int p) {
 /*! p-th root of x.
    \param[in] x Function argument.

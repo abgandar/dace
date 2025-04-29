@@ -91,7 +91,7 @@ public:
     AlgebraicVector<T> absolute() const;                                                            //!< Element-wise absolute value function.
     AlgebraicVector<T> trunc() const;                                                               //!< Element-wise truncation.
     AlgebraicVector<T> round() const;                                                               //!< Element-wise rounding.
-    AlgebraicVector<T> mod() const;                                                                 //!< Element-wise modulo.
+    AlgebraicVector<T> mod(const double p) const;                                                   //!< Element-wise modulo.
     AlgebraicVector<T> pow(const int p) const;                                                      //!< Element-wise exponentiation to (integer) power.
     AlgebraicVector<T> pow(const double p) const;                                                   //!< Element-wise exponentiation to (double) power.
     AlgebraicVector<T> root(const int p = 2) const;                                                 //!< Element-wise p-th root.
@@ -204,6 +204,11 @@ template<typename T> std::vector< std::vector<double> > linear(const AlgebraicVe
 #endif /* WITH_ALGEBRAICMATRIX */
 template<typename T> AlgebraicVector<T> deriv(const AlgebraicVector<T> &obj, const unsigned int p);
 template<typename T> AlgebraicVector<T> integ(const AlgebraicVector<T> &obj, const unsigned int p);
+template<typename T> AlgebraicVector<T> absolute(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> trunc(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> round(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> mod(const AlgebraicVector<T> &obj, const double p);
+template<typename T> AlgebraicVector<T> pow(const AlgebraicVector<T> &obj, const double p);
 template<typename T> AlgebraicVector<T> pow(const AlgebraicVector<T> &obj, const int p);
 template<typename T> AlgebraicVector<T> root(const AlgebraicVector<T> &obj, const int p = 2);
 template<typename T> AlgebraicVector<T> minv(const AlgebraicVector<T> &obj);
@@ -228,7 +233,7 @@ template<typename T> AlgebraicVector<T> acosh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> atanh(const AlgebraicVector<T> &obj);
 template<typename U, typename V> typename PromotionTrait<U,V>::returnType dot(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2);
 template<typename U, typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> cross(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2);
-template<typename T> T vnorm(const AlgebraicVector<T> &obj);
+template<typename T> T length(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> normalize(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> trim(const AlgebraicVector<T> &obj, unsigned int min, unsigned int max = DA::getMaxOrder());
 template<typename T, typename V> V eval(const AlgebraicVector<T> &obj, const V &args);
@@ -243,7 +248,7 @@ template<typename T> AlgebraicVector<double> norm(const AlgebraicVector<T> &obj,
 template<> DACE_API AlgebraicMatrix<double> AlgebraicVector<DA>::linear() const;
 template<> DACE_API AlgebraicMatrix<double> linear(const AlgebraicVector<DA> &obj);
 #else
-template<> DACE_API std::vector< std::vector<double> > AlgebraicVector<DA>::linear() const;
+template<> DACE_API std::vector<std::vector<double>> AlgebraicVector<DA>::linear() const;
 template<> DACE_API void AlgebraicVector<DA>::matrix_inverse(std::vector< std::vector<double> > &A);
 template<> DACE_API std::vector< std::vector<double> > linear(const AlgebraicVector<DA> &obj);
 #endif /* WITH_ALGEBRAICMATRIX */
