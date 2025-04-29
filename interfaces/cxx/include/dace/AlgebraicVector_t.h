@@ -119,7 +119,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::extract(const size_t
    \note This routine performs range checking and throws an error if the indices are out of range.
 */
     if(first>=this->size() || last>=this->size())
-        throw std::runtime_error("DACE::AlgebraicVector<T>::take: Indices out of bounds.");
+        throw std::runtime_error("DACE::AlgebraicVector<T>::extract: Indices out of bounds.");
 
     return AlgebraicVector<T>(*this, first, last);
 }
@@ -481,16 +481,17 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::round() const {
     return temp;
 }
 
-template<typename T> AlgebraicVector<T> AlgebraicVector<T>::mod() const {
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::mod(const double p) const {
 /*! Element-wise application of the mod function.
+   \param[in] p
    \return A new AlgebraicVector<T>.
  */
-    using std::trunc;
+    using DACE::mod;
 
     const size_t size = this->size();
     AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
-        temp[i] = mod((*this)[i]);}
+        temp[i] = mod((*this)[i], p);}
 
     return temp;
 }
@@ -1132,13 +1133,14 @@ template<typename T> AlgebraicVector<T> round(const AlgebraicVector<T> &obj) {
     return obj.round();
 }
 
-template<typename T> AlgebraicVector<T> mod(const AlgebraicVector<T> &obj) {
-/*! Element-wise application of the mod function.
+template<typename T> AlgebraicVector<T> mod(const AlgebraicVector<T> &obj, const double p) {
+/*! Element-wise application of the modulo function.
    \param[in] obj AlgebraicVector<T>.
+   \param[in] p divisor.
    \return A new AlgebraicVector<T>.
    \sa AlgebraicVector<T>::mod
  */
-    return obj.mod();
+    return obj.mod(p);
 }
 
 template<typename T> AlgebraicVector<T> pow(const AlgebraicVector<T> &obj, const int p) {
