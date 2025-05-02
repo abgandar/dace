@@ -30,6 +30,7 @@
  *  @{
  */
 
+#include <limits.h>
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -460,6 +461,44 @@ unsigned int daceGetLength(const DACEDA *ina)
 
     daceVariableInformation(ina, &ipoa, &ilma, &illa);
     return illa;
+}
+
+/*! Return the order of a DA object.
+   \param[in] ina Pointer to DA object to get order of
+   \return Lowest order of the non-zero monomials or UINT_MAX if ina is the zero DA.
+*/
+unsigned int daceGetOrder(const DACEDA *ina)
+{
+    monomial *ipoa; unsigned int ilma, illa;
+
+    daceVariableInformation(ina, &ipoa, &ilma, &illa);
+
+    unsigned int order = UINT_MAX;
+    for(monomial *ia = ipoa; ia < ipoa+illa; ia++)
+    {
+        if(DACECom.ieo[ia->ii] < order && !(fabs(ia->cc) <= DACECom_t.eps))
+            order = DACECom.ieo[ia->ii];
+    }
+    return order;
+}
+
+/*! Return the degree of a DA object.
+   \param[in] ina Pointer to DA object to get degree of
+   \return Highest order of the non-zero monomials or INT_MIN if ina is the zero DA.
+*/
+int daceGetDegree(const DACEDA *ina)
+{
+    monomial *ipoa; unsigned int ilma, illa;
+
+    daceVariableInformation(ina, &ipoa, &ilma, &illa);
+
+    int degree = INT_MIN;
+    for(monomial *ia = ipoa; ia < ipoa+illa; ia++)
+    {
+        if((int)DACECom.ieo[ia->ii] > degree && !(fabs(ia->cc) <= DACECom_t.eps))
+            degree = DACECom.ieo[ia->ii];
+    }
+    return degree;
 }
 
 /*! Copy content of one DA object into another DA object.
