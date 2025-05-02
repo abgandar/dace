@@ -64,6 +64,13 @@ double isrt(const double x){
     return 1.0/std::sqrt(x);
 }
 
+double icbrt(const double x){
+/*! Inverse cube root 1/cbrt(x).
+   \param[in] x Function argument.
+ */
+    return 1.0/std::cbrt(x);
+}
+
 double sqr(const double x){
 /*! Square of x.
    \param[in] x Function argument.
@@ -84,6 +91,14 @@ double root(const double x, const int p){
    \param[in] p Root to take.
  */
     return std::pow(x, 1.0/p);
+}
+
+double norm(const double x, const int p){
+/*! norm of x.
+   \param[in] x Function argument.
+   \param[in] type Type of norm (ignored for double).
+ */
+    return std::abs(x);
 }
 
 }
