@@ -32,6 +32,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 include(CMakeDependentOption)
 include(CheckSafeStrings)
 include(CMakePackageConfigHelpers)
+include(CheckIPOSupported)
 
 # Set generally understood compiler flags (enforcing -O2 for release builds)
 add_compile_options("$<$<CONFIG:Release>:-O2>" "$<$<CONFIG:RelWithDebInfo>:-O2>")
@@ -42,7 +43,7 @@ if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 elseif(CMAKE_C_COMPILER_ID MATCHES ".*Clang")        # Also catch IDs like "AppleClang"
   add_compile_options("-Wall" "$<$<BOOL:${WITH_FPSTRICT}>:-ffp-model=strict>")
 elseif(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
-  add_compile_options("/W4" "$<$<BOOL:${WITH_FPSTRICT}>:/fp:strict>" "$<$<CONFIG:RelWithDebInfo>:/fp:strict>")
+  add_compile_options("/W4" "$<$<BOOL:${WITH_FPSTRICT}>:/fp:strict>")
 endif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 
 # Boolean options
@@ -82,7 +83,8 @@ if(DACE_MEMORY_MODEL_U STREQUAL "STATIC")
   set(DACE_STATIC_MEM_SIZE 1944800 CACHE STRING "(EXPERT) Maximum stack size [NMMAX*VAR_SIZE]." FORCE)
 endif(DACE_MEMORY_MODEL_U STREQUAL "STATIC")
 
-# Check platform specific functions and pass options by configuring config.h file in core
+# Check platform specific features and pass options by configuring config.h file in core
+check_ipo_supported(RESULT HAVE_IPO LANGUAGES C CXX)
 check_safe_strings(HAVE_SAFE_STRINGS)
 configure_file(core/include/dace/config.h.in core/include/dace/config.h)
 
@@ -97,15 +99,15 @@ add_library(dace_s STATIC $<TARGET_OBJECTS:c_core_s> $<TARGET_OBJECTS:c_core_con
 
 # versioning and target properties (c_std_99 seems broken on 3.31.7 on Mac with XCode 16.3)
 set_target_properties(dace PROPERTIES
-  POSITION_INDEPENDENT_CODE True
-  INTERPROCEDURAL_OPTIMIZATION TRUE
+  POSITION_INDEPENDENT_CODE TRUE
+  INTERPROCEDURAL_OPTIMIZATION ${HAVE_IPO}
 #  INTERFACE_COMPILE_FEATURES "cxx_std_14;c_std_99"
   INTERFACE_COMPILE_FEATURES "cxx_std_14"
   VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}"
   SOVERSION ${DACE_MAJOR_VERSION}
   INTERFACE_dace_MAJOR_VERSION ${DACE_MAJOR_VERSION})
 set_target_properties(dace_s PROPERTIES
-  INTERPROCEDURAL_OPTIMIZATION TRUE
+  INTERPROCEDURAL_OPTIMIZATION ${HAVE_IPO}
 #  INTERFACE_COMPILE_FEATURES "cxx_std_14;c_std_99"
   INTERFACE_COMPILE_FEATURES "cxx_std_14"
   VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}"
