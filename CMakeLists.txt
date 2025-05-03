@@ -33,41 +33,22 @@ include(CMakeDependentOption)
 include(CheckSafeStrings)
 include(CMakePackageConfigHelpers)
 
-
-# Set C/C++ standard (adapted https://github.com/ceres-solver/ceres-solver/blob/master/CMakeLists.txt)
-# Respect user-specified CMAKE_C/C++_STANDARD or default to C99/C++11.
-# Standard is a hard requirement and that option is hidden from CMake GUI
-if(NOT CMAKE_C_STANDARD)
-  set(CMAKE_C_STANDARD 99 CACHE STRING "C standard (minimum 99)" FORCE)
-  set_property(CACHE CMAKE_C_STANDARD PROPERTY STRINGS 99 11 17)  # options shown in CMake GUI
-endif(NOT CMAKE_C_STANDARD)
-set(CMAKE_C_STANDARD_REQUIRED ON CACHE BOOL "")
-mark_as_advanced(CMAKE_C_STANDARD_REQUIRED)
-
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14 CACHE STRING "C++ standard (minimum 14)" FORCE)
-  set_property(CACHE CMAKE_CXX_STANDARD PROPERTY STRINGS 14 17 20)  # options shown in CMake GUI
-endif(NOT CMAKE_CXX_STANDARD)
-set(CMAKE_CXX_STANDARD_REQUIRED ON CACHE BOOL "")
-mark_as_advanced(CMAKE_CXX_STANDARD_REQUIRED)
-
-
-# Set generally understood compiler flags (enforcing -O2)
+# Set generally understood compiler flags (enforcing -O2 for release builds)
 add_compile_options("$<$<CONFIG:Release>:-O2>" "$<$<CONFIG:RelWithDebInfo>:-O2>")
 
 # Set compiler specific flags
 if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
-  add_compile_options("-Wall" "$<$<CONFIG:Release>:-frounding-math>" "$<$<CONFIG:Release>:-fsignaling-nans>" "$<$<CONFIG:RelWithDebInfo>:-frounding-math>" "$<$<CONFIG:RelWithDebInfo>:-fsignaling-nans>")
+  add_compile_options("-Wall" "$<$<BOOL:${WITH_FPSTRICT}>:-frounding-math>" "$<$<BOOL:${WITH_FPSTRICT}>:-fsignaling-nans>")
 elseif(CMAKE_C_COMPILER_ID MATCHES ".*Clang")        # Also catch IDs like "AppleClang"
-  add_compile_options("-Wall")
+  add_compile_options("-Wall" "$<$<BOOL:${WITH_FPSTRICT}>:-ffp-model=strict>")
 elseif(CMAKE_C_COMPILER_ID STREQUAL "MSVC")
-  add_compile_options("/W4" "$<$<CONFIG:Release>:/fp:strict>" "$<$<CONFIG:RelWithDebInfo>:/fp:strict>")
+  add_compile_options("/W4" "$<$<BOOL:${WITH_FPSTRICT}>:/fp:strict>" "$<$<CONFIG:RelWithDebInfo>:/fp:strict>")
 endif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 
-
 # Boolean options
-option(WITH_ALGEBRAICMATRIX "Include the AlgebraicMatrix type (experimental)" OFF)
 option(WITH_PTHREAD "Enable threading via pthread library" OFF)
+option(WITH_FPSTRICT "Enable strict IEEE-754 floating point handling" OFF)
+option(WITH_ALGEBRAICMATRIX "Include the AlgebraicMatrix type (experimental)" OFF)
 
 # Tri-state option for memory model and the associated choices
 set(DACE_MEMORY_MODEL DYNAMIC CACHE STRING "DACE memory model")
@@ -76,14 +57,12 @@ string(TOUPPER "${DACE_MEMORY_MODEL}" DACE_MEMORY_MODEL_U)
 
 # Default build type option if not set already
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
-       "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
-       FORCE)
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS Debug Release RelWithDebInfo MinSizeRel)  # options shown in CMake GUI
+  set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Build type: Debug Release RelWithDebInfo MinSizeRel" FORCE)
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS Debug Release RelWithDebInfo MinSizeRel)
 endif(NOT CMAKE_BUILD_TYPE)
+string(TOUPPER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_U)
 
 # Debug flag
-string(TOUPPER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_U)
 if(CMAKE_BUILD_TYPE_U STREQUAL "DEBUG")
   set(WITH_DEBUG 1)
 endif(CMAKE_BUILD_TYPE_U STREQUAL "DEBUG")
@@ -103,24 +82,33 @@ if(DACE_MEMORY_MODEL_U STREQUAL "STATIC")
   set(DACE_STATIC_MEM_SIZE 1944800 CACHE STRING "(EXPERT) Maximum stack size [NMMAX*VAR_SIZE]." FORCE)
 endif(DACE_MEMORY_MODEL_U STREQUAL "STATIC")
 
-
 # Check platform specific functions and pass options by configuring config.h file in core
 check_safe_strings(HAVE_SAFE_STRINGS)
 configure_file(core/include/dace/config.h.in core/include/dace/config.h)
-
 
 # process the subdirectories with actual code
 add_subdirectory(core/contrib)
 add_subdirectory(core)
 add_subdirectory(interfaces/cxx)
 
-
 # statically and dynamically linked DACE library with C core and C++ interface
 add_library(dace SHARED $<TARGET_OBJECTS:c_core> $<TARGET_OBJECTS:c_core_contrib> $<TARGET_OBJECTS:dacecxx>)
 add_library(dace_s STATIC $<TARGET_OBJECTS:c_core_s> $<TARGET_OBJECTS:c_core_contrib_s> $<TARGET_OBJECTS:dacecxx_s>)
 
-set_property(TARGET dace PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-set_property(TARGET dace_s PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+# versioning and target properties
+set_target_properties(dace PROPERTIES
+  POSITION_INDEPENDENT_CODE True
+  INTERPROCEDURAL_OPTIMIZATION TRUE
+  INTERFACE_COMPILE_FEATURES "cxx_std_14 c_std_99"
+  VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}"
+  SOVERSION ${DACE_MAJOR_VERSION}
+  INTERFACE_dace_MAJOR_VERSION ${DACE_MAJOR_VERSION})
+set_target_properties(dace_s PROPERTIES
+  INTERPROCEDURAL_OPTIMIZATION TRUE
+  INTERFACE_COMPILE_FEATURES "cxx_std_14 c_std_99"
+  VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}"
+  SOVERSION ${DACE_MAJOR_VERSION}
+  INTERFACE_dace_MAJOR_VERSION ${DACE_MAJOR_VERSION})
 
 # hard code all required include directories when building from source (C++ includes, core includes, config.h include)
 target_include_directories(dace INTERFACE $<INSTALL_INTERFACE:include>
@@ -139,20 +127,6 @@ if(WITH_PTHREAD)
   target_link_libraries(dace_s PUBLIC pthread)
 endif(WITH_PTHREAD)
 
-# library versioning
-set_property(TARGET dace PROPERTY VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}")
-set_property(TARGET dace PROPERTY SOVERSION ${DACE_MAJOR_VERSION})
-set_property(TARGET dace PROPERTY INTERFACE_dace_MAJOR_VERSION ${DACE_MAJOR_VERSION})
-set_property(TARGET dace APPEND PROPERTY COMPATIBLE_INTERFACE_STRING dace_MAJOR_VERSION)
-set_property(TARGET dace_s PROPERTY VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}")
-set_property(TARGET dace_s PROPERTY INTERFACE_dace_s_MAJOR_VERSION ${DACE_MAJOR_VERSION})
-set_property(TARGET dace_s APPEND PROPERTY COMPATIBLE_INTERFACE_STRING dace_s_MAJOR_VERSION)
-
-# explicitly set required minimum C++ standard so it carries through to exported targets and consumers
-set_property(TARGET dace PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_11)
-set_property(TARGET dace_s PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_11)
-
-
 # install DACE libraries and required headers
 install(TARGETS dace EXPORT dace
         LIBRARY DESTINATION lib COMPONENT libraries
@@ -168,7 +142,6 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/interfaces/cxx/include/dace DESTINATION 
         COMPONENT headers FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/core/include/ DESTINATION include/ COMPONENT headers FILES_MATCHING PATTERN "*.h")
 install(FILES ${PROJECT_BINARY_DIR}/core/include/dace/config.h DESTINATION include/dace COMPONENT headers)
-
 
 # Automatically create cmake package files to find the DACE
 write_basic_package_version_file(
