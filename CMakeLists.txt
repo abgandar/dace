@@ -95,20 +95,22 @@ add_subdirectory(interfaces/cxx)
 add_library(dace SHARED $<TARGET_OBJECTS:c_core> $<TARGET_OBJECTS:c_core_contrib> $<TARGET_OBJECTS:dacecxx>)
 add_library(dace_s STATIC $<TARGET_OBJECTS:c_core_s> $<TARGET_OBJECTS:c_core_contrib_s> $<TARGET_OBJECTS:dacecxx_s>)
 
-# versioning and target properties
+# versioning and target properties (c_std_99 seems broken on 3.31.7 on Mac with XCode 16.3)
 set_target_properties(dace PROPERTIES
   POSITION_INDEPENDENT_CODE True
   INTERPROCEDURAL_OPTIMIZATION TRUE
-  INTERFACE_COMPILE_FEATURES "cxx_std_14 c_std_99"
+#  INTERFACE_COMPILE_FEATURES "cxx_std_14;c_std_99"
+  INTERFACE_COMPILE_FEATURES "cxx_std_14"
   VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}"
   SOVERSION ${DACE_MAJOR_VERSION}
   INTERFACE_dace_MAJOR_VERSION ${DACE_MAJOR_VERSION})
 set_target_properties(dace_s PROPERTIES
   INTERPROCEDURAL_OPTIMIZATION TRUE
-  INTERFACE_COMPILE_FEATURES "cxx_std_14 c_std_99"
+#  INTERFACE_COMPILE_FEATURES "cxx_std_14;c_std_99"
+  INTERFACE_COMPILE_FEATURES "cxx_std_14"
   VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}"
   SOVERSION ${DACE_MAJOR_VERSION}
-  INTERFACE_dace_MAJOR_VERSION ${DACE_MAJOR_VERSION})
+  INTERFACE_dace_s_MAJOR_VERSION ${DACE_MAJOR_VERSION})
 
 # hard code all required include directories when building from source (C++ includes, core includes, config.h include)
 target_include_directories(dace INTERFACE $<INSTALL_INTERFACE:include>
