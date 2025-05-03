@@ -47,7 +47,7 @@ endif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
 
 # Boolean options
 option(WITH_PTHREAD "Enable threading via pthread library" OFF)
-option(WITH_FPSTRICT "Enable strict IEEE-754 floating point handling" OFF)
+option(WITH_FPSTRICT "Enable strict IEEE-754 floating point handling" ON)
 option(WITH_ALGEBRAICMATRIX "Include the AlgebraicMatrix type (experimental)" OFF)
 
 # Tri-state option for memory model and the associated choices
