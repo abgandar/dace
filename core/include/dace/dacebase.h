@@ -29,9 +29,6 @@
 /*
     This file contains all routines in the public interface to the DACE core.
     DACE core users or high level interfaces should only include this file.
-
-    Legacy users of DACE 1 can additionally include dacecompat.h to obtain a
-    source compatible mapping to the old DACE 1 function names and semantics.
 */
 /** \addtogroup DACE Core
  *  @{
