@@ -74,13 +74,13 @@ if(DACE_MEMORY_MODEL_U STREQUAL "STATIC")
   # Pick any maximum NO, NV combination to support, then set these values like this:
   # NMMAX = (NO+NV)!/NO!/NV!         LIAMAX = (NO+1)^((NV+1)/2)
   # For example, for NO=10 and NV=10 set DACE_STATIC_NMMAX=184756 and DACE_STATIC_LIAMAX=161051
-  # The following default values are sized for NO=10 and NV=7
-  set(DACE_STATIC_NOMAX 10 CACHE STRING "(EXPERT) Maximum order." FORCE)
-  set(DACE_STATIC_NVMAX 10 CACHE STRING "(EXPERT) Maximum number of variables." FORCE)
-  set(DACE_STATIC_NMMAX 19448 CACHE STRING "(EXPERT) Maximum number of monomials [(NO+NV)!/NO!/NV!]." FORCE)
-  set(DACE_STATIC_LIAMAX 161051 CACHE STRING "(EXPERT) Maximum addressing array size [(NO+1)^((NV+1)/2)]." FORCE)
-  set(DACE_STATIC_VAR_SIZE 100 CACHE STRING "(EXPERT) Maximum number of DA variables." FORCE)
-  set(DACE_STATIC_MEM_SIZE 1944800 CACHE STRING "(EXPERT) Maximum stack size [NMMAX*VAR_SIZE]." FORCE)
+  # The following default values are sized for NO=10 and NV=10
+  set(DACE_STATIC_NOMAX 10 CACHE STRING "(EXPERT) Maximum order.")
+  set(DACE_STATIC_NVMAX 10 CACHE STRING "(EXPERT) Maximum number of variables.")
+  set(DACE_STATIC_NMMAX 184756 CACHE STRING "(EXPERT) Maximum number of monomials [(NO+NV)!/NO!/NV!].")
+  set(DACE_STATIC_LIAMAX 161051 CACHE STRING "(EXPERT) Maximum addressing array size [(NO+1)^((NV+1)/2)].")
+  set(DACE_STATIC_VAR_SIZE 100 CACHE STRING "(EXPERT) Maximum number of available DA objects.")
+  set(DACE_STATIC_MEM_SIZE 18475600 CACHE STRING "(EXPERT) Maximum memory size [NMMAX*VAR_SIZE].")
 endif(DACE_MEMORY_MODEL_U STREQUAL "STATIC")
 
 # Check platform specific features and pass options by configuring config.h file in core
