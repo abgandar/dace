@@ -30,14 +30,15 @@
     This file contains all contributed routines to the DACE core.
     It is never included publicly by DACE users or high level interfaces.
 */
-/** \addtogroup DACEContrib Contrib
- *  @{
- */
-
-/// @cond
 
 #ifndef DINAMICA_DACECONTRIB_H_
 #define DINAMICA_DACECONTRIB_H_
+
+/// \cond
+
+/** \addtogroup DACEContrib Contrib
+ *  @{
+ */
 
 double zeta_(const double x, const double q, unsigned int *err);
 double dgamma_(const double *x);
@@ -47,6 +48,8 @@ int rjbesl_(double *x, double *alpha, long int *nb, double *b, long int *ncalc);
 int rkbesl_(double *x, double *alpha, long int *nb, long int *ize, double *b, long int *ncalc);
 int rybesl_(double *x, double *alpha, long int *nb, double *b, long int *ncalc);
 
-/// @endcond
 /** @}*/
+
+/// \endcond
+
 #endif /* DINAMICA_DACECONTRIB_H_ */
