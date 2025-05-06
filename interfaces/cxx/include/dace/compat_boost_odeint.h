@@ -29,7 +29,11 @@
 #ifndef DINAMICA_COMPAT_BOOST_ODEINT_H_
 #define DINAMICA_COMPAT_BOOST_ODEINT_H_
 
-/*! This file needs to be included after boost/numeric/odeint.hpp and dace/dace.h to provide
+/*! \file include/dace/compat_boost_odeint.h
+
+    \brief Boost library boost::numeric::odeint compatibility shim
+
+    This file needs to be included after boost/numeric/odeint.hpp and dace/dace.h to provide
     a compatibility shim to allow odeint to work with DACE::AlgebraicVector as a state type.
     It can be used both with DA and double data types.
 
@@ -49,7 +53,6 @@
         // select implementation of abs(DA) before compat_boost_odeint.h
         namespace DACE { using DACE::abs_max::abs; }
         #include <dace/compat_boost_odeint.h>
-
 
         using namespace boost::numeric::odeint;
         using namespace DACE;
