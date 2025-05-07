@@ -35,7 +35,7 @@
 #include "dace/Monomial.h"
 #include "dace/DA.h"
 
-namespace DACE{
+namespace DACE {
 
 const DASimpleFormat DASimpleFormatter::C =           { "+",  "-",  "*",        "",     "p", "[",  "",  "][",  "]", " \\\n\t",     0, -1, 20, false };
 const DASimpleFormat DASimpleFormatter::C_POW =       { "+",  "-",  "*",        "pow(", "x", "[",  "]", ",",   ")", " \\\n\t",     0,  0, 20, true  };
@@ -50,7 +50,7 @@ const DASimpleFormat DASimpleFormatter::LATEX =       { " +", " -", " \\cdot ", 
 
 std::string DASimpleFormatter::format(const DA &da){
 /*! Format and print a DA.
-   \param[in] da The DA to be printed.
+    \param[in] da DA to be printed
  */
     const std::vector<Monomial> monomials = da.getMonomials();
     const size_t size = monomials.size();
@@ -78,7 +78,7 @@ std::string DASimpleFormatter::format(const DA &da){
 
 std::string DASimpleFormatter::format(const std::vector<DA> &da){
 /*! Format and print a vector of DA.
-   \param[in] da The vector of DA to be printed.
+    \param[in] da vector of DA to be printed
  */
     std::ostringstream res;
 

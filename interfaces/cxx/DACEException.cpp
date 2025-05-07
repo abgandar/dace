@@ -35,7 +35,7 @@
 #include "dace/DACEException.h"
 #include "dace/dacecore.h"
 
-namespace DACE{
+namespace DACE {
 
     int DACEException::severity = 6;
     bool DACEException::warning = true;
@@ -43,7 +43,7 @@ namespace DACE{
     /********************************************************************************
     *     Constructors & Destructors
     *********************************************************************************/
-    DACEException::DACEException(){
+    DACEException::DACEException() {
     /*! Create a DACEException object from an existing severity and error codes.
      */
         //m_x = FC_GLOBAL(dacegetxerr,DACEGETXERR)();
@@ -56,10 +56,10 @@ namespace DACE{
         execute();
     }
 
-    DACEException::DACEException(const int exc_sv, const int exc_id){
+    DACEException::DACEException(const int exc_sv, const int exc_id) {
     /*! Create a DACEException object from given severity and ID codes.
-       \param exc_sv severity code of the error.
-       \param exc_id ID code of the error.
+        \param exc_sv severity code of the error
+        \param exc_id ID code of the error
      */
         m_x = exc_sv;
         m_yy = exc_id;
@@ -67,8 +67,8 @@ namespace DACE{
         execute();
     }
 
-    DACEException::~DACEException() throw(){
-    /*! Destroy the DACEException object.
+    DACEException::~DACEException() throw() {
+    /*! Destructor.
      */
         // nothing to do, just overloading the virtual destructor of the parent class
     }
@@ -76,7 +76,7 @@ namespace DACE{
     /********************************************************************************
     *     Private member functions
     *********************************************************************************/
-    void DACEException::updateMessage(){
+    void DACEException::updateMessage() {
     /*! Update the error message of this exception based on its ID.
      */
         struct errstrings{
@@ -177,24 +177,24 @@ namespace DACE{
         msg = s.str();
     }
 
-    void DACEException::execute() const{
+    void DACEException::execute() const {
     /*! Execute this exception, i.e. throw or print warning based on current user settings.
-       \throw DACE::DACEException
+        \throw DACE::DACEException
      */
         const int sev = m_x%11; // modulo 11 to handle both DACE and C++ interface severity codes
 
-        if(sev>=severity){
+        if(sev>=severity) {
             throw *this;}
-        else if(warning){
+        else if(warning) {
             std::cerr << "Warning: " << msg << std::endl;}
     }
 
     /********************************************************************************
     *     Public member functions
     *********************************************************************************/
-    const char* DACEException::what() const throw(){
+    const char* DACEException::what() const throw() {
     /*! Return a human readable error string representing this exception.
-       \return A C string containing the error message.
+        \return A C string containing the error message
      */
         return msg.c_str();
     }
@@ -202,7 +202,7 @@ namespace DACE{
     /********************************************************************************
     *     Static member functions
     *********************************************************************************/
-    void DACEException::setSeverity(const int n){
+    void DACEException::setSeverity(const int n) {
     /*! Set a value for the severity level. Errors with severity code greater
         or equal to this value will generate an exception object.
         Severity levels are:\n
@@ -213,14 +213,14 @@ namespace DACE{
                        reinitialize DACE, interface objects are no longer valid\n
         10 = Critical: Crash in the DACE, just printing as much as possible
                        and dying.
-       \param n severity value
+        \param n severity value
      */
         severity = n;
     }
 
     void DACEException::setWarning(const bool w){
     /*! Set the current status for visualization of warnings.
-       \param w status of warnings\n
+        \param w status of warnings\n
         true: turn on printing of warnings\n
         false: turn off printing of warnings
      */
@@ -231,10 +231,10 @@ namespace DACE{
     *     Friend functions
     *********************************************************************************/
     std::ostream& operator<< (std::ostream &out, const DACEException &ex){
-    /*! Overload of std::operator<< in iostream.
-       \param[in] out standard output stream.
-       \param[in] ex Exception to be printed in the stream
-       \return Output stream out.
+    /*! Output operator.
+        \param[in] out output stream
+        \param[in] ex Exception to be printed to the stream
+        \return Output stream
      */
         return out << ex.msg << std::endl;
     }

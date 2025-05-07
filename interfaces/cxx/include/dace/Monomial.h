@@ -34,22 +34,21 @@
 #include <string>
 #include <ostream>
 
-namespace DACE{
+namespace DACE {
 
 /*! Monomial class */
 class DACE_API Monomial
 {
 public:
-    std::vector<unsigned int> m_jj;     /*!< Vector of exponents.               */
-    double m_coeff;                     /*!< Coefficient.                       */
+    std::vector<unsigned int> m_jj;     //!< Vector of exponents
+    double m_coeff;                     //!< Coefficient
 
-    Monomial();                         /*!< Default constructor.               */
-
-    unsigned int order() const;         /*!< Return the order of the Monomial.  */
-    std::string toString() const;       /*!< Convert current monomial to string.*/
+    Monomial();
+    unsigned int order() const;
+    std::string toString() const;
 };
 
-DACE_API std::ostream& operator<< (std::ostream &out, const Monomial &m);    /*!< Overload output stream operator. */
+DACE_API std::ostream& operator<< (std::ostream &out, const Monomial &m);
 
 }
 

@@ -33,9 +33,10 @@
 #include <vector>
 #include <initializer_list>
 
-namespace DACE{
+namespace DACE {
 
-class DA;   // forward declaration
+// forward declaration
+class DA;
 
 /*! compiledDA class representing a precomputed representation of a polynomial for efficient evaluation. */
 class DACE_API compiledDA
@@ -51,33 +52,33 @@ public:
     /********************************************************************************
     *     Constructors & Destructors
     *********************************************************************************/
-    compiledDA(const compiledDA &cda);                      //!< Copy constructor.
-    compiledDA(const DA &da);                               //!< Constructor from a single DA.
-    compiledDA(const std::vector<DA> &da);                  //!< Constructor from a vector of DA.
-    ~compiledDA() throw();                                  //!< Default destructor.
+    compiledDA(const compiledDA &cda);
+    compiledDA(const DA &da);
+    compiledDA(const std::vector<DA> &da);
+    ~compiledDA() throw();
 
     /********************************************************************************
     *     Assignments
     *********************************************************************************/
-    compiledDA& operator=(const compiledDA &cda);           //!< Copy assignment.
+    compiledDA& operator=(const compiledDA &cda);
 
     /********************************************************************************
     *     Evaluation
     *********************************************************************************/
-    template<class V> V eval(const V &args) const;                                          //!< Evaluate the compiled polynomial with a vector of any arithmetic type and return vector of results.
-    template<class T> std::vector<T> eval(const std::initializer_list<T> l) const;          //!<Evaluate the compiled polynomial with a braced initializer list and return a vector of results.
-    template<class T> std::vector<T> eval(const T args[], const unsigned int length) const; //!< Evaluate the compiled polynomial with an array of any arithmetic type and return vector of results.
-    template<class T> std::vector<T> evalScalar(const T &arg) const;                        //!< Evaluate the compiled polynomial with a single variable of arithmetic type and return vector of results.
-    template<class T> void eval(const std::vector<T> &args, std::vector<T> &res) const;     //!< Evaluate the compiled polynomial with a vector of any arithmetic type and store results in provided vector.
+    template<class V> V eval(const V &args) const;
+    template<class T> std::vector<T> eval(const std::initializer_list<T> l) const;
+    template<class T> std::vector<T> eval(const T args[], const unsigned int length) const;
+    template<class T> std::vector<T> evalScalar(const T &arg) const;
+    template<class T> void eval(const std::vector<T> &args, std::vector<T> &res) const;
 
     /********************************************************************************
     *     Member access routines
     *********************************************************************************/
-    const double* getAc() const;                            //!< Return a pointer to the internal coefficient array
-    unsigned int getDim() const;                            //!< Return the number of polynomials
-    unsigned int getOrd() const;                            //!< Return the maximum order in all polynomials
-    unsigned int getVars() const;                           //!< Return the number of independent variables in all polynomials
-    unsigned int getTerms() const;                          //!< Return the number of terms
+    const double* getAc() const;
+    unsigned int getDim() const;
+    unsigned int getOrd() const;
+    unsigned int getVars() const;
+    unsigned int getTerms() const;
 };
 
 // specializations for particularly efficient evaluation with double and DA arguments implemented in the library
@@ -85,4 +86,5 @@ template<> DACE_API void compiledDA::eval(const std::vector<DA> &args, std::vect
 template<> DACE_API void compiledDA::eval(const std::vector<double> &args, std::vector<double> &res) const;
 
 }
+
 #endif /* DINAMICA_COMPILEDDA_H_ */

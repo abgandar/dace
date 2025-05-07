@@ -37,7 +37,7 @@
 #include "dace/PromotionTrait.h"
 #include "dace/DA.h"
 
-namespace DACE{
+namespace DACE {
 
 // forward declarations
 #ifdef WITH_ALGEBRAICMATRIX
@@ -51,24 +51,45 @@ public:
     /***********************************************************************************
     *     Constructors
     ************************************************************************************/
-    AlgebraicVector();                                                                        //!< Default constructor
-    explicit AlgebraicVector(const size_t size);                                              //!< Constructor with size
-    AlgebraicVector(const size_t size, const T &d);                                           //!< Constructor with size and elements value
-    AlgebraicVector(const std::vector<T> &v);                                                 //!< Copy constructor
-    AlgebraicVector(const std::vector<T> &v, const size_t first, const size_t last);          //!< Extraction constructor
-    AlgebraicVector(std::initializer_list<T> l);                                              //!< Constructor from braced initializer list
+    /*! Default constructor to create empty AlgebraicVector
+    */
+    AlgebraicVector() : std::vector<T>() {};
+    /*! Constructor with size to allocate a vector of the given size with elements initialized using their default constructor.
+        \param[in] size initial length of the AlgebraicVector.
+    */
+    explicit AlgebraicVector(const size_t size) : std::vector<T>(size) {};
+    /*! Constructor with size and value to allocate a vector of the given size with elements initialized as copies of d.
+        \param[in] size initial length of the AlgebraicVector.
+        \param[in] d    initial value for the elements
+    */
+    AlgebraicVector(const size_t size, const T &d) : std::vector<T>(size, d) {};
+    /*! Copy constructor to create a copy of any existing vector.
+        \param[in] v vector to be copied into AlgebraicVector
+    */
+    AlgebraicVector(const std::vector<T> &v) : std::vector<T>(v) {};
+    /*! Extraction constructor to copy only a given range of elements from vector v.
+        \param[in] v vector to be copied into AlgebraicVector
+        \param[in] first index of the first element to be copied
+        \param[in] last index of the last element to be copied
+        \note The constructor does not perform any range checking for the extraction.
+        \sa AlgebraicVector<T>::extract
+    */
+    AlgebraicVector(const std::vector<T> &v, const size_t first, const size_t last) : std::vector<T>(v.begin()+first, v.begin()+last+1) {};
+    /*! Constructor to create a vector from an initializer list.
+        \param[in] l braced initializer list to be copied into the AlgebraicVector
+    */
+    AlgebraicVector(std::initializer_list<T> l) : std::vector<T>(l) {};
 
     /***********************************************************************************
     *     Element and coefficient access / extraction routines
     ************************************************************************************/
-    AlgebraicVector<T> extract(const size_t first, const size_t last) const;            //!< Return the subvector containing the elements between first and last, inclusively
+    AlgebraicVector<T> extract(const size_t first, const size_t last) const;
     template<typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> concat(const std::vector<U> &obj) const;
-                                                                                                    //!< Return a new vector containing the elements of this vector followed by those of obj
-    AlgebraicVector<double> cons() const;                                                           //!< Return vector containing only the costant parts of each element
+    AlgebraicVector<double> cons() const;
 #ifdef WITH_ALGEBRAICMATRIX
-    AlgebraicMatrix<double> linear() const;                                                         //!< Return the linear parts in the form of a Matrix
+    AlgebraicMatrix<double> linear() const;
 #else
-    std::vector< std::vector<double> > linear() const;                                              //!< Return the linear parts in the form of a vector of vectors
+    std::vector< std::vector<double> > linear() const;
 #endif /* WITH_ALGEBRAICMATRIX */
 
     /***********************************************************************************
@@ -83,91 +104,86 @@ public:
     template<typename U> AlgebraicVector<T>& operator*=(const U &obj);
     template<typename U> AlgebraicVector<T>& operator/=(const AlgebraicVector<U> &obj);
     template<typename U> AlgebraicVector<T>& operator/=(const U &obj);
-    template<typename U> AlgebraicVector<T>& operator<<(const std::vector<U> &obj);                 //!< Concatenation operator.
+    template<typename U> AlgebraicVector<T>& operator<<(const std::vector<U> &obj);
 
     /***********************************************************************************
     *     Math routines
     ************************************************************************************/
-    AlgebraicVector<T> absolute() const;                                                            //!< Element-wise absolute value function.
-    AlgebraicVector<T> trunc() const;                                                               //!< Element-wise truncation.
-    AlgebraicVector<T> round() const;                                                               //!< Element-wise rounding.
-    AlgebraicVector<T> mod(const double p) const;                                                   //!< Element-wise modulo.
-    AlgebraicVector<T> pow(const int p) const;                                                      //!< Element-wise exponentiation to (integer) power.
-    AlgebraicVector<T> pow(const double p) const;                                                   //!< Element-wise exponentiation to (double) power.
-    AlgebraicVector<T> root(const int p = 2) const;                                                 //!< Element-wise p-th root.
-    AlgebraicVector<T> minv() const;                                                                //!< Element-wise multiplicative inverse.
-    AlgebraicVector<T> sqr() const;                                                                 //!< Element-wise square.
-    AlgebraicVector<T> sqrt() const;                                                                //!< Element-wise square root.
-    AlgebraicVector<T> isrt() const;                                                                //!< Element-wise inverse square root.
-    AlgebraicVector<T> cbrt() const;                                                                //!< Element-wise cube root.
-    AlgebraicVector<T> icbrt() const;                                                               //!< Element-wise inverse cube root.
-    AlgebraicVector<T> hypot(const AlgebraicVector<T> &obj) const;                                  //!< Element-wise hypotenuse.
-    AlgebraicVector<T> exp() const;                                                                 //!< Element-wise exponential.
-    AlgebraicVector<T> log() const;                                                                 //!< Element-wise natural logarithm.
-    AlgebraicVector<T> logb(const double b = 10.0) const;                                           //!< Element-wise logarithm wrt a given base.
-    AlgebraicVector<T> log10() const;                                                               //!< Element-wise logarithm to base 10.
-    AlgebraicVector<T> log2() const;                                                                //!< Element-wise logarithm to base 2.
-    AlgebraicVector<T> sin() const;                                                                 //!< Element-wise sine.
-    AlgebraicVector<T> cos() const;                                                                 //!< Element-wise cosine.
-    AlgebraicVector<T> tan() const;                                                                 //!< Element-wise tangent.
-    AlgebraicVector<T> asin() const;                                                                //!< Element-wise arcsine.
-    AlgebraicVector<T> acos() const;                                                                //!< Element-wise arccosine.
-    AlgebraicVector<T> atan() const;                                                                //!< Element-wise arctangent.
-    AlgebraicVector<T> atan2(const AlgebraicVector<T> &obj) const;                                  //!< Element-wise arctangent in [-pi, pi].
-    AlgebraicVector<T> sinh() const;                                                                //!< Element-wise hyperbolic sine.
-    AlgebraicVector<T> cosh() const;                                                                //!< Element-wise hyperbolic cosine.
-    AlgebraicVector<T> tanh() const;                                                                //!< Element-wise hyperbolic tangent.
-    AlgebraicVector<T> asinh() const;                                                               //!< Element-wise hyperbolic arcsine.
-    AlgebraicVector<T> acosh() const;                                                               //!< Element-wise hyperbolic arccosine.
-    AlgebraicVector<T> atanh() const;                                                               //!< Element-wise hyperbolic arctangent.
+    AlgebraicVector<T> absolute() const;
+    AlgebraicVector<T> trunc() const;
+    AlgebraicVector<T> round() const;
+    AlgebraicVector<T> mod(const double p) const;
+    AlgebraicVector<T> pow(const int p) const;
+    AlgebraicVector<T> pow(const double p) const;
+    AlgebraicVector<T> root(const int p = 2) const;
+    AlgebraicVector<T> minv() const;
+    AlgebraicVector<T> sqr() const;
+    AlgebraicVector<T> sqrt() const;
+    AlgebraicVector<T> isrt() const;
+    AlgebraicVector<T> cbrt() const;
+    AlgebraicVector<T> icbrt() const;
+    AlgebraicVector<T> hypot(const AlgebraicVector<T> &Y) const;
+    AlgebraicVector<T> exp() const;
+    AlgebraicVector<T> log() const;
+    AlgebraicVector<T> logb(const double b = 10.0) const;
+    AlgebraicVector<T> log10() const;
+    AlgebraicVector<T> log2() const;
+    AlgebraicVector<T> sin() const;
+    AlgebraicVector<T> cos() const;
+    AlgebraicVector<T> tan() const;
+    AlgebraicVector<T> asin() const;
+    AlgebraicVector<T> acos() const;
+    AlgebraicVector<T> atan() const;
+    AlgebraicVector<T> atan2(const AlgebraicVector<T> &X) const;
+    AlgebraicVector<T> sinh() const;
+    AlgebraicVector<T> cosh() const;
+    AlgebraicVector<T> tanh() const;
+    AlgebraicVector<T> asinh() const;
+    AlgebraicVector<T> acosh() const;
+    AlgebraicVector<T> atanh() const;
 
     /***********************************************************************************
     *    Vector routines
     ************************************************************************************/
     template<typename V> typename PromotionTrait<T,V>::returnType dot(const AlgebraicVector<V> &obj) const;
-                                                                                                    //!< Dot product (scalar product, inner product) of two vectors.
     template<typename V> AlgebraicVector<typename PromotionTrait<T,V>::returnType> cross(const AlgebraicVector<V> &obj) const;
-                                                                                                    //!< Cross product of two vectors of length 3.
-    T length() const;                                                                               //!< Length of the vector in Euclidean norm.
-    AlgebraicVector<T> normalize() const;                                                           //!< Normalized vector of unit length along this vector.
+    T length() const;
+    AlgebraicVector<T> normalize() const;
     // XXX: various Jacobians, gradients, curls, etc?
 
     /***********************************************************************************
     *     Special routines (DA related)
     ************************************************************************************/
-    AlgebraicVector<T> deriv(const unsigned int p) const;                                           //!< Derivative of each element with respect to given variable. DA only.
-    AlgebraicVector<T> integ(const unsigned int p) const;                                           //!< Integration of each element with respect to given variable. DA only.
-    template<typename V> V eval(const V &args) const;                                               //!< Generic evaluation of a AlgebraicVector<DA> with arguments. DA only.
-    template<typename U> AlgebraicVector<U> eval(const std::initializer_list<U> l) const;           //!< Generic evaluation of an AlgebraicVector<DA> with braced initializer list. DA only.
-    template<typename U> AlgebraicVector<U> evalScalar(const U &arg) const;                         //!< Generic evaluation of a AlgebraicVector<DA> with single argument.  DA only.
-    compiledDA compile() const;                                                                     //!< Compile current DA for efficient repeated evaluation. DA only.
-    AlgebraicVector<T> plug(const unsigned int var, const double val = 0.0) const;                  //!< Partial evaluation to replace given independent DA variable by value val. DA only.
+    AlgebraicVector<T> deriv(const unsigned int p) const;
+    AlgebraicVector<T> integ(const unsigned int p) const;
+    template<typename V> V eval(const V &args) const;
+    template<typename U> AlgebraicVector<U> eval(const std::initializer_list<U> l) const;
+    template<typename U> AlgebraicVector<U> evalScalar(const U &arg) const;
+    compiledDA compile() const;
+    AlgebraicVector<T> plug(const unsigned int var, const double val = 0.0) const;
     AlgebraicVector<T> trim(const unsigned int min, const unsigned int max = DA::getMaxOrder()) const;
-                                                                                                    //!< Trim the coefficients of each components to particular orders. DA only.
-    AlgebraicVector<T> invert() const;                                                              //!< Inverse function of the AlgebraicVector<DA>. DA only.
+    AlgebraicVector<T> invert() const;
 
     /********************************************************************************
     *     DA norm routines
     *********************************************************************************/
-    AlgebraicVector<double> norm(const unsigned int type = 0) const;                                //!< Element-wise DA norm
+    AlgebraicVector<double> norm(const unsigned int type = 0) const;
     /* XXX: define and add the norm estimation routines from DA including convergence radius estimation
     std::vector<double> orderNorm(const unsigned int var = 0, const unsigned int type = 0) const;
-                                                                            //!< Different types of norms over coefficients of each order separately
     std::vector<double> estimNorm(const unsigned int var = 0, const unsigned int type = 0, const unsigned int nc = DA::getMaxOrder()) const;
-                                                                            //!< Estimate of different types of order sorted norms
-    Interval bound() const;                                                 //!< Estimate range bound over [-1,1] for each independent variable
-    double convRadius(const double eps, const unsigned int type = 1) const; //!< Estimate the convergence radius of the current DA.
+    Interval bound() const;
+    double convRadius(const double eps, const unsigned int type = 1) const;
     */
 
     /********************************************************************************
     *     Static factory routines
     *********************************************************************************/
-    static AlgebraicVector<DA> identity(const size_t n = DA::getMaxVariables());              //!< Create an AlgebraicVector<DA> containing the identity in n dimensions. DA only.
+    static AlgebraicVector<DA> identity(const size_t n = DA::getMaxVariables());
 
     /***********************************************************************************
     *     Input/Output routines
     ************************************************************************************/
-    std::string toString() const;                                                                   //!< Convert the vector into a human readable string.
+    std::string toString() const;
 
 private:
 #ifndef WITH_ALGEBRAICMATRIX
@@ -192,8 +208,8 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::re
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> operator/( const AlgebraicVector<U> &obj1, const V &obj2);
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> operator/( const U &obj1, const AlgebraicVector<V> &obj2);
 
-template<typename U> std::ostream& operator<<(std::ostream &out, const AlgebraicVector<U> &obj);    //!< Overload output stream operator.
-template<typename U> std::istream& operator>>(std::istream &in, AlgebraicVector<U> &obj);           //!< Overload input stream operator.
+template<typename U> std::ostream& operator<<(std::ostream &out, const AlgebraicVector<U> &obj);
+template<typename U> std::istream& operator>>(std::istream &in, AlgebraicVector<U> &obj);
 
 // Declaration of external functional style wrappers to access AlgebraicVector functions
 template<typename T> AlgebraicVector<double> cons(const AlgebraicVector<T> &obj);
@@ -215,16 +231,21 @@ template<typename T> AlgebraicVector<T> minv(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> sqr(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> sqrt(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> isrt(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> cbrt(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> icbrt(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> hypot(const AlgebraicVector<T> &Y);
 template<typename T> AlgebraicVector<T> exp(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> log(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> logb(const AlgebraicVector<T> &obj, const double b = 10.0);
+template<typename T> AlgebraicVector<T> log10(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> log2(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> sin(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> cos(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> tan(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> asin(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> acos(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> atan(const AlgebraicVector<T> &obj);
-template<typename T> AlgebraicVector<T> atan2(const AlgebraicVector<T> &obj1, const AlgebraicVector<T> &obj2);
+template<typename T> AlgebraicVector<T> atan2(const AlgebraicVector<T> &Y, const AlgebraicVector<T> &X);
 template<typename T> AlgebraicVector<T> sinh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> cosh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> tanh(const AlgebraicVector<T> &obj);
@@ -268,6 +289,7 @@ template<> DACE_API AlgebraicVector<DA> plug(const AlgebraicVector<DA> &obj, con
 // shortcuts for common vector types
 typedef AlgebraicVector<DA> vectorDA;       //!< Shorthand notation for AlgebraicVector<DA>.
 typedef AlgebraicVector<double> vectordb;   //!< Shorthand notation for AlgebraicVector<double>.
+
 }
 
 #endif /* DINAMICA_ALGEBRAICVECTOR_H_ */

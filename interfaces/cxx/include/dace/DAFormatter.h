@@ -33,7 +33,7 @@
 #include <vector>
 #include <string>
 
-namespace DACE{
+namespace DACE {
 
 // forward declaration
 class DA;
@@ -47,7 +47,7 @@ public:
 };
 
 /*! Class containing the elements of a simple format as used by the DASimpleFormatter.
-   \sa DASimpleFormatter
+    \sa DASimpleFormatter
 */
 struct DASimpleFormat {
     std::string pos, neg, mul, pre_pow, var, pre_var, post_var, pow, post_pow, linebreak;
@@ -81,4 +81,5 @@ public:
 };
 
 }
+
 #endif /* DINAMICA_DAFORMATTER_H_ */

@@ -37,17 +37,14 @@
 
 namespace DACE{
 
-/********************************************************************************
-*     Constructors & Destructors
-*********************************************************************************/
 Monomial::Monomial() : m_jj(DA::getMaxVariables()), m_coeff(0.0) {
 /*! Create a Monomial object large enough to hold all current monomials.
- */
+*/
 }
 
-unsigned int Monomial::order() const{
+unsigned int Monomial::order() const {
 /*! Compute the order of the monomial.
-   \return Order of the monomial
+    \return Order of the monomial
  */
     unsigned int ord = 0;
 
@@ -57,9 +54,9 @@ unsigned int Monomial::order() const{
     return ord;
 }
 
-std::string Monomial::toString() const{
+std::string Monomial::toString() const {
 /*! Convert monomial to string.
-   \return A string representing the monomial in human readable form.
+    \return A string representing the monomial in human readable form.
  */
     std::ostringstream oss;
 
@@ -80,11 +77,11 @@ std::string Monomial::toString() const{
     return oss.str();
 }
 
-std::ostream& operator<< (std::ostream &out, const Monomial &m){
-/*! Overload of std::operator<< in iostream.
-   \param[in] out standard output stream.
-   \param[in] m Monomial vector to be printed in the stream
-   \return The output stream out.
+std::ostream& operator<< (std::ostream &out, const Monomial &m) {
+/*! Output operator.
+    \param[in] out Output stream
+    \param[in] m Monomial vector to be printed in the stream
+    \return The output stream
  */
     out << m.toString();
     return out;

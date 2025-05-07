@@ -29,7 +29,7 @@
 #ifndef DINAMICA_PROMOTIONTRAIT_H_
 #define DINAMICA_PROMOTIONTRAIT_H_
 
-namespace DACE{
+namespace DACE {
 
 // forward declaration
 class DA;
@@ -59,6 +59,7 @@ ADD_PROMOTION_ALL(DA,DA)
 
 #undef ADD_PROMOTION
 #undef ADD_PROMOTION_ALL
+
 }
 
 // not sure this is a good idea

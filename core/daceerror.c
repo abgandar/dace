@@ -46,8 +46,8 @@
  ********************************************************************************/
 
 /*! Return the current error XYY code.
-   \return The error code in XYY form
-   \sa daceerror.h
+    \return The error code in XYY form
+    \sa daceerror.h
 */
 unsigned int daceGetError()
 {
@@ -55,8 +55,8 @@ unsigned int daceGetError()
 }
 
 /*! Return the current error X code.
-   \return The X error code X
-   \sa daceerror.h
+    \return The X error code X
+    \sa daceerror.h
 */
 unsigned int daceGetErrorX()
 {
@@ -64,8 +64,8 @@ unsigned int daceGetErrorX()
 }
 
 /*! Return the current error YY code.
-   \return The YY error code
-   \sa daceerror.h
+    \return The YY error code
+    \sa daceerror.h
 */
 unsigned int daceGetErrorYY()
 {
@@ -73,7 +73,7 @@ unsigned int daceGetErrorYY()
 }
 
 /*! Return the function name of current generated error.
-   \return The function name originating the error.
+    \return The function name originating the error.
 */
 const char* daceGetErrorFunName()
 {
@@ -81,8 +81,8 @@ const char* daceGetErrorFunName()
 }
 
 /*! Return the current error message.
-   \return The current error message string
-   \sa daceerror.h
+    \return The current error message string
+    \sa daceerror.h
 */
 const char* daceGetErrorMSG()
 {

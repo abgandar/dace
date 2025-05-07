@@ -33,64 +33,64 @@
 #include "dace/compiledDA.h"
 #include "dace/DA.h"
 
-namespace DACE{
+namespace DACE {
 
 /********************************************************************************
 *     DA polynomial evaluation routines
 *********************************************************************************/
 template<class T> T DA::eval(const std::vector<T> &args) const{
 /*! Generic evaluation of the DA with a vector of arithmetic type T arguments.
-   \param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
-   \return The result of the evaluation
-   \throw DACE::DACEException
-   \note To be used only for single polynomial evaluation. For multiple
+    \param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
+    \return The result of the evaluation
+    \throw DACE::DACEException
+    \note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-   \note This function can be called with a braced initializer list. However, C++
+    \note This function can be called with a braced initializer list. However, C++
     is not able to derive the type of elements of an initializer list automatically.
     That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
     used with initializer lists.
-   \sa compiledDA::eval
+    \sa compiledDA::eval
  */
     return compiledDA(*this).eval(args)[0];
 }
 
 template<class T> T DA::eval(const T args[], const unsigned int length) const{
 /*! Generic evaluation of the DA with an array of arithmetic type T arguments.
-   \param[in] args array of arithmetic type T with which the DA vector is evaluated.
-   \param[in] length number of elements in the array args.
-   \return The result of the evaluation.
-   \throw DACE::DACEException
-   \note To be used only for single polynomial evaluation. For multiple
+    \param[in] args array of arithmetic type T with which the DA vector is evaluated
+    \param[in] length number of elements in the array args
+    \return The result of the evaluation
+    \throw DACE::DACEException
+    \note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-   \sa compiledDA::eval
+    \sa compiledDA::eval
  */
     return compiledDA(*this).eval(args,length)[0];
 }
 
 template<class T> T DA::evalScalar(const T &arg) const{
 /*! Generic evaluation of the DA with a single arithmetic type T argument.
-   \param[in] arg single variable of arithmetic type T of the first independent DA variable.
-   \return The result of the evaluation.
-   \note To be used only for single polynomial evaluation. For multiple
+    \param[in] arg single variable of arithmetic type T of the first independent DA variable
+    \return The result of the evaluation
+    \note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-   \sa compiledDA::evalScalar
+    \sa compiledDA::evalScalar
  */
     return compiledDA(*this).evalScalar(arg)[0];
 }
 
 template<class T> T eval(const DA &da, const std::vector<T> &args) {
 /*! Generic evaluation of the DA with a vector of arithmetic type T arguments.
-   \param[in] da a given DA object.
-   \param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated.
-   \return The result of the evaluation.
-   \throw DACE::DACEException
-   \note To be used only for single polynomial evaluation. For multiple
+    \param[in] da a DA object
+    \param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
+    \return The result of the evaluation
+    \throw DACE::DACEException
+    \note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-   \note This function can be called with a braced initializer list. However, C++
+    \note This function can be called with a braced initializer list. However, C++
     is not able to derive the type of elements of an initializer list automatically.
     That means eval() must be called explicitly as e.g. eval<double>(x, {1.0, 2.0, 3.0}) when
     used with initializer lists.
@@ -101,32 +101,33 @@ template<class T> T eval(const DA &da, const std::vector<T> &args) {
 
 template<class T> T eval(const DA &da, const T args[], const unsigned int length) {
 /*! Generic evaluation of the DA with an array of arithmetic type T arguments.
-   \param[in] da a given DA object.
-   \param[in] args array of arithmetic type T with which the DA vector is evaluated.
-   \param[in] length number of elements in the array args.
-   \return The result of the evaluation.
-   \throw DACE::DACEException
-   \note To be used only for single polynomial evaluation. For multiple
+    \param[in] da a DA object
+    \param[in] args array of arithmetic type T with which the DA vector is evaluated
+    \param[in] length number of elements in the array args
+    \return The result of the evaluation
+    \throw DACE::DACEException
+    \note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-   \sa compiledDA::eval
+    \sa compiledDA::eval
  */
     return da.eval(args,length);
 }
 
 template<class T> T evalScalar(const DA &da, const T &arg) {
 /*! Generic evaluation of the DA with a single arithmetic type T arguments.
-   \param[in] da a given DA object.
-   \param[in] arg single variable of arithmetic type T of the first independent DA variable.
-   \return The result of the evaluation.
-   \throw DACE::DACEException
-   \note To be used only for single polynomial evaluation. For multiple
+    \param[in] da a DA object
+    \param[in] arg single variable of arithmetic type T of the first independent DA variable
+    \return The result of the evaluation
+    \throw DACE::DACEException
+    \note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-   \sa compiledDA::evalScalar
+    \sa compiledDA::evalScalar
  */
     return da.evalScalar(arg);
 }
 
 }
+
 #endif /* DINAMICA_DA_T_H_ */

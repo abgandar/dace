@@ -39,7 +39,7 @@ namespace DACE{
 *********************************************************************************/
 compiledDA::compiledDA(const compiledDA &cda){
 /*! Create a copy of a compiledDA object.
-   \param[in] cda compiled DA object to be copied.
+    \param[in] cda compiled DA object to be copied
  */
     dim = cda.dim;
     terms = cda.terms;
@@ -51,8 +51,8 @@ compiledDA::compiledDA(const compiledDA &cda){
 
 compiledDA::compiledDA(const std::vector<DA> &da){
 /*! Create a vector of compiledDA objects from a vector of DA objects.
-   \param[in] da vector of DA objects.
-   \throw DACE::DACEException
+    \param[in] da vector of DA objects
+    \throw DACE::DACEException
  */
     dim = (unsigned int)da.size();
     if(dim<1) DACEException(16,04);
@@ -71,8 +71,8 @@ compiledDA::compiledDA(const std::vector<DA> &da){
 
 compiledDA::compiledDA(const DA &da){
 /*! Create a compiledDA object from a DA object.
-   \param[in] da vector.
-   \throw DACE::DACEException
+    \param[in] da vector
+    \throw DACE::DACEException
  */
     ac = new double[DA::getMaxMonomials()*3];
     dim = 1;
@@ -97,8 +97,8 @@ compiledDA::~compiledDA() throw(){
 compiledDA& compiledDA::operator=(const compiledDA &cda){
 /*! Copy the content of a given compiledDA object into the current
     compiledDA (the one the method belongs to).
-   \param[in] cda compiledDA vector to be copied.
-   \return The compiledDA object with the same content of the given compiledDA.
+    \param[in] cda compiledDA vector to be copied
+    \return The compiledDA object with the same content of the given compiledDA
  */
     if(this != &cda){
         dim = cda.dim;

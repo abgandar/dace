@@ -36,7 +36,7 @@
 // DACE classes required for interface definition
 #include "dace/PromotionTrait.h"
 
-namespace DACE{
+namespace DACE {
 
 // forward declarations
 class DA;
@@ -99,29 +99,29 @@ public:
     /***********************************************************************************
     *     Element access routine
     ************************************************************************************/
-    T& at(const unsigned int irow, const unsigned int icol);                //!< Reading/Writing single element
-    const T& at(const unsigned int irow, const unsigned int icol) const;    //!< Reading/Writing single element
+    T& at(const unsigned int irow, const unsigned int icol);
+    const T& at(const unsigned int irow, const unsigned int icol) const;
 
-    std::vector<T> getrow(const unsigned int irow) const;                   //!< Reading row
-    std::vector<T> getcol(const unsigned int icol) const;                   //!< Reading column
+    std::vector<T> getrow(const unsigned int irow) const;
+    std::vector<T> getcol(const unsigned int icol) const;
 
-    void setrow(const unsigned int irow, const std::vector<T> &obj);        //!< Set row equal to std::vector
-    void setcol(const unsigned int icol, const std::vector<T> &obj);        //!< Set column equal to std::vector
+    void setrow(const unsigned int irow, const std::vector<T> &obj);
+    void setcol(const unsigned int icol, const std::vector<T> &obj);
 
-    AlgebraicMatrix<T> submat(const unsigned int first_row, const unsigned int first_col, const unsigned int last_row, const unsigned int last_col) const;  //!< Extract submatrix
-    AlgebraicMatrix<T> submat(const unsigned int last_row, const unsigned int last_col) const;                                                              //!< Extract submatrix, starting from position (0,0)
+    AlgebraicMatrix<T> submat(const unsigned int first_row, const unsigned int first_col, const unsigned int last_row, const unsigned int last_col) const;
+    AlgebraicMatrix<T> submat(const unsigned int last_row, const unsigned int last_col) const;
 
     /***********************************************************************************
     *     Matrix operations
     ************************************************************************************/
-    AlgebraicMatrix<T> transpose() const;   //!< Matrix transpose
-    T det() const;                          //!< Matrix determinant
-    AlgebraicMatrix<T> inv() const;         //!< Matrix inverse XXX: name
+    AlgebraicMatrix<T> transpose() const;
+    T det() const;
+    AlgebraicMatrix<T> inv() const;
 
     /***********************************************************************************
     *     Coefficient access routines
     ************************************************************************************/
-    AlgebraicMatrix<double> cons() const;   //!< Return the costant part of a AlgebraicMatrix<T>
+    AlgebraicMatrix<double> cons() const;
 
 private:
     unsigned int _nrows;    //!< Number of rows of the matrix
@@ -135,10 +135,10 @@ private:
 /***********************************************************************************
  *     Operators
  ************************************************************************************/
-template<typename U> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<U> &obj);    //!< Overload output stream operator
-template<> DACE_API  std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA> &obj);             //!< DA specialization of output stream operator
-template<typename U> std::istream& operator>>(std::istream &in, AlgebraicMatrix<U> &obj);           //!< Overload input stream operator
-template<> DACE_API  std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj);                    //!< DA specialization of input stream operator
+template<typename U> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<U> &obj);
+template<> DACE_API  std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA> &obj);
+template<typename U> std::istream& operator>>(std::istream &in, AlgebraicMatrix<U> &obj);
+template<> DACE_API  std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj);
 
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2);
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const AlgebraicMatrix<U> &obj1, const V &obj2 );

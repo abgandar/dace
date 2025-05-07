@@ -34,31 +34,32 @@
 #include <string>
 #include <ostream>
 
-namespace DACE{
+namespace DACE {
 
 /*! DACEException class containing methods for error handling within the DACE C++ interface. */
 class DACE_API DACEException : public std::exception
 {
 private:
-    int m_x;                    //!< Severity code
+    int m_x;                    //!< Severity
     int m_yy;                   //!< Error code
     std::string msg;            //!< Error message
-    static int severity;        //!< Default severity code
-    static bool warning;        //!< Default warning status
-    void execute() const;       //!< Execute the exception
-    void updateMessage();       //!< Update the error message
+    static int severity;        //!< Default severity (errors equal or larger raise a DACEException)
+    static bool warning;        //!< Default warning status (all errors print a warning if true)
+    void execute() const;
+    void updateMessage();
 
 public:
-    DACEException();                                    //!< Default constructor
-    DACEException(const int exc_sv, const int exc_id);  //!< Constructor
-    ~DACEException() throw();                           //!< Destructor
+    DACEException();
+    DACEException(const int exc_sv, const int exc_id);
+    ~DACEException() throw();
 
-    const char* what() const throw();                   //!< Convert exception to string
-    static void setSeverity(const int n);               //!< Select the desired severity code
-    static void setWarning(const bool w);               //!< Select the warning status
+    const char* what() const throw();
+    static void setSeverity(const int n);
+    static void setWarning(const bool w);
 
-    friend DACE_API std::ostream& operator<< (std::ostream &out, const DACEException &ex); //!< Overload output stream operator
+    friend DACE_API std::ostream& operator<< (std::ostream &out, const DACEException &ex);
 };
 
 }
+
 #endif /* DINAMICA_DACEEXCEPTION_H_ */

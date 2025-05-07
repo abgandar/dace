@@ -80,8 +80,8 @@ typedef struct dmem {
 static dacemem DACEMem = { 0 };
 
 /*! Reallocate DACE internal memory.
-   \param[in] nvar Minimum number of variables the new memory allocation should support
-   \param[in] nmem Minimum amount of monomials the new memory allocation should support
+    \param[in] nvar Minimum number of variables the new memory allocation should support
+    \param[in] nmem Minimum amount of monomials the new memory allocation should support
 */
 void daceReallocateMemory(const unsigned int nvar, const unsigned int nmem)
 {
@@ -125,8 +125,8 @@ void daceReallocateMemory(const unsigned int nvar, const unsigned int nmem)
 }
 
 /*! Allocate storage for a DA vector with memory length len.
-   \param[out] inc Index of the newly created variable
-   \param[in] len Length of the variable to allocate. If len = 0 the length is
+    \param[out] inc Index of the newly created variable
+    \param[in] len Length of the variable to allocate. If len = 0 the length is
     automatically determined to be large enough for any DA vector (i.e. len=nmmax).
  */
 void daceAllocateDA(DACEDA *inc, const unsigned int len)
@@ -185,7 +185,7 @@ void daceAllocateDA(DACEDA *inc, const unsigned int len)
 }
 
 /*! Deallocate DA vector inc.
-   \param[in] inc Index of the DA variable to free
+    \param[in] inc Index of the DA variable to free
  */
 void daceFreeDA(DACEDA *inc)
 {
@@ -242,7 +242,7 @@ void daceFreeDA(DACEDA *inc)
 }
 
 /*! Invalidate DA vector inc without deallocating associated memory.
-   \param[in] inc Index of the DA variable to invalidate
+    \param[in] inc Index of the DA variable to invalidate
  */
 void daceInvalidateDA(DACEDA *inc)
 {
@@ -288,10 +288,10 @@ void daceMemoryDump()
 }
 
 /*! Extract internal information about a DA object.
-   \param[in] inc Pointer to the DA object to extract information from
-   \param[out] ipoc Pointer to an array of monomials allocated for this variable
-   \param[out] ilmc Pointer where to store the maximum number of monomials allocated in this DA object
-   \param[out] illc Pointer where to store the currently used length of this DA object
+    \param[in] inc Pointer to the DA object to extract information from
+    \param[out] ipoc Pointer to an array of monomials allocated for this variable
+    \param[out] ilmc Pointer where to store the maximum number of monomials allocated in this DA object
+    \param[out] illc Pointer where to store the currently used length of this DA object
 */
 void daceVariableInformation(const DACEDA *inc, monomial **ipoc, unsigned int *ilmc, unsigned int *illc)
 {
@@ -311,8 +311,8 @@ void daceVariableInformation(const DACEDA *inc, monomial **ipoc, unsigned int *i
 }
 
 /*! Set the length of a DACE DA object.
-   \param[in] inc The DACE DA object to operate on
-   \param[in] len The new length of the object
+    \param[in] inc The DACE DA object to operate on
+    \param[in] len The new length of the object
 */
 void daceSetLength(DACEDA *inc, const size_t len)
 {
@@ -326,9 +326,9 @@ void daceSetLength(DACEDA *inc, const size_t len)
 }
 
 /*! Compare if two DACE DA objects refer to the same underlying memory (i.e. are the same object).
-   \param[in] ina The first DACE DA object
-   \param[in] inb The second DACE DA object
-   \return returns true if the two objects are the same, false otherwise
+    \param[in] ina The first DACE DA object
+    \param[in] inb The second DACE DA object
+    \return returns true if the two objects are the same, false otherwise
 */
 bool daceIsSameObject(const DACEDA *ina, const DACEDA *inb)
 {
@@ -360,8 +360,8 @@ void daceFreeMemory()
 
 
 /*! Allocate storage for a DA vector with memory length len.
-   \param[out] inc Index of the newly created variable
-   \param[in] len Length of the variable to allocate. If len = 0 the length is
+    \param[out] inc Index of the newly created variable
+    \param[in] len Length of the variable to allocate. If len = 0 the length is
     automatically determined to be large enough for any DA vector (i.e. len=nmmax).
  */
 void daceAllocateDA(DACEDA *inc, const unsigned int len)
@@ -385,7 +385,7 @@ void daceAllocateDA(DACEDA *inc, const unsigned int len)
 }
 
 /*! Deallocate DA vector inc.
-   \param[in] inc Index of the DA variable to free
+    \param[in] inc Index of the DA variable to free
  */
 void daceFreeDA(DACEDA *inc)
 {
@@ -395,7 +395,7 @@ void daceFreeDA(DACEDA *inc)
 }
 
 /*! Invalidate DA vector inc without deallocating associated memory.
-   \param[in] inc Index of the DA variable to invalidate
+    \param[in] inc Index of the DA variable to invalidate
  */
 void daceInvalidateDA(DACEDA *inc)
 {
@@ -412,10 +412,10 @@ void daceMemoryDump()
 }
 
 /*! Extract internal information about a DA object.
-   \param[in] inc Pointer to the DA object to extract information from
-   \param[out] ipoc Pointer to an array of monomials allocated for this variable
-   \param[out] ilmc Pointer where to store the maximum number of monomials allocated in this DA object
-   \param[out] illc Pointer where to store the currently used length of this DA object
+    \param[in] inc Pointer to the DA object to extract information from
+    \param[out] ipoc Pointer to an array of monomials allocated for this variable
+    \param[out] ilmc Pointer where to store the maximum number of monomials allocated in this DA object
+    \param[out] illc Pointer where to store the currently used length of this DA object
 */
 void daceVariableInformation(const DACEDA *inc, monomial **ipoc, unsigned int *ilmc, unsigned int *illc)
 {
@@ -431,8 +431,8 @@ void daceVariableInformation(const DACEDA *inc, monomial **ipoc, unsigned int *i
 }
 
 /*! Set the length of a DACE DA object.
-   \param[in] inc The DACE DA object to operate on
-   \param[in] len The new length of the object
+    \param[in] inc The DACE DA object to operate on
+    \param[in] len The new length of the object
 */
 void daceSetLength(DACEDA *inc, const size_t len)
 {
@@ -446,9 +446,9 @@ void daceSetLength(DACEDA *inc, const size_t len)
 }
 
 /*! Compare if two DACE DA objects refer to the same underlying memory (i.e. are the same object).
-   \param[in] ina The first DACE DA object
-   \param[in] inb The second DACE DA object
-   \return returns true if the two objects are the same, false otherwise
+    \param[in] ina The first DACE DA object
+    \param[in] inb The second DACE DA object
+    \return returns true if the two objects are the same, false otherwise
 */
 bool daceIsSameObject(const DACEDA *ina, const DACEDA *inb)
 {
