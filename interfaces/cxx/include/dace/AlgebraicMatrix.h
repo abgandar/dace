@@ -26,6 +26,14 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief Experimental AlgebraicMatrix class.
+
+    This header file contains the AlgebraicMatrix class. This is experimental and
+    not supported by default. It may have bugs or not work as expected.
+*/
+
 #ifndef DINAMICA_DAMATRIX_H_
 #define DINAMICA_DAMATRIX_H_
 
@@ -42,7 +50,7 @@ namespace DACE {
 class DA;
 template<typename T> class AlgebraicVector;
 
-/*! Class to handle matrices and their operations. */
+/*! Matrix of any algebraic type. */
 template <class T> class AlgebraicMatrix
 {
 public:
@@ -126,7 +134,7 @@ public:
 private:
     unsigned int _nrows;    //!< Number of rows of the matrix
     unsigned int _ncols;    //!< Number of columns of the matrix
-    std::vector<T> _data;   //!< Elements container
+    std::vector<T> _data;   //!< Container for storing the elements linearly
 
     static unsigned int pivot(unsigned int& k, const unsigned int ii, const AlgebraicMatrix<T>& A, std::vector<unsigned int>& P, std::vector<unsigned int>& R, std::vector<unsigned int>& C1, std::vector<unsigned int >& C2, T& det);
     static void eliminate(const unsigned int k, AlgebraicMatrix<T>& A, std::vector<unsigned int>& R);

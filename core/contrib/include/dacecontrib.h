@@ -26,8 +26,11 @@
  *      Author: Alexander Wittig
  */
 
-/*
-    This file contains all contributed routines to the DACE core.
+/*! \file
+
+    \brief Contributed functions to DACE core.
+
+    This file contains all externally contributed routines used in the DACE core.
     It is never included publicly by DACE users or high level interfaces.
 */
 

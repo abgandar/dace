@@ -26,6 +26,13 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief Simple storage class for a real Interval
+
+    This class is trivial and just used to return a pair of an upper and lower bound for convenience.
+*/
+
 #ifndef DINAMICA_INTERVAL_H_
 #define DINAMICA_INTERVAL_H_
 

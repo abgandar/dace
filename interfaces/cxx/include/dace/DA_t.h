@@ -26,6 +26,13 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief Templated function definitions for main DA class.
+
+    This header file contains the definition of templated functions in the DA class.
+*/
+
 #ifndef DINAMICA_DA_T_H_
 #define DINAMICA_DA_T_H_
 
@@ -94,7 +101,7 @@ template<class T> T eval(const DA &da, const std::vector<T> &args) {
     is not able to derive the type of elements of an initializer list automatically.
     That means eval() must be called explicitly as e.g. eval<double>(x, {1.0, 2.0, 3.0}) when
     used with initializer lists.
-   \sa compiledDA
+    \sa compiledDA
  */
     return da.eval(args);
 }

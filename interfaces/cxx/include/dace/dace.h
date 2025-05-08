@@ -26,6 +26,13 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief Main C++ header file.
+
+    This header file just includes all other DACE C++ headers in the right order.
+*/
+
 #ifndef DINAMICA_DACE_H_
 #define DINAMICA_DACE_H_
 

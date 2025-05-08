@@ -26,6 +26,14 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief DA representation for efficient repeated evaluation.
+
+    This header file contains the compiledDA class for a representation of one
+    or more DA objects that is prepared ("compiled") for efficient repeated evaluation.
+*/
+
 #ifndef DINAMICA_COMPILEDDA_H_
 #define DINAMICA_COMPILEDDA_H_
 
@@ -38,7 +46,8 @@ namespace DACE {
 // forward declaration
 class DA;
 
-/*! compiledDA class representing a precomputed representation of a polynomial for efficient evaluation. */
+/*! Representation of a precomputed DA polynomial for efficient evaluation.
+ */
 class DACE_API compiledDA
 {
 private:

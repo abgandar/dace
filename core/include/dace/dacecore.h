@@ -26,13 +26,17 @@
  *      Author: Politecnico di Milano
  */
 
-/*
-    User interface header for DACE core library.
-    Includes all relevant headers with public interfaces to the DACE core.
-*/
 /** \addtogroup DACE Core
  *  @{
  */
+
+/*! \file
+
+    \brief Main DACE core header.
+
+    This file contains all routines in the public interface to the DACE core.
+    DACE core users or high level interfaces should only include this file.
+*/
 
 #ifndef DINAMICA_DACECORE_H_
 #define DINAMICA_DACECORE_H_

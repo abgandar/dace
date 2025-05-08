@@ -26,6 +26,18 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief Main DA class and related utilities.
+
+    This header file contains the DA class representing a single DA polynomial.
+    It implements an object oriented interface to access all math function, as
+    well as non-member functions for classical functional math notation.
+    It also contains the storedDA class for serializing a DA object into an
+    opaque binary representation that can be stored, transmitted, and converted
+    back into a DA object without loss of precision.
+*/
+
 #ifndef DINAMICA_DA_H_
 #define DINAMICA_DA_H_
 
@@ -53,7 +65,8 @@ class Interval;
 class DA;
 template<typename T> class AlgebraicVector;
 
-/*! Basic DA class representing a single polynomial. */
+/*! Basic DA class representing a single polynomial.
+ */
 class DACE_API DA
 {
     friend class compiledDA;
@@ -338,24 +351,31 @@ DACE_API DA translateVariable(const DA &da, const unsigned int var = 0, const do
 DACE_API std::string toString(const DA &da);
 DACE_API void write(const DA &da, std::ostream &os);
 
+/*! Namespace containing an implementation of abs(DA) using only the absolute constant part.
+ */
 namespace abs_cons {
     double abs(const DA &da);
 }
 
+/*! Namespace containing an implementation of abs(DA) using the largest absolute coefficient.
+ */
 namespace abs_max {
     double abs(const DA &da);
 }
 
+/*! Namespace containing an implementation of abs(DA) using the sum of all absolute coefficients.
+ */
 namespace abs_sum {
     double abs(const DA &da);
 }
 
 
-/*! Stored DA class representing a DA vector in a binary, setup independent format. */
+/*! Stored DA class representing a DA vector in a binary, setup independent format.
+ */
 class DACE_API storedDA : std::vector<char>
 {
 private:
-    static const unsigned int headerSize;
+    static const unsigned int headerSize;           //!< size of the binary DA header (from DACE core)
 
 public:
     storedDA(const DA &da);

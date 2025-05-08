@@ -26,6 +26,16 @@
  *      Author: University of Southampton
  */
 
+/*! \file
+
+     \brief Main C++ header file for static linking.
+
+     This header file just includes all other DACE C++ headers in the right order.
+     It is identical to include/dace/dace.h except on Windows where it explicitly
+     sets the linkage of all DACE functions to local. Use this when linking with
+     the static version of the DACE library (instead of the DLL).
+*/
+
 #ifndef DINAMICA_DACE_S_H_
 #define DINAMICA_DACE_S_H_
 

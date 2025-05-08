@@ -26,6 +26,29 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief Formatters allow printing of DAs in a variety of formats other than the standard output
+
+    The standard output format of DA via the C++ iostream interface provides a human-readable text
+    representation of a DA vector. In some circumstances it is preferable to print a DA vector in
+    a different format, e.g. to output the polynomial in a particular programming language or in
+    LaTeX format.
+
+    The abstract DAFormatter class provides an abstract interface for this functionality.
+    The DASimpleFormatter class is an implementation of a simple formatter that can output DAs
+    in a variety of pre-defined or user-supplied formats including Python, C, Matlab, Fortran,
+    and LaTeX code.
+
+    Example:
+    \code
+        DASimpleFormatter sf(DASimpleFormatter::LATEX);
+        DA x = sin(DA(1));
+        std::string res = sf.format(x);
+        // res now is "+1 \cdot x_{1} -0.1666666666666667 \cdot x_{1}^{3} +0.008333333333333333 \cdot x_{1}^{5}"
+    \endcode
+*/
+
 #ifndef DINAMICA_DAFORMATTER_H_
 #define DINAMICA_DAFORMATTER_H_
 
@@ -42,21 +65,47 @@ class DA;
 class DACE_API DAFormatter
 {
 public:
+    /*! Format a single DA and return a string representation.
+        \param da DA object
+        \return formatted string representation
+     */
     virtual std::string format(const DA &da) = 0;
+    /*! Format a vector of DAs and return a string representation.
+        Usually this just formats each DA one after the other.
+        \param da vector of DA objects
+        \return formatted string representation
+     */
     virtual std::string format(const std::vector<DA> &da) = 0;
 };
 
-/*! Class containing the elements of a simple format as used by the DASimpleFormatter.
+/*! Structure containing the elements of a simple format as used by the DASimpleFormatter.
+
+    Each monomial consisting of coefficient C and exponents e_1, e_2, ... is formatted
+    by outputting these values:
+
+        pos/neg << abs(C)
+
+    followed by this for each exponent e_i
+
+        mul << pre_pow << var << pre_var << i+first_var << post_var << pow << e_i+first_pow << post_pow
+
+    or if shortening is enabled and e_i == 1
+
+        mul << var << pre_var << i+first_var << post_var
+
     \sa DASimpleFormatter
 */
 struct DASimpleFormat {
     std::string pos, neg, mul, pre_pow, var, pre_var, post_var, pow, post_pow, linebreak;
-    int first_var, first_pow;
-    unsigned int monperline;
-    bool shorten;
+    int first_var,              ///< number of the first independent DA variable (e.g. start counting at 0 or 1)
+        first_pow;              ///< offset added to the power of an independent DA variable
+    unsigned int monperline;    ///< number of monomials formatted per line before a line break is output
+    bool shorten;               ///< if true, exponents equal to one are output using the short format
 };
 
-/*! DASimpleFormatter class which formats a DA vector using simple rules to output code suitable for various programming languages. */
+/*! DASimpleFormatter class which formats a DA vector using simple rules to output code
+    suitable for various programming languages.
+ */
 class DACE_API DASimpleFormatter : public DAFormatter
 {
 public:
@@ -71,10 +120,10 @@ public:
     static const DASimpleFormat PYTHON_POW;
     static const DASimpleFormat LATEX;
 
-    DASimpleFormat sf;
+    DASimpleFormat sf;                                              //!< Format the instance uses
 
-    DASimpleFormatter() : sf(C) {};
-    DASimpleFormatter(const DASimpleFormat& isf) : sf(isf) {};
+    DASimpleFormatter() : sf(C) {};                                 //!< Default constructor formats as C code
+    DASimpleFormatter(const DASimpleFormat &isf) : sf(isf) {};      //!< Create formatter using the provided format
 
     std::string format(const DA &da);
     std::string format(const std::vector<DA> &da);

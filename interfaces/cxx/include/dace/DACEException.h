@@ -26,6 +26,15 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief DACE Exceptions are thrown when a DA operations fails within the C++ interface.
+
+    The DACEException class contains methods for error handling within the DACE C++ interface.
+    Whenever an error occurs during a DA operation either nothing happens, a warning is printed,
+    or this exception is thrown. What happens depends on the settings in this class.
+*/
+
 #ifndef DINAMICA_DACEEXCEPTION_H_
 #define DINAMICA_DACEEXCEPTION_H_
 
@@ -36,7 +45,8 @@
 
 namespace DACE {
 
-/*! DACEException class containing methods for error handling within the DACE C++ interface. */
+/*! DACEException class containing methods for error handling within the DACE C++ interface.
+ */
 class DACE_API DACEException : public std::exception
 {
 private:

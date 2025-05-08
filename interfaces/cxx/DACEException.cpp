@@ -44,7 +44,9 @@ namespace DACE {
     *     Constructors & Destructors
     *********************************************************************************/
     DACEException::DACEException() {
-    /*! Create a DACEException object from an existing severity and error codes.
+    /*! Create a DACEException object from current error codes set in DACE core
+        and clear DACE core errors.
+        Execute the appropriate action for the exception based on current settings.
      */
         //m_x = FC_GLOBAL(dacegetxerr,DACEGETXERR)();
         //m_yy = FC_GLOBAL(dacegetyyerr,DACEGETYYERR)();
@@ -57,7 +59,8 @@ namespace DACE {
     }
 
     DACEException::DACEException(const int exc_sv, const int exc_id) {
-    /*! Create a DACEException object from given severity and ID codes.
+    /*! Create a DACEException object with given severity and ID codes.
+        Execute the appropriate action for the exception based on current settings.
         \param exc_sv severity code of the error
         \param exc_id ID code of the error
      */
@@ -178,15 +181,16 @@ namespace DACE {
     }
 
     void DACEException::execute() const {
-    /*! Execute this exception, i.e. throw or print warning based on current user settings.
+    /*! Execute this exception, i.e. throw or print warning based on current settings.
         \throw DACE::DACEException
      */
-        const int sev = m_x%11; // modulo 11 to handle both DACE and C++ interface severity codes
+        const int sev = m_x%11; // modulo 11 to handle both DACE core and C++ interface severity codes
 
-        if(sev>=severity) {
-            throw *this;}
-        else if(warning) {
-            std::cerr << "Warning: " << msg << std::endl;}
+        if(sev >= severity) {
+            throw *this;
+        } else if(warning) {
+            std::cerr << "Warning: " << msg << std::endl;
+        }
     }
 
     /********************************************************************************
@@ -203,13 +207,13 @@ namespace DACE {
     *     Static member functions
     *********************************************************************************/
     void DACEException::setSeverity(const int n) {
-    /*! Set a value for the severity level. Errors with severity code greater
-        or equal to this value will generate an exception object.
+    /*! Set severity level. Errors with severity code greater or equal to this
+        value will throw an exception.
         Severity levels are:\n
         0 = Warning:   Informative, no action required\n
         1 = Warning:   Serius, possible wrong implementation\n
         6 = Error:     Recoverable, assumptions have been made\n
-        9 = Error:     Unrecoverable, new call to init is required to
+        9 = Error:     Unrecoverable, new call to DA::init is required to
                        reinitialize DACE, interface objects are no longer valid\n
         10 = Critical: Crash in the DACE, just printing as much as possible
                        and dying.
@@ -219,10 +223,8 @@ namespace DACE {
     }
 
     void DACEException::setWarning(const bool w){
-    /*! Set the current status for visualization of warnings.
-        \param w status of warnings\n
-        true: turn on printing of warnings\n
-        false: turn off printing of warnings
+    /*! Set the current mode for printing of warnings.
+        \param w warning status: print warnings if true
      */
         warning = w;
     }

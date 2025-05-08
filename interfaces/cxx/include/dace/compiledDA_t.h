@@ -26,6 +26,13 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief Templated function definitions for compiledDA class.
+
+    This header file contains the definition of templated functions in the compiledDA class.
+*/
+
 #ifndef DINAMICA_COMPILEDDA_T_H_
 #define DINAMICA_COMPILEDDA_T_H_
 
@@ -37,7 +44,7 @@ namespace DACE {
 /********************************************************************************
 *     compiledDA evaluation routines
 *********************************************************************************/
-template<class V> V compiledDA::eval(const V &args) const{
+template<class V> V compiledDA::eval(const V &args) const {
 /*! Evaluate the compiled polynomial with a vector of any arithmetic type
     (such as DA or double) and return vector of results.
     \param[in] args the values of the independent DA variables to evaluate
@@ -54,7 +61,7 @@ template<class V> V compiledDA::eval(const V &args) const{
     return res;
 }
 
-template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T> l) const{
+template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T> l) const {
 /*! Evaluate the compiled polynomial with a braced initializer list of any arithmetic type
     (such as DA or double) and return vector of results.
     \param[in] l the values of the independent DA variables to evaluate
@@ -73,7 +80,7 @@ template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T>
     return res;
 }
 
-template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned int length) const{
+template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned int length) const {
 /*! Evaluate the compiled polynomial with an array of any arithmetic type
     (such as DA or double) and return vector of results.
     \param[in] args array of the values of the independent DA variables to
@@ -91,7 +98,7 @@ template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned
     return res;
 }
 
-template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const{
+template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
 /*! Evaluate the compiled polynomial with a single argument of any
     arithmetic type (such as DA or double) and return vector of results.
     \param[in] arg The value of the first independent DA variable to evaluate
@@ -108,14 +115,14 @@ template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const{
 }
 
 /* Actual evaluation with a std::vector<T> of algebraic type T.
-   T must support at least:
+    T must support at least:
      - default constructor    T::T()
      - assignment             T::operator=(const T& t)
      - assignment & addition  T::operator+=(const T& t)
      - double multiplication  T::operator*(const double d)
      - double addition        T::operator+(const double d)
  */
-template<class T> void compiledDA::eval(const std::vector<T> &args, std::vector<T> &res) const{
+template<class T> void compiledDA::eval(const std::vector<T> &args, std::vector<T> &res) const {
     const unsigned int narg = args.size();
     unsigned int jlskip = ord+1;
     double *p = ac+2;

@@ -26,10 +26,7 @@
  *      Author: Alexander Wittig
  */
 
-#ifndef DINAMICA_COMPAT_BOOST_ODEINT_H_
-#define DINAMICA_COMPAT_BOOST_ODEINT_H_
-
-/*! \file include/dace/compat_boost_odeint.h
+/*! \file
 
     \brief Boost library boost::numeric::odeint compatibility shim
 
@@ -66,7 +63,10 @@
         x += 0.01 * x.identity(3);
         integrate_adaptive( make_controlled( 1e-8, 1e-8, runge_kutta_dopri5<state_type>() ), RHS, x, 0.0, 10.0, 0.1 );
     \endcode
- */
+*/
+
+#ifndef DINAMICA_COMPAT_BOOST_ODEINT_H_
+#define DINAMICA_COMPAT_BOOST_ODEINT_H_
 
 // range_algebra helpers (default)
 

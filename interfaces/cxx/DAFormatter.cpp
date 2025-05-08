@@ -37,20 +37,31 @@
 
 namespace DACE {
 
+/// C code formatter. Expects an array p[var][n] containing the n-th power of independent variable var.
 const DASimpleFormat DASimpleFormatter::C =           { "+",  "-",  "*",        "",     "p", "[",  "",  "][",  "]", " \\\n\t",     0, -1, 20, false };
+/// C code formatter. Uses the pow function repeatedly and only expects an array x[var] containing the value of independent variable var.
 const DASimpleFormat DASimpleFormatter::C_POW =       { "+",  "-",  "*",        "pow(", "x", "[",  "]", ",",   ")", " \\\n\t",     0,  0, 20, true  };
+/// Fortran code formatter. Expects an array p(var,n) containing the n-th power of independent variable var.
 const DASimpleFormat DASimpleFormatter::FORTRAN =     { "+",  "-",  "*",        "",     "p", "(",  "",  ",",   ")", " &\n     &",  1,  0, 20, false };
+/// Fortran code formatter. Uses ** repeatedly and only expects an array x(var) containing the value of independent variable var.
 const DASimpleFormat DASimpleFormatter::FORTRAN_POW = { "+",  "-",  "*",        "",     "x", "(",  ")", "**(", ")", " &\n     &",  1,  0, 20, true  };
+/// Matlab code formatter. Expects an array p(var,n) containing the n-th power of independent variable var.
 const DASimpleFormat DASimpleFormatter::MATLAB =      { "+",  "-",  ".*",       "",     "p", "(",  "",  ",",   ")", " ...\n\t",    1,  0, 20, false };
+/// Matlab code formatter. Uses ^ repeatedly and only expects an array x(var) containing the value of independent variable var.
 const DASimpleFormat DASimpleFormatter::MATLAB_POW =  { "+",  "-",  ".*",       "",     "x", "(",  ")", ".^(", ")", " ...\n\t",    1,  0, 20, true  };
+/// Python code formatter. Expects a list p[var][n] containing the n-th power of independent variable var.
 const DASimpleFormat DASimpleFormatter::PYTHON =      { "+",  "-",  "*",        "",     "p", "[",  "",  "][",  "]", " \\\n\t",     0, -1, 20, false };
+/// Python code formatter. Expects a numpy array p[var,n] containing the n-th power of independent variable var.
 const DASimpleFormat DASimpleFormatter::PYTHON_NP =   { "+",  "-",  "*",        "",     "p", "[",  "",  ",",   "]", " \\\n\t",     0, -1, 20, false };
+/// Python code formatter. Uses ** repeatedly and only expects a list x[var] containing the value of independent variable var.
 const DASimpleFormat DASimpleFormatter::PYTHON_POW =  { "+",  "-",  "*",        "",     "x", "[",  "]", "**(", ")", " \\\n\t",     0,  0, 20, true  };
+/// LaTeX formatter. Outputs the polynomial as a nicely formatted equation.
 const DASimpleFormat DASimpleFormatter::LATEX =       { " +", " -", " \\cdot ", "",     "x", "_{", "}", "^{",  "}", " \n\t",       1,  0, 20, true  };
 
 std::string DASimpleFormatter::format(const DA &da){
-/*! Format and print a DA.
-    \param[in] da DA to be printed
+/*! Format a single DA and return a string representation.
+    \param da DA object
+    \return formatted string representation
  */
     const std::vector<Monomial> monomials = da.getMonomials();
     const size_t size = monomials.size();
@@ -77,8 +88,10 @@ std::string DASimpleFormatter::format(const DA &da){
 }
 
 std::string DASimpleFormatter::format(const std::vector<DA> &da){
-/*! Format and print a vector of DA.
-    \param[in] da vector of DA to be printed
+/*! Format a vector of DAs and return a string representation.
+    This just formats each DA in the vector one after the other.
+    \param da vector of DA objects
+    \return formatted string representation
  */
     std::ostringstream res;
 

@@ -26,13 +26,18 @@
  *      Author: Politecnico di Milano
  */
 
-/*
-    This file contains all routines in the public interface to the DACE core.
-    DACE core users or high level interfaces should only include this file.
-*/
 /** \addtogroup DACE Core
  *  @{
  */
+
+/*! \file
+
+    \brief DACE core public functions and structures.
+
+    This file contains all routines in the public interface to the DACE core.
+    DACE core users or high level interfaces should include this file indirectly
+    via the include/dace/dacecore.h header.
+*/
 
 #ifndef DINAMICA_DACEBASE_H_
 #define DINAMICA_DACEBASE_H_
@@ -41,7 +46,7 @@
 
 #include "dace/config.h"
 
-// Maximum line length of the DACE string I/O interface
+/// Maximum line length of the DACE string I/O interface
 #define DACE_STRLEN (140)
 
 #ifdef __cplusplus
@@ -63,16 +68,16 @@
 #define DACE_PANIC     10
 
 #if DACE_MEMORY_MODEL == DACE_MEMORY_HYBRID || DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
-    // Type of a DACE DA object
+    /// Type of a DACE core DA object
     typedef int DACEDA;
 #elif DACE_MEMORY_MODEL == DACE_MEMORY_DYNAMIC
-    // A DACE variable
+    /// A DACE core variable containing a DA
     typedef struct dvariable {
         unsigned int len, max;
         struct dmonomial *mem;
     } variable;
 
-    // Type of a DACE DA object
+    /// Type of a DACE core DA object
     typedef variable DACEDA;
 #else
     #error Invalid DACE memory model selected!
@@ -242,9 +247,13 @@ DACE_API void daceImportBlob(const void *blob, DACEDA REF(inc));
 *     DACE miscellaneous routines
 *********************************************************************************/
 DACE_API double daceRandom();
+
 /// @endcond
+
 #ifdef __cplusplus
     }
 #endif /* _cplusplus */
+
 /** @}*/
+
 #endif /* DINAMICA_DACEBASE_H_ */

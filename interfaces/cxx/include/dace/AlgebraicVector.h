@@ -26,6 +26,15 @@
  *      Author: Dinamica Srl
  */
 
+/*! \file
+
+    \brief Main AlgebraicVector class.
+
+    This header file contains the AlgebraicVector class to simplify math using vectors
+    of any algebraic type, including DA and double. It derives from std::vector, so
+    can be used in all library interfaces where a std::vector is accepted.
+*/
+
 #ifndef DINAMICA_ALGEBRAICVECTOR_H_
 #define DINAMICA_ALGEBRAICVECTOR_H_
 
