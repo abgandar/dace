@@ -518,4 +518,5 @@ void daceImportBlob(const void *blob, DACEDA *inc)
     dacefree(p);
 #endif
 }
+
 /** @}*/

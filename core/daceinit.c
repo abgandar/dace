@@ -342,4 +342,5 @@ unsigned int daceSetTruncationOrder(const unsigned int fnot)
     DACECom_t.nocut = umax(umin(fnot, DACECom.nomax), 1);
     return old_nocut;
 }
+
 /** @}*/

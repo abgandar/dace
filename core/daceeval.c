@@ -482,4 +482,5 @@ void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], un
     dacefree(stack);
 #endif
 }
+
 /** @}*/

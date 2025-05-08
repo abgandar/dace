@@ -326,4 +326,5 @@ void daceGetBounds(const DACEDA *ina, double *alo, double *aup)
     dacefree(jj);
 #endif
 }
+
 /** @}*/

@@ -33,7 +33,7 @@
 #include "dace/config.h"
 #include "dace/MathExtension.h"
 
-namespace DACE{
+namespace DACE {
 
 double absolute(const double x){
 /*! Absolute value.

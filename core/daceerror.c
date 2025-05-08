@@ -165,4 +165,5 @@ void daceSetError(const char *c, const unsigned int ix, const unsigned int iyy)
         }
     }
 }
+
 /** @}*/

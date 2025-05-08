@@ -275,7 +275,7 @@ template<> AlgebraicVector<DA> AlgebraicVector<DA>::invert() const {
 *********************************************************************************/
 template<> AlgebraicVector<DA> AlgebraicVector<DA>::identity(const size_t n) {
 /*! Return the DA identity of dimension n.
-    \param[in] n The dimendion of the identity
+    \param[in] n The dimension
     \return AlgebraicVector<DA> containing the DA identity in n dimensions
     \note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler

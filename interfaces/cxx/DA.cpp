@@ -42,7 +42,7 @@
 #include "dace/AlgebraicVector.h"
 #include "dace/AlgebraicVector_t.h"
 
-namespace DACE{
+namespace DACE {
 
 /********************************************************************************
 *     DACE static class variables
@@ -242,7 +242,7 @@ void DA::popTO() {
 /********************************************************************************
 *     Constructors & Destructors
 *********************************************************************************/
-DA::DA(){
+DA::DA() {
 /*! Create an empty DA object representing the constant zero function.
     \throw DACE::DACEException
  */
@@ -250,7 +250,7 @@ DA::DA(){
     if(daceGetError()) DACEException();
 }
 
-DA::DA(const DA &da){
+DA::DA(const DA &da) {
 /*! Create a copy of a DA object.
     \param[in] da object to be copied.
     \throw DACE::DACEException
@@ -260,7 +260,7 @@ DA::DA(const DA &da){
     if(daceGetError()) DACEException();
 }
 
-DA::DA(DA &&da){
+DA::DA(DA &&da) {
 /*! Move all resources from a DA object to us without copying.
     \param[in] da object to be moved.
     \throw DACE::DACEException
@@ -270,7 +270,7 @@ DA::DA(DA &&da){
     if(daceGetError()) DACEException();
 }
 
-DA::DA(const double c){
+DA::DA(const double c) {
 /*! Create a DA object with the constant part equal to c.
     \note This routine MUST be called with a floating point type as the first argument, e.g. DA(1.0). Expressions involving integer data types such as DA(1) will be interpreted as the first independent DA variable instead of the constant DA object of the given value.
     \param[in] c A double value set as constant part of the DA object.
@@ -281,7 +281,7 @@ DA::DA(const double c){
     if(daceGetError()) DACEException();
 }
 
-DA::DA(const unsigned int i, const double c){
+DA::DA(const unsigned int i, const double c) {
 /*! Create a DA object as c times the independent variable number i.
     \note When used in its one argument form (with the default argument 1.0 for c), this routine MUST be called with an integer type as the first argument, e.g. DA(1). Expressions involving floating point data types such as DA(1.0) will be interpreted as the constant DA of the given value instead of the first independent variable.
     \param[in] i independent variable number (i=0 means the constant part).
@@ -293,7 +293,7 @@ DA::DA(const unsigned int i, const double c){
     if(daceGetError()) DACEException();
 }
 
-DA::DA(const int i, const double c){
+DA::DA(const int i, const double c) {
 /*! Create a DA object as c times the independent variable number i.
     \note When used in its one argument form (with the default argument 1.0 for c), this routine MUST be called with an integer type as the first argument, e.g. DA(1). Expressions involving floating point data types such as DA(1.0) will be interpreted as the constant DA object of the given value instead of the first independent DA variable.
     \param[in] i independent variable number (i=0 means the constant part).
@@ -305,7 +305,7 @@ DA::DA(const int i, const double c){
     if(daceGetError()) DACEException();
 }
 
-DA::~DA() throw(){
+DA::~DA() throw() {
 /*! Destroy a DA object and free the associated object in the DACE core.
  */
     daceFreeDA(m_index);
@@ -318,7 +318,7 @@ DA::~DA() throw(){
 *     Coefficient information, access, and extraction routines
 *********************************************************************************/
 
-unsigned int DA::size() const{
+unsigned int DA::size() const {
 /*! Return the number of non-zero coefficients of a DA object.
     \return The number of non-zero coefficients stored in the DA object.
     \throw DACE::DACEException
@@ -329,7 +329,7 @@ unsigned int DA::size() const{
     return res;
 }
 
-unsigned int DA::order() const{
+unsigned int DA::order() const {
 /*! Return the order of a DA object.
     \return Lowest order of the non-zero monomials or UINT_MAX if it is the zero DA.
     \throw DACE::DACEException
@@ -340,7 +340,7 @@ unsigned int DA::order() const{
     return res;
 }
 
-int DA::degree() const{
+int DA::degree() const {
 /*! Return the degree of a DA object.
     \return Highest order of the non-zero monomials or INT_MIN if it is the zero DA.
     \throw DACE::DACEException
@@ -351,7 +351,7 @@ int DA::degree() const{
     return res;
 }
 
-int DA::isnan() const{
+int DA::isnan() const {
 /*! Check if a DA object has any NAN coefficients.
     \return True is any coefficients of the DA object are NAN.
     \throw DACE::DACEException
@@ -362,7 +362,7 @@ int DA::isnan() const{
     return temp;
 }
 
-int DA::isinf() const{
+int DA::isinf() const {
 /*! Check if a DA object has any INF coefficients.
     \return True is any coefficients of the DA object are INF.
     \throw DACE::DACEException
@@ -373,7 +373,7 @@ int DA::isinf() const{
     return temp;
 }
 
-double DA::cons() const{
+double DA::cons() const {
 /*! Return the constant part of a DA object.
     \return A double corresponding to the constant part of the DA object.
     \throw DACE::DACEException
@@ -384,7 +384,7 @@ double DA::cons() const{
     return temp;
 }
 
-AlgebraicVector<double> DA::linear() const{
+AlgebraicVector<double> DA::linear() const {
 /*! Return the linear part of a DA object.
     \return An AlgebraicVector<dobule> containing the linear coefficients of
     each independent DA variable in the DA object.
@@ -460,7 +460,7 @@ void DA::setCoefficient(const std::vector<unsigned int> &jj, const double coeff)
     if(daceGetError()) DACEException();
 }
 
-Monomial DA::getMonomial(const unsigned int npos) const{
+Monomial DA::getMonomial(const unsigned int npos) const {
 /*! Return the Monomial corresponding to the non-zero coefficient at the given
     position in the DA object (monomials use one based indexing!).
     \param[in] npos position within the DA object. The ordering of the Monomials
@@ -498,7 +498,7 @@ void DA::getMonomial(const unsigned int npos, Monomial &m) const {
     if(daceGetError()) DACEException();
 }
 
-std::vector<Monomial> DA::getMonomials() const{
+std::vector<Monomial> DA::getMonomials() const {
 /*! Return a vector of all Monomials in the DA object (differently from
     getMonomial() where only a single Monomial, corresponding to a specified
     position in the DA object, is returned).
@@ -541,7 +541,7 @@ std::vector<Monomial> DA::getMonomials() const{
 /********************************************************************************
 *     Assignments
 *********************************************************************************/
-DA& DA::operator=(DA &&da){
+DA& DA::operator=(DA &&da) {
 /*! Move all resources from a DA object to us without copying.
     \param[in] da object to be moved.
     \throw DACE::DACEException
@@ -552,7 +552,7 @@ DA& DA::operator=(DA &&da){
     return *this;
 }
 
-DA& DA::operator=(const DA &da){
+DA& DA::operator=(const DA &da) {
 /*! Copy the content of a given DA object da into the DA object.
     \param[in] da DA object to be copied.
     \return The DA object with the same content of the given DA object.
@@ -566,7 +566,7 @@ DA& DA::operator=(const DA &da){
     return *this;
 }
 
-DA& DA::operator=(const double c){
+DA& DA::operator=(const double c) {
 /*! Copy a constant polynomial of value c into the DA.
     \param[in] c Constant value to be copied.
     \return The DA object representing the constant function with value c.
@@ -579,7 +579,7 @@ DA& DA::operator=(const double c){
     return *this;
 }
 
-DA& DA::operator+=(const DA &da){
+DA& DA::operator+=(const DA &da) {
 /*! Compute the sum between the DA object and the given one.
     The result is directly copied into the current DA object.
     \param[in] da DA object to be added.
@@ -592,7 +592,7 @@ DA& DA::operator+=(const DA &da){
     return *this;
 }
 
-DA& DA::operator+=(const double c){
+DA& DA::operator+=(const double c) {
 /*! Compute the sum between the current DA object and a given constant.
     The result is directly copied into the current DA object.
     \param[in] c constant value to be added.
@@ -606,7 +606,7 @@ DA& DA::operator+=(const double c){
     return *this;
 }
 
-DA& DA::operator-=(const DA &da){
+DA& DA::operator-=(const DA &da) {
 /*! Compute the difference between the current DA object and the given one.
     The result is directly copied into the current DA object.
     \param[in] da DA object to be subtracted.
@@ -619,7 +619,7 @@ DA& DA::operator-=(const DA &da){
     return *this;
 }
 
-DA& DA::operator-=(const double c){
+DA& DA::operator-=(const double c) {
 /*! Compute the difference between the current DA object and a given constant.
     The result is directly copied into the current DA object.
     \param[in] c constant value to be subtracted.
@@ -632,7 +632,7 @@ DA& DA::operator-=(const double c){
     return *this;
 }
 
-DA& DA::operator*=(const DA &da){
+DA& DA::operator*=(const DA &da) {
 /*! Compute the product between the current DA object and the given one.
     The result is directly copied into the current DA object.
     \param[in] da DA object to be multiplied.
@@ -645,7 +645,7 @@ DA& DA::operator*=(const DA &da){
     return *this;
 }
 
-DA& DA::operator*=(const double c){
+DA& DA::operator*=(const double c) {
 /*! Compute the product between the current DA object and a given constant.
     The result is directly copied into the current DA object.
     \param[in] c constant value to be multiplied.
@@ -658,7 +658,7 @@ DA& DA::operator*=(const double c){
     return *this;
 }
 
-DA& DA::operator/=(const DA &da){
+DA& DA::operator/=(const DA &da) {
 /*! Compute the division between the current DA object and the given one.
     The result is directly copied into the current DA object.
     \param[in] da DA object through which the current DA is divided by.
@@ -671,7 +671,7 @@ DA& DA::operator/=(const DA &da){
     return *this;
 }
 
-DA& DA::operator/=(const double c){
+DA& DA::operator/=(const double c) {
 /*! Compute the division between the current DA object and a given constant.
     The result is directly copied into the current DA object.
     \param[in] c constant value through which the current DA is divided by.
@@ -700,7 +700,7 @@ DA DA::operator-() const {
     return temp;
 }
 
-DA operator+(const DA &da1, const DA &da2){
+DA operator+(const DA &da1, const DA &da2) {
 /*! Compute the addition between two DA objects.
     \param[in] da1 first DA object.
     \param[in] da2 second DA object.
@@ -714,7 +714,7 @@ DA operator+(const DA &da1, const DA &da2){
     return temp;
 }
 
-DA operator+(const DA &da, const double c){
+DA operator+(const DA &da, const double c) {
 /*! Compute the addition between a DA object and a given constant.
     \param[in] da DA object
     \param[in] c given constant.
@@ -728,7 +728,7 @@ DA operator+(const DA &da, const double c){
     return temp;
 }
 
-DA operator+(const double c, const DA &da){
+DA operator+(const double c, const DA &da) {
 /*! Compute the addition between a given constant and a DA object.
     \param[in] c given constant.
     \param[in] da DA object
@@ -742,7 +742,7 @@ DA operator+(const double c, const DA &da){
     return temp;
 }
 
-DA operator-(const DA &da1, const DA &da2){
+DA operator-(const DA &da1, const DA &da2) {
 /*! Compute the subtraction between two DA objects.
     \param[in] da1 first DA object.
     \param[in] da2 second DA object.
@@ -756,7 +756,7 @@ DA operator-(const DA &da1, const DA &da2){
     return temp;
 }
 
-DA operator-(const DA &da, const double c){
+DA operator-(const DA &da, const double c) {
 /*! Compute the subtraction between a DA object and a given constant.
     \param[in] da DA object
     \param[in] c given constant.
@@ -770,7 +770,7 @@ DA operator-(const DA &da, const double c){
     return temp;
 }
 
-DA operator-(const double c, const DA &da){
+DA operator-(const double c, const DA &da) {
 /*! Compute the subtraction between a given constant and a DA object.
     \param[in] c given constant.
     \param[in] da DA object
@@ -784,7 +784,7 @@ DA operator-(const double c, const DA &da){
     return temp;
 }
 
-DA operator*(const DA &da1, const DA &da2){
+DA operator*(const DA &da1, const DA &da2) {
 /*! Compute the multiplication between two DA objects.
     \param[in] da1 first DA object.
     \param[in] da2 second DA object.
@@ -798,7 +798,7 @@ DA operator*(const DA &da1, const DA &da2){
     return temp;
 }
 
-DA operator*(const DA &da, const double c){
+DA operator*(const DA &da, const double c) {
 /*! Compute the multiplication between a DA object and a given constant.
     \param[in] da DA object
     \param[in] c given constant.
@@ -812,7 +812,7 @@ DA operator*(const DA &da, const double c){
     return temp;
 }
 
-DA operator*(const double c, const DA &da){
+DA operator*(const double c, const DA &da) {
 /*! Compute the multiplication between a given constant and a DA object.
     \param[in] c given constant.
     \param[in] da DA object
@@ -826,7 +826,7 @@ DA operator*(const double c, const DA &da){
     return temp;
 }
 
-DA operator/(const DA &da1, const DA &da2){
+DA operator/(const DA &da1, const DA &da2) {
 /*! Compute the division between two DA objects.
     \param[in] da1 first DA object.
     \param[in] da2 second DA object.
@@ -840,7 +840,7 @@ DA operator/(const DA &da1, const DA &da2){
     return temp;
 }
 
-DA operator/(const DA &da, const double c){
+DA operator/(const DA &da, const double c) {
 /*! Compute the division between a DA object and a given constant.
     \param[in] da DA object
     \param[in] c given constant.
@@ -854,7 +854,7 @@ DA operator/(const DA &da, const double c){
     return temp;
 }
 
-DA operator/(const double c, const DA &da){
+DA operator/(const double c, const DA &da) {
 /*! Compute the division between a given constant and a DA object.
     \param[in] c given constant.
     \param[in] da DA object
@@ -887,7 +887,7 @@ DA DA::multiplyMonomials(const DA &da) const {
     return temp;
 }
 
-DA DA::divide(const unsigned int var, const unsigned int p) const{
+DA DA::divide(const unsigned int var, const unsigned int p) const {
 /*! Divide by independent variable var raised to power p.
     \param[in] var independente variable number to divide by.
     \param[in] p power of the independent variable.
@@ -901,7 +901,7 @@ DA DA::divide(const unsigned int var, const unsigned int p) const{
     return temp;
 }
 
-DA DA::deriv(const unsigned int i) const{
+DA DA::deriv(const unsigned int i) const {
 /*! Compute the derivative of a DA object with respect to variable i.
     \param[in] i variable with respect to which the derivative is calculated.
     \return A new DA object containing the result of the derivation.
@@ -914,7 +914,7 @@ DA DA::deriv(const unsigned int i) const{
     return temp;
 }
 
-DA DA::deriv(const std::vector<unsigned int> ind) const{
+DA DA::deriv(const std::vector<unsigned int> ind) const {
 /*! Compute the derivative of a DA object with respect to variables ind.
     \param[in] ind vector containing the number of derivatives to take for each
     independent variable. If ind has fewer entries than there are independent
@@ -934,7 +934,7 @@ DA DA::deriv(const std::vector<unsigned int> ind) const{
     return temp;
 }
 
-DA DA::integ(const unsigned int i) const{
+DA DA::integ(const unsigned int i) const {
 /*! Compute the integral of a DA object with respect to variable i.
     \param[in] i variable with respect to which the integral is calculated.
     \return A new DA object containing the result of the integration.
@@ -947,7 +947,7 @@ DA DA::integ(const unsigned int i) const{
     return temp;
 }
 
-DA DA::integ(const std::vector<unsigned int> ind) const{
+DA DA::integ(const std::vector<unsigned int> ind) const {
 /*! Compute the integral of a DA object with respect to variables i.
     \param[in] ind vector containing the number of integrals to take for each
     independent variable. If ind has fewer entries than there are independent
@@ -967,7 +967,7 @@ DA DA::integ(const std::vector<unsigned int> ind) const{
     return temp;
 }
 
-DA DA::trim(const unsigned int min, const unsigned int max) const{
+DA DA::trim(const unsigned int min, const unsigned int max) const {
 /*! Returns a DA object with all monomials of order less than min and greater
     than max removed.
     \param[in] min The minimum order to keep in the DA object.
@@ -982,7 +982,7 @@ DA DA::trim(const unsigned int min, const unsigned int max) const{
     return temp;
 }
 
-DA DA::absolute() const{
+DA DA::absolute() const {
 /*! Absolute value of a DA object.
     Returns either the DA or the negative of the DA based on the constant part.
     \return A new DA object with the absolute value DA.
@@ -997,7 +997,7 @@ DA DA::absolute() const{
     return temp;
 }
 
-DA DA::trunc() const{
+DA DA::trunc() const {
 /*! Truncate the constant part of a DA object to an integer.
     \return A new DA object with a truncated constant part.
     \throw DACE::DACEException
@@ -1009,7 +1009,7 @@ DA DA::trunc() const{
     return temp;
 }
 
-DA DA::round() const{
+DA DA::round() const {
 /*! Round the constant part of a DA object to an integer.
     \return A new DA object with a rounded constant part.
     \throw DACE::DACEException
@@ -1021,7 +1021,7 @@ DA DA::round() const{
     return temp;
 }
 
-DA DA::mod(const double p) const{
+DA DA::mod(const double p) const {
 /*! Take floating-point remainder of constant part divided by p.
     \param[in] p the divisor.
     \return A new DA object with constant part modulo p.
@@ -1034,7 +1034,7 @@ DA DA::mod(const double p) const{
     return temp;
 }
 
-DA DA::pow(const int p) const{
+DA DA::pow(const int p) const {
 /*! Elevate a DA object to a given integer power.
     \param[in] p power to which the DA object is raised.
     \return A new DA object
@@ -1047,7 +1047,7 @@ DA DA::pow(const int p) const{
     return temp;
 }
 
-DA DA::pow(const double p) const{
+DA DA::pow(const double p) const {
 /*! Elevate a DA object to a given real power. The constant part must be positive.
     \param[in] p power to which the DA object is raised.
     \return A new DA object
@@ -1060,7 +1060,7 @@ DA DA::pow(const double p) const{
     return temp;
 }
 
-DA DA::root(const int p) const{
+DA DA::root(const int p) const {
 /*! Compute the p-th root of a DA object.
     \param[in] p root to be computed.
     \return A new DA object
@@ -1073,7 +1073,7 @@ DA DA::root(const int p) const{
     return temp;
 }
 
-DA DA::minv() const{
+DA DA::minv() const {
 /*! Compute the multiplicative inverse of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1085,7 +1085,7 @@ DA DA::minv() const{
     return temp;
 }
 
-DA DA::sqr() const{
+DA DA::sqr() const {
 /*! Compute the square of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1097,7 +1097,7 @@ DA DA::sqr() const{
     return temp;
 }
 
-DA DA::sqrt() const{
+DA DA::sqrt() const {
 /*! Compute the square root of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1109,7 +1109,7 @@ DA DA::sqrt() const{
     return temp;
 }
 
-DA DA::isrt() const{
+DA DA::isrt() const {
 /*! Compute the inverse square root of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1121,7 +1121,7 @@ DA DA::isrt() const{
     return temp;
 }
 
-DA DA::cbrt() const{
+DA DA::cbrt() const {
 /*! Compute the cubic root of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1133,7 +1133,7 @@ DA DA::cbrt() const{
     return temp;
 }
 
-DA DA::icrt() const{
+DA DA::icrt() const {
 /*! Compute the inverse cubic root of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1145,7 +1145,7 @@ DA DA::icrt() const{
     return temp;
 }
 
-DA DA::hypot(const DA &da) const{
+DA DA::hypot(const DA &da) const {
 /*! Compute the hypotenuse (sqrt(a*a+b*b)) of a DA object and the given DA argument.
     \return A new DA object
     \throw DACE::DACEException
@@ -1157,7 +1157,7 @@ DA DA::hypot(const DA &da) const{
     return temp;
 }
 
-DA DA::exp() const{
+DA DA::exp() const {
 /*! Compute the exponential of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1169,7 +1169,7 @@ DA DA::exp() const{
     return temp;
 }
 
-DA DA::log() const{
+DA DA::log() const {
 /*! Compute the natural logarithm of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1181,7 +1181,7 @@ DA DA::log() const{
     return temp;
 }
 
-DA DA::logb(const double b) const{
+DA DA::logb(const double b) const {
 /*! Compute the logarithm of a DA object with respect to a given base.
     \param[in] b base with respect to which the logarithm is computed (base 10 set as default base).
     \return A new DA object
@@ -1194,7 +1194,7 @@ DA DA::logb(const double b) const{
     return temp;
 }
 
-DA DA::log10() const{
+DA DA::log10() const {
 /*! Compute the 10 based logarithm of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1206,7 +1206,7 @@ DA DA::log10() const{
     return temp;
 }
 
-DA DA::log2() const{
+DA DA::log2() const {
 /*! Compute the 2 based logarithm of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1218,7 +1218,7 @@ DA DA::log2() const{
     return temp;
 }
 
-DA DA::sin() const{
+DA DA::sin() const {
 /*! Compute the sine of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1230,7 +1230,7 @@ DA DA::sin() const{
     return temp;
 }
 
-DA DA::cos() const{
+DA DA::cos() const {
 /*! Compute the cosine of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1242,7 +1242,7 @@ DA DA::cos() const{
     return temp;
 }
 
-DA DA::tan() const{
+DA DA::tan() const {
 /*! Compute the tangent of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1254,7 +1254,7 @@ DA DA::tan() const{
     return temp;
 }
 
-DA DA::asin() const{
+DA DA::asin() const {
 /*! Compute the arcsine of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1266,7 +1266,7 @@ DA DA::asin() const{
     return temp;
 }
 
-DA DA::acos() const{
+DA DA::acos() const {
 /*! Compute the arccosine of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1278,7 +1278,7 @@ DA DA::acos() const{
     return temp;
 }
 
-DA DA::atan() const{
+DA DA::atan() const {
 /*! Compute the arctangent of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1290,7 +1290,7 @@ DA DA::atan() const{
     return temp;
 }
 
-DA DA::atan2(const DA &da) const{
+DA DA::atan2(const DA &da) const {
 /*! Compute the four-quadrant arctangent of Y/X. Y is the current DA object,
     whereas X is the given da.
     \param[in] da DA object
@@ -1304,7 +1304,7 @@ DA DA::atan2(const DA &da) const{
     return temp;
 }
 
-DA DA::sinh() const{
+DA DA::sinh() const {
 /*! Compute the hyperbolic sine of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1316,7 +1316,7 @@ DA DA::sinh() const{
     return temp;
 }
 
-DA DA::cosh() const{
+DA DA::cosh() const {
 /*! Compute the hyperbolic cosine of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1328,7 +1328,7 @@ DA DA::cosh() const{
     return temp;
 }
 
-DA DA::tanh() const{
+DA DA::tanh() const {
 /*! Compute the hyperbolic tangent of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1340,7 +1340,7 @@ DA DA::tanh() const{
     return temp;
 }
 
-DA DA::asinh() const{
+DA DA::asinh() const {
 /*! Compute the hyperbolic arcsine of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1352,7 +1352,7 @@ DA DA::asinh() const{
     return temp;
 }
 
-DA DA::acosh() const{
+DA DA::acosh() const {
 /*! Compute the hyperbolic arccosine of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1364,7 +1364,7 @@ DA DA::acosh() const{
     return temp;
 }
 
-DA DA::atanh() const{
+DA DA::atanh() const {
 /*! Compute the hyperbolic arctangent of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1377,7 +1377,7 @@ DA DA::atanh() const{
 }
 
 
-DA DA::erf() const{
+DA DA::erf() const {
 /*! Compute the error function of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1389,7 +1389,7 @@ DA DA::erf() const{
     return temp;
 }
 
-DA DA::erfc() const{
+DA DA::erfc() const {
 /*! Compute the complementary error function of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1401,7 +1401,7 @@ DA DA::erfc() const{
     return temp;
 }
 
-DA DA::BesselJFunction(const int n) const{
+DA DA::BesselJFunction(const int n) const {
 /*! Compute the n-th Bessel function of first type J_n of a DA object.
     \param[in] n order of the Bessel function
     \return A new DA object
@@ -1416,7 +1416,7 @@ DA DA::BesselJFunction(const int n) const{
     return temp;
 }
 
-DA DA::BesselYFunction(const int n) const{
+DA DA::BesselYFunction(const int n) const {
 /*! Compute the n-th Bessel function of second type Y_n of a DA object.
     \param[in] n order of the Bessel function
     \return A new DA object
@@ -1431,7 +1431,7 @@ DA DA::BesselYFunction(const int n) const{
     return temp;
 }
 
-DA DA::BesselIFunction(const int n, const bool scaled) const{
+DA DA::BesselIFunction(const int n, const bool scaled) const {
 /*! Compute the n-th modified Bessel function of first type I_n of a DA object.
     \param[in] n order of the Bessel function
     \param[in] scaled if true, the modified Bessel function is scaled
@@ -1448,7 +1448,7 @@ DA DA::BesselIFunction(const int n, const bool scaled) const{
     return temp;
 }
 
-DA DA::BesselKFunction(const int n, const bool scaled) const{
+DA DA::BesselKFunction(const int n, const bool scaled) const {
 /*! Compute the n-th modified Bessel function of second type K_n of a DA object.
     \param[in] n order of the Bessel function
     \param[in] scaled if true, the modified Bessel function is scaled
@@ -1465,7 +1465,7 @@ DA DA::BesselKFunction(const int n, const bool scaled) const{
     return temp;
 }
 
-DA DA::GammaFunction() const{
+DA DA::GammaFunction() const {
 /*! Compute the Gamma function of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1477,7 +1477,7 @@ DA DA::GammaFunction() const{
     return temp;
 }
 
-DA DA::LogGammaFunction() const{
+DA DA::LogGammaFunction() const {
 /*! Compute the Logarithmic Gamma function (i.e. the natural logarithm of Gamma) of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1489,7 +1489,7 @@ DA DA::LogGammaFunction() const{
     return temp;
 }
 
-DA DA::PsiFunction(const unsigned int n) const{
+DA DA::PsiFunction(const unsigned int n) const {
 /*! Compute the n-th order Psi function, i.e. the (n+1)st derivative of the Logarithmic Gamma function, of a DA object.
     \return A new DA object
     \throw DACE::DACEException
@@ -1504,7 +1504,7 @@ DA DA::PsiFunction(const unsigned int n) const{
 /********************************************************************************
 *    Norm and estimation routines
 *********************************************************************************/
-double DA::norm(const unsigned int type) const{
+double DA::norm(const unsigned int type) const {
 /*! Compute different types of norms for a DA object.
     \param[in] type type of norm to be computed. Possible norms are:\n
      0: Max norm (Default)\n
@@ -1519,7 +1519,7 @@ double DA::norm(const unsigned int type) const{
     return c;
 }
 
-std::vector<double> DA::orderNorm(const unsigned int var, const unsigned int type) const{
+std::vector<double> DA::orderNorm(const unsigned int var, const unsigned int type) const {
 /*! Extract different types of order sorted norms from a DA object.
     \param[in] var order\n
      0: Terms are sorted by their order (Default)\n
@@ -1538,7 +1538,7 @@ std::vector<double> DA::orderNorm(const unsigned int var, const unsigned int typ
     return v;
 }
 
-std::vector<double> DA::estimNorm(const unsigned int var, const unsigned int type, const unsigned int nc) const{
+std::vector<double> DA::estimNorm(const unsigned int var, const unsigned int type, const unsigned int nc) const {
 /*! Estimate different types of order sorted norms for terms of a DA object
     up to a specified order.
     \param[in] var order\n
@@ -1560,7 +1560,7 @@ std::vector<double> DA::estimNorm(const unsigned int var, const unsigned int typ
     return v;
 }
 
-std::vector<double> DA::estimNorm(std::vector<double> &err, const unsigned int var, const unsigned int type, const unsigned int nc) const{
+std::vector<double> DA::estimNorm(std::vector<double> &err, const unsigned int var, const unsigned int type, const unsigned int nc) const {
 /*! Estimate different types of order sorted norms for terms of a DA object
     up to a specified order with error estimates.
     \param[out] err returns the amount by which the estimate underestimates the actual ordered norm of the terms in the polynomial up to the minimum of nc or the maximum computation order.
@@ -1584,7 +1584,7 @@ std::vector<double> DA::estimNorm(std::vector<double> &err, const unsigned int v
     return v;
 }
 
-Interval DA::bound() const{
+Interval DA::bound() const {
 /*! Compute lower and upper bounds of a DA object.
     \return An Interval object containing both the lower and the upper bound
     of the DA object.
@@ -1598,7 +1598,7 @@ Interval DA::bound() const{
     return i;
 }
 
-double DA::convRadius(const double eps, const unsigned int type) const{
+double DA::convRadius(const double eps, const unsigned int type) const {
 /*! Estimate the convergence radius of the DA object.
     \param[in] eps requested tolerance.
     \param[in] type type of norm (sum norm is used as default)
@@ -1614,7 +1614,7 @@ double DA::convRadius(const double eps, const unsigned int type) const{
 /********************************************************************************
 *     DACE polynomial evaluation routines
 *********************************************************************************/
-compiledDA DA::compile() const{
+compiledDA DA::compile() const {
 /*! Compile current DA object and create a compiledDA object.
     \return The compiled DA object.
     \throw DACE::DACEException
@@ -1622,7 +1622,7 @@ compiledDA DA::compile() const{
     return compiledDA(*this);
 }
 
-DA DA::plug(const unsigned int var, const double val) const{
+DA DA::plug(const unsigned int var, const double val) const {
 /*! Partial evaluation of a DA object. In the DA object, variable var is
     replaced by the value val. The resulting DA object is returned.
     \param[in] var variable number to be replaced
@@ -1651,7 +1651,7 @@ double DA::evalMonomials(const DA &values) const {
     return res;
 }
 
-DA DA::replaceVariable(const unsigned int from, const unsigned int to, const double val) const{
+DA DA::replaceVariable(const unsigned int from, const unsigned int to, const double val) const {
 /*! Partial evaluation of a DA object. In the DA object, variable from is
     replaced by the value val times variable to. The resulting DA object is returned.
     \param[in] from variable number to be replaced
@@ -1668,7 +1668,7 @@ DA DA::replaceVariable(const unsigned int from, const unsigned int to, const dou
     return temp;
 }
 
-DA DA::scaleVariable(const unsigned int var, const double val) const{
+DA DA::scaleVariable(const unsigned int var, const double val) const {
 /*! Scaling of an independent variable. In the DA object, variable var is
     replaced by the value val times var. The resulting DA object is returned.
     \param[in] var variable number to be scaled
@@ -1684,7 +1684,7 @@ DA DA::scaleVariable(const unsigned int var, const double val) const{
     return temp;
 }
 
-DA DA::translateVariable(const unsigned int var, const double a, const double c) const{
+DA DA::translateVariable(const unsigned int var, const double a, const double c) const {
 /*! Affine translation of an independent variable. In the DA object, variable var is
     replaced by a*var + c. The resulting DA object is returned.
     \param[in] var variable number to be translated
@@ -1704,7 +1704,7 @@ DA DA::translateVariable(const unsigned int var, const double a, const double c)
 /********************************************************************************
 *     DACE input/output routines
 *********************************************************************************/
-std::string DA::toString() const{
+std::string DA::toString() const {
 /*!  Convert DA object to string.
     \return A string.
     \throw DACE::DACEException
@@ -1733,10 +1733,10 @@ std::string DA::toString() const{
 }
 
 std::ostream& operator<<(std::ostream &out, const DA &da){
-/*! Overload of std::operator<< in iostream.
-    \param[in] out standard output stream.
-    \param[in] da DA object to be printed in the stream
-    \return Standard output stream.
+/*! Output operator.
+    \param[in] out Output stream.
+    \param[in] da DA object to be output to the stream
+    \return Output stream.
     \throw DACE::DACEException
     \sa DA::toString
  */
@@ -1746,12 +1746,11 @@ std::ostream& operator<<(std::ostream &out, const DA &da){
 }
 
 
-std::istream& operator>>(std::istream &in, DA &da){
-/*! Overload of std::operator>> in iostream. Reads both string and binary
-    DA representations from a file.
-    \param[in] in standard input stream.
-    \param[in] da DA object to be created from the stream
-    \return Standard input stream.
+std::istream& operator>>(std::istream &in, DA &da) {
+/*! Input operator. Reads both string and binary DA representations from a stream.
+    \param[in] in Input stream.
+    \param[in] da DA object to read to from the stream
+    \return Input stream.
     \throw DACE::DACEException
     \note When using binary IO operations, make sure the stream is opened in ios_base::binary mode!
     Some C++ libraries are known to mangle the input otherwise which will break the ability to read binary DA objects.
@@ -1818,8 +1817,9 @@ std::istream& operator>>(std::istream &in, DA &da){
     return in;
 }
 
-void DA::write(std::ostream &os) const{
-/*!  Write a binary representation of the DA as a blob to os.
+void DA::write(std::ostream &os) const {
+/*! Write a binary representation of the DA as a blob to output stream.
+    \param os Output stream
     \throw DACE::DACEException
  */
     os << storedDA(*this);
@@ -1829,7 +1829,7 @@ void DA::write(std::ostream &os) const{
 /********************************************************************************
 *     DACE static factory routines
 *********************************************************************************/
-DA DA::random(const double cm){
+DA DA::random(const double cm) {
 /*! Create a DA object and fill with random entries.
     \param[in] cm filling factor (for cm < 0, the DA object is filled with random numbers;
     for cm > 0, the DA object is filled with weighted decaying numbers).
@@ -1842,7 +1842,7 @@ DA DA::random(const double cm){
     return temp;
 }
 
-DA DA::identity(const unsigned int var){
+DA DA::identity(const unsigned int var) {
 /*! Create a DA object representing the identity function in independent DA
     variable number var. This is just an alias for DA::DA(var).
     \param[in] var The independent DA variable number
@@ -1852,7 +1852,7 @@ DA DA::identity(const unsigned int var){
     return DA((int)var);
 }
 
-DA DA::fromString(const std::string &str){
+DA DA::fromString(const std::string &str) {
 /*! Convert a string to DA object.
     \param[in] str string
     \return A DA object
@@ -1865,7 +1865,7 @@ DA DA::fromString(const std::string &str){
     return temp;
 }
 
-DA DA::fromString(const std::vector<std::string> &str){
+DA DA::fromString(const std::vector<std::string> &str) {
 /*! Convert a vector of strings to DA object.
     \param[in] str vector of strings, each representing one line of the input
     \return A DA object
@@ -1895,12 +1895,13 @@ DA DA::fromString(const std::vector<std::string> &str){
     return da;
 }
 
-DA DA::read(std::istream &is){
-/*!  Read a binary representation of a DA from is.
+DA DA::read(std::istream &is) {
+/*! Read a binary representation of a DA from input stream.
+    \param[in] is Input stream
     \throw DACE::DACEException
     \note When using binary IO operations, make sure the stream is opened in ios_base::binary mode!
-     Some C++ libraries are known to mangle the input otherwise which will break the ability to read binary DA objects.
-     Setting the binary flag for all IO (also text based) does not affect the output and is recommended.
+    Some C++ libraries are known to mangle the input otherwise which will break the ability to read binary DA objects.
+    Setting the binary flag for all IO (also text based) does not affect the output and is recommended.
  */
     storedDA sda(is);
     return sda;         // automatically cast to DA
@@ -1909,7 +1910,7 @@ DA DA::read(std::istream &is){
 /********************************************************************************
 *     DACE various routines
 *********************************************************************************/
-void DA::memdump(){
+void DA::memdump() {
 /*! Print debugging information about the internal memory status of the DACE core.
  */
     daceMemoryDump();
@@ -1918,7 +1919,7 @@ void DA::memdump(){
 /********************************************************************************
 *     DACE non-member functions
 *********************************************************************************/
-unsigned int size(const DA &da){
+unsigned int size(const DA &da) {
 /*! Return the number of non-zero coefficients of a DA object.
     \param[in] da DA object
     \return The number of non-zero coefficients of the DA object
@@ -1927,7 +1928,7 @@ unsigned int size(const DA &da){
  */
     return da.size();}
 
-unsigned int order(const DA &da){
+unsigned int order(const DA &da) {
 /*! Return the order of a DA object.
     \param[in] da DA object
     \return Lowest order of the non-zero monomials or UINT_MAX if it is the zero DA
@@ -1936,7 +1937,7 @@ unsigned int order(const DA &da){
  */
     return da.order();}
 
-int degree(const DA &da){
+int degree(const DA &da) {
 /*! Return the degree of a DA object.
     \param[in] da DA object
     \return Highest order of the non-zero monomials or INT_MIN if it is the zero DA
@@ -1988,7 +1989,7 @@ AlgebraicVector<DA> gradient(const DA &da) {
 
     return da.gradient();}
 
-DA divide(const DA &da, const unsigned int var, const unsigned int p){
+DA divide(const DA &da, const unsigned int var, const unsigned int p) {
 /*! Divide by independent variable var raised to power p.
     \param[in] da DA object
     \param[in] var variable number to divide by
@@ -2000,7 +2001,7 @@ DA divide(const DA &da, const unsigned int var, const unsigned int p){
     return da.divide(var, p);}
 
 
-DA deriv(const DA &da, const unsigned int i){
+DA deriv(const DA &da, const unsigned int i) {
 /*! Compute the derivative of a DA object with respect to variable i.
     \param[in] da DA object
     \param[in] i variable with respect to which the derivative is calculated
@@ -2010,7 +2011,7 @@ DA deriv(const DA &da, const unsigned int i){
  */
     return da.deriv(i);}
 
-DA deriv(const DA &da, const std::vector<unsigned int> ind){
+DA deriv(const DA &da, const std::vector<unsigned int> ind) {
 /*! Compute the derivative of a DA object with respect to variables ind.
     \param[in] da DA object
     \param[in] ind vector containing the number of derivatives to take for each
@@ -2023,7 +2024,7 @@ DA deriv(const DA &da, const std::vector<unsigned int> ind){
  */
     return da.deriv(ind);}
 
-DA integ(const DA &da, const unsigned int i){
+DA integ(const DA &da, const unsigned int i) {
 /*! Compute the integral of a DA object with respect to variable i.
     \param[in] da DA object
     \param[in] i variable with respect to which the integral is calculated
@@ -2033,7 +2034,7 @@ DA integ(const DA &da, const unsigned int i){
  */
     return da.integ(i);}
 
-DA integ(const DA &da, const std::vector<unsigned int> ind){
+DA integ(const DA &da, const std::vector<unsigned int> ind) {
 /*! Compute the integral of a DA object with respect to variable i.
     \param[in] da DA object
     \param[in] ind vector containing the number of derivatives to take for each
@@ -2046,7 +2047,7 @@ DA integ(const DA &da, const std::vector<unsigned int> ind){
  */
     return da.integ(ind);}
 
-DA trim(const DA &da, const unsigned int min, const unsigned int max){
+DA trim(const DA &da, const unsigned int min, const unsigned int max) {
 /*! Returns a DA object with all monomials of order less than min and greater
     than max removed (trimmed).
     \param[in] da DA object
@@ -2058,7 +2059,7 @@ DA trim(const DA &da, const unsigned int min, const unsigned int max){
  */
     return da.trim(min,max);}
 
-DA absolute(const DA &da){
+DA absolute(const DA &da) {
 /*! Absolute value of a DA object.
     Returns either the DA or the negative of the DA based on the constant part.
     \param[in] da DA object
@@ -2070,7 +2071,7 @@ DA absolute(const DA &da){
  */
     return da.absolute();}
 
-DA trunc(const DA &da){
+DA trunc(const DA &da) {
 /*! Truncate the constant part of a DA object to an integer.
     \param[in] da DA object
     \return A new DA object with a truncated constant part
@@ -2079,7 +2080,7 @@ DA trunc(const DA &da){
  */
     return da.trunc();}
 
-DA round(const DA &da){
+DA round(const DA &da) {
 /*! Round the constant part of a DA object to an integer.
     \param[in] da DA object
     \return A new DA object with a rounded constant part
@@ -2088,7 +2089,7 @@ DA round(const DA &da){
  */
     return da.round();}
 
-DA mod(const DA &da, double p){
+DA mod(const DA &da, double p) {
 /*! Compute the floating-point remainder of c/p (c modulo p),
     where c is the constant part of the given DA object.
     \param[in] da DA object
@@ -2099,7 +2100,7 @@ DA mod(const DA &da, double p){
  */
     return da.mod(p);}
 
-DA pow(const DA &da, int p){
+DA pow(const DA &da, int p) {
 /*! Raise a DA object to a given integer power.
     \param[in] da DA object
     \param[in] p power at which the DA object is elevated
@@ -2110,7 +2111,7 @@ DA pow(const DA &da, int p){
     return da.pow(p);}
 
 
-DA pow(const DA &da, double p){
+DA pow(const DA &da, double p) {
 /*! Raise a DA object to a given integer power. The constant part must be positive.
     \param[in] da DA object
     \param[in] p power at which the DA object is elevated
@@ -2121,7 +2122,7 @@ DA pow(const DA &da, double p){
     return da.pow(p);}
 
 
-DA root(const DA &da, int p){
+DA root(const DA &da, int p) {
 /*! Compute the p-th root of a DA object.
     \param[in] da DA object
     \param[in] p root to be computed
@@ -2131,7 +2132,7 @@ DA root(const DA &da, int p){
  */
     return da.root(p);}
 
-DA minv(const DA &da){
+DA minv(const DA &da) {
 /*! Compute the multiplicative inverse of a DA object.
     \param[in] da DA object
     \return A new DA object containing the result of the operation
@@ -2140,7 +2141,7 @@ DA minv(const DA &da){
  */
     return da.minv();}
 
-DA sqr(const DA &da){
+DA sqr(const DA &da) {
 /*! Compute the square of a DA object.
     \param[in] da DA object
     \return A new DA object containing the result of the operation
@@ -2149,7 +2150,7 @@ DA sqr(const DA &da){
  */
     return da.sqr();}
 
-DA sqrt(const DA &da){
+DA sqrt(const DA &da) {
 /*! Compute the square root of a DA object.
     \param[in] da DA object
     \return A new DA object containing the result of the operation
@@ -2158,7 +2159,7 @@ DA sqrt(const DA &da){
  */
     return da.sqrt();}
 
-DA isrt(const DA &da){
+DA isrt(const DA &da) {
 /*! Compute the inverse square root of a DA object.
     \param[in] da DA object
     \return A new DA object containing the result of the operation
@@ -2168,7 +2169,7 @@ DA isrt(const DA &da){
     return da.isrt();}
 
 
-DA cbrt(const DA &da){
+DA cbrt(const DA &da) {
 /*! Compute the cubic root of a DA object.
     \param[in] da DA object
     \return A new DA object containing the result of the operation
@@ -2177,7 +2178,7 @@ DA cbrt(const DA &da){
  */
     return da.cbrt();}
 
-DA icrt(const DA &da){
+DA icrt(const DA &da) {
 /*! Compute the inverse cubic root of a DA object.
     \param[in] da DA object
     \return A new DA object containing the result of the operation
@@ -2186,7 +2187,7 @@ DA icrt(const DA &da){
  */
     return da.icrt();}
 
-DA hypot(const DA &X, const DA &Y){
+DA hypot(const DA &X, const DA &Y) {
 /*! Compute the hypotenuse (sqrt(X*X + Y*Y)) of two DA objects.
     \param[in] X first DA object
     \param[in] Y second DA object
@@ -2197,7 +2198,7 @@ DA hypot(const DA &X, const DA &Y){
     return X.hypot(Y);}
 
 
-DA exp(const DA &da){
+DA exp(const DA &da) {
 /*! Compute the exponential of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2206,7 +2207,7 @@ DA exp(const DA &da){
  */
     return da.exp();}
 
-DA log(const DA &da){
+DA log(const DA &da) {
 /*! Compute the natural logarithm of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2215,7 +2216,7 @@ DA log(const DA &da){
  */
     return da.log();}
 
-DA logb(const DA &da, const double b){
+DA logb(const DA &da, const double b) {
 /*! Compute the logarithm of a DA object with respect to a given base.
     \param[in] da DA object
     \param[in] b base with respect to which the logarithm is computed (base 10 set as default base).
@@ -2226,7 +2227,7 @@ DA logb(const DA &da, const double b){
     return da.logb(b);}
 
 
-DA log10(const DA &da){
+DA log10(const DA &da) {
 /*! Compute the 10 based logarithm of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2235,7 +2236,7 @@ DA log10(const DA &da){
  */
     return da.log10();}
 
-DA log2(const DA &da){
+DA log2(const DA &da) {
 /*! Compute the 2 based logarithm of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2245,7 +2246,7 @@ DA log2(const DA &da){
     return da.log2();}
 
 
-DA sin(const DA &da){
+DA sin(const DA &da) {
 /*! Compute the sine of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2254,7 +2255,7 @@ DA sin(const DA &da){
  */
     return da.sin();}
 
-DA cos(const DA &da){
+DA cos(const DA &da) {
 /*! Compute the cosine of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2263,7 +2264,7 @@ DA cos(const DA &da){
  */
     return da.cos();}
 
-DA tan(const DA &da){
+DA tan(const DA &da) {
 /*! Compute the tangent of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2272,7 +2273,7 @@ DA tan(const DA &da){
  */
     return da.tan();}
 
-DA asin(const DA &da){
+DA asin(const DA &da) {
 /*! Compute the arcsine of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2281,7 +2282,7 @@ DA asin(const DA &da){
  */
     return da.asin();}
 
-DA acos(const DA &da){
+DA acos(const DA &da) {
 /*! Compute the arccosine of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2290,7 +2291,7 @@ DA acos(const DA &da){
  */
     return da.acos();}
 
-DA atan(const DA &da){
+DA atan(const DA &da) {
 /*! Compute the arctangent of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2299,7 +2300,7 @@ DA atan(const DA &da){
  */
     return da.atan();}
 
-DA atan2(const DA &Y, const DA &X){
+DA atan2(const DA &Y, const DA &X) {
 /*! Compute the four-quadrant arctangent of Y/X.
     \param[in] Y DA object
     \param[in] X DA object
@@ -2309,7 +2310,7 @@ DA atan2(const DA &Y, const DA &X){
  */
     return Y.atan2(X);}
 
-DA sinh(const DA &da){
+DA sinh(const DA &da) {
 /*! Compute the hyperbolic sine of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2318,7 +2319,7 @@ DA sinh(const DA &da){
  */
     return da.sinh();}
 
-DA cosh(const DA &da){
+DA cosh(const DA &da) {
 /*! Compute the hyperbolic cosine of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2327,7 +2328,7 @@ DA cosh(const DA &da){
  */
     return da.cosh();}
 
-DA tanh(const DA &da){
+DA tanh(const DA &da) {
 /*! Compute the hyperbolic tangent of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2336,7 +2337,7 @@ DA tanh(const DA &da){
  */
     return da.tanh();}
 
-DA asinh(const DA &da){
+DA asinh(const DA &da) {
 /*! Compute the hyperbolic arcsine of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2345,7 +2346,7 @@ DA asinh(const DA &da){
  */
     return da.asinh();}
 
-DA acosh(const DA &da){
+DA acosh(const DA &da) {
 /*! Compute the hyperbolic arccosine of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2354,7 +2355,7 @@ DA acosh(const DA &da){
  */
     return da.acosh();}
 
-DA atanh(const DA &da){
+DA atanh(const DA &da) {
 /*! Compute the hyperbolic arctangent of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2364,7 +2365,7 @@ DA atanh(const DA &da){
     return da.atanh();}
 
 
-DA erf(const DA &da){
+DA erf(const DA &da) {
 /*! Compute the error function of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2373,7 +2374,7 @@ DA erf(const DA &da){
  */
     return da.erf();}
 
-DA erfc(const DA &da){
+DA erfc(const DA &da) {
 /*! Compute the complementary error function of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2382,7 +2383,7 @@ DA erfc(const DA &da){
  */
     return da.erfc();}
 
-DA jn(const int n, const DA &da){
+DA jn(const int n, const DA &da) {
 /*! Compute the n-th Bessel function of first type J_n of a DA object.
     \param[in] n order of the Bessel function.
     \param[in] da DA object
@@ -2394,7 +2395,7 @@ DA jn(const int n, const DA &da){
  */
     return da.BesselJFunction(n);}
 
-DA yn(const int n, const DA &da){
+DA yn(const int n, const DA &da) {
 /*! Compute the n-th Bessel function of second type Y_n of a DA object.
     \param[in] n order of the Bessel function
     \param[in] da DA object
@@ -2406,7 +2407,7 @@ DA yn(const int n, const DA &da){
  */
     return da.BesselYFunction(n);}
 
-DA BesselJFunction(const int n, const DA &da){
+DA BesselJFunction(const int n, const DA &da) {
 /*! Compute the n-th Bessel function of first type J_n of a DA object.
     \param[in] n order of the Bessel function
     \param[in] da DA object
@@ -2417,7 +2418,7 @@ DA BesselJFunction(const int n, const DA &da){
 */
     return da.BesselJFunction(n);}
 
-DA BesselYFunction(const int n, const DA &da){
+DA BesselYFunction(const int n, const DA &da) {
 /*! Compute the n-th Bessel function of second type Y_n of a DA object.
     \param[in] n order of the Bessel function
     \param[in] da DA object
@@ -2428,7 +2429,7 @@ DA BesselYFunction(const int n, const DA &da){
  */
     return da.BesselYFunction(n);}
 
-DA BesselIFunction(const int n, const DA &da, const bool scaled){
+DA BesselIFunction(const int n, const DA &da, const bool scaled) {
 /*! Compute the n-th modified Bessel function of first type I_n of a DA object.
     \param[in] n order of the Bessel function
     \param[in] da DA object
@@ -2441,7 +2442,7 @@ DA BesselIFunction(const int n, const DA &da, const bool scaled){
  */
     return da.BesselIFunction(n, scaled);}
 
-DA BesselKFunction(const int n, const DA &da, const bool scaled){
+DA BesselKFunction(const int n, const DA &da, const bool scaled) {
 /*! Compute the n-th modified Bessel function of second type K_n of a DA object.
     \param[in] n order of the Bessel function
     \param[in] da DA object
@@ -2454,7 +2455,7 @@ DA BesselKFunction(const int n, const DA &da, const bool scaled){
  */
     return da.BesselKFunction(n, scaled);}
 
-DA tgamma(const DA &da){
+DA tgamma(const DA &da) {
 /*! Compute the Gamma function of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2464,7 +2465,7 @@ DA tgamma(const DA &da){
  */
     return da.GammaFunction();}
 
-DA lgamma(const DA &da){
+DA lgamma(const DA &da) {
 /*! Compute the Log Gamma function of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2474,7 +2475,7 @@ DA lgamma(const DA &da){
  */
     return da.LogGammaFunction();}
 
-DA GammaFunction(const DA &da){
+DA GammaFunction(const DA &da) {
 /*! Compute the Gamma function of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2483,7 +2484,7 @@ DA GammaFunction(const DA &da){
  */
     return da.GammaFunction();}
 
-DA LogGammaFunction(const DA &da){
+DA LogGammaFunction(const DA &da) {
 /*! Compute the Log Gamma function of a DA object.
     \param[in] da DA object
     \return A new DA object
@@ -2492,7 +2493,7 @@ DA LogGammaFunction(const DA &da){
  */
     return da.LogGammaFunction();}
 
-DA PsiFunction(const unsigned int n, const DA &da){
+DA PsiFunction(const unsigned int n, const DA &da) {
 /*! Compute the n-th Psi function of a DA object.
     \param[in] n order of the Psi function to compute.
     \param[in] da DA object
@@ -2502,7 +2503,7 @@ DA PsiFunction(const unsigned int n, const DA &da){
  */
     return da.PsiFunction(n);}
 
-double norm(const DA &da, unsigned int type){
+double norm(const DA &da, unsigned int type) {
 /*! Compute different types of norms for a DA object.
     \param[in] da DA object
     \param[in] type type of norm to be computed. Possible norms are:\n
@@ -2515,7 +2516,7 @@ double norm(const DA &da, unsigned int type){
  */
     return da.norm(type);}
 
-std::vector<double> orderNorm(const DA &da, const unsigned int var, const unsigned int type){
+std::vector<double> orderNorm(const DA &da, const unsigned int var, const unsigned int type) {
 /*! Compute different types of order sorted norms for terms of a DA object.
     \param[in] da DA object
     \param[in] var order\n
@@ -2531,7 +2532,7 @@ std::vector<double> orderNorm(const DA &da, const unsigned int var, const unsign
  */
     return da.orderNorm(var, type);}
 
-std::vector<double> estimNorm(const DA &da, const unsigned int var, const unsigned int type, const unsigned int nc){
+std::vector<double> estimNorm(const DA &da, const unsigned int var, const unsigned int type, const unsigned int nc) {
 /*! Estimate different types of order sorted norms for terms of a DA object
     up to a specified order.
     \param[in] da DA object
@@ -2551,7 +2552,7 @@ std::vector<double> estimNorm(const DA &da, const unsigned int var, const unsign
     return da.estimNorm(var, type, nc);}
 
 
-std::vector<double> estimNorm(const DA &da, std::vector<double> &err, const unsigned int var, const unsigned int type, const unsigned int nc){
+std::vector<double> estimNorm(const DA &da, std::vector<double> &err, const unsigned int var, const unsigned int type, const unsigned int nc) {
 /*! Estimate different types of order sorted norms for terms of a DA object
     up to a specified order with error estimates.
     \param[in] da DA object
@@ -2573,7 +2574,7 @@ std::vector<double> estimNorm(const DA &da, std::vector<double> &err, const unsi
  */
     return da.estimNorm(err, var, type, nc);}
 
-Interval bound(const DA &da){
+Interval bound(const DA &da) {
 /*! Compute lower and upper bounds of a DA object.
     \param[in] da DA object
     \return An Interval object containing both the lower and the upper bound
@@ -2583,7 +2584,7 @@ Interval bound(const DA &da){
  */
     return da.bound();}
 
-double convRadius(const DA &da, const double eps, const unsigned int type){
+double convRadius(const DA &da, const double eps, const unsigned int type) {
 /*! Estimate the convergence radius of the given DA.
     \param[in] da the given DA object
     \param[in] eps requested tolerance
@@ -2594,7 +2595,7 @@ double convRadius(const DA &da, const double eps, const unsigned int type){
  */
     return da.convRadius(eps, type);}
 
-DA plug(const DA &da, const unsigned int var, const double val){
+DA plug(const DA &da, const unsigned int var, const double val) {
 /*! Partial evaluation of a DA object. In the DA object, variable var is
     replaced by the value val. The resulting DA object is returned.
     \param[in] da DA object
@@ -2607,7 +2608,7 @@ DA plug(const DA &da, const unsigned int var, const double val){
     return da.plug(var, val);}
 
 
-DA replaceVariable(const DA &da, const unsigned int from, const unsigned int to, const double val){
+DA replaceVariable(const DA &da, const unsigned int from, const unsigned int to, const double val) {
 /*! Partial evaluation of a DA object. In the DA object, variable from is
     replaced by the value val times variable to. The resulting DA object is returned.
     \param[in] da DA object
@@ -2620,7 +2621,7 @@ DA replaceVariable(const DA &da, const unsigned int from, const unsigned int to,
  */
     return da.replaceVariable(from, to, val);}
 
-DA scaleVariable(const DA &da, const unsigned int var, const double val){
+DA scaleVariable(const DA &da, const unsigned int var, const double val) {
 /*! Scaling of an independent variable. In the DA object, variable var is
     replaced by the value val times var. The resulting DA object is returned.
     \param[in] da DA object
@@ -2632,7 +2633,7 @@ DA scaleVariable(const DA &da, const unsigned int var, const double val){
  */
     return da.scaleVariable(var, val);}
 
-DA translateVariable(const DA &da, const unsigned int var, const double a, const double c){
+DA translateVariable(const DA &da, const unsigned int var, const double a, const double c) {
 /*! Affine translation of an independent variable. In the DA object, variable var is
     replaced by a*var + c. The resulting DA object is returned.
     \param[in] da DA object
@@ -2645,7 +2646,7 @@ DA translateVariable(const DA &da, const unsigned int var, const double a, const
  */
     return da.translateVariable(var, a, c);}
 
-compiledDA compile(const DA &da){
+compiledDA compile(const DA &da) {
 /*! Compile a given DA object and create a compiledDA object.
     \return A compiled DA object
     \throw DACE::DACEException
@@ -2653,7 +2654,7 @@ compiledDA compile(const DA &da){
  */
     return da.compile();}
 
-std::string toString(const DA &da){
+std::string toString(const DA &da) {
 /*! Convert DA object to a string.
     \param[in] da DA object
     \return A string representing the DA
@@ -2663,17 +2664,17 @@ std::string toString(const DA &da){
     return da.toString();}
 
 
-void write(const DA &da, std::ostream &os){
-/*! Write binary representation of DA object to given stream os.
+void write(const DA &da, std::ostream &os) {
+/*! Write binary representation of DA object to given output stream.
     \param[in] da DA object
-    \param[in] os the output stream to write to
+    \param[in] os Output stream
     \throw DACE::DACEException
     \sa DA::write
  */
     return da.write(os);}
 
 namespace abs_cons {
-    double abs(const DA &da){
+    double abs(const DA &da) {
 /*! Absolute value of constant part.
     \param[in] da DA object
     \throw DACE::DACEException
@@ -2684,7 +2685,7 @@ namespace abs_cons {
 }
 
 namespace abs_max {
-    double abs(const DA &da){
+    double abs(const DA &da) {
 /*! Largest coefficient in absolute value.
     \param[in] da DA object
     \throw DACE::DACEException
@@ -2695,7 +2696,7 @@ namespace abs_max {
 }
 
 namespace abs_sum {
-    double abs(const DA &da){
+    double abs(const DA &da) {
 /*! Sum of absolute values of all coefficients.
     \param[in] da DA object
     \throw DACE::DACEException
@@ -2708,8 +2709,10 @@ namespace abs_sum {
 // static class variables
 const unsigned int storedDA::headerSize = daceBlobSize(NULL);
 
-// create new storedDA from an existing DA
-storedDA::storedDA(const DA &da){
+/*! Create new storedDA from an existing DA.
+    \param[in] da DA object
+ */
+storedDA::storedDA(const DA &da) {
     unsigned int len;
 
     daceExportBlob(da.m_index, NULL, len);
@@ -2718,12 +2721,16 @@ storedDA::storedDA(const DA &da){
     if(daceGetError()) DACEException();
 }
 
-// create new storedDA by copying from a buffer
-storedDA::storedDA(const std::vector<char> &data) : std::vector<char>(data){
+/*! Create new storedDA by copying from a buffer.
+    \param[in] data vector of bytes
+ */
+storedDA::storedDA(const std::vector<char> &data) : std::vector<char>(data) {
 }
 
-// create a new storedDA by reading from a stream
-storedDA::storedDA(std::istream &is) : std::vector<char>(storedDA::headerSize){
+/*! Create a new storedDA by reading from a stream.
+    \param[in] is Input stream
+ */
+storedDA::storedDA(std::istream &is) : std::vector<char>(storedDA::headerSize) {
     // read blob header
     is.read(data(), headerSize);
     if(is.gcount() != headerSize)
@@ -2750,8 +2757,10 @@ storedDA::storedDA(std::istream &is) : std::vector<char>(storedDA::headerSize){
     }
 }
 
-// return if this storedDA data appears to be valid
-bool storedDA::isValid() const{
+/*! Return if this storedDA data appears to be valid.
+    \return true if storedDA appears valid
+ */
+bool storedDA::isValid() const {
     const size_t s1 = size();
     // check first that we have the minimum amount of data for the DACE blob header
     if(s1 < headerSize)
@@ -2766,13 +2775,17 @@ bool storedDA::isValid() const{
     return s1 >= s2;
 }
 
-// convert data to string
-storedDA::operator std::string() const{
+/*! Convert stored data to string.
+    \return string of the data
+ */
+storedDA::operator std::string() const {
     return std::string(data(), size());
 }
 
-// convert to DA
-storedDA::operator DA() const{
+/*! Convert storedDA back to DA.
+    \return DA
+ */
+storedDA::operator DA() const {
     DA da;
 
     if(isValid())
@@ -2788,7 +2801,10 @@ storedDA::operator DA() const{
     return da;
 }
 
-// write binary data to ostream
+/*! Write binary data to output stream.
+    \param[in] out Output stream
+    \param[in] sda storedDA
+ */
 std::ostream& operator<<(std::ostream &out, const storedDA &sda) {
     out.write(sda.data(), sda.size());
 

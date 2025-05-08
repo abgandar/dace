@@ -45,8 +45,8 @@ template<> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA>
 {
 /*! Output operator for DA matrices.
     \param[in] out Output stream
-    \param[in] obj AlgebraicMatrix<DA> to be printed to the stream
-    \return The output stream
+    \param[in] obj AlgebraicMatrix<DA> to be output to the stream
+    \return Output stream
  */
     const unsigned int nrows = obj.nrows();
     const unsigned int ncols = obj.ncols();
@@ -63,10 +63,10 @@ template<> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA>
 }
 
 template<> std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj){
-/*! Specialized stream input operator for DA matrices.
+/*! Input operator for DA matrices.
     \param[in] in Input stream
     \param[out] obj AlgebraicMatrix<DA> to be read from the stream
-    \return The input stream
+    \return Input stream
 */
     // read the first line
     std::string line;

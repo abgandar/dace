@@ -702,4 +702,5 @@ unsigned int daceIsInf(const DACEDA *ina)
     }
     return false;
 }
+
 /** @}*/

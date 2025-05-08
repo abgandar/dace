@@ -35,7 +35,7 @@
 #include "dace/Monomial.h"
 #include "dace/DA.h"
 
-namespace DACE{
+namespace DACE {
 
 Monomial::Monomial() : m_jj(DA::getMaxVariables()), m_coeff(0.0) {
 /*! Create a Monomial object large enough to hold all current monomials.

@@ -2236,4 +2236,5 @@ void daceWeightedSum(const DACEDA *ina, const double afac, const DACEDA *inb, co
 
     daceSetLength(inc, ic-ipoc);
 }
+
 /** @}*/

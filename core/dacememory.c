@@ -44,9 +44,9 @@
 
 
 // Global DACE data structure allocation
-dacecom DACECom = { 0 };                        // !< DACE common data block for all threads
-DACE_THREAD_LOCAL dacecom_t DACECom_t = { 0 };  // !< DACE common block with local data for each thread
-DACE_THREAD_LOCAL dacedbg DACEDbg = { 0 };      // !< DACE common block for error handling
+dacecom DACECom = { 0 };                        //!< DACE common data block for all threads
+DACE_THREAD_LOCAL dacecom_t DACECom_t = { 0 };  //!< DACE common block with local data for each thread
+DACE_THREAD_LOCAL dacedbg DACEDbg = { 0 };      //!< DACE common block for error handling
 
 
 // The DACE has three types of memory allocators
