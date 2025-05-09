@@ -26,9 +26,9 @@
  *      Author: Dinamica Srl
  */
 
-/*! \file
+/*! @file
 
-    \brief Simple storage class for a single monomial
+    @brief Simple storage class for a single monomial
 
     The Monomial class represents a single monomial, containing a vector of exponents
     and the corresponding coefficient. This class is only used for user convenience

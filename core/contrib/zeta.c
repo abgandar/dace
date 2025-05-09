@@ -61,7 +61,7 @@ Copyright 1984, 1987, 2000 by Stephen L. Moshier
 Modified interface by Alexander Wittig, November 2019.
 */
 
-/** \addtogroup DACEContrib Contrib
+/** @addtogroup DACEContrib Contrib
  *  @{
  */
 

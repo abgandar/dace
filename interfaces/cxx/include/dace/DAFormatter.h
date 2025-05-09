@@ -26,9 +26,9 @@
  *      Author: Dinamica Srl
  */
 
-/*! \file
+/*! @file
 
-    \brief Formatters allow printing of DAs in a variety of formats other than the standard output
+    @brief Formatters allow printing of DAs in a variety of formats other than the standard output
 
     The standard output format of DA via the C++ iostream interface provides a human-readable text
     representation of a DA vector. In some circumstances it is preferable to print a DA vector in
@@ -41,12 +41,12 @@
     and LaTeX code.
 
     Example:
-    \code
+    @code
         DASimpleFormatter sf(DASimpleFormatter::LATEX);
         DA x = sin(DA(1));
         std::string res = sf.format(x);
         // res now is "+1 \cdot x_{1} -0.1666666666666667 \cdot x_{1}^{3} +0.008333333333333333 \cdot x_{1}^{5}"
-    \endcode
+    @endcode
 */
 
 #ifndef DINAMICA_DAFORMATTER_H_
@@ -66,14 +66,14 @@ class DACE_API DAFormatter
 {
 public:
     /*! Format a single DA and return a string representation.
-        \param da DA object
-        \return formatted string representation
+        @param da DA object
+        @return formatted string representation
      */
     virtual std::string format(const DA &da) = 0;
     /*! Format a vector of DAs and return a string representation.
         Usually this just formats each DA one after the other.
-        \param da vector of DA objects
-        \return formatted string representation
+        @param da vector of DA objects
+        @return formatted string representation
      */
     virtual std::string format(const std::vector<DA> &da) = 0;
 };
@@ -93,7 +93,7 @@ public:
 
         mul << var << pre_var << i+first_var << post_var
 
-    \sa DASimpleFormatter
+    @see DASimpleFormatter
 */
 struct DASimpleFormat {
     std::string pos, neg, mul, pre_pow, var, pre_var, post_var, pow, post_pow, linebreak;

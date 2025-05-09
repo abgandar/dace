@@ -45,11 +45,11 @@ namespace DACE {
 #ifdef WITH_ALGEBRAICMATRIX
 template<> AlgebraicMatrix<double> AlgebraicVector<DA>::linear() const {
 /*! Return the linear part of a AlgebraicVector<T>. NOT DEFINED FOR TYPES OTHER THAN DA.
-    \return A AlgebraicMatrix<double> of dimension size by nvar, where size is the
+    @return A AlgebraicMatrix<double> of dimension size by nvar, where size is the
     size of the AlgebraicVector<T> considered and nvar is the number of variables defined
     during the DACE initialization. Each row contains the linear part of the corresponding
     DA included in the original AlgebraicVector<T>.
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler
     error will be the result.
  */
@@ -65,9 +65,9 @@ template<> AlgebraicMatrix<double> AlgebraicVector<DA>::linear() const {
 #else
 template<> std::vector< std::vector<double> > AlgebraicVector<DA>::linear() const {
 /*! Return the linear part of a AlgebraicVector<T>. NOT DEFINED FOR TYPES OTHER THAN DA.
-    \return A std::vector< std::vector<double> >, where each std::vector<double> contains
+    @return A std::vector< std::vector<double> >, where each std::vector<double> contains
     the linear part of the corresponding DA included in the original AlgebraicVector<T>
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
  */
     const size_t size = this->size();
@@ -82,10 +82,10 @@ template<> std::vector< std::vector<double> > AlgebraicVector<DA>::linear() cons
 
 template<> AlgebraicVector<DA> AlgebraicVector<DA>::trim(const unsigned int min, const unsigned int max) const {
 /*! Returns an AlgebraicVector<DA> with all monomials of order less than min and greater than max removed (trimmed). The result is copied in a new AlgebraicVector<DA>.
-    \param[in] min minimum order to be preserved
-    \param[in] max maximum order to be preserved
-    \return A new AlgebraicVector<DA>
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] min minimum order to be preserved
+    @param[in] max maximum order to be preserved
+    @return A new AlgebraicVector<DA>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
 */
     AlgebraicVector<DA> tmp(this->size());
@@ -102,9 +102,9 @@ template<> AlgebraicVector<DA> AlgebraicVector<DA>::trim(const unsigned int min,
 template<> AlgebraicVector<DA> AlgebraicVector<DA>::deriv(const unsigned int p) const {
 /*! Compute the derivative of a AlgebraicVector<T> with respect to variable p.
     The result is copied in a new AlgebraicVector<T>. NOT DEFINED FOR TYPES OTHER THAN DA.
-    \param[in] p variable with respect to which the derivative is calculated
-    \return A new AlgebraicVector<T>
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] p variable with respect to which the derivative is calculated
+    @return A new AlgebraicVector<T>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
  */
     const size_t size = this->size();
@@ -118,9 +118,9 @@ template<> AlgebraicVector<DA> AlgebraicVector<DA>::deriv(const unsigned int p) 
 template<> AlgebraicVector<DA> AlgebraicVector<DA>::integ(const unsigned int p) const {
 /*! Compute the integral of a AlgebraicVector<T> with respect to variable p.
     The result is copied in a new AlgebraicVector<T>. NOT DEFINED FOR TYPES OTHER THAN DA.
-    \param[in] p variable with respect to which the integral is calculated.
-    \return A new AlgebraicVector<T>
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] p variable with respect to which the integral is calculated.
+    @return A new AlgebraicVector<T>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
  */
     const size_t size = this->size();
@@ -136,8 +136,8 @@ template<> AlgebraicVector<DA> AlgebraicVector<DA>::integ(const unsigned int p) 
 ************************************************************************************/
 template<> compiledDA AlgebraicVector<DA>::compile() const {
 /*! Compile vector of polynomials and create a compiledDA object.
-    \return The compiled DA object
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @return The compiled DA object
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
  */
     return compiledDA(*this);
@@ -146,10 +146,10 @@ template<> compiledDA AlgebraicVector<DA>::compile() const {
 template<> AlgebraicVector<DA> AlgebraicVector<DA>::plug(const unsigned int var, const double val) const {
 /*! Partial evaluation of vector of polynomials. In each element of the vector,
     variable var is replaced by the value val. The resulting vector of DAs is returned.
-    \param[in] var variable number to be replaced
-    \param[in] val value by which to replace the variable
-    \return A new DA object
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] var variable number to be replaced
+    @param[in] val value by which to replace the variable
+    @return A new DA object
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
  */
     const size_t size = this->size();
@@ -161,7 +161,7 @@ template<> AlgebraicVector<DA> AlgebraicVector<DA>::plug(const unsigned int var,
 }
 
 #ifndef WITH_ALGEBRAICMATRIX
-/*! \cond */
+/*! @cond */
 /* Internal routine to compute a matrix inverse of a double precision matrix.
    Algorithm based on the Gauss elimination with full pivot (from the Numerical
    Cookbook) adapted for C++. This is the same algorithm but a different
@@ -207,14 +207,14 @@ template<> void AlgebraicVector<DA>::matrix_inverse(std::vector< std::vector<dou
             for (size_t k=0; k<n; k++)
                 std::swap(A[k][indexr[i-1]], A[k][indexc[i-1]]);
 }
-/*! \endcond */
+/*! @endcond */
 #endif /* WITH_ALGEBRAICMATRIX */
 
 template<> AlgebraicVector<DA> AlgebraicVector<DA>::invert() const {
 /*! Invert the polynomials map given by the AlgebraicVector<DA>.
-    \return the inverted polynomials
-    \throw std::runtime_error
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @return the inverted polynomials
+    @throw std::runtime_error
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
 */
     const unsigned int ord = DA::getTO();
@@ -275,9 +275,9 @@ template<> AlgebraicVector<DA> AlgebraicVector<DA>::invert() const {
 *********************************************************************************/
 template<> AlgebraicVector<DA> AlgebraicVector<DA>::identity(const size_t n) {
 /*! Return the DA identity of dimension n.
-    \param[in] n The dimension
-    \return AlgebraicVector<DA> containing the DA identity in n dimensions
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] n The dimension
+    @return AlgebraicVector<DA> containing the DA identity in n dimensions
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler
     error will be the result.
  */
@@ -294,24 +294,24 @@ template<> AlgebraicVector<DA> AlgebraicVector<DA>::identity(const size_t n) {
 #ifdef WITH_ALGEBRAICMATRIX
 template<> AlgebraicMatrix<double> linear(const AlgebraicVector<DA> &obj) {
 /*! Return the linear part of a AlgebraicVector<T>.
-    \param[in] obj AlgebraicVector<T> to extract linear part from
-    \return An AlgebraicMatrix<double> of dimensions size by nvar, where
+    @param[in] obj AlgebraicVector<T> to extract linear part from
+    @return An AlgebraicMatrix<double> of dimensions size by nvar, where
     size is the size of the AlgebraicVector<T> considered and nvar is the
     number of variables defined during the DACE initialization.
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler
     error will be the result.
-    \sa AlgebraicVector<T>::linear
+    @see AlgebraicVector<T>::linear
  */
 #else
 template<> std::vector< std::vector<double> > linear(const AlgebraicVector<DA> &obj) {
 /*! Return the linear part of a AlgebraicVector<T>. Only defined for AlgebraicVector<DA>.
-    \param[in] obj AlgebraicVector<T> to extract linear part from
-    \return A std::vector< std::vector<double> > containing the linear parts of
+    @param[in] obj AlgebraicVector<T> to extract linear part from
+    @return A std::vector< std::vector<double> > containing the linear parts of
     each component of the AlgebraicVector<DA> obj
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
-    \sa AlgebraicVector<T>::linear
+    @see AlgebraicVector<T>::linear
  */
 #endif /* WITH_ALGEBRAICMATRIX */
     return obj.linear();
@@ -320,46 +320,46 @@ template<> std::vector< std::vector<double> > linear(const AlgebraicVector<DA> &
 template<> AlgebraicVector<DA> trim(const AlgebraicVector<DA> &obj, unsigned int min, unsigned int max) {
 /*! Returns an AlgebraicVector<DA> with all monomials of order less
     than min and greater than max removed (trimmed).
-    \param[in] obj the AlgebraicVector<DA> to be trimmed
-    \param[in] min minimum order to be preserved
-    \param[in] max maximum order to be preserved
-    \return A new AlgebraicVector<DA>
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] obj the AlgebraicVector<DA> to be trimmed
+    @param[in] min minimum order to be preserved
+    @param[in] max maximum order to be preserved
+    @return A new AlgebraicVector<DA>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
-    \sa AlgebraicVector<T>::trim
+    @see AlgebraicVector<T>::trim
 */
     return obj.trim(min, max);
 }
 
 template<> AlgebraicVector<DA> deriv(const AlgebraicVector<DA> &obj, const unsigned int p) {
 /*! Compute the derivative of a AlgebraicVector<T> with respect to variable p.
-    \param[in] obj AlgebraicVector<T>
-    \param[in] p variable with respect to which the derivative is calculated
-    \return A new AlgebraicVector<T>
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] obj AlgebraicVector<T>
+    @param[in] p variable with respect to which the derivative is calculated
+    @return A new AlgebraicVector<T>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
-    \sa AlgebraicVector<T>::deriv
+    @see AlgebraicVector<T>::deriv
  */
     return obj.deriv(p);
 }
 
 template<> AlgebraicVector<DA> integ(const AlgebraicVector<DA> &obj, const unsigned int p) {
 /*! Compute the integral of a AlgebraicVector<T> with respect to variable p.
-    \param[in] obj AlgebraicVector<T>
-    \param[in] p variable with respect to which the integral is calculated
-    \return A new AlgebraicVector<T> containing the result of the integration
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] obj AlgebraicVector<T>
+    @param[in] p variable with respect to which the integral is calculated
+    @return A new AlgebraicVector<T> containing the result of the integration
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
-    \sa AlgebraicVector<T>::integ
+    @see AlgebraicVector<T>::integ
  */
     return obj.integ(p);
 }
 
 template<> compiledDA compile(const AlgebraicVector<DA> &obj) {
 /*! Compile vector of polynomials and create a compiledDA object.
-    \param[in] obj The AlgebraicVector to compile
-    \return The compiled DA object
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] obj The AlgebraicVector to compile
+    @return The compiled DA object
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
  */
     return obj.compile();
@@ -369,11 +369,11 @@ template<> AlgebraicVector<DA> plug(const AlgebraicVector<DA> &obj, const unsign
 /*! Partial evaluation of vector of polynomials. In each element of the vector,
     variable var is replaced by the value val. The resulting vector of DAs
     is returned.
-    \param[in] obj The vector to partially evaluate
-    \param[in] var Variable number to be replaced
-    \param[in] val Value by which to replace the variable
-    \return A new DA object
-    \note This DA specific function is only available in AlgebraicVector<DA>.
+    @param[in] obj The vector to partially evaluate
+    @param[in] var Variable number to be replaced
+    @param[in] val Value by which to replace the variable
+    @return A new DA object
+    @note This DA specific function is only available in AlgebraicVector<DA>.
     When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
  */
     return obj.plug(var, val);

@@ -39,7 +39,7 @@ namespace DACE {
 *********************************************************************************/
 compiledDA::compiledDA(const compiledDA &cda) {
 /*! Create a copy of a compiledDA object.
-    \param[in] cda compiled DA object to be copied
+    @param[in] cda compiled DA object to be copied
  */
     dim = cda.dim;
     terms = cda.terms;
@@ -51,8 +51,8 @@ compiledDA::compiledDA(const compiledDA &cda) {
 
 compiledDA::compiledDA(const std::vector<DA> &da) {
 /*! Create a vector of compiledDA objects from a vector of DA objects.
-    \param[in] da vector of DA objects
-    \throw DACE::DACEException
+    @param[in] da vector of DA objects
+    @throw DACE::DACEException
  */
     dim = (unsigned int)da.size();
     if(dim<1) DACEException(16,04);
@@ -71,8 +71,8 @@ compiledDA::compiledDA(const std::vector<DA> &da) {
 
 compiledDA::compiledDA(const DA &da) {
 /*! Create a compiledDA object from a DA object.
-    \param[in] da vector
-    \throw DACE::DACEException
+    @param[in] da vector
+    @throw DACE::DACEException
  */
     ac = new double[DA::getMaxMonomials()*3];
     dim = 1;
@@ -97,8 +97,8 @@ compiledDA::~compiledDA() throw() {
 compiledDA& compiledDA::operator=(const compiledDA &cda) {
 /*! Copy the content of a given compiledDA object into the current
     compiledDA (the one the method belongs to).
-    \param[in] cda compiledDA vector to be copied
-    \return The compiledDA object with the same content of the given compiledDA
+    @param[in] cda compiledDA vector to be copied
+    @return The compiledDA object with the same content of the given compiledDA
  */
     if(this != &cda){
         dim = cda.dim;
@@ -193,35 +193,35 @@ template<> void compiledDA::eval(const std::vector<DA> &args, std::vector<DA> &r
 *     Member access routines
 *********************************************************************************/
 /*! Return the coefficient array.
-    \return coefficient array
+    @return coefficient array
  */
 const double* compiledDA::getAc() const {
     return this->ac;
 }
 
 /*! Return the number of DAs (dimension).
-    \return dimension
+    @return dimension
  */
 unsigned int compiledDA::getDim() const {
     return this->dim;
 }
 
 /*! Return the maximum order.
-    \return maximum order
+    @return maximum order
  */
 unsigned int compiledDA::getOrd() const {
     return this->ord;
 }
 
 /*! Return the maximum number of variables.
-    \return maximum number of variables
+    @return maximum number of variables
  */
 unsigned int compiledDA::getVars() const {
     return this->vars;
 }
 
 /*! Return the number of terms.
-    \return number of terms
+    @return number of terms
  */
 unsigned int compiledDA::getTerms() const {
     return this->terms;

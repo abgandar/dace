@@ -26,7 +26,7 @@
  *      Author: Politecnico di Milano
  */
 
-/** \addtogroup DACE Core
+/** @addtogroup DACE Core
  *  @{
  */
 
@@ -43,13 +43,13 @@
  *********************************************************************************/
 
 /*! Print the DA object ina to string strs (of line length DACE_STRLEN).
-    \param[in] ina Pointer to the DA object to be printed
-    \param[out] strs C array of size (nmmax+2)*DACE_STRLEN containing the
+    @param[in] ina Pointer to the DA object to be printed
+    @param[out] strs C array of size (nmmax+2)*DACE_STRLEN containing the
     zero-terminated lines of length DACE_STRLEN
-    \param[out] nstrs Pointer where to store the final number of strings printed
-    \sa daceRead
-    \sa dacePrint
-    \note The format of the output is written in DACE format which is loosely
+    @param[out] nstrs Pointer where to store the final number of strings printed
+    @see daceRead
+    @see dacePrint
+    @note The format of the output is written in DACE format which is loosely
     based on the format used by COSY INFINITY but is not fully compatible to it.
  */
 void daceWrite(const DACEDA *ina, char *strs, unsigned int *nstrs)
@@ -111,13 +111,13 @@ void daceWrite(const DACEDA *ina, char *strs, unsigned int *nstrs)
 
 /*! Read a DA object ina from a human readable string representation in strs,
     containing nstrs contiguous zero-terminated lines of line length DACE_STRLEN.
-    \param[out] ina Pointer to the DA object to read into
-    \param[in] strs C array of size nstrs*DACE_STRLEN containing the
+    @param[out] ina Pointer to the DA object to read into
+    @param[in] strs C array of size nstrs*DACE_STRLEN containing the
     zero-terminated lines of length DACE_STRLEN
-    \param[in] nstrs Number of lines in strs
-    \sa daceWrite
-    \sa dacePrint
-    \note This routine can read both DACE output strings as well as some COSY INFINITY
+    @param[in] nstrs Number of lines in strs
+    @see daceWrite
+    @see dacePrint
+    @note This routine can read both DACE output strings as well as some COSY INFINITY
     formated strings. COSY INFINITY input is limited to less than 16 variables
     (i.e. a single line per coefficient).
  */
@@ -330,9 +330,9 @@ void daceRead(DACEDA *ina, char* strs, unsigned int nstrs)
 }
 
 /*! Print a DA object ina to the standard output.
-    \param[out] ina Pointer to the DA object to printed
-    \sa daceWrite
-    \sa daceRead
+    @param[out] ina Pointer to the DA object to printed
+    @see daceWrite
+    @see daceRead
  */
 void dacePrint(const DACEDA *ina)
 {
@@ -379,13 +379,13 @@ void dacePrint(const DACEDA *ina)
     The binary data is not supposed to be modified and its format is considered
     internal to the DACE. It is guaranteed that a binary representation can
     be read back into a DA object even with differently initialized settings.
-    \param[in] ina The DA object to export
-    \param[inout] blob Pointer to memory where to store the data
-    \param[inout] size On input contains the size (in bytes) of the memory
+    @param[in] ina The DA object to export
+    @param[inout] blob Pointer to memory where to store the data
+    @param[inout] size On input contains the size (in bytes) of the memory
     pointed to by blob. On output contains the actual amount of memory used.
-    \return Returns 0 is the entire DA object was exported successfully or the
+    @return Returns 0 is the entire DA object was exported successfully or the
     number of truncated monomials if the object was truncated
-    \note If blob is NULL, the value returned in size is the size (in bytes) of
+    @note If blob is NULL, the value returned in size is the size (in bytes) of
     the memory needed to store the entire DA object.
 */
 unsigned int daceExportBlob(const DACEDA *ina, void *blob, unsigned int *size)
@@ -432,13 +432,13 @@ unsigned int daceExportBlob(const DACEDA *ina, void *blob, unsigned int *size)
 }
 
 /*! Determine the total size (in byte) of a DACE blob.
-    \param[in] blob Pointer to memory where the data is stored
-    \note If called with blob==NULL, the routine will return the minimum size
+    @param[in] blob Pointer to memory where the data is stored
+    @note If called with blob==NULL, the routine will return the minimum size
     of data that must be read in order to determine the total size. A user can
     therefore call this routine twice: first with NULL to determine the size
     of the blob header to read, and then a second time with the header to determine
     the size of the remaining data.
-    \return The total size (in bytes) of the DACE blob, or 0 on error (e.g. when
+    @return The total size (in bytes) of the DACE blob, or 0 on error (e.g. when
     the data pointed to by blob is not a DACE blob at all). If blob is NULL, the
     minimum size (in bytes) of a blob (i.e. the blob header size) is returned.
 */
@@ -460,9 +460,9 @@ unsigned int daceBlobSize(const void *blob)
 }
 
 /*! Import a DA object in a binary format.
-    \param[in] blob Pointer to memory where the data is stored
-    \param[in] inc The DA object to import into
-    \note This routine will silently truncate orders above the currently set
+    @param[in] blob Pointer to memory where the data is stored
+    @param[in] inc The DA object to import into
+    @note This routine will silently truncate orders above the currently set
     maximum computation order as well as any extra variables present.
 */
 void daceImportBlob(const void *blob, DACEDA *inc)

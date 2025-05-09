@@ -26,13 +26,13 @@
  *      Author: Politecnico di Milano
  */
 
-/** \addtogroup DACE Core
+/** @addtogroup DACE Core
  *  @{
  */
 
-/*! \file
+/*! @file
 
-    \brief DACE core public functions and structures.
+    @brief DACE core public functions and structures.
 
     This file contains all routines in the public interface to the DACE core.
     DACE core users or high level interfaces should include this file indirectly

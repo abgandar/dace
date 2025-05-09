@@ -26,7 +26,7 @@
  *      Author: Politecnico di Milano
  */
 
-/** \addtogroup DACE Core
+/** @addtogroup DACE Core
  *  @{
  */
 
@@ -46,8 +46,8 @@
  ********************************************************************************/
 
 /*! Return the current error XYY code.
-    \return The error code in XYY form
-    \sa daceerror.h
+    @return The error code in XYY form
+    @see daceerror.h
 */
 unsigned int daceGetError()
 {
@@ -55,8 +55,8 @@ unsigned int daceGetError()
 }
 
 /*! Return the current error X code.
-    \return The X error code X
-    \sa daceerror.h
+    @return The X error code X
+    @see daceerror.h
 */
 unsigned int daceGetErrorX()
 {
@@ -64,8 +64,8 @@ unsigned int daceGetErrorX()
 }
 
 /*! Return the current error YY code.
-    \return The YY error code
-    \sa daceerror.h
+    @return The YY error code
+    @see daceerror.h
 */
 unsigned int daceGetErrorYY()
 {
@@ -73,7 +73,7 @@ unsigned int daceGetErrorYY()
 }
 
 /*! Return the function name of current generated error.
-    \return The function name originating the error.
+    @return The function name originating the error.
 */
 const char* daceGetErrorFunName()
 {
@@ -81,8 +81,8 @@ const char* daceGetErrorFunName()
 }
 
 /*! Return the current error message.
-    \return The current error message string
-    \sa daceerror.h
+    @return The current error message string
+    @see daceerror.h
 */
 const char* daceGetErrorMSG()
 {
@@ -130,10 +130,10 @@ void daceClearError()
 
       Currently used error codes XYY are defined in daceerror.h
 
-      \param[in] c an error string representing the error
-      \param[in] ix is the error severity code
-      \param[in] iyy is the error code
-      \sa daceerror.h
+      @param[in] c an error string representing the error
+      @param[in] ix is the error severity code
+      @param[in] iyy is the error code
+      @see daceerror.h
  */
 
 void daceSetError(const char *c, const unsigned int ix, const unsigned int iyy)

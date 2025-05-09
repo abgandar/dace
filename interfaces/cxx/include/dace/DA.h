@@ -26,9 +26,9 @@
  *      Author: Dinamica Srl
  */
 
-/*! \file
+/*! @file
 
-    \brief Main DA class and related utilities.
+    @brief Main DA class and related utilities.
 
     This header file contains the DA class representing a single DA polynomial.
     It implements an object oriented interface to access all math function, as

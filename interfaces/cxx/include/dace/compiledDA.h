@@ -26,9 +26,9 @@
  *      Author: Dinamica Srl
  */
 
-/*! \file
+/*! @file
 
-    \brief DA representation for efficient repeated evaluation.
+    @brief DA representation for efficient repeated evaluation.
 
     This header file contains the compiledDA class for a representation of one
     or more DA objects that is prepared ("compiled") for efficient repeated evaluation.

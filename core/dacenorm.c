@@ -26,7 +26,7 @@
  *      Author: Politecnico di Milano
  */
 
-/** \addtogroup DACE Core
+/** @addtogroup DACE Core
  *  @{
  */
 
@@ -43,12 +43,12 @@
  *********************************************************************************/
 
 /*! Compute a norm of a DA object.
-    \param[in] ina Pointer to the DA object to take norm of
-    \param[in] ityp Type of norm to compute.
+    @param[in] ina Pointer to the DA object to take norm of
+    @param[in] ityp Type of norm to compute.
      0 = max norm
      1 = sum norm
     >1 = corresponding vector norm
-    \return The norm of ina
+    @return The norm of ina
 */
 double daceNorm(const DACEDA *ina, const unsigned int ityp)
 {
@@ -80,15 +80,15 @@ double daceNorm(const DACEDA *ina, const unsigned int ityp)
 }
 
 /*! Compute an order sorted norm of a DA object.
-    \param[in] ina Pointer to the DA object to take norm of
-    \param[in] ivar Independent variable with respect to which to group.
+    @param[in] ina Pointer to the DA object to take norm of
+    @param[in] ivar Independent variable with respect to which to group.
      0 = group by monomial order
     >1 = group by given independent variable
-    \param[in] ityp Type of norm to compute.
+    @param[in] ityp Type of norm to compute.
      0 = max norm
      1 = sum norm
     >1 = corresponding vector norm
-    \param[out] onorm C array of length nomax+1 containing the grouped estimates
+    @param[out] onorm C array of length nomax+1 containing the grouped estimates
 */
 void daceOrderedNorm(const DACEDA *ina, const unsigned int ivar, const unsigned int ityp, double onorm[])
 {
@@ -180,20 +180,20 @@ void daceOrderedNorm(const DACEDA *ina, const unsigned int ivar, const unsigned 
 }
 
 /*! Estimate order sorted norms of DA object ina up to given order.
-    \param[in] ina Pointer to the DA object to take norm of
-    \param[in] ivar Independent variable with respect to which to group
+    @param[in] ina Pointer to the DA object to take norm of
+    @param[in] ivar Independent variable with respect to which to group
      0 = group by monomial order
     >1 = group by given independent variable
-    \param[in] ityp Type of norm to compute
+    @param[in] ityp Type of norm to compute
      0 = max norm
      1 = sum norm
     >1 = corresponding vector norm
-    \param[in] nc Maximum order to estimate
-    \param[out] c C array of length nc+1 containing the grouped estimates
-    \param[out] err C array of length min(nc, nomax)+1 containing the residuals
+    @param[in] nc Maximum order to estimate
+    @param[out] c C array of length nc+1 containing the grouped estimates
+    @param[out] err C array of length min(nc, nomax)+1 containing the residuals
     of the exponential fit at each order. If NULL is passed in, no residuals
     are computed and returned.
-    \note If estimation is not possible, zero is returned for all
+    @note If estimation is not possible, zero is returned for all
     requested orders. In most cases this is actually not too far off.
 */
 void daceEstimate(const DACEDA *ina, const unsigned int ivar, const unsigned int ityp, double c[], double err[], const unsigned int nc)
@@ -265,9 +265,9 @@ void daceEstimate(const DACEDA *ina, const unsigned int ivar, const unsigned int
 }
 
 /*! Compute an upper and lower bound of DA object ina over the domain [-1,1]^n.
-    \param[in] ina Pointer to the DA object to bound
-    \param[out] alo Pointer where to store the lower bound
-    \param[out] aup Pointer where to store the upper bound
+    @param[in] ina Pointer to the DA object to bound
+    @param[out] alo Pointer where to store the lower bound
+    @param[out] aup Pointer where to store the upper bound
 */
 void daceGetBounds(const DACEDA *ina, double *alo, double *aup)
 {

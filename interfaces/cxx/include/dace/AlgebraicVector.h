@@ -26,9 +26,9 @@
  *      Author: Dinamica Srl
  */
 
-/*! \file
+/*! @file
 
-    \brief Main AlgebraicVector class.
+    @brief Main AlgebraicVector class.
 
     This header file contains the AlgebraicVector class to simplify math using vectors
     of any algebraic type, including DA and double. It derives from std::vector, so
@@ -64,28 +64,28 @@ public:
     */
     AlgebraicVector() : std::vector<T>() {};
     /*! Constructor with size to allocate a vector of the given size with elements initialized using their default constructor.
-        \param[in] size initial length of the AlgebraicVector.
+        @param[in] size initial length of the AlgebraicVector.
     */
     explicit AlgebraicVector(const size_t size) : std::vector<T>(size) {};
     /*! Constructor with size and value to allocate a vector of the given size with elements initialized as copies of d.
-        \param[in] size initial length of the AlgebraicVector.
-        \param[in] d    initial value for the elements
+        @param[in] size initial length of the AlgebraicVector.
+        @param[in] d    initial value for the elements
     */
     AlgebraicVector(const size_t size, const T &d) : std::vector<T>(size, d) {};
     /*! Copy constructor to create a copy of any existing vector.
-        \param[in] v vector to be copied into AlgebraicVector
+        @param[in] v vector to be copied into AlgebraicVector
     */
     AlgebraicVector(const std::vector<T> &v) : std::vector<T>(v) {};
     /*! Extraction constructor to copy only a given range of elements from vector v.
-        \param[in] v vector to be copied into AlgebraicVector
-        \param[in] first index of the first element to be copied
-        \param[in] last index of the last element to be copied
-        \note The constructor does not perform any range checking for the extraction.
-        \sa AlgebraicVector<T>::extract
+        @param[in] v vector to be copied into AlgebraicVector
+        @param[in] first index of the first element to be copied
+        @param[in] last index of the last element to be copied
+        @note The constructor does not perform any range checking for the extraction.
+        @see AlgebraicVector<T>::extract
     */
     AlgebraicVector(const std::vector<T> &v, const size_t first, const size_t last) : std::vector<T>(v.begin()+first, v.begin()+last+1) {};
     /*! Constructor to create a vector from an initializer list.
-        \param[in] l braced initializer list to be copied into the AlgebraicVector
+        @param[in] l braced initializer list to be copied into the AlgebraicVector
     */
     AlgebraicVector(std::initializer_list<T> l) : std::vector<T>(l) {};
 

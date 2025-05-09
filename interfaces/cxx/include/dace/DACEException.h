@@ -26,9 +26,9 @@
  *      Author: Dinamica Srl
  */
 
-/*! \file
+/*! @file
 
-    \brief DACE Exceptions are thrown when a DA operations fails within the C++ interface.
+    @brief DACE Exceptions are thrown when a DA operations fails within the C++ interface.
 
     The DACEException class contains methods for error handling within the DACE C++ interface.
     Whenever an error occurs during a DA operation either nothing happens, a warning is printed,

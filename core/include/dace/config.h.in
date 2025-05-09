@@ -26,13 +26,13 @@
  *      Author: University of Southampton
  */
 
-/** \addtogroup DACE Core
+/** @addtogroup DACE Core
  *  @{
  */
 
-/*! \file
+/*! @file
 
-    \brief Build-time DACE configuration options.
+    @brief Build-time DACE configuration options.
 
     This file contains the build time configuration options used for building the DACE library.
 */

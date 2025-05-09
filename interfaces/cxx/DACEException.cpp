@@ -61,8 +61,8 @@ namespace DACE {
     DACEException::DACEException(const int exc_sv, const int exc_id) {
     /*! Create a DACEException object with given severity and ID codes.
         Execute the appropriate action for the exception based on current settings.
-        \param exc_sv severity code of the error
-        \param exc_id ID code of the error
+        @param exc_sv severity code of the error
+        @param exc_id ID code of the error
      */
         m_x = exc_sv;
         m_yy = exc_id;
@@ -182,7 +182,7 @@ namespace DACE {
 
     void DACEException::execute() const {
     /*! Execute this exception, i.e. throw or print warning based on current settings.
-        \throw DACE::DACEException
+        @throw DACE::DACEException
      */
         const int sev = m_x%11; // modulo 11 to handle both DACE core and C++ interface severity codes
 
@@ -198,7 +198,7 @@ namespace DACE {
     *********************************************************************************/
     const char* DACEException::what() const throw() {
     /*! Return a human readable error string representing this exception.
-        \return A C string containing the error message
+        @return A C string containing the error message
      */
         return msg.c_str();
     }
@@ -217,14 +217,14 @@ namespace DACE {
                        reinitialize DACE, interface objects are no longer valid\n
         10 = Critical: Crash in the DACE, just printing as much as possible
                        and dying.
-        \param n severity value
+        @param n severity value
      */
         severity = n;
     }
 
     void DACEException::setWarning(const bool w){
     /*! Set the current mode for printing of warnings.
-        \param w warning status: print warnings if true
+        @param w warning status: print warnings if true
      */
         warning = w;
     }
@@ -234,9 +234,9 @@ namespace DACE {
     *********************************************************************************/
     std::ostream& operator<< (std::ostream &out, const DACEException &ex){
     /*! Output operator.
-        \param[in] out output stream
-        \param[in] ex Exception to be printed to the stream
-        \return Output stream
+        @param[in] out output stream
+        @param[in] ex Exception to be printed to the stream
+        @return Output stream
      */
         return out << ex.msg << std::endl;
     }

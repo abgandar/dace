@@ -26,9 +26,9 @@
  *      Author: Alexander Wittig
  */
 
-/*! \file
+/*! @file
 
-    \brief Boost library boost::numeric::odeint compatibility shim
+    @brief Boost library boost::numeric::odeint compatibility shim
 
     This file needs to be included after boost/numeric/odeint.hpp and dace/dace.h to provide
     a compatibility shim to allow odeint to work with DACE::AlgebraicVector as a state type.
@@ -43,7 +43,7 @@
     provided in DACE::abs_cons, DACE::abs_max, or DACE::abs_sum.
 
     Example:
-    \code
+    @code
         #include <boost/numeric/odeint.hpp>
         #include <dace/dace.h>
 
@@ -62,7 +62,7 @@
         x[0] = 1.0; x[1] = 2.0; x[3] = 3.0;
         x += 0.01 * x.identity(3);
         integrate_adaptive( make_controlled( 1e-8, 1e-8, runge_kutta_dopri5<state_type>() ), RHS, x, 0.0, 10.0, 0.1 );
-    \endcode
+    @endcode
 */
 
 #ifndef DINAMICA_COMPAT_BOOST_ODEINT_H_

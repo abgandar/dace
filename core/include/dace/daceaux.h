@@ -26,13 +26,13 @@
  *      Author: Politecnico di Milano
  */
 
-/** \addtogroup DACE Core
+/** @addtogroup DACE Core
  *  @{
  */
 
-/*! \file
+/*! @file
 
-    \brief Auxiliary DACE functions used internally.
+    @brief Auxiliary DACE functions used internally.
 
     This file contains all internal DACE auxiliary functions used by the DACE core.
     It is not meant to be included publicly by DACE users or high level interfaces.

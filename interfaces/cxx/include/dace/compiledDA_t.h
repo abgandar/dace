@@ -26,9 +26,9 @@
  *      Author: Dinamica Srl
  */
 
-/*! \file
+/*! @file
 
-    \brief Templated function definitions for compiledDA class.
+    @brief Templated function definitions for compiledDA class.
 
     This header file contains the definition of templated functions in the compiledDA class.
 */
@@ -47,12 +47,12 @@ namespace DACE {
 template<class V> V compiledDA::eval(const V &args) const {
 /*! Evaluate the compiled polynomial with a vector of any arithmetic type
     (such as DA or double) and return vector of results.
-    \param[in] args the values of the independent DA variables to evaluate
+    @param[in] args the values of the independent DA variables to evaluate
     with. Must be a std::vector<> (or derived class) of an arithmetic
     type. If less than the number of independent DA variables defined
     during the DACE initialization are given, the missing entries are
     assumed to be zero.
-    \return Vector with the result of the evaluation. The vector is of
+    @return Vector with the result of the evaluation. The vector is of
     the same type as the argument args.
  */
     V res(dim);
@@ -64,13 +64,13 @@ template<class V> V compiledDA::eval(const V &args) const {
 template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T> l) const {
 /*! Evaluate the compiled polynomial with a braced initializer list of any arithmetic type
     (such as DA or double) and return vector of results.
-    \param[in] l the values of the independent DA variables to evaluate
+    @param[in] l the values of the independent DA variables to evaluate
     with. Must be a braced initializer list of an arithmetic
     type. If less than the number of independent DA variables defined
     during the DACE initialization are given, the missing entries are
     assumed to be zero.
-    \return std::vector with the result of the evaluation
-    \note C++ is not able to derive the type of elements of an initializer list automatically.
+    @return std::vector with the result of the evaluation
+    @note C++ is not able to derive the type of elements of an initializer list automatically.
     That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
     used with initializer lists.
  */
@@ -83,12 +83,12 @@ template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T>
 template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned int length) const {
 /*! Evaluate the compiled polynomial with an array of any arithmetic type
     (such as DA or double) and return vector of results.
-    \param[in] args array of the values of the independent DA variables to
+    @param[in] args array of the values of the independent DA variables to
     evaluate with
-    \param[in] length Size of the array args[]. If less than the number of
+    @param[in] length Size of the array args[]. If less than the number of
     variables defined during the DACE initialization are given, the
     missing entries are assumed to be zero.
-    \return Vector with the result of the evaluation. The vector is of
+    @return Vector with the result of the evaluation. The vector is of
     type std::vector<V>.
  */
     std::vector<T> arg(args,args+length);
@@ -101,9 +101,9 @@ template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned
 template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
 /*! Evaluate the compiled polynomial with a single argument of any
     arithmetic type (such as DA or double) and return vector of results.
-    \param[in] arg The value of the first independent DA variable to evaluate
+    @param[in] arg The value of the first independent DA variable to evaluate
     with. All remaining independent DA variables are assumed to be zero.
-    \return Vector with the result of the evaluation. The vector is of
+    @return Vector with the result of the evaluation. The vector is of
     type std::vector<V>.
  */
     std::vector<T> args(1);

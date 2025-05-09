@@ -26,7 +26,7 @@
  *      Author: Politecnico di Milano
  */
 
-/** \addtogroup DACE Core
+/** @addtogroup DACE Core
  *  @{
  */
 
@@ -44,10 +44,10 @@
 /*! Evaluate DA object ina by providing the value to use for each monomial in
     DA object inb.
     This is equivalent to a monomial-wise DA dot product.
-    \param[in] ina Pointer to first DA object to evaluate
-    \param[in] inb Pointer to second DA object to provide monomial values
-    \return Monomial-wise dot product of both DA objects
-    \sa daceMultiplyMonomials()
+    @param[in] ina Pointer to first DA object to evaluate
+    @param[in] inb Pointer to second DA object to provide monomial values
+    @return Monomial-wise dot product of both DA objects
+    @see daceMultiplyMonomials()
 */
 double daceEvalMonomials(const DACEDA *ina, const DACEDA *inb)
 {
@@ -74,10 +74,10 @@ double daceEvalMonomials(const DACEDA *ina, const DACEDA *inb)
 
 /*! Perform partial evaluation of DA object ina by replacing independent variable
     number nvar by the value val.
-    \param[in] ina Pointer to DA object to evaluate
-    \param[in] nvar Number of the independent variable to replace (one-based)
-    \param[in] val Value to replace independent variable with
-    \param[out] inc Pointer to DA object to store the result of the partial evaluation
+    @param[in] ina Pointer to DA object to evaluate
+    @param[in] nvar Number of the independent variable to replace (one-based)
+    @param[in] val Value to replace independent variable with
+    @param[out] inc Pointer to DA object to store the result of the partial evaluation
 */
 void daceEvalVariable(const DACEDA *ina, const unsigned int nvar, const double val, DACEDA *inc)
 {
@@ -148,11 +148,11 @@ void daceEvalVariable(const DACEDA *ina, const unsigned int nvar, const double v
 
 /*! Replace independent variable with index from by val times the independent
     variable with index to.
-    \param[in] ina Pointer to DA object to evaluate
-    \param[in] from Number of the independent variable to replace
-    \param[in] to Number of the independent variable to change to
-    \param[in] val Value to scale new independent variable with
-    \param[out] inc Pointer to DA object to store the result of the replacement
+    @param[in] ina Pointer to DA object to evaluate
+    @param[in] from Number of the independent variable to replace
+    @param[in] to Number of the independent variable to change to
+    @param[in] val Value to scale new independent variable with
+    @param[out] inc Pointer to DA object to store the result of the replacement
 */
 void daceReplaceVariable(const DACEDA *ina, const unsigned int from, const unsigned int to, const double val, DACEDA *inc)
 {
@@ -205,10 +205,10 @@ void daceReplaceVariable(const DACEDA *ina, const unsigned int from, const unsig
 }
 
 /*! Scale independent variable nvar by val.
-    \param[in] ina Pointer to DA object to scale
-    \param[in] nvar Number of the independent variable to scale
-    \param[in] val Value to scale independent variable with
-    \param[out] inc Pointer to DA object to store the result of the scaling
+    @param[in] ina Pointer to DA object to scale
+    @param[in] nvar Number of the independent variable to scale
+    @param[in] val Value to scale independent variable with
+    @param[out] inc Pointer to DA object to store the result of the scaling
 */
 void daceScaleVariable(const DACEDA *ina, const unsigned int nvar, const double val, DACEDA *inc)
 {
@@ -264,11 +264,11 @@ void daceScaleVariable(const DACEDA *ina, const unsigned int nvar, const double 
 }
 
 /*! Translate independent variable nvar to (a*x + c).
-    \param[in] ina Pointer to DA object to translate
-    \param[in] nvar Number of the independent variable to translate
-    \param[in] a Linear value to scale independent variable by
-    \param[in] c Constant value to translate independent variable by
-    \param[out] inc Pointer to DA object to store the result of the translation
+    @param[in] ina Pointer to DA object to translate
+    @param[in] nvar Number of the independent variable to translate
+    @param[in] a Linear value to scale independent variable by
+    @param[in] c Constant value to translate independent variable by
+    @param[out] inc Pointer to DA object to store the result of the translation
 */
 void daceTranslateVariable(const DACEDA *ina, const unsigned int nvar, const double a, const double c, DACEDA *inc)
 {
@@ -346,14 +346,14 @@ void daceTranslateVariable(const DACEDA *ina, const unsigned int nvar, const dou
 }
 
 /*! Compute an evaluation tree to efficiently evaluate several DA objects.
-    \param[in] das C array of pointers to DA objects to evaluate
-    \param[in] count Number of DA objects in das[]
-    \param[out] ac C array of doubles containing compiled coefficients
-    \param[out] nterm Pointer where to store the total number of terms in evaluation tree
-    \param[out] nvar Pointer where to store the total number of variables in evaluation tree
-    \param[out] nord Pointer where to store the maximum order in evaluation tree
-    \sa DACE::compiledDA
-    \note See the C++ interface for a detailed description of the resulting data
+    @param[in] das C array of pointers to DA objects to evaluate
+    @param[in] count Number of DA objects in das[]
+    @param[out] ac C array of doubles containing compiled coefficients
+    @param[out] nterm Pointer where to store the total number of terms in evaluation tree
+    @param[out] nvar Pointer where to store the total number of variables in evaluation tree
+    @param[out] nord Pointer where to store the maximum order in evaluation tree
+    @see DACE::compiledDA
+    @note See the C++ interface for a detailed description of the resulting data
     arrays from this routine.
 */
 void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], unsigned int *nterm, unsigned int *nvar, unsigned int *nord)

@@ -60,8 +60,8 @@ const DASimpleFormat DASimpleFormatter::LATEX =       { " +", " -", " \\cdot ", 
 
 std::string DASimpleFormatter::format(const DA &da){
 /*! Format a single DA and return a string representation.
-    \param da DA object
-    \return formatted string representation
+    @param da DA object
+    @return formatted string representation
  */
     const std::vector<Monomial> monomials = da.getMonomials();
     const size_t size = monomials.size();
@@ -90,8 +90,8 @@ std::string DASimpleFormatter::format(const DA &da){
 std::string DASimpleFormatter::format(const std::vector<DA> &da){
 /*! Format a vector of DAs and return a string representation.
     This just formats each DA in the vector one after the other.
-    \param da vector of DA objects
-    \return formatted string representation
+    @param da vector of DA objects
+    @return formatted string representation
  */
     std::ostringstream res;
 

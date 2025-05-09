@@ -26,14 +26,14 @@
  *      Author: Dinamica Srl
  */
 
-/*! \file
+/*! @file
 
-    \brief PromotionTrait template to determine the result of algebraic operations between types
+    @brief PromotionTrait template to determine the result of algebraic operations between types
 
     This file provides the PromotionTrait template that is used to determine the resulting
     type when performing algebraic operations between different types. This is used for e.g.
     the AlgebraicVector class to know that operations between DA and double yield a DA.
-    \note Normal users should not need to know or call this mechanism.
+    @note Normal users should not need to know or call this mechanism.
 */
 
 #ifndef DINAMICA_PROMOTIONTRAIT_H_

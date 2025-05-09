@@ -26,7 +26,7 @@
  *      Author: Politecnico di Milano
  */
 
-/** \addtogroup DACE Core
+/** @addtogroup DACE Core
  *  @{
  */
 
@@ -46,10 +46,10 @@
  *********************************************************************************/
 
 /*! Create a DA object to be ckon times the i-th independen variable.
-    \param[in] ina Pointer to DA object to store the resulting DA in
-    \param[in] i number of the independent variable to create
-    \param[in] ckon coefficient of the independent DA variable created
-    \note Independent DA variable indices are 1-based, i.e. the first independent
+    @param[in] ina Pointer to DA object to store the resulting DA in
+    @param[in] i number of the independent variable to create
+    @param[in] ckon coefficient of the independent DA variable created
+    @note Independent DA variable indices are 1-based, i.e. the first independent
     variable is i=1. The case of i=0 corresponds to the constant part of the polynomial.
 */
 void daceCreateVariable(DACEDA *ina, const unsigned int i, const double ckon)
@@ -101,9 +101,9 @@ void daceCreateVariable(DACEDA *ina, const unsigned int i, const double ckon)
 }
 
 /*! Create a DA object to be ckon times the monomial given by the exponents in jj[].
-    \param[in] ina Pointer to DA object to store the resulting DA in
-    \param[in] jj C array with nvmax exponents indicating the monomial to create
-    \param[in] ckon coefficient of the monomial created
+    @param[in] ina Pointer to DA object to store the resulting DA in
+    @param[in] jj C array with nvmax exponents indicating the monomial to create
+    @param[in] ckon coefficient of the monomial created
 */
 void daceCreateMonomial(DACEDA *ina, const unsigned int jj[], const double ckon)
 {
@@ -131,8 +131,8 @@ void daceCreateMonomial(DACEDA *ina, const unsigned int jj[], const double ckon)
 }
 
 /*! Create a DA object with all coefficients set to the constant value ckon.
-    \param[in] ina Pointer to DA object to store the resulting DA in
-    \param[in] ckon coefficient of the monomials
+    @param[in] ina Pointer to DA object to store the resulting DA in
+    @param[in] ckon coefficient of the monomials
 */
 void daceCreateFilled(DACEDA *ina, const double ckon)
 {
@@ -151,8 +151,8 @@ void daceCreateFilled(DACEDA *ina, const double ckon)
 }
 
 /*! Create a DA object with constant part equal to ckon.
-    \param[in] ina Pointer to DA object to store the resulting DA in
-    \param[in] ckon coefficient of the constant part of the result
+    @param[in] ina Pointer to DA object to store the resulting DA in
+    @param[in] ckon coefficient of the constant part of the result
 */
 void daceCreateConstant(DACEDA *ina, const double ckon)
 {
@@ -160,8 +160,8 @@ void daceCreateConstant(DACEDA *ina, const double ckon)
 }
 
 /*! Create a DA object with randomly filled coefficients.
-    \param[in] ina Pointer to DA object to store the resulting DA in
-    \param[in] cm The filling factor between -1.0 and 1.0.
+    @param[in] ina Pointer to DA object to store the resulting DA in
+    @param[in] cm The filling factor between -1.0 and 1.0.
     The absolute value of the filling factor determines the fraction of non-zero
     coefficients.
     If cm is positive, the values are weighted by order such that
@@ -210,8 +210,8 @@ void daceCreateRandom(DACEDA *ina, const double cm)
  *********************************************************************************/
 
 /*! Extract the constant part from a DA object.
-    \param[in] ina Pointer to DA object to extract constant part from
-    \return Constant part of the given DA object
+    @param[in] ina Pointer to DA object to extract constant part from
+    @return Constant part of the given DA object
 */
 double daceGetConstant(const DACEDA *ina)
 {
@@ -230,8 +230,8 @@ double daceGetConstant(const DACEDA *ina)
 }
 
 /*! Extract the linear part of a DA object.
-    \param[in] ina Pointer to DA object to extract linear part from
-    \param[in] c C array of length nvmax containing the linear coefficients in order
+    @param[in] ina Pointer to DA object to extract linear part from
+    @param[in] c C array of length nvmax containing the linear coefficients in order
 */
 void daceGetLinear(const DACEDA *ina, double c[])
 {
@@ -254,9 +254,9 @@ void daceGetLinear(const DACEDA *ina, double c[])
 }
 
 /*! Extract coefficient of a monomial in a DA object.
-    \param[in] ina Pointer to DA object to extract monomial coefficient from
-    \param[in] jj C array of nvmax exponents identifying the monomial
-    \return The coefficient of the given monomial in the DA object
+    @param[in] ina Pointer to DA object to extract monomial coefficient from
+    @param[in] jj C array of nvmax exponents identifying the monomial
+    @return The coefficient of the given monomial in the DA object
 */
 double daceGetCoefficient(const DACEDA *ina, const unsigned int jj[])
 {
@@ -264,9 +264,9 @@ double daceGetCoefficient(const DACEDA *ina, const unsigned int jj[])
 }
 
 /*! Extract coefficient of a monomial in a DA object.
-    \param[in] ina Pointer to DA object to extract monomial coefficient from
-    \param[in] ic DA coding integer of the monomial to extract
-    \return The coefficient of the given monomial in the DA object
+    @param[in] ina Pointer to DA object to extract monomial coefficient from
+    @param[in] ic DA coding integer of the monomial to extract
+    @return The coefficient of the given monomial in the DA object
 */
 double daceGetCoefficient0(const DACEDA *ina, const unsigned int ic)
 {
@@ -315,9 +315,9 @@ double daceGetCoefficient0(const DACEDA *ina, const unsigned int ic)
 }
 
 /*! Set coefficient of a monomial in a DA object.
-    \param[in] ina Pointer to DA object to set monomial in
-    \param[in] jj C array of nvmax exponents identifying the monomial
-    \param[in] cjj Value of the corresponding coefficient
+    @param[in] ina Pointer to DA object to set monomial in
+    @param[in] jj C array of nvmax exponents identifying the monomial
+    @param[in] cjj Value of the corresponding coefficient
 */
 void daceSetCoefficient(DACEDA *ina, const unsigned int jj[], const double cjj)
 {
@@ -325,9 +325,9 @@ void daceSetCoefficient(DACEDA *ina, const unsigned int jj[], const double cjj)
 }
 
 /*! Set coefficient of a monomial in a DA object.
-    \param[in] ina Pointer to DA object to set monomial in
-    \param[in] ic DA coding integer of the monomial to set
-    \param[in] cjj Value of the corresponding coefficient
+    @param[in] ina Pointer to DA object to set monomial in
+    @param[in] ic DA coding integer of the monomial to set
+    @param[in] cjj Value of the corresponding coefficient
 */
 void daceSetCoefficient0(DACEDA *ina, const unsigned int ic, const double cjj)
 {
@@ -428,10 +428,10 @@ void daceSetCoefficient0(DACEDA *ina, const unsigned int ic, const double cjj)
 /*! Extract coefficient at position npos (starting with 1) in the list of
     non-zero coefficients in the DA object and return its exponents and
     coefficient. If the monomial does not exist, the value 0.0 is returned.
-    \param[in] ina Pointer to DA object to extract monomial from
-    \param[in] npos Index of the monomial to extract
-    \param[out] jj C array of nvmax elements for returning the exponents of the monomial
-    \param[out] cjj Pointer where to store the value of the coefficient of the monomial
+    @param[in] ina Pointer to DA object to extract monomial from
+    @param[in] npos Index of the monomial to extract
+    @param[out] jj C array of nvmax elements for returning the exponents of the monomial
+    @param[out] cjj Pointer where to store the value of the coefficient of the monomial
 */
 void daceGetCoefficientAt(const DACEDA *ina, const unsigned int npos, unsigned int jj[], double *cjj)
 {
@@ -452,8 +452,8 @@ void daceGetCoefficientAt(const DACEDA *ina, const unsigned int npos, unsigned i
 }
 
 /*! Return the number of non-zero monomials in a DA object.
-    \param[in] ina Pointer to DA object to get length of
-    \return Number of non-zero monomials
+    @param[in] ina Pointer to DA object to get length of
+    @return Number of non-zero monomials
 */
 unsigned int daceGetLength(const DACEDA *ina)
 {
@@ -464,8 +464,8 @@ unsigned int daceGetLength(const DACEDA *ina)
 }
 
 /*! Return the order of a DA object.
-    \param[in] ina Pointer to DA object to get order of
-    \return Lowest order of the non-zero monomials or UINT_MAX if ina is the zero DA.
+    @param[in] ina Pointer to DA object to get order of
+    @return Lowest order of the non-zero monomials or UINT_MAX if ina is the zero DA.
 */
 unsigned int daceGetOrder(const DACEDA *ina)
 {
@@ -483,8 +483,8 @@ unsigned int daceGetOrder(const DACEDA *ina)
 }
 
 /*! Return the degree of a DA object.
-    \param[in] ina Pointer to DA object to get degree of
-    \return Highest order of the non-zero monomials or INT_MIN if ina is the zero DA.
+    @param[in] ina Pointer to DA object to get degree of
+    @return Highest order of the non-zero monomials or INT_MIN if ina is the zero DA.
 */
 int daceGetDegree(const DACEDA *ina)
 {
@@ -502,8 +502,8 @@ int daceGetDegree(const DACEDA *ina)
 }
 
 /*! Copy content of one DA object into another DA object.
-    \param[in] ina Pointer to DA object to copy from
-    \param[in] inb Pointer to DA object to copy to
+    @param[in] ina Pointer to DA object to copy from
+    @param[in] inb Pointer to DA object to copy to
 */
 void daceCopy(const DACEDA *ina, DACEDA *inb)
 {
@@ -528,9 +528,9 @@ void daceCopy(const DACEDA *ina, DACEDA *inb)
 
 /*! Copy content of one DA object into another DA object filtering out terms
     below a certain threshold.
-    \param[in] ina Pointer to DA object to copy from
-    \param[in] inb Pointer to DA object to copy to
-    \note This routine is slightly worse than non-filtering version (about 10%)
+    @param[in] ina Pointer to DA object to copy from
+    @param[in] inb Pointer to DA object to copy to
+    @note This routine is slightly worse than non-filtering version (about 10%)
 */
 void daceCopyFiltering(const DACEDA *ina, DACEDA *inb)
 {
@@ -572,10 +572,10 @@ void daceCopyFiltering(const DACEDA *ina, DACEDA *inb)
 
 /*! Truncate a DA object to contain only terms of order larger or equal to imin
     and less than or equal imax.
-    \param[in] ina Pointer to DA object to trim
-    \param[in] imin Minimum order to keep
-    \param[in] imax Maximum order to keep
-    \param[in] inc Pointer to DA object to store the truncated result in
+    @param[in] ina Pointer to DA object to trim
+    @param[in] imin Minimum order to keep
+    @param[in] imax Maximum order to keep
+    @param[in] inc Pointer to DA object to store the truncated result in
 */
 void daceTrim(const DACEDA *ina, const unsigned int imin, const unsigned int imax, DACEDA *inc)
 {
@@ -609,9 +609,9 @@ void daceTrim(const DACEDA *ina, const unsigned int imin, const unsigned int ima
 /*! Copy monomials from a DA object ina to DA object inb if the same monomial
     is non-zero in DA object inc, while filtering out terms below the current
     cutoff.
-    \param[in] ina Pointer to DA object to filter
-    \param[in] inb Pointer to DA object to store the filtered result in
-    \param[in] inc Pointer to DA object providing the filter template
+    @param[in] ina Pointer to DA object to filter
+    @param[in] inb Pointer to DA object to store the filtered result in
+    @param[in] inc Pointer to DA object providing the filter template
 */
 void daceFilter(const DACEDA *ina, DACEDA *inb, const DACEDA *inc)
 {
@@ -668,8 +668,8 @@ void daceFilter(const DACEDA *ina, DACEDA *inb, const DACEDA *inc)
 }
 
 /*! Check each coefficient of DA object ina to see if any of them are NANs (not a number).
-    \param[in] ina Pointer to DA object to check
-    \return True (non-zero) if any of the coefficients of ina is NAN
+    @param[in] ina Pointer to DA object to check
+    @return True (non-zero) if any of the coefficients of ina is NAN
 */
 unsigned int daceIsNan(const DACEDA *ina)
 {
@@ -686,8 +686,8 @@ unsigned int daceIsNan(const DACEDA *ina)
 }
 
 /*! Check each coefficient of DA object ina to see if any of them are INF (infinity).
-    \param[in] ina Pointer to DA object to check
-    \return True (non-zero) if any of the coefficients of ina is INF
+    @param[in] ina Pointer to DA object to check
+    @return True (non-zero) if any of the coefficients of ina is INF
 */
 unsigned int daceIsInf(const DACEDA *ina)
 {

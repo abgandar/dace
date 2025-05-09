@@ -26,9 +26,9 @@
  *      Author: Alexander Wittig
  */
 
-/*! \file
+/*! @file
 
-    \brief Contributed functions to DACE core.
+    @brief Contributed functions to DACE core.
 
     This file contains all externally contributed routines used in the DACE core.
     It is never included publicly by DACE users or high level interfaces.
@@ -37,9 +37,9 @@
 #ifndef DINAMICA_DACECONTRIB_H_
 #define DINAMICA_DACECONTRIB_H_
 
-/// \cond
+/// @cond
 
-/** \addtogroup DACEContrib Contrib
+/** @addtogroup DACEContrib Contrib
  *  @{
  */
 
@@ -53,6 +53,6 @@ int rybesl_(double *x, double *alpha, long int *nb, double *b, long int *ncalc);
 
 /** @}*/
 
-/// \endcond
+/// @endcond
 
 #endif /* DINAMICA_DACECONTRIB_H_ */

@@ -26,9 +26,9 @@
  *      Author: Dinamica Srl
  */
 
-/*! \file
+/*! @file
 
-    \brief Simple storage class for a real Interval
+    @brief Simple storage class for a real Interval
 
     This class is trivial and just used to return a pair of an upper and lower bound for convenience.
 */
