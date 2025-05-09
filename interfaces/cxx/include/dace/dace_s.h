@@ -28,7 +28,7 @@
 
 /*! @file
 
-     @brief Main C++ header file for static linking.
+     @brief Public DACE C++ header file for static linking.
 
      This header file just includes all other DACE C++ headers in the right order.
      It is identical to include/dace/dace.h except on Windows where it explicitly

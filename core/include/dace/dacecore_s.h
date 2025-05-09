@@ -32,7 +32,7 @@
 
 /*! @file
 
-    @brief Main DACE core header for static linking.
+    @brief Public DACE core header for static linking.
 
     This file contains all routines in the public interface to the DACE core.
     It is identical to include/dace/dacecore.h except on Windows where it explicitly

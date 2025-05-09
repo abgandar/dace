@@ -28,7 +28,7 @@
 
 /*! @file
 
-    @brief Main C++ header file.
+    @brief Public DACE C++ header file.
 
     This header file just includes all other DACE C++ headers in the right order.
 */

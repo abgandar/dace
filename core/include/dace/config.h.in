@@ -32,7 +32,7 @@
 
 /*! @file
 
-    @brief Build-time DACE configuration options.
+    @brief Internal build-time DACE configuration options.
 
     This file contains the build time configuration options used for building the DACE library.
 */

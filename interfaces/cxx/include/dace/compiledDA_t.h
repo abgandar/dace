@@ -44,7 +44,6 @@ namespace DACE {
 /********************************************************************************
 *     compiledDA evaluation routines
 *********************************************************************************/
-template<class V> V compiledDA::eval(const V &args) const {
 /*! Evaluate the compiled polynomial with a vector of any arithmetic type
     (such as DA or double) and return vector of results.
     @param[in] args the values of the independent DA variables to evaluate
@@ -55,13 +54,13 @@ template<class V> V compiledDA::eval(const V &args) const {
     @return Vector with the result of the evaluation. The vector is of
     the same type as the argument args.
  */
+template<class V> V compiledDA::eval(const V &args) const {
     V res(dim);
     eval(args, res);
 
     return res;
 }
 
-template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T> l) const {
 /*! Evaluate the compiled polynomial with a braced initializer list of any arithmetic type
     (such as DA or double) and return vector of results.
     @param[in] l the values of the independent DA variables to evaluate
@@ -74,13 +73,13 @@ template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T>
     That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
     used with initializer lists.
  */
+template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T> l) const {
     std::vector<T> res(dim);
     eval(std::vector<T>(l), res);
 
     return res;
 }
 
-template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned int length) const {
 /*! Evaluate the compiled polynomial with an array of any arithmetic type
     (such as DA or double) and return vector of results.
     @param[in] args array of the values of the independent DA variables to
@@ -91,6 +90,7 @@ template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned
     @return Vector with the result of the evaluation. The vector is of
     type std::vector<V>.
  */
+template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned int length) const {
     std::vector<T> arg(args,args+length);
     std::vector<T> res(dim);
     eval(arg, res);
@@ -98,7 +98,6 @@ template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned
     return res;
 }
 
-template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
 /*! Evaluate the compiled polynomial with a single argument of any
     arithmetic type (such as DA or double) and return vector of results.
     @param[in] arg The value of the first independent DA variable to evaluate
@@ -106,6 +105,7 @@ template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
     @return Vector with the result of the evaluation. The vector is of
     type std::vector<V>.
  */
+template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
     std::vector<T> args(1);
     std::vector<T> res(dim);
     args[0] = arg;
@@ -114,12 +114,20 @@ template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
     return res;
 }
 
-/* Actual evaluation with a std::vector<T> of algebraic type T.
-    T must support at least:
-     - default constructor    T::T()
-     - assignment             T::operator=(const T& t)
-     - assignment & addition  T::operator+=(const T& t)
-     - double multiplication  T::operator*(const double d)
+/*! Evaluate the compiled polynomial with a vector of arithmetic type T
+    (such as DA or double) and return the result in the vector res.
+    @param[in] args the values of the independent DA variables to evaluate
+    with. Must be a std::vector<> (or derived class) of an arithmetic
+    type. If less than the number of independent DA variables defined
+    during the DACE initialization are given, the missing entries are
+    assumed to be zero.
+    @param[out] res the vector containing the result of the evaluation.
+    Must be at least of length dim.
+    @tparam T Any arithmetic type. Must support at least:\n
+     - default constructor    T::T()\n
+     - assignment             T::operator=(const T& t)\n
+     - assignment & addition  T::operator+=(const T& t)\n
+     - double multiplication  T::operator*(const double d)\n
      - double addition        T::operator+(const double d)
  */
 template<class T> void compiledDA::eval(const std::vector<T> &args, std::vector<T> &res) const {

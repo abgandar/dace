@@ -37,15 +37,15 @@
 
 namespace DACE {
 
-Monomial::Monomial() : m_jj(DA::getMaxVariables()), m_coeff(0.0) {
 /*! Create a Monomial object large enough to hold all current monomials.
 */
+Monomial::Monomial() : m_jj(DA::getMaxVariables()), m_coeff(0.0) {
 }
 
-unsigned int Monomial::order() const {
 /*! Compute the order of the monomial.
     @return Order of the monomial
  */
+unsigned int Monomial::order() const {
     unsigned int ord = 0;
 
     for(unsigned int i = 0; i < m_jj.size(); i++)
@@ -54,10 +54,10 @@ unsigned int Monomial::order() const {
     return ord;
 }
 
-std::string Monomial::toString() const {
 /*! Convert monomial to string.
     @return A string representing the monomial in human readable form.
  */
+std::string Monomial::toString() const {
     std::ostringstream oss;
 
     oss << "     I  COEFFICIENT              ORDER EXPONENTS" << std::endl;
@@ -77,12 +77,12 @@ std::string Monomial::toString() const {
     return oss.str();
 }
 
-std::ostream& operator<< (std::ostream &out, const Monomial &m) {
 /*! Output operator.
     @param[in] out Output stream
     @param[in] m Monomial vector to be printed in the stream
     @return The output stream
  */
+std::ostream& operator<< (std::ostream &out, const Monomial &m) {
     out << m.toString();
     return out;
 }

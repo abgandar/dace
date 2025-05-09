@@ -45,7 +45,6 @@ namespace DACE {
 /********************************************************************************
 *     DA polynomial evaluation routines
 *********************************************************************************/
-template<class T> T DA::eval(const std::vector<T> &args) const{
 /*! Generic evaluation of the DA with a vector of arithmetic type T arguments.
     @param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
     @return The result of the evaluation
@@ -59,10 +58,10 @@ template<class T> T DA::eval(const std::vector<T> &args) const{
     used with initializer lists.
     @see compiledDA::eval
  */
+template<class T> T DA::eval(const std::vector<T> &args) const {
     return compiledDA(*this).eval(args)[0];
 }
 
-template<class T> T DA::eval(const T args[], const unsigned int length) const{
 /*! Generic evaluation of the DA with an array of arithmetic type T arguments.
     @param[in] args array of arithmetic type T with which the DA vector is evaluated
     @param[in] length number of elements in the array args
@@ -73,10 +72,10 @@ template<class T> T DA::eval(const T args[], const unsigned int length) const{
     compiledDA.
     @see compiledDA::eval
  */
+template<class T> T DA::eval(const T args[], const unsigned int length) const {
     return compiledDA(*this).eval(args,length)[0];
 }
 
-template<class T> T DA::evalScalar(const T &arg) const{
 /*! Generic evaluation of the DA with a single arithmetic type T argument.
     @param[in] arg single variable of arithmetic type T of the first independent DA variable
     @return The result of the evaluation
@@ -85,10 +84,10 @@ template<class T> T DA::evalScalar(const T &arg) const{
     compiledDA.
     @see compiledDA::evalScalar
  */
+template<class T> T DA::evalScalar(const T &arg) const {
     return compiledDA(*this).evalScalar(arg)[0];
 }
 
-template<class T> T eval(const DA &da, const std::vector<T> &args) {
 /*! Generic evaluation of the DA with a vector of arithmetic type T arguments.
     @param[in] da a DA object
     @param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
@@ -103,10 +102,10 @@ template<class T> T eval(const DA &da, const std::vector<T> &args) {
     used with initializer lists.
     @see compiledDA
  */
+template<class T> T eval(const DA &da, const std::vector<T> &args) {
     return da.eval(args);
 }
 
-template<class T> T eval(const DA &da, const T args[], const unsigned int length) {
 /*! Generic evaluation of the DA with an array of arithmetic type T arguments.
     @param[in] da a DA object
     @param[in] args array of arithmetic type T with which the DA vector is evaluated
@@ -118,10 +117,10 @@ template<class T> T eval(const DA &da, const T args[], const unsigned int length
     compiledDA.
     @see compiledDA::eval
  */
+template<class T> T eval(const DA &da, const T args[], const unsigned int length) {
     return da.eval(args,length);
 }
 
-template<class T> T evalScalar(const DA &da, const T &arg) {
 /*! Generic evaluation of the DA with a single arithmetic type T arguments.
     @param[in] da a DA object
     @param[in] arg single variable of arithmetic type T of the first independent DA variable
@@ -132,6 +131,7 @@ template<class T> T evalScalar(const DA &da, const T &arg) {
     compiledDA.
     @see compiledDA::evalScalar
  */
+template<class T> T evalScalar(const DA &da, const T &arg) {
     return da.evalScalar(arg);
 }
 

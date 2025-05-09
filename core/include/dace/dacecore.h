@@ -32,7 +32,7 @@
 
 /*! @file
 
-    @brief Main DACE core header.
+    @brief Public DACE core header.
 
     This file contains all routines in the public interface to the DACE core.
     DACE core users or high level interfaces should only include this file.

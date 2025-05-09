@@ -39,14 +39,6 @@
     The DASimpleFormatter class is an implementation of a simple formatter that can output DAs
     in a variety of pre-defined or user-supplied formats including Python, C, Matlab, Fortran,
     and LaTeX code.
-
-    Example:
-    @code
-        DASimpleFormatter sf(DASimpleFormatter::LATEX);
-        DA x = sin(DA(1));
-        std::string res = sf.format(x);
-        // res now is "+1 \cdot x_{1} -0.1666666666666667 \cdot x_{1}^{3} +0.008333333333333333 \cdot x_{1}^{5}"
-    @endcode
 */
 
 #ifndef DINAMICA_DAFORMATTER_H_
@@ -105,6 +97,14 @@ struct DASimpleFormat {
 
 /*! DASimpleFormatter class which formats a DA vector using simple rules to output code
     suitable for various programming languages.
+
+    Example:
+    @code
+        DASimpleFormatter sf(DASimpleFormatter::LATEX);
+        DA x = sin(DA(1));
+        std::string res = sf.format(x);
+        // res now is "+1 \cdot x_{1} -0.1666666666666667 \cdot x_{1}^{3} +0.008333333333333333 \cdot x_{1}^{5}"
+    @endcode
  */
 class DACE_API DASimpleFormatter : public DAFormatter
 {

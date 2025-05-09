@@ -41,13 +41,13 @@ namespace DACE {
 /***********************************************************************************
 *     Input/Output routines
 ************************************************************************************/
-template<> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA> &obj)
-{
 /*! Output operator for DA matrices.
     @param[in] out Output stream
     @param[in] obj AlgebraicMatrix<DA> to be output to the stream
     @return Output stream
  */
+template<> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA> &obj)
+{
     const unsigned int nrows = obj.nrows();
     const unsigned int ncols = obj.ncols();
 
@@ -62,12 +62,12 @@ template<> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA>
     return out;
 }
 
-template<> std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj){
 /*! Input operator for DA matrices.
     @param[in] in Input stream
     @param[out] obj AlgebraicMatrix<DA> to be read from the stream
     @return Input stream
 */
+template<> std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj){
     // read the first line
     std::string line;
     std::getline(in, line);

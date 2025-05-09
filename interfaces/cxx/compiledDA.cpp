@@ -37,10 +37,10 @@ namespace DACE {
 /********************************************************************************
 *     Constructors & Destructors
 *********************************************************************************/
-compiledDA::compiledDA(const compiledDA &cda) {
 /*! Create a copy of a compiledDA object.
     @param[in] cda compiled DA object to be copied
  */
+compiledDA::compiledDA(const compiledDA &cda) {
     dim = cda.dim;
     terms = cda.terms;
     vars = cda.vars;
@@ -49,11 +49,11 @@ compiledDA::compiledDA(const compiledDA &cda) {
     for(int i=terms*(dim+2)-1; i>=0; i--) ac[i] = cda.ac[i];
 }
 
-compiledDA::compiledDA(const std::vector<DA> &da) {
 /*! Create a vector of compiledDA objects from a vector of DA objects.
     @param[in] da vector of DA objects
     @throw DACE::DACEException
  */
+compiledDA::compiledDA(const std::vector<DA> &da) {
     dim = (unsigned int)da.size();
     if(dim<1) DACEException(16,04);
 
@@ -69,11 +69,11 @@ compiledDA::compiledDA(const std::vector<DA> &da) {
     if(daceGetError()) DACEException();
 }
 
-compiledDA::compiledDA(const DA &da) {
 /*! Create a compiledDA object from a DA object.
     @param[in] da vector
     @throw DACE::DACEException
  */
+compiledDA::compiledDA(const DA &da) {
     ac = new double[DA::getMaxMonomials()*3];
     dim = 1;
     unsigned int nterms, nvars, nord;
@@ -85,21 +85,21 @@ compiledDA::compiledDA(const DA &da) {
     if(daceGetError()) DACEException();
 }
 
-compiledDA::~compiledDA() throw() {
 /*! Destructor.
  */
+compiledDA::~compiledDA() throw() {
     delete[] ac;
 }
 
 /********************************************************************************
 *     Assignments
 *********************************************************************************/
-compiledDA& compiledDA::operator=(const compiledDA &cda) {
 /*! Copy the content of a given compiledDA object into the current
     compiledDA (the one the method belongs to).
     @param[in] cda compiledDA vector to be copied
     @return The compiledDA object with the same content of the given compiledDA
  */
+compiledDA& compiledDA::operator=(const compiledDA &cda) {
     if(this != &cda){
         dim = cda.dim;
         terms = cda.terms;

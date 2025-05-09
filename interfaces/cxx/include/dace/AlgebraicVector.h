@@ -63,19 +63,23 @@ public:
     /*! Default constructor to create empty AlgebraicVector
     */
     AlgebraicVector() : std::vector<T>() {};
+
     /*! Constructor with size to allocate a vector of the given size with elements initialized using their default constructor.
         @param[in] size initial length of the AlgebraicVector.
     */
     explicit AlgebraicVector(const size_t size) : std::vector<T>(size) {};
+
     /*! Constructor with size and value to allocate a vector of the given size with elements initialized as copies of d.
         @param[in] size initial length of the AlgebraicVector.
         @param[in] d    initial value for the elements
     */
     AlgebraicVector(const size_t size, const T &d) : std::vector<T>(size, d) {};
+
     /*! Copy constructor to create a copy of any existing vector.
         @param[in] v vector to be copied into AlgebraicVector
     */
     AlgebraicVector(const std::vector<T> &v) : std::vector<T>(v) {};
+
     /*! Extraction constructor to copy only a given range of elements from vector v.
         @param[in] v vector to be copied into AlgebraicVector
         @param[in] first index of the first element to be copied
@@ -84,6 +88,7 @@ public:
         @see AlgebraicVector<T>::extract
     */
     AlgebraicVector(const std::vector<T> &v, const size_t first, const size_t last) : std::vector<T>(v.begin()+first, v.begin()+last+1) {};
+
     /*! Constructor to create a vector from an initializer list.
         @param[in] l braced initializer list to be copied into the AlgebraicVector
     */
@@ -296,8 +301,8 @@ template<> DACE_API compiledDA compile(const AlgebraicVector<DA> &obj);
 template<> DACE_API AlgebraicVector<DA> plug(const AlgebraicVector<DA> &obj, const unsigned int var, const double val);
 
 // shortcuts for common vector types
-typedef AlgebraicVector<DA> vectorDA;       //!< Shorthand notation for AlgebraicVector<DA>.
-typedef AlgebraicVector<double> vectordb;   //!< Shorthand notation for AlgebraicVector<double>.
+typedef AlgebraicVector<DA> vectorDA;           //!< Shorthand notation for AlgebraicVector<DA>.
+typedef AlgebraicVector<double> vectordb;       //!< Shorthand notation for AlgebraicVector<double>.
 
 }
 

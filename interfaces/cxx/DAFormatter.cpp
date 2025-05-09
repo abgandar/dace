@@ -58,41 +58,43 @@ const DASimpleFormat DASimpleFormatter::PYTHON_POW =  { "+",  "-",  "*",        
 /// LaTeX formatter. Outputs the polynomial as a nicely formatted equation.
 const DASimpleFormat DASimpleFormatter::LATEX =       { " +", " -", " \\cdot ", "",     "x", "_{", "}", "^{",  "}", " \n\t",       1,  0, 20, true  };
 
-std::string DASimpleFormatter::format(const DA &da){
 /*! Format a single DA and return a string representation.
     @param da DA object
     @return formatted string representation
  */
+std::string DASimpleFormatter::format(const DA &da){
     const std::vector<Monomial> monomials = da.getMonomials();
     const size_t size = monomials.size();
     std::ostringstream res;
 
     res.precision(16);
-    for(size_t i=0; i<size; i++){
+    for(size_t i=0; i<size; i++) {
         if(monomials[i].m_coeff < 0)
             res << sf.neg << -monomials[i].m_coeff;
         else
             res << sf.pos << monomials[i].m_coeff;
 
-        for(size_t j=0; j<monomials[i].m_jj.size(); j++){
+        for(size_t j=0; j<monomials[i].m_jj.size(); j++) {
             if(monomials[i].m_jj[j] <= 0)
                 continue;
             else if(sf.shorten && monomials[i].m_jj[j] == 1)
                 res << sf.mul << sf.var << sf.pre_var << j+sf.first_var << sf.post_var;
             else
-                res << sf.mul << sf.pre_pow << sf.var << sf.pre_var << j+sf.first_var << sf.post_var << sf.pow << monomials[i].m_jj[j]+sf.first_pow << sf.post_pow;}
+                res << sf.mul << sf.pre_pow << sf.var << sf.pre_var << j+sf.first_var << sf.post_var << sf.pow << monomials[i].m_jj[j]+sf.first_pow << sf.post_pow;
+        }
         if((i+1)%sf.monperline == 0 && i+1<size)
-            res << sf.linebreak;}
+            res << sf.linebreak;
+    }
 
     return res.str();
 }
 
-std::string DASimpleFormatter::format(const std::vector<DA> &da){
 /*! Format a vector of DAs and return a string representation.
     This just formats each DA in the vector one after the other.
     @param da vector of DA objects
     @return formatted string representation
  */
+std::string DASimpleFormatter::format(const std::vector<DA> &da){
     std::ostringstream res;
 
     for(unsigned int i=0; i<da.size(); i++)

@@ -43,14 +43,11 @@ namespace DACE {
     /********************************************************************************
     *     Constructors & Destructors
     *********************************************************************************/
-    DACEException::DACEException() {
     /*! Create a DACEException object from current error codes set in DACE core
         and clear DACE core errors.
         Execute the appropriate action for the exception based on current settings.
      */
-        //m_x = FC_GLOBAL(dacegetxerr,DACEGETXERR)();
-        //m_yy = FC_GLOBAL(dacegetyyerr,DACEGETYYERR)();
-        //FC_GLOBAL(daceclrerr,DACECLRERR)();
+    DACEException::DACEException() {
         m_x = daceGetErrorX();
         m_yy = daceGetErrorYY();
         updateMessage();
@@ -58,30 +55,30 @@ namespace DACE {
         execute();
     }
 
-    DACEException::DACEException(const int exc_sv, const int exc_id) {
     /*! Create a DACEException object with given severity and ID codes.
         Execute the appropriate action for the exception based on current settings.
         @param exc_sv severity code of the error
         @param exc_id ID code of the error
      */
+    DACEException::DACEException(const int exc_sv, const int exc_id) {
         m_x = exc_sv;
         m_yy = exc_id;
         updateMessage();
         execute();
     }
 
-    DACEException::~DACEException() throw() {
     /*! Destructor.
      */
+    DACEException::~DACEException() throw() {
         // nothing to do, just overloading the virtual destructor of the parent class
     }
 
     /********************************************************************************
     *     Private member functions
     *********************************************************************************/
-    void DACEException::updateMessage() {
     /*! Update the error message of this exception based on its ID.
      */
+    void DACEException::updateMessage() {
         struct errstrings{
             int ID;
             const char* msg;};
@@ -180,10 +177,10 @@ namespace DACE {
         msg = s.str();
     }
 
-    void DACEException::execute() const {
     /*! Execute this exception, i.e. throw or print warning based on current settings.
         @throw DACE::DACEException
      */
+    void DACEException::execute() const {
         const int sev = m_x%11; // modulo 11 to handle both DACE core and C++ interface severity codes
 
         if(sev >= severity) {
@@ -196,17 +193,16 @@ namespace DACE {
     /********************************************************************************
     *     Public member functions
     *********************************************************************************/
-    const char* DACEException::what() const throw() {
     /*! Return a human readable error string representing this exception.
         @return A C string containing the error message
      */
+    const char* DACEException::what() const throw() {
         return msg.c_str();
     }
 
     /********************************************************************************
     *     Static member functions
     *********************************************************************************/
-    void DACEException::setSeverity(const int n) {
     /*! Set severity level. Errors with severity code greater or equal to this
         value will throw an exception.
         Severity levels are:\n
@@ -219,25 +215,26 @@ namespace DACE {
                        and dying.
         @param n severity value
      */
+    void DACEException::setSeverity(const int n) {
         severity = n;
     }
 
-    void DACEException::setWarning(const bool w){
     /*! Set the current mode for printing of warnings.
         @param w warning status: print warnings if true
      */
+    void DACEException::setWarning(const bool w) {
         warning = w;
     }
 
     /********************************************************************************
     *     Friend functions
     *********************************************************************************/
-    std::ostream& operator<< (std::ostream &out, const DACEException &ex){
     /*! Output operator.
         @param[in] out output stream
         @param[in] ex Exception to be printed to the stream
         @return Output stream
      */
+    std::ostream& operator<< (std::ostream &out, const DACEException &ex) {
         return out << ex.msg << std::endl;
     }
 
