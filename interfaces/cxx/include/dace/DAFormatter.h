@@ -55,7 +55,7 @@ namespace DACE {
 // forward declaration
 class DA;
 
-/** Abstract class providing a DA formatter to output DA vectors in some advanced format.
+/** Abstract class providing an interface to output DA vectors in advanced formats.
 
     The standard output format of DA via the C++ iostream interface provides a human-readable text
     representation of a DA vector. In some circumstances it is preferable to print a DA vector in
@@ -111,8 +111,7 @@ struct DASimpleFormat {
     bool shorten;               ///< if true, exponents equal to one are output using the short format
 };
 
-/** DASimpleFormatter class which formats a DA vector using simple rules to output code
-    suitable for various programming languages.
+/** Formats a DA vector using simple rules to output code suitable for various programming languages.
 
     Example:
     @code

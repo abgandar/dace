@@ -47,10 +47,10 @@
 
 namespace DACE {
 
-/** DACEException class containing methods for error handling within the DACE C++ interface.
+/** Contains methods for error handling within the DACE C++ interface.
 
     Whenever an error occurs during a DA operation either nothing happens, a warning is printed,
-    or this exception is thrown. What happens depends on the settings in this class.
+    or this exception is thrown. What happens is determined via the static settings in this class.
  */
 class DACE_API DACEException : public std::exception
 {

@@ -55,7 +55,9 @@ namespace DACE {
 template<typename T> class AlgebraicMatrix;
 #endif
 
-/** Generic vector class to handle vectors of algebraic types and their algebraic operations. */
+/** Vector of any algebraic type.
+    Provides vector-vector, vector-scalar, and componentwise operations.
+ */
 template<typename T> class AlgebraicVector : public std::vector<T>
 {
 public:
@@ -303,8 +305,8 @@ template<> DACE_API compiledDA compile(const AlgebraicVector<DA> &obj);
 template<> DACE_API AlgebraicVector<DA> plug(const AlgebraicVector<DA> &obj, const unsigned int var, const double val);
 
 // shortcuts for common vector types
-typedef AlgebraicVector<DA> vectorDA;           //!< Shorthand notation for AlgebraicVector<DA>.
-typedef AlgebraicVector<double> vectordb;       //!< Shorthand notation for AlgebraicVector<double>.
+typedef AlgebraicVector<DA> vectorDA;           //!< Short for AlgebraicVector<DA>.
+typedef AlgebraicVector<double> vectordb;       //!< Short for AlgebraicVector<double>.
 
 }
 
