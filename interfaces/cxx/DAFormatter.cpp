@@ -37,6 +37,28 @@
 
 namespace DACE {
 
+/*! Format a vector of DAs and return a string representation.
+    By default, this function just formats each DA separated by std::endl.
+    @param da Vector of DA objects
+    @return Formatted string representation.
+ */
+std::string DAFormatter::operator()(const std::vector<DA> &da){
+    std::ostringstream res;
+
+    for(unsigned int i = 0; i < da.size(); i++)
+        res << (*this)(da[i]) << std::endl;
+
+    return res.str();
+}
+
+/*! Format a single DA using DA::toString() and return the string representation.
+    @param da DA object
+    @return Formatted string representation.
+ */
+std::string DADefaultFormatter::operator()(const DA &da) {
+    return da.toString();
+};
+
 /// C code formatter. Expects an array p[var][n] containing the n-th power of independent variable var.
 const DASimpleFormat DASimpleFormatter::C =           { "+",  "-",  "*",        "",     "p", "[",  "",  "][",  "]", " \\\n\t",     0, -1, 20, false };
 /// C code formatter. Uses the pow function repeatedly and only expects an array x[var] containing the value of independent variable var.
@@ -58,11 +80,11 @@ const DASimpleFormat DASimpleFormatter::PYTHON_POW =  { "+",  "-",  "*",        
 /// LaTeX formatter. Outputs the polynomial as a nicely formatted equation.
 const DASimpleFormat DASimpleFormatter::LATEX =       { " +", " -", " \\cdot ", "",     "x", "_{", "}", "^{",  "}", " \n\t",       1,  0, 20, true  };
 
-/*! Format a single DA and return a string representation.
+/*! Format a single DA using the set DASimpleFormat and return the string representation.
     @param da DA object
-    @return formatted string representation
+    @return Formatted string representation.
  */
-std::string DASimpleFormatter::format(const DA &da){
+std::string DASimpleFormatter::operator()(const DA &da){
     const std::vector<Monomial> monomials = da.getMonomials();
     const size_t size = monomials.size();
     std::ostringstream res;
@@ -85,20 +107,6 @@ std::string DASimpleFormatter::format(const DA &da){
         if((i+1)%sf.monperline == 0 && i+1<size)
             res << sf.linebreak;
     }
-
-    return res.str();
-}
-
-/*! Format a vector of DAs and return a string representation.
-    This just formats each DA in the vector one after the other.
-    @param da vector of DA objects
-    @return formatted string representation
- */
-std::string DASimpleFormatter::format(const std::vector<DA> &da){
-    std::ostringstream res;
-
-    for(unsigned int i=0; i<da.size(); i++)
-        res << format(da[i]) << std::endl;
 
     return res.str();
 }

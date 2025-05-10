@@ -59,15 +59,41 @@ class DACE_API DAFormatter
 public:
     /*! Format a single DA and return a string representation.
         @param da DA object
-        @return formatted string representation
+        @return Formatted string representation.
+        @pure This function must be implemented by any derived DA formatter at a minimum.
      */
-    virtual std::string format(const DA &da) = 0;
+    virtual std::string operator()(const DA &da) = 0;
+
+    virtual std::string operator()(const std::vector<DA> &da);
+
+    /*! Format a single DA and return a string representation.
+        @param da DA object
+        @return Formatted string representation.
+        @deprecated Replaced by DAFormatter::operator().
+        @see DAFormatter::operator()
+     */
+    std::string format(const DA &da) {
+        return (*this)(da);
+    };
+
     /*! Format a vector of DAs and return a string representation.
         Usually this just formats each DA one after the other.
-        @param da vector of DA objects
-        @return formatted string representation
+        @param da Vector of DA objects
+        @return Formatted string representation.
+        @deprecated Replaced by DAFormatter::operator().
+        @see DAFormatter::operator()
      */
-    virtual std::string format(const std::vector<DA> &da) = 0;
+    std::string format(const std::vector<DA> &da) {
+        return (*this)(da);
+    };
+};
+
+/*! DADefaultFormatter formats DAs using the built-in DA output function.
+ */
+class DACE_API DADefaultFormatter : public DAFormatter
+{
+public:
+    std::string operator()(const DA &da);
 };
 
 /*! Structure containing the elements of a simple format as used by the DASimpleFormatter.
@@ -105,6 +131,8 @@ struct DASimpleFormat {
         std::string res = sf.format(x);
         // res now is "+1 \cdot x_{1} -0.1666666666666667 \cdot x_{1}^{3} +0.008333333333333333 \cdot x_{1}^{5}"
     @endcode
+
+    @see DASimpleFormat
  */
 class DACE_API DASimpleFormatter : public DAFormatter
 {
@@ -125,8 +153,7 @@ public:
     DASimpleFormatter() : sf(C) {};                                 //!< Default constructor formats as C code
     DASimpleFormatter(const DASimpleFormat &isf) : sf(isf) {};      //!< Create formatter using the provided format
 
-    std::string format(const DA &da);
-    std::string format(const std::vector<DA> &da);
+    std::string operator()(const DA &da);
 };
 
 }
