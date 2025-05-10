@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 #include <math.h>
@@ -327,4 +327,4 @@ void daceGetBounds(const DACEDA *ina, double *alo, double *aup)
 #endif
 }
 
-/** @}*/
+/** @} */

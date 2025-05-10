@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 // C++ stdlib classes used only internally in the implementation
@@ -109,4 +109,4 @@ std::string DASimpleFormatter::format(const std::vector<DA> &da){
 
 }
 
-/** @}*/
+/** @} */

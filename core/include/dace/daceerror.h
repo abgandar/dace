@@ -30,7 +30,7 @@
 #define DINAMICA_DACEERROR_H
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 /*  Internal DACE core error handling.
@@ -121,6 +121,6 @@ DACE_API const errstrings DACEerr[] = {
     {  70, ""},
 };
 
-/** @}*/
+/** @} */
 
 #endif

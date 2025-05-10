@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 #include <math.h>
@@ -343,4 +343,4 @@ unsigned int daceSetTruncationOrder(const unsigned int fnot)
     return old_nocut;
 }
 
-/** @}*/
+/** @} */

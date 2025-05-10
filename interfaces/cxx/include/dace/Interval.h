@@ -35,7 +35,7 @@
 #define DINAMICA_INTERVAL_H_
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 namespace DACE {
@@ -55,4 +55,4 @@ public:
 
 #endif /* DINAMICA_INTERVAL_H_ */
 
-/** @}*/
+/** @} */

@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 /*  Internal auxiliary DACE functions.
@@ -145,5 +145,5 @@ void daceEvaluateScaledModifiedBesselFunction(const DACEDA *ina, const double bz
 void daceLogGammaFunction0(const DACEDA *ina, const double a0, DACEDA *inc);
 void daceEvaluateSeries(const DACEDA *ina, const double xf[], DACEDA *inc);
 /// @endcond
-/** @}*/
+/** @} */
 #endif /* DINAMICA_DACEAUX_H_ */

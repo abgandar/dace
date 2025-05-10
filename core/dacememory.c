@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 /********************************************************************************
@@ -466,4 +466,4 @@ void daceFreeMemory()
 #else
 #error Invalid DACE memory model selected!
 #endif // DACE_MEMORY_MODEL
-/** @}*/
+/** @} */

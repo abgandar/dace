@@ -13,7 +13,7 @@
 /// @cond CONTRIB
 
 /** @addtogroup DACEContrib Contrib
- *  @{
+    @{
  */
 
 #include "f2c.h"
@@ -638,6 +638,6 @@ L300:
 /* ---------- Last line of RJBESL ---------- */
 } /* rjbesl_ */
 
-/** @}*/
+/** @} */
 
 /// @endcond

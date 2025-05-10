@@ -42,7 +42,7 @@
 #include <ostream>
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 namespace DACE {
@@ -79,4 +79,4 @@ public:
 
 #endif /* DINAMICA_DACEEXCEPTION_H_ */
 
-/** @}*/
+/** @} */

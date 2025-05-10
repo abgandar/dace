@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 /*  Internal DACE core interface functions and structures.
@@ -252,6 +252,6 @@ DACE_API double daceRandom();
     }
 #endif /* _cplusplus */
 
-/** @}*/
+/** @} */
 
 #endif /* DINAMICA_DACEBASE_H_ */

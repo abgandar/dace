@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 #include <stdio.h>
@@ -520,4 +520,4 @@ void daceImportBlob(const void *blob, DACEDA *inc)
 #endif
 }
 
-/** @}*/
+/** @} */

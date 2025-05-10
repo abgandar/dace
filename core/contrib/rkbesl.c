@@ -13,7 +13,7 @@
 /// @cond CONTRIB
 
 /** @addtogroup DACEContrib Contrib
- *  @{
+    @{
  */
 
 #include "f2c.h"
@@ -609,6 +609,6 @@ L500:
 /* ---------- Last line of RKBESL ---------- */
 } /* rkbesl_ */
 
-/** @}*/
+/** @} */
 
 /// @endcond

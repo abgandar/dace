@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 #include <math.h>
@@ -483,4 +483,4 @@ void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], un
 #endif
 }
 
-/** @}*/
+/** @} */

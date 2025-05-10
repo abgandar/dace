@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 // C++ stdlib classes
@@ -115,4 +115,4 @@ double norm(const double x, const int type) {
 
 }
 
-/** @}*/
+/** @} */

@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 /** @file
@@ -42,5 +42,5 @@
 #define DINAMICA_DACECORE_H_
 
 #include "dace/dacebase.h"
-/** @}*/
+/** @} */
 #endif /* DINAMICA_DACECORE_H_ */

@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 // MS C library needs this to trigger it to define math constants
@@ -713,7 +713,6 @@ void daceIntegrate(const unsigned int iint, const DACEDA *ina, DACEDA *inc)
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
-    @see daceAbsoluteValue
     @see daceNorm
  */
 void daceAbsolute(const DACEDA *ina, DACEDA *inc)
@@ -2237,4 +2236,4 @@ void daceWeightedSum(const DACEDA *ina, const double afac, const DACEDA *inb, co
     daceSetLength(inc, ic-ipoc);
 }
 
-/** @}*/
+/** @} */

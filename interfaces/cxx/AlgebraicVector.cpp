@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
  // C++ stdlib classes used only internally in this implementation
@@ -385,4 +385,4 @@ template<> AlgebraicVector<DA> plug(const AlgebraicVector<DA> &obj, const unsign
 
 }
 
-/** @}*/
+/** @} */

@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 // indicate that we want to use strXXX_s functions, if available
@@ -166,4 +166,4 @@ void daceSetError(const char *c, const unsigned int ix, const unsigned int iyy)
     }
 }
 
-/** @}*/
+/** @} */

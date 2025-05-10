@@ -10,7 +10,7 @@ Modified interface by Alexander Wittig, November 2019.
 /// @cond CONTRIB
 
 /** @addtogroup DACEContrib Contrib
- *  @{
+    @{
  */
 
 #include <math.h>
@@ -124,6 +124,6 @@ done:
     return(s);
 }
 
-/** @}*/
+/** @} */
 
 /// @endcond

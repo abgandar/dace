@@ -42,7 +42,7 @@
 #include <ostream>
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 namespace DACE {
@@ -70,4 +70,4 @@ DACE_API std::ostream& operator<< (std::ostream &out, const Monomial &m);
 
 #endif /* DINAMICA_MONOMIAL_H_ */
 
-/** @}*/
+/** @} */
