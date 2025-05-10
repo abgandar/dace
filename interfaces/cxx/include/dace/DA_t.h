@@ -47,7 +47,7 @@ namespace DACE {
 /********************************************************************************
 *     DA polynomial evaluation routines
 *********************************************************************************/
-/*! Generic evaluation of the DA with a vector of arithmetic type T arguments.
+/** Generic evaluation of the DA with a vector of arithmetic type T arguments.
     @param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
     @return The result of the evaluation
     @throw DACE::DACEException
@@ -64,7 +64,7 @@ template<class T> T DA::eval(const std::vector<T> &args) const {
     return compiledDA(*this).eval(args)[0];
 }
 
-/*! Generic evaluation of the DA with an array of arithmetic type T arguments.
+/** Generic evaluation of the DA with an array of arithmetic type T arguments.
     @param[in] args array of arithmetic type T with which the DA vector is evaluated
     @param[in] length number of elements in the array args
     @return The result of the evaluation
@@ -78,7 +78,7 @@ template<class T> T DA::eval(const T args[], const unsigned int length) const {
     return compiledDA(*this).eval(args,length)[0];
 }
 
-/*! Generic evaluation of the DA with a single arithmetic type T argument.
+/** Generic evaluation of the DA with a single arithmetic type T argument.
     @param[in] arg single variable of arithmetic type T of the first independent DA variable
     @return The result of the evaluation
     @note To be used only for single polynomial evaluation. For multiple
@@ -90,7 +90,7 @@ template<class T> T DA::evalScalar(const T &arg) const {
     return compiledDA(*this).evalScalar(arg)[0];
 }
 
-/*! Generic evaluation of the DA with a vector of arithmetic type T arguments.
+/** Generic evaluation of the DA with a vector of arithmetic type T arguments.
     @param[in] da a DA object
     @param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
     @return The result of the evaluation
@@ -108,7 +108,7 @@ template<class T> T eval(const DA &da, const std::vector<T> &args) {
     return da.eval(args);
 }
 
-/*! Generic evaluation of the DA with an array of arithmetic type T arguments.
+/** Generic evaluation of the DA with an array of arithmetic type T arguments.
     @param[in] da a DA object
     @param[in] args array of arithmetic type T with which the DA vector is evaluated
     @param[in] length number of elements in the array args
@@ -123,7 +123,7 @@ template<class T> T eval(const DA &da, const T args[], const unsigned int length
     return da.eval(args,length);
 }
 
-/*! Generic evaluation of the DA with a single arithmetic type T arguments.
+/** Generic evaluation of the DA with a single arithmetic type T arguments.
     @param[in] da a DA object
     @param[in] arg single variable of arithmetic type T of the first independent DA variable
     @return The result of the evaluation

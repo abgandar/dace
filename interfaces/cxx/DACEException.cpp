@@ -47,7 +47,7 @@ namespace DACE {
     /********************************************************************************
     *     Constructors & Destructors
     *********************************************************************************/
-    /*! Create a DACEException object from current error codes set in DACE core
+    /** Create a DACEException object from current error codes set in DACE core
         and clear DACE core errors.
         Execute the appropriate action for the exception based on current settings.
      */
@@ -59,7 +59,7 @@ namespace DACE {
         execute();
     }
 
-    /*! Create a DACEException object with given severity and ID codes.
+    /** Create a DACEException object with given severity and ID codes.
         Execute the appropriate action for the exception based on current settings.
         @param exc_sv severity code of the error
         @param exc_id ID code of the error
@@ -71,7 +71,7 @@ namespace DACE {
         execute();
     }
 
-    /*! Destructor.
+    /** Destructor.
      */
     DACEException::~DACEException() throw() {
         // nothing to do, just overloading the virtual destructor of the parent class
@@ -80,7 +80,7 @@ namespace DACE {
     /********************************************************************************
     *     Private member functions
     *********************************************************************************/
-    /*! Update the error message of this exception based on its ID.
+    /** Update the error message of this exception based on its ID.
      */
     void DACEException::updateMessage() {
         struct errstrings{
@@ -181,7 +181,7 @@ namespace DACE {
         msg = s.str();
     }
 
-    /*! Execute this exception, i.e. throw or print warning based on current settings.
+    /** Execute this exception, i.e. throw or print warning based on current settings.
         @throw DACE::DACEException
      */
     void DACEException::execute() const {
@@ -197,7 +197,7 @@ namespace DACE {
     /********************************************************************************
     *     Public member functions
     *********************************************************************************/
-    /*! Return a human readable error string representing this exception.
+    /** Return a human readable error string representing this exception.
         @return A C string containing the error message
      */
     const char* DACEException::what() const throw() {
@@ -207,7 +207,7 @@ namespace DACE {
     /********************************************************************************
     *     Static member functions
     *********************************************************************************/
-    /*! Set severity level. Errors with severity code greater or equal to this
+    /** Set severity level. Errors with severity code greater or equal to this
         value will throw an exception.
         Severity levels are:\n
         0 = Warning:   Informative, no action required\n
@@ -223,7 +223,7 @@ namespace DACE {
         severity = n;
     }
 
-    /*! Set the current mode for printing of warnings.
+    /** Set the current mode for printing of warnings.
         @param w warning status: print warnings if true
      */
     void DACEException::setWarning(const bool w) {
@@ -233,7 +233,7 @@ namespace DACE {
     /********************************************************************************
     *     Friend functions
     *********************************************************************************/
-    /*! Output operator.
+    /** Output operator.
         @param[in] out output stream
         @param[in] ex Exception to be printed to the stream
         @return Output stream

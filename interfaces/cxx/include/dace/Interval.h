@@ -40,7 +40,7 @@
 
 namespace DACE {
 
-/*! Class representing an interval.
+/** Class representing an interval.
 
     This class is trivial and just used to return a pair of an upper and lower bound for convenience.
  */

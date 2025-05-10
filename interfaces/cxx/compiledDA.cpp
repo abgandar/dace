@@ -41,7 +41,7 @@ namespace DACE {
 /********************************************************************************
 *     Constructors & Destructors
 *********************************************************************************/
-/*! Create a copy of a compiledDA object.
+/** Create a copy of a compiledDA object.
     @param[in] cda compiled DA object to be copied
  */
 compiledDA::compiledDA(const compiledDA &cda) {
@@ -53,7 +53,7 @@ compiledDA::compiledDA(const compiledDA &cda) {
     for(int i=terms*(dim+2)-1; i>=0; i--) ac[i] = cda.ac[i];
 }
 
-/*! Create a vector of compiledDA objects from a vector of DA objects.
+/** Create a vector of compiledDA objects from a vector of DA objects.
     @param[in] da vector of DA objects
     @throw DACE::DACEException
  */
@@ -73,7 +73,7 @@ compiledDA::compiledDA(const std::vector<DA> &da) {
     if(daceGetError()) DACEException();
 }
 
-/*! Create a compiledDA object from a DA object.
+/** Create a compiledDA object from a DA object.
     @param[in] da vector
     @throw DACE::DACEException
  */
@@ -89,7 +89,7 @@ compiledDA::compiledDA(const DA &da) {
     if(daceGetError()) DACEException();
 }
 
-/*! Destructor.
+/** Destructor.
  */
 compiledDA::~compiledDA() throw() {
     delete[] ac;
@@ -98,7 +98,7 @@ compiledDA::~compiledDA() throw() {
 /********************************************************************************
 *     Assignments
 *********************************************************************************/
-/*! Copy the content of a given compiledDA object into the current
+/** Copy the content of a given compiledDA object into the current
     compiledDA.
     @param[in] cda compiledDA vector to be copied
     @return The compiledDA object with the same content of the given compiledDA
@@ -196,35 +196,35 @@ template<> void compiledDA::eval(const std::vector<DA> &args, std::vector<DA> &r
 /********************************************************************************
 *     Member access routines
 *********************************************************************************/
-/*! Return the coefficient array.
+/** Return the coefficient array.
     @return coefficient array
  */
 const double* compiledDA::getAc() const {
     return this->ac;
 }
 
-/*! Return the number of DAs (dimension).
+/** Return the number of DAs (dimension).
     @return dimension
  */
 unsigned int compiledDA::getDim() const {
     return this->dim;
 }
 
-/*! Return the maximum order.
+/** Return the maximum order.
     @return maximum order
  */
 unsigned int compiledDA::getOrd() const {
     return this->ord;
 }
 
-/*! Return the maximum number of variables.
+/** Return the maximum number of variables.
     @return maximum number of variables
  */
 unsigned int compiledDA::getVars() const {
     return this->vars;
 }
 
-/*! Return the number of terms.
+/** Return the number of terms.
     @return number of terms
  */
 unsigned int compiledDA::getTerms() const {

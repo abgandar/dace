@@ -47,7 +47,7 @@
 
 namespace DACE {
 
-/*! Class representing a single monomial.
+/** Class representing a single monomial.
 
     This class represents a single monomial, containing a vector of exponents
     and the corresponding coefficient. This class is only used for user convenience

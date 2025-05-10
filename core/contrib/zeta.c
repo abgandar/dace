@@ -38,7 +38,7 @@ static const double A[] = {
 
 static const double MACHEP = 1.11022302462515654042E-16;
 
-/*! Riemann zeta function of two arguments.
+/** Riemann zeta function of two arguments.
 
     @f[ \zeta(x,q) = \sum_{k=0}^\inty (k+q)^{-x}  @f]
     where x > 1 and q is not a negative integer or zero.

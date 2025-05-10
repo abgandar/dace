@@ -26,7 +26,7 @@
  *      Author: University of Southampton
  */
 
-/*! @file
+/** @file
 
     @brief Public DACE C++ header file for static linking.
 

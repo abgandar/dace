@@ -30,7 +30,7 @@
  *  @{
  */
 
-/*! @file
+/** @file
 
     @brief Public DACE core header.
 

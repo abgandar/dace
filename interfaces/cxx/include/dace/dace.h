@@ -26,7 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
+/** @file
 
     @brief Public DACE C++ header file.
 

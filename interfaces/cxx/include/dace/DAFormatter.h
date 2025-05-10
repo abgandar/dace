@@ -55,7 +55,7 @@ namespace DACE {
 // forward declaration
 class DA;
 
-/*! Abstract class providing a DA formatter to output DA vectors in some advanced format.
+/** Abstract class providing a DA formatter to output DA vectors in some advanced format.
 
     The standard output format of DA via the C++ iostream interface provides a human-readable text
     representation of a DA vector. In some circumstances it is preferable to print a DA vector in
@@ -73,12 +73,12 @@ class DA;
 class DACE_API DAFormatter
 {
 public:
-    /*! Format a single DA and return a string representation.
+    /** Format a single DA and return a string representation.
         @param da DA object
         @return formatted string representation
      */
     virtual std::string format(const DA &da) = 0;
-    /*! Format a vector of DAs and return a string representation.
+    /** Format a vector of DAs and return a string representation.
         Usually this just formats each DA one after the other.
         @param da vector of DA objects
         @return formatted string representation
@@ -86,7 +86,7 @@ public:
     virtual std::string format(const std::vector<DA> &da) = 0;
 };
 
-/*! Structure containing the elements of a simple format as used by the DASimpleFormatter.
+/** Structure containing the elements of a simple format as used by the DASimpleFormatter.
 
     Each monomial consisting of coefficient C and exponents e_1, e_2, ... is formatted
     by outputting these values:
@@ -111,7 +111,7 @@ struct DASimpleFormat {
     bool shorten;               ///< if true, exponents equal to one are output using the short format
 };
 
-/*! DASimpleFormatter class which formats a DA vector using simple rules to output code
+/** DASimpleFormatter class which formats a DA vector using simple rules to output code
     suitable for various programming languages.
 
     Example:

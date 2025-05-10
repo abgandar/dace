@@ -46,7 +46,7 @@ namespace DACE {
 /********************************************************************************
 *     compiledDA evaluation routines
 *********************************************************************************/
-/*! Evaluate the compiled polynomial with a vector of any arithmetic type
+/** Evaluate the compiled polynomial with a vector of any arithmetic type
     (such as DA or double) and return vector of results.
     @param[in] args the values of the independent DA variables to evaluate
     with. Must be a std::vector<> (or derived class) of an arithmetic
@@ -63,7 +63,7 @@ template<class V> V compiledDA::eval(const V &args) const {
     return res;
 }
 
-/*! Evaluate the compiled polynomial with a braced initializer list of any arithmetic type
+/** Evaluate the compiled polynomial with a braced initializer list of any arithmetic type
     (such as DA or double) and return vector of results.
     @param[in] l the values of the independent DA variables to evaluate
     with. Must be a braced initializer list of an arithmetic
@@ -82,7 +82,7 @@ template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T>
     return res;
 }
 
-/*! Evaluate the compiled polynomial with an array of any arithmetic type
+/** Evaluate the compiled polynomial with an array of any arithmetic type
     (such as DA or double) and return vector of results.
     @param[in] args array of the values of the independent DA variables to
     evaluate with
@@ -100,7 +100,7 @@ template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned
     return res;
 }
 
-/*! Evaluate the compiled polynomial with a single argument of any
+/** Evaluate the compiled polynomial with a single argument of any
     arithmetic type (such as DA or double) and return vector of results.
     @param[in] arg The value of the first independent DA variable to evaluate
     with. All remaining independent DA variables are assumed to be zero.
@@ -116,7 +116,7 @@ template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
     return res;
 }
 
-/*! Evaluate the compiled polynomial with a vector of arithmetic type T
+/** Evaluate the compiled polynomial with a vector of arithmetic type T
     (such as DA or double) and return the result in the vector res.
     @param[in] args the values of the independent DA variables to evaluate
     with. Must be a std::vector<> (or derived class) of an arithmetic

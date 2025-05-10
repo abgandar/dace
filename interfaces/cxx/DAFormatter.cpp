@@ -62,7 +62,7 @@ const DASimpleFormat DASimpleFormatter::PYTHON_POW =  { "+",  "-",  "*",        
 /// LaTeX formatter. Outputs the polynomial as a nicely formatted equation.
 const DASimpleFormat DASimpleFormatter::LATEX =       { " +", " -", " \\cdot ", "",     "x", "_{", "}", "^{",  "}", " \n\t",       1,  0, 20, true  };
 
-/*! Format a single DA and return a string representation.
+/** Format a single DA and return a string representation.
     @param da DA object
     @return formatted string representation
  */
@@ -93,7 +93,7 @@ std::string DASimpleFormatter::format(const DA &da){
     return res.str();
 }
 
-/*! Format a vector of DAs and return a string representation.
+/** Format a vector of DAs and return a string representation.
     This just formats each DA in the vector one after the other.
     @param da vector of DA objects
     @return formatted string representation

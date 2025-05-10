@@ -45,7 +45,7 @@
  *     DACE error state routine
  ********************************************************************************/
 
-/*! Return the current error XYY code.
+/** Return the current error XYY code.
     @return The error code in XYY form
     @see daceerror.h
 */
@@ -54,7 +54,7 @@ unsigned int daceGetError()
     return DACEDbg.ierr;
 }
 
-/*! Return the current error X code.
+/** Return the current error X code.
     @return The X error code X
     @see daceerror.h
 */
@@ -63,7 +63,7 @@ unsigned int daceGetErrorX()
     return DACEDbg.ixerr;
 }
 
-/*! Return the current error YY code.
+/** Return the current error YY code.
     @return The YY error code
     @see daceerror.h
 */
@@ -72,7 +72,7 @@ unsigned int daceGetErrorYY()
     return DACEDbg.iyyerr;
 }
 
-/*! Return the function name of current generated error.
+/** Return the function name of current generated error.
     @return The function name originating the error.
 */
 const char* daceGetErrorFunName()
@@ -80,7 +80,7 @@ const char* daceGetErrorFunName()
     return DACEDbg.name;
 }
 
-/*! Return the current error message.
+/** Return the current error message.
     @return The current error message string
     @see daceerror.h
 */
@@ -95,7 +95,7 @@ const char* daceGetErrorMSG()
  *     Should be called by the interface once the error has been corrected
  *
  */
-/*! Clear the DACE error code.
+/** Clear the DACE error code.
 */
 void daceClearError()
 {
@@ -106,7 +106,7 @@ void daceClearError()
     *DACEDbg.msg = '\0';
 }
 
-/*!   Error handler for errors within the DACE.
+/**   Error handler for errors within the DACE.
       It is intended mostly for development and debugging. More descriptive error messages should be
       displayed by the user interface.
 

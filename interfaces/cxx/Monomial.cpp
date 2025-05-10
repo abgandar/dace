@@ -41,12 +41,12 @@
 
 namespace DACE {
 
-/*! Create a Monomial object large enough to hold all current monomials.
+/** Create a Monomial object large enough to hold all current monomials.
 */
 Monomial::Monomial() : m_jj(DA::getMaxVariables()), m_coeff(0.0) {
 }
 
-/*! Compute the order of the monomial.
+/** Compute the order of the monomial.
     @return Order of the monomial
  */
 unsigned int Monomial::order() const {
@@ -58,7 +58,7 @@ unsigned int Monomial::order() const {
     return ord;
 }
 
-/*! Convert monomial to string.
+/** Convert monomial to string.
     @return A string representing the monomial in human readable form.
  */
 std::string Monomial::toString() const {
@@ -81,7 +81,7 @@ std::string Monomial::toString() const {
     return oss.str();
 }
 
-/*! Output operator.
+/** Output operator.
     @param[in] out Output stream
     @param[in] m Monomial vector to be printed in the stream
     @return The output stream

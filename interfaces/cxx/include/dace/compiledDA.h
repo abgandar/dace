@@ -48,7 +48,7 @@ namespace DACE {
 // forward declaration
 class DA;
 
-/*! Representation of a precomputed DA polynomial for efficient evaluation.
+/** Representation of a precomputed DA polynomial for efficient evaluation.
  */
 class DACE_API compiledDA
 {

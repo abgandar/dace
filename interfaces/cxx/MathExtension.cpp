@@ -39,21 +39,21 @@
 
 namespace DACE {
 
-/*! Absolute value.
+/** Absolute value.
     @param[in] x Function argument
  */
 double absolute(const double x) {
     return std::abs(x);
 }
 
-/*! Constant part. For double type this is just x.
+/** Constant part. For double type this is just x.
     @param[in] x Function argument
  */
 double cons(const double x) {
     return x;
 }
 
-/*! Logarithm relative to base b.
+/** Logarithm relative to base b.
     @param[in] x Function argument
     @param[in] b Base of the logarithm (must be positive)
  */
@@ -61,35 +61,35 @@ double logb(const double x, const double b) {
     return std::log(x)/std::log(b);
 }
 
-/*! Inverse square root 1/sqrt(x).
+/** Inverse square root 1/sqrt(x).
     @param[in] x Function argument
  */
 double isrt(const double x) {
     return 1.0/std::sqrt(x);
 }
 
-/*! Inverse cube root 1/cbrt(x).
+/** Inverse cube root 1/cbrt(x).
     @param[in] x Function argument
  */
 double icbrt(const double x) {
     return 1.0/std::cbrt(x);
 }
 
-/*! Square of x.
+/** Square of x.
     @param[in] x Function argument
  */
 double sqr(const double x) {
     return x*x;
 }
 
-/*! Multiplicative inverse 1/x.
+/** Multiplicative inverse 1/x.
     @param[in] x Function argument
  */
 double minv(const double x) {
     return 1.0/x;
 }
 
-/*! Modulo function (remainder of x/p).
+/** Modulo function (remainder of x/p).
     @param[in] x the dividend
     @param[in] p the divisor
  */
@@ -97,7 +97,7 @@ double mod(const double x, const double p) {
     return std::fmod(x, p);
 }
 
-/*! p-th root of x.
+/** p-th root of x.
     @param[in] x Function argument
     @param[in] p Root to take
  */
@@ -105,7 +105,7 @@ double root(const double x, const int p) {
     return std::pow(x, 1.0/p);
 }
 
-/*! norm of x.
+/** norm of x.
     @param[in] x Function argument
     @param[in] type Type of norm (ignored for double)
  */

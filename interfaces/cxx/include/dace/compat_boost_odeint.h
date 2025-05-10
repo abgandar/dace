@@ -30,7 +30,7 @@
  *  @{
  */
 
-/*! @file
+/** @file
 
     @brief Boost library compatibility shim for boost::numeric::odeint.
 

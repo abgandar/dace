@@ -52,7 +52,7 @@ namespace DACE {
 class DA;
 template<typename T> class AlgebraicVector;
 
-/*! Matrix of any algebraic type. */
+/** Matrix of any algebraic type. */
 template <class T> class AlgebraicMatrix
 {
 public:
@@ -61,18 +61,18 @@ public:
     ************************************************************************************/
     AlgebraicMatrix() : _nrows(0), _ncols(0) {};    //!< Default Constructor
 
-    /*! Constructor for square matrices.
+    /** Constructor for square matrices.
         @param[in] size size of the matrix, i.e. the number of rows and columns.
      */
     explicit AlgebraicMatrix(const int size) : _nrows(size), _ncols(size), _data(size*size,0.0) { };
 
-    /*! Constructor for rectangular matrices.
+    /** Constructor for rectangular matrices.
         @param[in] nrows number of rows of the matrix
         @param[in] ncols number of columns of the matrix
      */
     AlgebraicMatrix(const int nrows, const int ncols) : _nrows(nrows), _ncols(ncols), _data(nrows*ncols,0.0) { };
 
-    /*! Constructor for rectangular matrices that allows to set all elements equal to a variable.
+    /** Constructor for rectangular matrices that allows to set all elements equal to a variable.
         @param[in] nrows number of rows of the matrix
         @param[in] ncols number of columns of the matrix
         @param[in] d     matrix elements value
@@ -82,17 +82,17 @@ public:
     /***********************************************************************************
     *     Output number of rows, columns, and size
     ************************************************************************************/
-    /*! Returns the number of columns of the matrix
+    /** Returns the number of columns of the matrix
         @return number of columns of the matrix.
      */
     unsigned int ncols() const { return this->_ncols; };
 
-    /*! Returns the number of rows of the matrix
+    /** Returns the number of rows of the matrix
         @return number of rows of the matrix.
      */
     unsigned int nrows() const { return this->_nrows; };
 
-    /*! Returns the number of elements of the matrix
+    /** Returns the number of elements of the matrix
         @return number of elements of the matrix.
      */
     unsigned int size() const { return this->_data.size(); };
