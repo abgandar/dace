@@ -43,9 +43,9 @@
     #include <pthread.h>
 #endif
 
-/*! Set up the ordering and addressing arrays in the common data structure
+/** Set up the ordering and addressing arrays in the common data structure
     and initialize DA memory.
-    @note MUST BE CALLED BEFORE ANY OTHER DA ROUTINE CAN BE USED.
+    @warning MUST BE CALLED BEFORE ANY OTHER DA ROUTINE CAN BE USED.
     @note Also initializes the truncation order to the maximum computation order
     and disables the DA epsilon cutoff by setting it to 0.0.
     @param[in] no order of the Taylor polynomials
@@ -185,11 +185,11 @@ void daceInitialize(unsigned int no, unsigned int nv)
     daceInitializeThread0();
 }
 
-/*! Set up thread local data structures at the beginning of a new thread.
+/** Set up thread local data structures at the beginning of a new thread.
     @note The main thread must call daceInitialize once before spawning new threads.
     All spawned threads must then call daceInitializeThread to initialize the
     thread before performing any other operations.
-    @note daceInitialize MUST NOT be called again by any thread while other threads
+    @warning daceInitialize MUST NOT be called again by any thread while other threads
     are active.
     @note Also initializes the truncation order to the maximum computation order
     and disables the DA epsilon cutoff by setting it to 0.0.
@@ -203,7 +203,7 @@ void daceInitializeThread()
     daceInitializeThread0();
 }
 
-/*! Clean up thread local data structures at the end of thread's life time.
+/** Clean up thread local data structures at the end of thread's life time.
     @note Each spawned thread (except for the main thread) should call daceCleanupThread
     before exitting to ensure any thread local memory is properly release. No DACE operations
     must be performed after calling daceCleanupThread.
@@ -218,7 +218,7 @@ void daceCleanupThread()
 #endif
 }
 
-/*! Set up thread local data structures without resetting error.
+/** Set up thread local data structures without resetting DACE error.
     Also initializes the truncation order to the maximum computation order
     and disables the DA epsilon cutoff by setting it to 0.0.
 */
@@ -242,7 +242,7 @@ void daceInitializeThread0()
 #endif
 }
 
-/*! This subroutine returns the major and minor version number of the DACE.
+/** This subroutine returns the major and minor version number of the DACE.
     These values can be checked by the interface to ensure compatibility.
     @param[out] imaj Major version number
     @param[out] imin Minor version number
@@ -255,11 +255,11 @@ void daceGetVersion(int *imaj, int *imin, int *ipat)
     *ipat = DACE_PATCH_VERSION;
 }
 
-/*! Set cutoff value to eps and return the previous value.
+/** Set cutoff value to eps and return the previous value.
     @param[in] eps New cutoff value at or below which coefficients can be flushed to
     zero for efficiency purposes
     @return The previous value of the cutoff
-    @note This feature can have severe unintended consequences if used incorrectly!
+    @warning This feature can have severe unintended consequences if used incorrectly!
     Flushing occurs for any intermediate result also within the DACE, and can result
     in wrong solutions whenever DA coefficients become very small relative to epsilon.
     For example, division by a large DA divisor can cause the (internally calculated)
@@ -274,7 +274,7 @@ double daceSetEpsilon(const double eps)
     return old_eps;
 }
 
-/*! Get the cutoff value eps.
+/** Get the cutoff value eps.
     @return The current value of the cutoff
     @see daceSetEpsilon
  */
@@ -283,7 +283,7 @@ double daceGetEpsilon()
     return DACECom_t.eps;
 }
 
-/*! Get machine epsilon value.
+/** Get machine epsilon value.
     @return The experimentally determined machine epsilon
  */
 double daceGetMachineEpsilon()
@@ -291,7 +291,7 @@ double daceGetMachineEpsilon()
     return DACECom.epsmac;
 }
 
-/*! Get the maximum computation order set in the initialization routine.
+/** Get the maximum computation order set in the initialization routine.
     @return The maximum computation order
     @see daceInitialize
  */
@@ -300,7 +300,7 @@ unsigned int daceGetMaxOrder()
     return DACECom.nomax;
 }
 
-/*! Get the maximum number of variables set in the initialization routine.
+/** Get the maximum number of variables set in the initialization routine.
     @return The maximum number of variables
     @see daceInitialize
  */
@@ -309,7 +309,7 @@ unsigned int daceGetMaxVariables()
     return DACECom.nvmax;
 }
 
-/*! Get the maximum number of monomials for the current setup.
+/** Get the maximum number of monomials for the current setup.
     @return The maximum number of monomials
     @see daceInitialize
  */
@@ -318,7 +318,7 @@ unsigned int daceGetMaxMonomials()
     return DACECom.nmmax;
 }
 
-/*! Get the current truncation order set for computations.
+/** Get the current truncation order set for computations.
     @return The current truncation order
     @see daceSetTruncationOrder
  */
@@ -327,7 +327,7 @@ unsigned int daceGetTruncationOrder()
     return DACECom_t.nocut;
 }
 
-/*! Set the current truncation order for future computations.
+/** Set the current truncation order for future computations.
     @param[in] fnot The new truncation order
     @return The previous truncation order
     @see daceGetTruncationOrder

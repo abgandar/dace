@@ -26,6 +26,10 @@
  *      Author: Dinamica Srl
  */
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 // C++ stdlib classes used only internally in this implementation
 #include <string>
 #include <sstream>
@@ -41,7 +45,7 @@ namespace DACE {
 /***********************************************************************************
 *     Input/Output routines
 ************************************************************************************/
-/*! Output operator for DA matrices.
+/** Output operator for DA matrices.
     @param[in] out Output stream
     @param[in] obj AlgebraicMatrix<DA> to be output to the stream
     @return Output stream
@@ -62,7 +66,7 @@ template<> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA>
     return out;
 }
 
-/*! Input operator for DA matrices.
+/** Input operator for DA matrices.
     @param[in] in Input stream
     @param[out] obj AlgebraicMatrix<DA> to be read from the stream
     @return Input stream
@@ -118,3 +122,5 @@ template<> std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj){
 }
 
 }
+
+/** @}*/

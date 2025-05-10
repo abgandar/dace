@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Formatters allow printing of DAs in a variety of formats other than the standard output
+/*  Formatters allow printing of DAs in a variety of formats other than the standard output
 
     The standard output format of DA via the C++ iostream interface provides a human-readable text
     representation of a DA vector. In some circumstances it is preferable to print a DA vector in
@@ -48,16 +46,34 @@
 #include <vector>
 #include <string>
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
 // forward declaration
 class DA;
 
-/*! Abstract class providing a DA formatter to output DA vectors in some advanced format. */
+/** Abstract class providing an interface to output DA vectors in advanced formats.
+
+    The standard output format of DA via the C++ iostream interface provides a human-readable text
+    representation of a DA vector. In some circumstances it is preferable to print a DA vector in
+    a different format, e.g. to output the polynomial in a particular programming language or in
+    LaTeX format.
+
+    This abstract class provides an interface for this functionality.
+    The DACE::DADefaultFormatter and DACE::DASimpleFormatter classes are an implementation of
+    simple formatters that can output DAs in various pre-defined or user-supplied formats
+    including Python, C, Matlab, Fortran, and LaTeX code.
+
+    @see DACE::DADefaultFormatter
+    @see DACE::DASimpleFormatter
+ */
 class DACE_API DAFormatter
 {
 public:
-    /*! Format a single DA and return a string representation.
+    /** Format a single DA and return a string representation.
         @param da DA object
         @return Formatted string representation.
         @pure This function must be implemented by any derived DA formatter at a minimum.
@@ -66,7 +82,7 @@ public:
 
     virtual std::string operator()(const std::vector<DA> &da);
 
-    /*! Format a single DA and return a string representation.
+    /** Format a single DA and return a string representation.
         @param da DA object
         @return Formatted string representation.
         @deprecated Replaced by DAFormatter::operator().
@@ -76,7 +92,7 @@ public:
         return (*this)(da);
     };
 
-    /*! Format a vector of DAs and return a string representation.
+    /** Format a vector of DAs and return a string representation.
         Usually this just formats each DA one after the other.
         @param da Vector of DA objects
         @return Formatted string representation.
@@ -88,7 +104,7 @@ public:
     };
 };
 
-/*! DADefaultFormatter formats DAs using the built-in DA output function.
+/** DADefaultFormatter formats DAs using the built-in DA output function.
  */
 class DACE_API DADefaultFormatter : public DAFormatter
 {
@@ -96,7 +112,7 @@ public:
     std::string operator()(const DA &da);
 };
 
-/*! Structure containing the elements of a simple format as used by the DASimpleFormatter.
+/** Structure containing the elements of a simple format as used by the DASimpleFormatter.
 
     Each monomial consisting of coefficient C and exponents e_1, e_2, ... is formatted
     by outputting these values:
@@ -121,8 +137,7 @@ struct DASimpleFormat {
     bool shorten;               ///< if true, exponents equal to one are output using the short format
 };
 
-/*! DASimpleFormatter class which formats a DA vector using simple rules to output code
-    suitable for various programming languages.
+/** Formats a DA vector using simple rules to output code suitable for various programming languages.
 
     Example:
     @code
@@ -159,3 +174,5 @@ public:
 }
 
 #endif /* DINAMICA_DAFORMATTER_H_ */
+
+/** @}*/

@@ -30,7 +30,7 @@
  *  @{
  */
 
-/*! @file
+/** @file
 
     @brief Internal build-time DACE configuration options.
 

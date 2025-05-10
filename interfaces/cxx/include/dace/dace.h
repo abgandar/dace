@@ -26,11 +26,16 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
+/** @file
 
     @brief Public DACE C++ header file.
 
-    This header file just includes all other DACE C++ headers in the right order.
+    This header file includes all other DACE C++ headers in the right order.
+    Users of the C++ interface should include (only) this file or dace_s.h
+    for static linking.
+
+    @see dace_s.h
+    @addtogroup DACECXX C++ Interface
 */
 
 #ifndef DINAMICA_DACE_H_

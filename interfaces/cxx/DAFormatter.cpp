@@ -26,6 +26,10 @@
  *      Author: Dinamica Srl
  */
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 // C++ stdlib classes used only internally in the implementation
 #include <sstream>
 
@@ -80,7 +84,7 @@ const DASimpleFormat DASimpleFormatter::PYTHON_POW =  { "+",  "-",  "*",        
 /// LaTeX formatter. Outputs the polynomial as a nicely formatted equation.
 const DASimpleFormat DASimpleFormatter::LATEX =       { " +", " -", " \\cdot ", "",     "x", "_{", "}", "^{",  "}", " \n\t",       1,  0, 20, true  };
 
-/*! Format a single DA using the set DASimpleFormat and return the string representation.
+/** Format a single DA and return a string representation.
     @param da DA object
     @return Formatted string representation.
  */
@@ -112,3 +116,5 @@ std::string DASimpleFormatter::operator()(const DA &da){
 }
 
 }
+
+/** @}*/

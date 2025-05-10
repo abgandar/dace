@@ -10,11 +10,11 @@
         http://www.netlib.org/f2c/libf2c.zip
 */
 
+/// @cond CONTRIB
+
 /** @addtogroup DACEContrib Contrib
  *  @{
  */
-
-/// @cond
 
 #include "f2c.h"
 
@@ -300,5 +300,6 @@ L900:
 /* ---------- Last line of GAMMA ---------- */
 } /* dgamma_ */
 
-/// @endcond
 /** @}*/
+
+/// @endcond

@@ -1,8 +1,6 @@
-/* f2c.h  --  Standard Fortran to C header file */
+/// @cond
 
-/**  barf  [ba:rf]  2.  "He suggested using FORTRAN, and everybody barfed."
-
-    - From The Shogakukan DICTIONARY OF NEW ENGLISH (Second edition) */
+/* f2c.h  --  Standard Fortran to C header file (use with libf2c.c) */
 
 #ifndef F2C_INCLUDE
 #define F2C_INCLUDE
@@ -383,3 +381,5 @@ extern void z_sin(doublecomplex *, doublecomplex *);
 extern void z_sqrt(doublecomplex *, doublecomplex *);
     }
 #endif
+
+/// @endcond

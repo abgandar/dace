@@ -26,6 +26,10 @@
  *      Author: Dinamica Srl
  */
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 // C++ stdlib classes used only internally in the implementation
 #include <algorithm>
 #include <exception>
@@ -53,7 +57,7 @@ std::stack<unsigned int> DA::TOstack;   // truncation order stack, initially emp
 /********************************************************************************
 *     DACE Setup
 *********************************************************************************/
-/*! Initialize the DACE control arrays and set the maximum order and the
+/** Initialize the DACE and set the maximum order and the
     maximum number of variables.
     @note MUST BE CALLED BEFORE ANY OTHER DA ROUTINE CAN BE USED.
     @note This routine performs a mandatory version check to compare the version
@@ -75,7 +79,7 @@ void DA::init(const unsigned int ord, const unsigned int nvar) {
     initialized = true;
 }
 
-/*! Returns the inizialisation status of the DACE.
+/** Returns the inizialisation status of the DACE.
     @return Returns true if the DACE has previously been initialized by a call
     to DA::init, or false otherwise.
     @see DA::init
@@ -84,7 +88,7 @@ bool DA::isInitialized() {
     return initialized;
 }
 
-/*! Return the major and minor version number of the DACE
+/** Return the major and minor version number of the DACE
     along with the patch level of the library.
     @param[out] maj major DACE version number;
     @param[out] min minor DACE version number;
@@ -96,7 +100,8 @@ void DA::version(int &maj, int &min, int &patch) {
     if(daceGetError()) DACEException();
 }
 
-/*! Check the DACE core library version linked to this C++ interface
+/** Check the DACE core library version.
+    Check the DACE core library version linked to this C++ interface
     against the interface version and throw an exception if the versions don't
     match.
     @throw DACE::DACEException
@@ -109,7 +114,7 @@ void DA::checkVersion() {
     if((maj!=DACE_CPP_MAJOR)||(min!=DACE_CPP_MINOR)||(maj!=DACE_MAJOR_VERSION)||(min!=DACE_MINOR_VERSION)) DACEException(20,99);
 }
 
-/*! Return the maximum order currently set for the computations.
+/** Return the maximum order currently set for the computations.
     @return The maximum order, or zero if undefined.
     @throw DACE::DACEException
  */
@@ -120,7 +125,7 @@ unsigned int DA::getMaxOrder() {
     return ord;
 }
 
-/*! Set the cutoff value eps to a new value and return the
+/** Set the cutoff value eps to a new value and return the
     previous value.
     @param[in] eps new cutoff value.
     @return The previous cutoff value of eps, or zero if undefined.
@@ -133,7 +138,7 @@ double DA::setEps(const double eps) {
     return old_eps;
 }
 
-/*! Return the cutoff value eps currently set for the computations.
+/** Return the cutoff value eps currently set for the computations.
     @return The cutoff value of eps, or zero if undefined.
     @throw DACE::DACEException
  */
@@ -144,7 +149,7 @@ double DA::getEps() {
     return eps;
 }
 
-/*! Return the machine epsilon (pessimistic estimate).
+/** Return the machine epsilon (pessimistic estimate).
     @return The machine epsilon, or zero if undefined.
     @throw DACE::DACEException
  */
@@ -155,7 +160,7 @@ double DA::getEpsMac() {
     return epsmac;
 }
 
-/*! Return the maximum number of variables set for the computations.
+/** Return the maximum number of variables set for the computations.
     @return The maximum number of variables, or zero if undefined.
     @throw DACE::DACEException
  */
@@ -166,7 +171,7 @@ unsigned int DA::getMaxVariables() {
     return nvar;
 }
 
-/*! Return the maximum number of monomials available with the
+/** Return the maximum number of monomials available with the
     order and number of variables specified.
     @return The maximum number of monomials, or zero if undefined.
     @throw DACE::DACEException
@@ -178,7 +183,7 @@ unsigned int DA::getMaxMonomials() {
     return nmmax;
 }
 
-/*! Set the truncation order ot to a new value and return the
+/** Set the truncation order ot to a new value and return the
     previous value. All terms larger than the truncation order are discarded
     in subsequent operations.
     @param[in] ot new truncation order.
@@ -195,7 +200,7 @@ unsigned int DA::setTO(const unsigned int ot) {
     return old_no;
 }
 
-/*! Return the truncation order currently set for the computations. All terms
+/** Return the truncation order currently set for the computations. All terms
     larger than the truncation order are discarded in subsequent operations.
     @return current truncation order, or zero if undefined.
     @throw DACE::DACEException
@@ -210,7 +215,7 @@ unsigned int DA::getTO() {
     return no;
 }
 
-/*! Set a new truncation order, saving the previous one on the truncation
+/** Set a new truncation order, saving the previous one on the truncation
     order stack. All terms larger than the truncation order are discarded
     in subsequent operations.
     @param[in] ot new truncation order.
@@ -224,7 +229,7 @@ void DA::pushTO(const unsigned int ot) {
     if(daceGetError()) DACEException();
 }
 
-/*! Restore the previous truncation order from the truncation order stack.
+/** Restore the previous truncation order from the truncation order stack.
     All terms larger than the truncation order are discarded in subsequent
     operations.
     @throw DACE::DACEException
@@ -243,7 +248,7 @@ void DA::popTO() {
 /********************************************************************************
 *     Constructors & Destructors
 *********************************************************************************/
-/*! Create an empty DA object representing the constant zero function.
+/** Create an empty DA object representing the constant zero function.
     @throw DACE::DACEException
  */
 DA::DA() {
@@ -251,7 +256,7 @@ DA::DA() {
     if(daceGetError()) DACEException();
 }
 
-/*! Create a copy of a DA object.
+/** Create a copy of a DA object.
     @param[in] da object to be copied.
     @throw DACE::DACEException
  */
@@ -261,7 +266,7 @@ DA::DA(const DA &da) {
     if(daceGetError()) DACEException();
 }
 
-/*! Move all resources from a DA object to us without copying.
+/** Move all resources from a DA object to us without copying.
     @param[in] da object to be moved.
     @throw DACE::DACEException
  */
@@ -271,7 +276,7 @@ DA::DA(DA &&da) {
     if(daceGetError()) DACEException();
 }
 
-/*! Create a DA object with the constant part equal to c.
+/** Create a DA object with the constant part equal to c.
     @note This routine MUST be called with a floating point type as the first argument, e.g. DA(1.0). Expressions involving integer data types such as DA(1) will be interpreted as the first independent DA variable instead of the constant DA object of the given value.
     @param[in] c A double value set as constant part of the DA object.
     @throw DACE::DACEException
@@ -282,7 +287,7 @@ DA::DA(const double c) {
     if(daceGetError()) DACEException();
 }
 
-/*! Create a DA object as c times the independent variable number i.
+/** Create a DA object as c times the independent variable number i.
     @note When used in its one argument form (with the default argument 1.0 for c), this routine MUST be called with an integer type as the first argument, e.g. DA(1). Expressions involving floating point data types such as DA(1.0) will be interpreted as the constant DA of the given value instead of the first independent variable.
     @param[in] i independent variable number (i=0 means the constant part).
     @param[in] c coefficient corresponding to the given independent variable. By default, this value is assumed to be 1.0.
@@ -294,7 +299,7 @@ DA::DA(const unsigned int i, const double c) {
     if(daceGetError()) DACEException();
 }
 
-/*! Create a DA object as c times the independent variable number i.
+/** Create a DA object as c times the independent variable number i.
     @note When used in its one argument form (with the default argument 1.0 for c), this routine MUST be called with an integer type as the first argument, e.g. DA(1). Expressions involving floating point data types such as DA(1.0) will be interpreted as the constant DA object of the given value instead of the first independent DA variable.
     @param[in] i independent variable number (i=0 means the constant part).
     @param[in] c coefficient corresponding to the given independent variable. By default, this value is assumed to be 1.0.
@@ -306,7 +311,7 @@ DA::DA(const int i, const double c) {
     if(daceGetError()) DACEException();
 }
 
-/*! Destroy a DA object and free the associated object in the DACE core.
+/** Destroy a DA object and free the associated object in the DACE core.
  */
 DA::~DA() throw() {
     daceFreeDA(m_index);
@@ -319,7 +324,7 @@ DA::~DA() throw() {
 *     Coefficient information, access, and extraction routines
 *********************************************************************************/
 
-/*! Return the number of non-zero coefficients of a DA object.
+/** Return the number of non-zero coefficients of a DA object.
     @return The number of non-zero coefficients stored in the DA object.
     @throw DACE::DACEException
  */
@@ -330,7 +335,7 @@ unsigned int DA::size() const {
     return res;
 }
 
-/*! Return the order of a DA object.
+/** Return the order of a DA object.
     @return Lowest order of the non-zero monomials or UINT_MAX if it is the zero DA.
     @throw DACE::DACEException
  */
@@ -341,7 +346,7 @@ unsigned int DA::order() const {
     return res;
 }
 
-/*! Return the degree of a DA object.
+/** Return the degree of a DA object.
     @return Highest order of the non-zero monomials or INT_MIN if it is the zero DA.
     @throw DACE::DACEException
  */
@@ -352,7 +357,7 @@ int DA::degree() const {
     return res;
 }
 
-/*! Check if a DA object has any NAN coefficients.
+/** Check if a DA object has any NAN coefficients.
     @return True is any coefficients of the DA object are NAN.
     @throw DACE::DACEException
 */
@@ -363,7 +368,7 @@ int DA::isnan() const {
     return temp;
 }
 
-/*! Check if a DA object has any INF coefficients.
+/** Check if a DA object has any INF coefficients.
     @return True is any coefficients of the DA object are INF.
     @throw DACE::DACEException
 */
@@ -374,7 +379,7 @@ int DA::isinf() const {
     return temp;
 }
 
-/*! Return the constant part of a DA object.
+/** Return the constant part of a DA object.
     @return A double corresponding to the constant part of the DA object.
     @throw DACE::DACEException
  */
@@ -385,7 +390,7 @@ double DA::cons() const {
     return temp;
 }
 
-/*! Return the linear part of a DA object.
+/** Return the linear part of a DA object.
     @return An AlgebraicVector<dobule> containing the linear coefficients of
     each independent DA variable in the DA object.
     @throw DACE::DACEException
@@ -399,7 +404,7 @@ AlgebraicVector<double> DA::linear() const {
     return v;
 }
 
-/*! Compute the gradient of the DA object.
+/** Compute the gradient of the DA object.
     @return An AlgebraicVector<DA> containing the derivatives
     of the DA object with respect to all independent DA variables.
     @throw DACE::DACEException
@@ -414,7 +419,7 @@ AlgebraicVector<DA> DA::gradient() const {
     return temp;
 }
 
-/*! Return a specific coefficient of a DA object.
+/** Return a specific coefficient of a DA object.
     @param[in] jj vector of the exponents of the coefficient to retrieve.
     @return The coefficient of DA object corresponding to the given vector of exponents.
     @throw DACE::DACEException
@@ -434,7 +439,7 @@ double DA::getCoefficient(const std::vector<unsigned int> &jj) const {
     return coeff;
 }
 
-/*! Set a specific coefficient into a DA object.
+/** Set a specific coefficient into a DA object.
     @param[in] jj vector of the exponents of the coefficient to be set.
     @param[in] coeff value to be set as coefficient.
     @throw DACE::DACEException
@@ -454,7 +459,7 @@ void DA::setCoefficient(const std::vector<unsigned int> &jj, const double coeff)
     if(daceGetError()) DACEException();
 }
 
-/*! Return the Monomial corresponding to the non-zero coefficient at the given
+/** Return the Monomial corresponding to the non-zero coefficient at the given
     position in the DA object (monomials use one based indexing!).
     @param[in] npos position within the DA object. The ordering of the Monomials
     within a DA object is implementation dependent and does not correspond
@@ -474,7 +479,7 @@ Monomial DA::getMonomial(const unsigned int npos) const {
     return m;
 }
 
-/*! Return the Monomial corresponding to the non-zero coefficient at the given
+/** Return the Monomial corresponding to the non-zero coefficient at the given
     position in the DA object (monomials use one based indexing!).
     @param[in] npos position within the DA object. The ordering of the Monomials
     within a DA object is implementation dependent and does not correspond
@@ -490,7 +495,7 @@ void DA::getMonomial(const unsigned int npos, Monomial &m) const {
     if(daceGetError()) DACEException();
 }
 
-/*! Return a vector of all Monomials in the DA object (differently from
+/** Return a vector of all Monomials in the DA object (differently from
     getMonomial() where only a single Monomial, corresponding to a specified
     position in the DA object, is returned).
     @return A vector of Monomial objects containing both the coefficient and
@@ -533,7 +538,7 @@ std::vector<Monomial> DA::getMonomials() const {
 /********************************************************************************
 *     Assignments
 *********************************************************************************/
-/*! Move all resources from a DA object to us without copying.
+/** Move all resources from a DA object to us without copying.
     @param[in] da object to be moved.
     @throw DACE::DACEException
  */
@@ -544,7 +549,7 @@ DA& DA::operator=(DA &&da) {
     return *this;
 }
 
-/*! Copy the content of a given DA object da into the DA object.
+/** Copy the content of a given DA object da into the DA object.
     @param[in] da DA object to be copied.
     @return The DA object with the same content of the given DA object.
     @throw DACE::DACEException
@@ -558,7 +563,7 @@ DA& DA::operator=(const DA &da) {
     return *this;
 }
 
-/*! Copy a constant polynomial of value c into the DA.
+/** Copy a constant polynomial of value c into the DA.
     @param[in] c Constant value to be copied.
     @return The DA object representing the constant function with value c.
     @throw DACE::DACEException
@@ -570,7 +575,7 @@ DA& DA::operator=(const double c) {
     return *this;
 }
 
-/*! Compute the sum between the DA object and the given one.
+/** Compute the sum between the DA object and the given one.
     The result is directly copied into the current DA object.
     @param[in] da DA object to be added.
     @return The current DA object with modified contents.
@@ -583,7 +588,7 @@ DA& DA::operator+=(const DA &da) {
     return *this;
 }
 
-/*! Compute the sum between the current DA object and a given constant.
+/** Compute the sum between the current DA object and a given constant.
     The result is directly copied into the current DA object.
     @param[in] c constant value to be added.
     @return The current DA object with modified contents.
@@ -596,7 +601,7 @@ DA& DA::operator+=(const double c) {
     return *this;
 }
 
-/*! Compute the difference between the current DA object and the given one.
+/** Compute the difference between the current DA object and the given one.
     The result is directly copied into the current DA object.
     @param[in] da DA object to be subtracted.
     @return The current DA object with modified contents.
@@ -609,7 +614,7 @@ DA& DA::operator-=(const DA &da) {
     return *this;
 }
 
-/*! Compute the difference between the current DA object and a given constant.
+/** Compute the difference between the current DA object and a given constant.
     The result is directly copied into the current DA object.
     @param[in] c constant value to be subtracted.
     @return The current DA object with modified contents.
@@ -622,7 +627,7 @@ DA& DA::operator-=(const double c) {
     return *this;
 }
 
-/*! Compute the product between the current DA object and the given one.
+/** Compute the product between the current DA object and the given one.
     The result is directly copied into the current DA object.
     @param[in] da DA object to be multiplied.
     @return The current DA object with modified contents.
@@ -635,7 +640,7 @@ DA& DA::operator*=(const DA &da) {
     return *this;
 }
 
-/*! Compute the product between the current DA object and a given constant.
+/** Compute the product between the current DA object and a given constant.
     The result is directly copied into the current DA object.
     @param[in] c constant value to be multiplied.
     @return The current DA object with modified contents.
@@ -648,7 +653,7 @@ DA& DA::operator*=(const double c) {
     return *this;
 }
 
-/*! Compute the division between the current DA object and the given one.
+/** Compute the division between the current DA object and the given one.
     The result is directly copied into the current DA object.
     @param[in] da DA object through which the current DA is divided by.
     @return The current DA object with modified contents.
@@ -661,7 +666,7 @@ DA& DA::operator/=(const DA &da) {
     return *this;
 }
 
-/*! Compute the division between the current DA object and a given constant.
+/** Compute the division between the current DA object and a given constant.
     The result is directly copied into the current DA object.
     @param[in] c constant value through which the current DA is divided by.
     @return The current DA object with modified contents.
@@ -677,7 +682,7 @@ DA& DA::operator/=(const double c) {
 /********************************************************************************
 *     Algebraic operations
 *********************************************************************************/
-/*! Compute the additive inverse of the given DA object.
+/** Compute the additive inverse of the given DA object.
     The result is copied in a new DA vector.
     @return A new DA object with the opposite sign.
     @throw DACE::DACEException
@@ -690,7 +695,7 @@ DA DA::operator-() const {
     return temp;
 }
 
-/*! Compute the addition between two DA objects.
+/** Compute the addition between two DA objects.
     @param[in] da1 first DA object.
     @param[in] da2 second DA object.
     @return A new DA object containing the result of the operation (da1+da2).
@@ -704,7 +709,7 @@ DA operator+(const DA &da1, const DA &da2) {
     return temp;
 }
 
-/*! Compute the addition between a DA object and a given constant.
+/** Compute the addition between a DA object and a given constant.
     @param[in] da DA object
     @param[in] c given constant.
     @return A new DA object containing the result of the operation (da+c).
@@ -718,7 +723,7 @@ DA operator+(const DA &da, const double c) {
     return temp;
 }
 
-/*! Compute the addition between a given constant and a DA object.
+/** Compute the addition between a given constant and a DA object.
     @param[in] c given constant.
     @param[in] da DA object
     @return A new DA object containing the result of the operation (c+da).
@@ -732,7 +737,7 @@ DA operator+(const double c, const DA &da) {
     return temp;
 }
 
-/*! Compute the subtraction between two DA objects.
+/** Compute the subtraction between two DA objects.
     @param[in] da1 first DA object.
     @param[in] da2 second DA object.
     @return A new DA object containing the result of the operation (da1-da2).
@@ -746,7 +751,7 @@ DA operator-(const DA &da1, const DA &da2) {
     return temp;
 }
 
-/*! Compute the subtraction between a DA object and a given constant.
+/** Compute the subtraction between a DA object and a given constant.
     @param[in] da DA object
     @param[in] c given constant.
     @return A new DA object containing the result of the operation (da-c).
@@ -760,7 +765,7 @@ DA operator-(const DA &da, const double c) {
     return temp;
 }
 
-/*! Compute the subtraction between a given constant and a DA object.
+/** Compute the subtraction between a given constant and a DA object.
     @param[in] c given constant.
     @param[in] da DA object
     @return A new DA object containing the result of the operation (c-da).
@@ -774,7 +779,7 @@ DA operator-(const double c, const DA &da) {
     return temp;
 }
 
-/*! Compute the multiplication between two DA objects.
+/** Compute the multiplication between two DA objects.
     @param[in] da1 first DA object.
     @param[in] da2 second DA object.
     @return A new DA object containing the result of the operation (da1*da2).
@@ -788,7 +793,7 @@ DA operator*(const DA &da1, const DA &da2) {
     return temp;
 }
 
-/*! Compute the multiplication between a DA object and a given constant.
+/** Compute the multiplication between a DA object and a given constant.
     @param[in] da DA object
     @param[in] c given constant.
     @return A new DA object containing the result of the operation (da*c).
@@ -802,7 +807,7 @@ DA operator*(const DA &da, const double c) {
     return temp;
 }
 
-/*! Compute the multiplication between a given constant and a DA object.
+/** Compute the multiplication between a given constant and a DA object.
     @param[in] c given constant.
     @param[in] da DA object
     @return A new DA object containing the result of the operation (c*da).
@@ -816,7 +821,7 @@ DA operator*(const double c, const DA &da) {
     return temp;
 }
 
-/*! Compute the division between two DA objects.
+/** Compute the division between two DA objects.
     @param[in] da1 first DA object.
     @param[in] da2 second DA object.
     @return A new DA object containing the result of the operation (da1/da2).
@@ -830,7 +835,7 @@ DA operator/(const DA &da1, const DA &da2) {
     return temp;
 }
 
-/*! Compute the division between a DA object and a given constant.
+/** Compute the division between a DA object and a given constant.
     @param[in] da DA object
     @param[in] c given constant.
     @return A new DA object containing the result of the operation (da/c).
@@ -844,7 +849,7 @@ DA operator/(const DA &da, const double c) {
     return temp;
 }
 
-/*! Compute the division between a given constant and a DA object.
+/** Compute the division between a given constant and a DA object.
     @param[in] c given constant.
     @param[in] da DA object
     @return A new DA object containing the result of the operation (c/da).
@@ -862,7 +867,7 @@ DA operator/(const double c, const DA &da) {
 *     Math routines
 *********************************************************************************/
 
-/*! Multiply the DA vector with another DA vector da monomial by monomial.
+/** Multiply the DA vector with another DA vector da monomial by monomial.
     This is the equivalent of coefficient-wise multiplication (like in DA addition).
     @param[in] da DA vector to multiply with coefficient-wise
     @return A new DA object
@@ -877,7 +882,7 @@ DA DA::multiplyMonomials(const DA &da) const {
     return temp;
 }
 
-/*! Divide by independent variable var raised to power p.
+/** Divide by independent variable var raised to power p.
     @param[in] var independente variable number to divide by.
     @param[in] p power of the independent variable.
     @return A new DA object containing the result.
@@ -891,7 +896,7 @@ DA DA::divide(const unsigned int var, const unsigned int p) const {
     return temp;
 }
 
-/*! Compute the derivative of a DA object with respect to variable i.
+/** Compute the derivative of a DA object with respect to variable i.
     @param[in] i variable with respect to which the derivative is calculated.
     @return A new DA object containing the result of the derivation.
     @throw DACE::DACEException
@@ -904,7 +909,7 @@ DA DA::deriv(const unsigned int i) const {
     return temp;
 }
 
-/*! Compute the derivative of a DA object with respect to variables ind.
+/** Compute the derivative of a DA object with respect to variables ind.
     @param[in] ind vector containing the number of derivatives to take for each
     independent variable. If ind has fewer entries than there are independent
     variables, the missing entries are assumed to be zero. If ind has more
@@ -924,7 +929,7 @@ DA DA::deriv(const std::vector<unsigned int> ind) const {
     return temp;
 }
 
-/*! Compute the integral of a DA object with respect to variable i.
+/** Compute the integral of a DA object with respect to variable i.
     @param[in] i variable with respect to which the integral is calculated.
     @return A new DA object containing the result of the integration.
     @throw DACE::DACEException
@@ -937,7 +942,7 @@ DA DA::integ(const unsigned int i) const {
     return temp;
 }
 
-/*! Compute the integral of a DA object with respect to variables i.
+/** Compute the integral of a DA object with respect to variables i.
     @param[in] ind vector containing the number of integrals to take for each
     independent variable. If ind has fewer entries than there are independent
     variables, the missing entries are assumed to be zero. If ind has more
@@ -957,7 +962,7 @@ DA DA::integ(const std::vector<unsigned int> ind) const {
     return temp;
 }
 
-/*! Returns a DA object with all monomials of order less than min and greater
+/** Returns a DA object with all monomials of order less than min and greater
     than max removed.
     @param[in] min The minimum order to keep in the DA object.
     @param[in] max The maximum order to keep in the DA object.
@@ -972,7 +977,7 @@ DA DA::trim(const unsigned int min, const unsigned int max) const {
     return temp;
 }
 
-/*! Absolute value of a DA object.
+/** Absolute value of a DA object.
     Returns either the DA or the negative of the DA based on the constant part.
     @return A new DA object with the absolute value DA.
     @throw DACE::DACEException
@@ -987,7 +992,7 @@ DA DA::absolute() const {
     return temp;
 }
 
-/*! Truncate the constant part of a DA object to an integer.
+/** Truncate the constant part of a DA object to an integer.
     @return A new DA object with a truncated constant part.
     @throw DACE::DACEException
  */
@@ -999,7 +1004,7 @@ DA DA::trunc() const {
     return temp;
 }
 
-/*! Round the constant part of a DA object to an integer.
+/** Round the constant part of a DA object to an integer.
     @return A new DA object with a rounded constant part.
     @throw DACE::DACEException
  */
@@ -1011,7 +1016,7 @@ DA DA::round() const {
     return temp;
 }
 
-/*! Take floating-point remainder of constant part divided by p.
+/** Take floating-point remainder of constant part divided by p.
     @param[in] p the divisor.
     @return A new DA object with constant part modulo p.
     @throw DACE::DACEException
@@ -1024,7 +1029,7 @@ DA DA::mod(const double p) const {
     return temp;
 }
 
-/*! Elevate a DA object to a given integer power.
+/** Elevate a DA object to a given integer power.
     @param[in] p power to which the DA object is raised.
     @return A new DA object
     @throw DACE::DACEException
@@ -1037,7 +1042,7 @@ DA DA::pow(const int p) const {
     return temp;
 }
 
-/*! Elevate a DA object to a given real power. The constant part must be positive.
+/** Elevate a DA object to a given real power. The constant part must be positive.
     @param[in] p power to which the DA object is raised.
     @return A new DA object
     @throw DACE::DACEException
@@ -1050,7 +1055,7 @@ DA DA::pow(const double p) const {
     return temp;
 }
 
-/*! Compute the p-th root of a DA object.
+/** Compute the p-th root of a DA object.
     @param[in] p root to be computed.
     @return A new DA object
     @throw DACE::DACEException
@@ -1063,7 +1068,7 @@ DA DA::root(const int p) const {
     return temp;
 }
 
-/*! Compute the multiplicative inverse of a DA object.
+/** Compute the multiplicative inverse of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1075,7 +1080,7 @@ DA DA::minv() const {
     return temp;
 }
 
-/*! Compute the square of a DA object.
+/** Compute the square of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1087,7 +1092,7 @@ DA DA::sqr() const {
     return temp;
 }
 
-/*! Compute the square root of a DA object.
+/** Compute the square root of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1099,7 +1104,7 @@ DA DA::sqrt() const {
     return temp;
 }
 
-/*! Compute the inverse square root of a DA object.
+/** Compute the inverse square root of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1111,7 +1116,7 @@ DA DA::isrt() const {
     return temp;
 }
 
-/*! Compute the cubic root of a DA object.
+/** Compute the cubic root of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1123,7 +1128,7 @@ DA DA::cbrt() const {
     return temp;
 }
 
-/*! Compute the inverse cubic root of a DA object.
+/** Compute the inverse cubic root of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1135,7 +1140,7 @@ DA DA::icrt() const {
     return temp;
 }
 
-/*! Compute the hypotenuse (sqrt(a*a+b*b)) of a DA object and the given DA argument.
+/** Compute the hypotenuse (sqrt(a*a+b*b)) of a DA object and the given DA argument.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1147,7 +1152,7 @@ DA DA::hypot(const DA &da) const {
     return temp;
 }
 
-/*! Compute the exponential of a DA object.
+/** Compute the exponential of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1159,7 +1164,7 @@ DA DA::exp() const {
     return temp;
 }
 
-/*! Compute the natural logarithm of a DA object.
+/** Compute the natural logarithm of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1171,7 +1176,7 @@ DA DA::log() const {
     return temp;
 }
 
-/*! Compute the logarithm of a DA object with respect to a given base.
+/** Compute the logarithm of a DA object with respect to a given base.
     @param[in] b base with respect to which the logarithm is computed (base 10 set as default base).
     @return A new DA object
     @throw DACE::DACEException
@@ -1184,7 +1189,7 @@ DA DA::logb(const double b) const {
     return temp;
 }
 
-/*! Compute the 10 based logarithm of a DA object.
+/** Compute the 10 based logarithm of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1196,7 +1201,7 @@ DA DA::log10() const {
     return temp;
 }
 
-/*! Compute the 2 based logarithm of a DA object.
+/** Compute the 2 based logarithm of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1208,7 +1213,7 @@ DA DA::log2() const {
     return temp;
 }
 
-/*! Compute the sine of a DA object.
+/** Compute the sine of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1220,7 +1225,7 @@ DA DA::sin() const {
     return temp;
 }
 
-/*! Compute the cosine of a DA object.
+/** Compute the cosine of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1232,7 +1237,7 @@ DA DA::cos() const {
     return temp;
 }
 
-/*! Compute the tangent of a DA object.
+/** Compute the tangent of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1244,7 +1249,7 @@ DA DA::tan() const {
     return temp;
 }
 
-/*! Compute the arcsine of a DA object.
+/** Compute the arcsine of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1256,7 +1261,7 @@ DA DA::asin() const {
     return temp;
 }
 
-/*! Compute the arccosine of a DA object.
+/** Compute the arccosine of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1268,7 +1273,7 @@ DA DA::acos() const {
     return temp;
 }
 
-/*! Compute the arctangent of a DA object.
+/** Compute the arctangent of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1280,7 +1285,7 @@ DA DA::atan() const {
     return temp;
 }
 
-/*! Compute the four-quadrant arctangent of Y/X. Y is the current DA object,
+/** Compute the four-quadrant arctangent of Y/X. Y is the current DA object,
     whereas X is the given da.
     @param[in] da DA object
     @return A new DA object containing the result of the operation Y/X in [-pi, pi].
@@ -1294,7 +1299,7 @@ DA DA::atan2(const DA &da) const {
     return temp;
 }
 
-/*! Compute the hyperbolic sine of a DA object.
+/** Compute the hyperbolic sine of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1306,7 +1311,7 @@ DA DA::sinh() const {
     return temp;
 }
 
-/*! Compute the hyperbolic cosine of a DA object.
+/** Compute the hyperbolic cosine of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1318,7 +1323,7 @@ DA DA::cosh() const {
     return temp;
 }
 
-/*! Compute the hyperbolic tangent of a DA object.
+/** Compute the hyperbolic tangent of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1330,7 +1335,7 @@ DA DA::tanh() const {
     return temp;
 }
 
-/*! Compute the hyperbolic arcsine of a DA object.
+/** Compute the hyperbolic arcsine of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1342,7 +1347,7 @@ DA DA::asinh() const {
     return temp;
 }
 
-/*! Compute the hyperbolic arccosine of a DA object.
+/** Compute the hyperbolic arccosine of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1354,7 +1359,7 @@ DA DA::acosh() const {
     return temp;
 }
 
-/*! Compute the hyperbolic arctangent of a DA object.
+/** Compute the hyperbolic arctangent of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1366,7 +1371,7 @@ DA DA::atanh() const {
     return temp;
 }
 
-/*! Compute the error function of a DA object.
+/** Compute the error function of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1378,7 +1383,7 @@ DA DA::erf() const {
     return temp;
 }
 
-/*! Compute the complementary error function of a DA object.
+/** Compute the complementary error function of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1390,7 +1395,7 @@ DA DA::erfc() const {
     return temp;
 }
 
-/*! Compute the n-th Bessel function of first type J_n of a DA object.
+/** Compute the n-th Bessel function of first type J_n of a DA object.
     @param[in] n order of the Bessel function
     @return A new DA object
     @throw DACE::DACEException
@@ -1405,7 +1410,7 @@ DA DA::BesselJFunction(const int n) const {
     return temp;
 }
 
-/*! Compute the n-th Bessel function of second type Y_n of a DA object.
+/** Compute the n-th Bessel function of second type Y_n of a DA object.
     @param[in] n order of the Bessel function
     @return A new DA object
     @throw DACE::DACEException
@@ -1420,7 +1425,7 @@ DA DA::BesselYFunction(const int n) const {
     return temp;
 }
 
-/*! Compute the n-th modified Bessel function of first type I_n of a DA object.
+/** Compute the n-th modified Bessel function of first type I_n of a DA object.
     @param[in] n order of the Bessel function
     @param[in] scaled if true, the modified Bessel function is scaled
     by a factor exp(-x), i.e. exp(-x)I_n(x) is returned.
@@ -1437,7 +1442,7 @@ DA DA::BesselIFunction(const int n, const bool scaled) const {
     return temp;
 }
 
-/*! Compute the n-th modified Bessel function of second type K_n of a DA object.
+/** Compute the n-th modified Bessel function of second type K_n of a DA object.
     @param[in] n order of the Bessel function
     @param[in] scaled if true, the modified Bessel function is scaled
     by a factor exp(x), i.e. exp(x)K_n(x) is returned.
@@ -1454,7 +1459,7 @@ DA DA::BesselKFunction(const int n, const bool scaled) const {
     return temp;
 }
 
-/*! Compute the Gamma function of a DA object.
+/** Compute the Gamma function of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1466,7 +1471,7 @@ DA DA::GammaFunction() const {
     return temp;
 }
 
-/*! Compute the Logarithmic Gamma function (i.e. the natural logarithm of Gamma) of a DA object.
+/** Compute the Logarithmic Gamma function (i.e. the natural logarithm of Gamma) of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1478,7 +1483,7 @@ DA DA::LogGammaFunction() const {
     return temp;
 }
 
-/*! Compute the n-th order Psi function, i.e. the (n+1)st derivative of the Logarithmic Gamma function, of a DA object.
+/** Compute the n-th order Psi function, i.e. the (n+1)st derivative of the Logarithmic Gamma function, of a DA object.
     @return A new DA object
     @throw DACE::DACEException
  */
@@ -1493,7 +1498,7 @@ DA DA::PsiFunction(const unsigned int n) const {
 /********************************************************************************
 *    Norm and estimation routines
 *********************************************************************************/
-/*! Compute different types of norms for a DA object.
+/** Compute different types of norms for a DA object.
     @param[in] type type of norm to be computed. Possible norms are:\n
      0: Max norm (Default)\n
      1: Sum norm\n
@@ -1508,7 +1513,7 @@ double DA::norm(const unsigned int type) const {
     return c;
 }
 
-/*! Extract different types of order sorted norms from a DA object.
+/** Extract different types of order sorted norms from a DA object.
     @param[in] var order\n
      0: Terms are sorted by their order (Default)\n
     >0: Terms are sorted by the exponent of variable var
@@ -1527,7 +1532,7 @@ std::vector<double> DA::orderNorm(const unsigned int var, const unsigned int typ
     return v;
 }
 
-/*! Estimate different types of order sorted norms for terms of a DA object
+/** Estimate different types of order sorted norms for terms of a DA object
     up to a specified order.
     @param[in] var order\n
      0: Terms are sorted by their order (Default)\n
@@ -1549,7 +1554,7 @@ std::vector<double> DA::estimNorm(const unsigned int var, const unsigned int typ
     return v;
 }
 
-/*! Estimate different types of order sorted norms for terms of a DA object
+/** Estimate different types of order sorted norms for terms of a DA object
     up to a specified order with error estimates.
     @param[out] err returns the amount by which the estimate underestimates the actual ordered norm of the terms in the polynomial up to the minimum of nc or the maximum computation order.
     @param[in] var order\n
@@ -1573,7 +1578,7 @@ std::vector<double> DA::estimNorm(std::vector<double> &err, const unsigned int v
     return v;
 }
 
-/*! Compute lower and upper bounds of a DA object.
+/** Compute lower and upper bounds of a DA object.
     @return An Interval object containing both the lower and the upper bound
     of the DA object.
     @throw DACE::DACEException
@@ -1587,7 +1592,7 @@ Interval DA::bound() const {
     return i;
 }
 
-/*! Estimate the convergence radius of the DA object.
+/** Estimate the convergence radius of the DA object.
     @param[in] eps requested tolerance.
     @param[in] type type of norm (sum norm is used as default)
     @return A double corresponding to the estimated convergence radius.
@@ -1603,7 +1608,7 @@ double DA::convRadius(const double eps, const unsigned int type) const {
 /********************************************************************************
 *     DACE polynomial evaluation routines
 *********************************************************************************/
-/*! Compile current DA object and create a compiledDA object.
+/** Compile current DA object and create a compiledDA object.
     @return The compiled DA object.
     @throw DACE::DACEException
  */
@@ -1611,7 +1616,7 @@ compiledDA DA::compile() const {
     return compiledDA(*this);
 }
 
-/*! Partial evaluation of a DA object. In the DA object, variable var is
+/** Partial evaluation of a DA object. In the DA object, variable var is
     replaced by the value val. The resulting DA object is returned.
     @param[in] var variable number to be replaced
     @param[in] val value by which to replace the variable
@@ -1626,7 +1631,7 @@ DA DA::plug(const unsigned int var, const double val) const {
     return temp;
 }
 
-/*! Evaluates the DA vector using the coefficients in argument values as the values for each monomial.
+/** Evaluates the DA vector using the coefficients in argument values as the values for each monomial.
     This is equivalent to a monomial-wise dot product of two DA vectors.
     @param[in] values DA vector containing the values of each monomial
     @return The result of the evaluation.
@@ -1640,7 +1645,7 @@ double DA::evalMonomials(const DA &values) const {
     return res;
 }
 
-/*! Partial evaluation of a DA object. In the DA object, variable from is
+/** Partial evaluation of a DA object. In the DA object, variable from is
     replaced by the value val times variable to. The resulting DA object is returned.
     @param[in] from variable number to be replaced
     @param[in] to variable number to be inserted instead
@@ -1657,7 +1662,7 @@ DA DA::replaceVariable(const unsigned int from, const unsigned int to, const dou
     return temp;
 }
 
-/*! Scaling of an independent variable. In the DA object, variable var is
+/** Scaling of an independent variable. In the DA object, variable var is
     replaced by the value val times var. The resulting DA object is returned.
     @param[in] var variable number to be scaled
     @param[in] val value by which to scale the variable
@@ -1673,7 +1678,7 @@ DA DA::scaleVariable(const unsigned int var, const double val) const {
     return temp;
 }
 
-/*! Affine translation of an independent variable. In the DA object, variable var is
+/** Affine translation of an independent variable. In the DA object, variable var is
     replaced by a*var + c. The resulting DA object is returned.
     @param[in] var variable number to be translated
     @param[in] a value by which to scale the variable
@@ -1693,7 +1698,7 @@ DA DA::translateVariable(const unsigned int var, const double a, const double c)
 /********************************************************************************
 *     DACE input/output routines
 *********************************************************************************/
-/*!  Convert DA object to string.
+/**  Convert DA object to string.
     @return A string.
     @throw DACE::DACEException
  */
@@ -1719,7 +1724,7 @@ std::string DA::toString() const {
     return s;
 }
 
-/*! Output operator.
+/** Output operator.
     @param[in] out Output stream.
     @param[in] da DA object to be output to the stream
     @return Output stream.
@@ -1733,7 +1738,7 @@ std::ostream& operator<<(std::ostream &out, const DA &da) {
 }
 
 
-/*! Input operator. Reads both string and binary DA representations from a stream.
+/** Input operator. Reads both string and binary DA representations from a stream.
     @param[in] in Input stream.
     @param[in] da DA object to read to from the stream
     @return Input stream.
@@ -1795,7 +1800,7 @@ std::istream& operator>>(std::istream &in, DA &da) {
     return in;
 }
 
-/*! Write a binary representation of the DA as a blob to output stream.
+/** Write a binary representation of the DA as a blob to output stream.
     @param[in] os Output stream
     @throw DACE::DACEException
  */
@@ -1807,7 +1812,7 @@ void DA::write(std::ostream &os) const {
 /********************************************************************************
 *     DACE static factory routines
 *********************************************************************************/
-/*! Create a DA object and fill with random entries.
+/** Create a DA object and fill with random entries.
     @param[in] cm filling factor (for cm < 0, the DA object is filled with random numbers;
     for cm > 0, the DA object is filled with weighted decaying numbers).
     @throw DACE::DACEException
@@ -1820,7 +1825,7 @@ DA DA::random(const double cm) {
     return temp;
 }
 
-/*! Create a DA object representing the identity function in independent DA
+/** Create a DA object representing the identity function in independent DA
     variable number var. This is just an alias for DA::DA(var).
     @param[in] var The independent DA variable number
     @throw DACE::DACEException
@@ -1830,7 +1835,7 @@ DA DA::identity(const unsigned int var) {
     return DA((int)var);
 }
 
-/*! Convert a string to DA object.
+/** Convert a string to DA object.
     @param[in] str string
     @return A DA object
     @throw DACE::DACEException
@@ -1843,7 +1848,7 @@ DA DA::fromString(const std::string &str) {
     return temp;
 }
 
-/*! Convert a vector of strings to DA object.
+/** Convert a vector of strings to DA object.
     @param[in] str vector of strings, each representing one line of the input
     @return A DA object
     @throw DACE::DACEException
@@ -1872,7 +1877,7 @@ DA DA::fromString(const std::vector<std::string> &str) {
     return da;
 }
 
-/*! Read a binary representation of a DA from input stream.
+/** Read a binary representation of a DA from input stream.
     @param[in] is Input stream
     @throw DACE::DACEException
     @note When using binary IO operations, make sure the stream is opened in ios_base::binary mode!
@@ -1887,7 +1892,7 @@ DA DA::read(std::istream &is) {
 /********************************************************************************
 *     DACE various routines
 *********************************************************************************/
-/*! Print debugging information about the internal memory status of the DACE core.
+/** Print debugging information about the internal memory status of the DACE core.
  */
 void DA::memdump() {
     daceMemoryDump();
@@ -1896,7 +1901,7 @@ void DA::memdump() {
 /********************************************************************************
 *     DACE non-member functions
 *********************************************************************************/
-/*! Return the number of non-zero coefficients of a DA object.
+/** Return the number of non-zero coefficients of a DA object.
     @param[in] da DA object
     @return The number of non-zero coefficients of the DA object
     @throw DACE::DACEException
@@ -1906,7 +1911,7 @@ unsigned int size(const DA &da) {
     return da.size();
 }
 
-/*! Return the order of a DA object.
+/** Return the order of a DA object.
     @param[in] da DA object
     @return Lowest order of the non-zero monomials or UINT_MAX if it is the zero DA
     @throw DACE::DACEException
@@ -1916,7 +1921,7 @@ unsigned int order(const DA &da) {
     return da.order();
 }
 
-/*! Return the degree of a DA object.
+/** Return the degree of a DA object.
     @param[in] da DA object
     @return Highest order of the non-zero monomials or INT_MIN if it is the zero DA
     @throw DACE::DACEException
@@ -1926,7 +1931,7 @@ int degree(const DA &da) {
     return da.degree();
 }
 
-/*! Check if a DA object has any NAN coefficients.
+/** Check if a DA object has any NAN coefficients.
     @param[in] da DA object
     @return True if any coefficients of the DA object are NAN
     @throw DACE::DACEException
@@ -1935,7 +1940,7 @@ int isnan(const DA &da) {
     return da.isnan();
 }
 
-/*! Check if a DA object has any INF coefficients.
+/** Check if a DA object has any INF coefficients.
     @param[in] da DA object
     @return True if any coefficients of the DA object are INF
     @throw DACE::DACEException
@@ -1944,7 +1949,7 @@ int isinf(const DA &da) {
     return da.isinf();
 }
 
-/*! Return the constant part of a DA object.
+/** Return the constant part of a DA object.
     @param[in] da DA object
     @return A double corresponding to the constant part of the DA object
     @throw DACE::DACEException
@@ -1953,7 +1958,7 @@ double cons(const DA &da) {
     return da.cons();
 }
 
-/*! Return the linear part of a DA object.
+/** Return the linear part of a DA object.
     @param[in] da DA object
     @return An AlgebraicVector<dobule> containing the linear coefficients of
     each independent DA variable in the given DA object
@@ -1963,7 +1968,7 @@ AlgebraicVector<double> linear(const DA &da) {
     return da.linear();
 }
 
-/*! Compute the gradient of a DA object.
+/** Compute the gradient of a DA object.
     @param[in] da the given DA object.
     @return A AlgebraicVector<DA> containing the derivatives
     of the DA object with respect to all independent DA variables
@@ -1973,7 +1978,7 @@ AlgebraicVector<DA> gradient(const DA &da) {
     return da.gradient();
 }
 
-/*! Divide by independent variable var raised to power p.
+/** Divide by independent variable var raised to power p.
     @param[in] da DA object
     @param[in] var variable number to divide by
     @param[in] p power of variable var to divide by
@@ -1985,7 +1990,7 @@ DA divide(const DA &da, const unsigned int var, const unsigned int p) {
     return da.divide(var, p);
 }
 
-/*! Compute the derivative of a DA object with respect to variable i.
+/** Compute the derivative of a DA object with respect to variable i.
     @param[in] da DA object
     @param[in] i variable with respect to which the derivative is calculated
     @return A new DA object containing the result of the derivation
@@ -1996,7 +2001,7 @@ DA deriv(const DA &da, const unsigned int i) {
     return da.deriv(i);
 }
 
-/*! Compute the derivative of a DA object with respect to variables ind.
+/** Compute the derivative of a DA object with respect to variables ind.
     @param[in] da DA object
     @param[in] ind vector containing the number of derivatives to take for each
     independent variable. If ind has fewer entries than there are independent
@@ -2010,7 +2015,7 @@ DA deriv(const DA &da, const std::vector<unsigned int> ind) {
     return da.deriv(ind);
 }
 
-/*! Compute the integral of a DA object with respect to variable i.
+/** Compute the integral of a DA object with respect to variable i.
     @param[in] da DA object
     @param[in] i variable with respect to which the integral is calculated
     @return A new DA object containing the result of the integration
@@ -2021,7 +2026,7 @@ DA integ(const DA &da, const unsigned int i) {
     return da.integ(i);
 }
 
-/*! Compute the integral of a DA object with respect to variable i.
+/** Compute the integral of a DA object with respect to variable i.
     @param[in] da DA object
     @param[in] ind vector containing the number of derivatives to take for each
     independent variable. If ind has fewer entries than there are independent
@@ -2035,7 +2040,7 @@ DA integ(const DA &da, const std::vector<unsigned int> ind) {
     return da.integ(ind);
 }
 
-/*! Returns a DA object with all monomials of order less than min and greater
+/** Returns a DA object with all monomials of order less than min and greater
     than max removed (trimmed).
     @param[in] da DA object
     @param[in] min The minimum order to keep in the DA object
@@ -2048,7 +2053,7 @@ DA trim(const DA &da, const unsigned int min, const unsigned int max) {
     return da.trim(min,max);
 }
 
-/*! Absolute value of a DA object.
+/** Absolute value of a DA object.
     Returns either the DA or the negative of the DA based on the constant part.
     @param[in] da DA object
     @return A new DA object with the absolute value DA
@@ -2061,7 +2066,7 @@ DA absolute(const DA &da) {
     return da.absolute();
 }
 
-/*! Truncate the constant part of a DA object to an integer.
+/** Truncate the constant part of a DA object to an integer.
     @param[in] da DA object
     @return A new DA object with a truncated constant part
     @throw DACE::DACEException
@@ -2071,7 +2076,7 @@ DA trunc(const DA &da) {
     return da.trunc();
 }
 
-/*! Round the constant part of a DA object to an integer.
+/** Round the constant part of a DA object to an integer.
     @param[in] da DA object
     @return A new DA object with a rounded constant part
     @throw DACE::DACEException
@@ -2081,7 +2086,7 @@ DA round(const DA &da) {
     return da.round();
 }
 
-/*! Compute the floating-point remainder of c/p (c modulo p),
+/** Compute the floating-point remainder of c/p (c modulo p),
     where c is the constant part of the given DA object.
     @param[in] da DA object
     @param[in] p costant with respect to which the modulo function is computed
@@ -2093,7 +2098,7 @@ DA mod(const DA &da, double p) {
     return da.mod(p);
 }
 
-/*! Raise a DA object to a given integer power.
+/** Raise a DA object to a given integer power.
     @param[in] da DA object
     @param[in] p power at which the DA object is elevated
     @return A new DA object containing the result of the operation
@@ -2104,7 +2109,7 @@ DA pow(const DA &da, int p) {
     return da.pow(p);
 }
 
-/*! Raise a DA object to a given integer power. The constant part must be positive.
+/** Raise a DA object to a given integer power. The constant part must be positive.
     @param[in] da DA object
     @param[in] p power at which the DA object is elevated
     @return A new DA object containing the result of the operation
@@ -2115,7 +2120,7 @@ DA pow(const DA &da, double p) {
     return da.pow(p);
 }
 
-/*! Compute the p-th root of a DA object.
+/** Compute the p-th root of a DA object.
     @param[in] da DA object
     @param[in] p root to be computed
     @return A new DA object containing the result of the operation
@@ -2126,7 +2131,7 @@ DA root(const DA &da, int p) {
     return da.root(p);
 }
 
-/*! Compute the multiplicative inverse of a DA object.
+/** Compute the multiplicative inverse of a DA object.
     @param[in] da DA object
     @return A new DA object containing the result of the operation
     @throw DACE::DACEException
@@ -2136,7 +2141,7 @@ DA minv(const DA &da) {
     return da.minv();
 }
 
-/*! Compute the square of a DA object.
+/** Compute the square of a DA object.
     @param[in] da DA object
     @return A new DA object containing the result of the operation
     @throw DACE::DACEException
@@ -2146,7 +2151,7 @@ DA sqr(const DA &da) {
     return da.sqr();
 }
 
-/*! Compute the square root of a DA object.
+/** Compute the square root of a DA object.
     @param[in] da DA object
     @return A new DA object containing the result of the operation
     @throw DACE::DACEException
@@ -2156,7 +2161,7 @@ DA sqrt(const DA &da) {
     return da.sqrt();
 }
 
-/*! Compute the inverse square root of a DA object.
+/** Compute the inverse square root of a DA object.
     @param[in] da DA object
     @return A new DA object containing the result of the operation
     @throw DACE::DACEException
@@ -2166,7 +2171,7 @@ DA isrt(const DA &da) {
     return da.isrt();
 }
 
-/*! Compute the cubic root of a DA object.
+/** Compute the cubic root of a DA object.
     @param[in] da DA object
     @return A new DA object containing the result of the operation
     @throw DACE::DACEException
@@ -2176,7 +2181,7 @@ DA cbrt(const DA &da) {
     return da.cbrt();
 }
 
-/*! Compute the inverse cubic root of a DA object.
+/** Compute the inverse cubic root of a DA object.
     @param[in] da DA object
     @return A new DA object containing the result of the operation
     @throw DACE::DACEException
@@ -2186,7 +2191,7 @@ DA icrt(const DA &da) {
     return da.icrt();
 }
 
-/*! Compute the hypotenuse (sqrt(X*X + Y*Y)) of two DA objects.
+/** Compute the hypotenuse (sqrt(X*X + Y*Y)) of two DA objects.
     @param[in] X first DA object
     @param[in] Y second DA object
     @return A new DA object
@@ -2197,7 +2202,7 @@ DA hypot(const DA &X, const DA &Y) {
     return X.hypot(Y);
 }
 
-/*! Compute the exponential of a DA object.
+/** Compute the exponential of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2207,7 +2212,7 @@ DA exp(const DA &da) {
     return da.exp();
 }
 
-/*! Compute the natural logarithm of a DA object.
+/** Compute the natural logarithm of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2217,7 +2222,7 @@ DA log(const DA &da) {
     return da.log();
 }
 
-/*! Compute the logarithm of a DA object with respect to a given base.
+/** Compute the logarithm of a DA object with respect to a given base.
     @param[in] da DA object
     @param[in] b base with respect to which the logarithm is computed (base 10 set as default base).
     @return A new DA object
@@ -2228,7 +2233,7 @@ DA logb(const DA &da, const double b) {
     return da.logb(b);
 }
 
-/*! Compute the 10 based logarithm of a DA object.
+/** Compute the 10 based logarithm of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2238,7 +2243,7 @@ DA log10(const DA &da) {
     return da.log10();
 }
 
-/*! Compute the 2 based logarithm of a DA object.
+/** Compute the 2 based logarithm of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2248,7 +2253,7 @@ DA log2(const DA &da) {
     return da.log2();
 }
 
-/*! Compute the sine of a DA object.
+/** Compute the sine of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2258,7 +2263,7 @@ DA sin(const DA &da) {
     return da.sin();
 }
 
-/*! Compute the cosine of a DA object.
+/** Compute the cosine of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2268,7 +2273,7 @@ DA cos(const DA &da) {
     return da.cos();
 }
 
-/*! Compute the tangent of a DA object.
+/** Compute the tangent of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2278,7 +2283,7 @@ DA tan(const DA &da) {
     return da.tan();
 }
 
-/*! Compute the arcsine of a DA object.
+/** Compute the arcsine of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2288,7 +2293,7 @@ DA asin(const DA &da) {
     return da.asin();
 }
 
-/*! Compute the arccosine of a DA object.
+/** Compute the arccosine of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2298,7 +2303,7 @@ DA acos(const DA &da) {
     return da.acos();
 }
 
-/*! Compute the arctangent of a DA object.
+/** Compute the arctangent of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2308,7 +2313,7 @@ DA atan(const DA &da) {
     return da.atan();
 }
 
-/*! Compute the four-quadrant arctangent of Y/X.
+/** Compute the four-quadrant arctangent of Y/X.
     @param[in] Y DA object
     @param[in] X DA object
     @return A new DA object containing the result of the operation in [-pi, pi]
@@ -2319,7 +2324,7 @@ DA atan2(const DA &Y, const DA &X) {
     return Y.atan2(X);
 }
 
-/*! Compute the hyperbolic sine of a DA object.
+/** Compute the hyperbolic sine of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2329,7 +2334,7 @@ DA sinh(const DA &da) {
     return da.sinh();
 }
 
-/*! Compute the hyperbolic cosine of a DA object.
+/** Compute the hyperbolic cosine of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2339,7 +2344,7 @@ DA cosh(const DA &da) {
     return da.cosh();
 }
 
-/*! Compute the hyperbolic tangent of a DA object.
+/** Compute the hyperbolic tangent of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2349,7 +2354,7 @@ DA tanh(const DA &da) {
     return da.tanh();
 }
 
-/*! Compute the hyperbolic arcsine of a DA object.
+/** Compute the hyperbolic arcsine of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2359,7 +2364,7 @@ DA asinh(const DA &da) {
     return da.asinh();
 }
 
-/*! Compute the hyperbolic arccosine of a DA object.
+/** Compute the hyperbolic arccosine of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2369,7 +2374,7 @@ DA acosh(const DA &da) {
     return da.acosh();
 }
 
-/*! Compute the hyperbolic arctangent of a DA object.
+/** Compute the hyperbolic arctangent of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2379,7 +2384,7 @@ DA atanh(const DA &da) {
     return da.atanh();
 }
 
-/*! Compute the error function of a DA object.
+/** Compute the error function of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2389,7 +2394,7 @@ DA erf(const DA &da) {
     return da.erf();
 }
 
-/*! Compute the complementary error function of a DA object.
+/** Compute the complementary error function of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2399,7 +2404,7 @@ DA erfc(const DA &da) {
     return da.erfc();
 }
 
-/*! Compute the n-th Bessel function of first type J_n of a DA object.
+/** Compute the n-th Bessel function of first type J_n of a DA object.
     @param[in] n order of the Bessel function.
     @param[in] da DA object
     @return A new DA object
@@ -2412,7 +2417,7 @@ DA jn(const int n, const DA &da) {
     return da.BesselJFunction(n);
 }
 
-/*! Compute the n-th Bessel function of second type Y_n of a DA object.
+/** Compute the n-th Bessel function of second type Y_n of a DA object.
     @param[in] n order of the Bessel function
     @param[in] da DA object
     @return A new DA object
@@ -2425,7 +2430,7 @@ DA yn(const int n, const DA &da) {
     return da.BesselYFunction(n);
 }
 
-/*! Compute the n-th Bessel function of first type J_n of a DA object.
+/** Compute the n-th Bessel function of first type J_n of a DA object.
     @param[in] n order of the Bessel function
     @param[in] da DA object
     @return A new DA object
@@ -2437,7 +2442,7 @@ DA BesselJFunction(const int n, const DA &da) {
     return da.BesselJFunction(n);
 }
 
-/*! Compute the n-th Bessel function of second type Y_n of a DA object.
+/** Compute the n-th Bessel function of second type Y_n of a DA object.
     @param[in] n order of the Bessel function
     @param[in] da DA object
     @return A new DA object
@@ -2449,7 +2454,7 @@ DA BesselYFunction(const int n, const DA &da) {
     return da.BesselYFunction(n);
 }
 
-/*! Compute the n-th modified Bessel function of first type I_n of a DA object.
+/** Compute the n-th modified Bessel function of first type I_n of a DA object.
     @param[in] n order of the Bessel function
     @param[in] da DA object
     @param[in] scaled if true, the modified Bessel function is scaled
@@ -2463,7 +2468,7 @@ DA BesselIFunction(const int n, const DA &da, const bool scaled) {
     return da.BesselIFunction(n, scaled);
 }
 
-/*! Compute the n-th modified Bessel function of second type K_n of a DA object.
+/** Compute the n-th modified Bessel function of second type K_n of a DA object.
     @param[in] n order of the Bessel function
     @param[in] da DA object
     @param[in] scaled if true, the modified Bessel function is scaled
@@ -2477,7 +2482,7 @@ DA BesselKFunction(const int n, const DA &da, const bool scaled) {
     return da.BesselKFunction(n, scaled);
 }
 
-/*! Compute the Gamma function of a DA object.
+/** Compute the Gamma function of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2488,7 +2493,7 @@ DA tgamma(const DA &da) {
     return da.GammaFunction();
 }
 
-/*! Compute the Log Gamma function of a DA object.
+/** Compute the Log Gamma function of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2499,7 +2504,7 @@ DA lgamma(const DA &da) {
     return da.LogGammaFunction();
 }
 
-/*! Compute the Gamma function of a DA object.
+/** Compute the Gamma function of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2509,7 +2514,7 @@ DA GammaFunction(const DA &da) {
     return da.GammaFunction();
 }
 
-/*! Compute the Log Gamma function of a DA object.
+/** Compute the Log Gamma function of a DA object.
     @param[in] da DA object
     @return A new DA object
     @throw DACE::DACEException
@@ -2519,7 +2524,7 @@ DA LogGammaFunction(const DA &da) {
     return da.LogGammaFunction();
 }
 
-/*! Compute the n-th Psi function of a DA object.
+/** Compute the n-th Psi function of a DA object.
     @param[in] n order of the Psi function to compute.
     @param[in] da DA object
     @return A new DA object
@@ -2529,7 +2534,7 @@ DA LogGammaFunction(const DA &da) {
 DA PsiFunction(const unsigned int n, const DA &da) {
     return da.PsiFunction(n);}
 
-/*! Compute different types of norms for a DA object.
+/** Compute different types of norms for a DA object.
     @param[in] da DA object
     @param[in] type type of norm to be computed. Possible norms are:\n
      0: Max norm (Default)\n
@@ -2543,7 +2548,7 @@ double norm(const DA &da, unsigned int type) {
     return da.norm(type);
 }
 
-/*! Compute different types of order sorted norms for terms of a DA object.
+/** Compute different types of order sorted norms for terms of a DA object.
     @param[in] da DA object
     @param[in] var order\n
      0: Terms are sorted by their order (Default)\n
@@ -2560,7 +2565,7 @@ std::vector<double> orderNorm(const DA &da, const unsigned int var, const unsign
     return da.orderNorm(var, type);
 }
 
-/*! Estimate different types of order sorted norms for terms of a DA object
+/** Estimate different types of order sorted norms for terms of a DA object
     up to a specified order.
     @param[in] da DA object
     @param[in] var order\n
@@ -2580,7 +2585,7 @@ std::vector<double> estimNorm(const DA &da, const unsigned int var, const unsign
     return da.estimNorm(var, type, nc);
 }
 
-/*! Estimate different types of order sorted norms for terms of a DA object
+/** Estimate different types of order sorted norms for terms of a DA object
     up to a specified order with error estimates.
     @param[in] da DA object
     @param[out] err returns the amount by which the estimate underestimates
@@ -2603,7 +2608,7 @@ std::vector<double> estimNorm(const DA &da, std::vector<double> &err, const unsi
     return da.estimNorm(err, var, type, nc);
 }
 
-/*! Compute lower and upper bounds of a DA object.
+/** Compute lower and upper bounds of a DA object.
     @param[in] da DA object
     @return An Interval object containing both the lower and the upper bound
     of the DA object
@@ -2614,7 +2619,7 @@ Interval bound(const DA &da) {
     return da.bound();
 }
 
-/*! Estimate the convergence radius of the given DA.
+/** Estimate the convergence radius of the given DA.
     @param[in] da the given DA object
     @param[in] eps requested tolerance
     @param[in] type type of norm (sum norm is used as default)
@@ -2626,7 +2631,7 @@ double convRadius(const DA &da, const double eps, const unsigned int type) {
     return da.convRadius(eps, type);
 }
 
-/*! Partial evaluation of a DA object. In the DA object, variable var is
+/** Partial evaluation of a DA object. In the DA object, variable var is
     replaced by the value val. The resulting DA object is returned.
     @param[in] da DA object
     @param[in] var variable number to be replaced
@@ -2639,7 +2644,7 @@ DA plug(const DA &da, const unsigned int var, const double val) {
     return da.plug(var, val);
 }
 
-/*! Partial evaluation of a DA object. In the DA object, variable from is
+/** Partial evaluation of a DA object. In the DA object, variable from is
     replaced by the value val times variable to. The resulting DA object is returned.
     @param[in] da DA object
     @param[in] from variable number to be replaced
@@ -2653,7 +2658,7 @@ DA replaceVariable(const DA &da, const unsigned int from, const unsigned int to,
     return da.replaceVariable(from, to, val);
 }
 
-/*! Scaling of an independent variable. In the DA object, variable var is
+/** Scaling of an independent variable. In the DA object, variable var is
     replaced by the value val times var. The resulting DA object is returned.
     @param[in] da DA object
     @param[in] var variable number to be scaled
@@ -2666,7 +2671,7 @@ DA scaleVariable(const DA &da, const unsigned int var, const double val) {
     return da.scaleVariable(var, val);
 }
 
-/*! Affine translation of an independent variable. In the DA object, variable var is
+/** Affine translation of an independent variable. In the DA object, variable var is
     replaced by a*var + c. The resulting DA object is returned.
     @param[in] da DA object
     @param[in] var variable number to be translated
@@ -2680,7 +2685,7 @@ DA translateVariable(const DA &da, const unsigned int var, const double a, const
     return da.translateVariable(var, a, c);
 }
 
-/*! Compile a given DA object and create a compiledDA object.
+/** Compile a given DA object and create a compiledDA object.
     @return A compiled DA object
     @throw DACE::DACEException
     @see DA::compile
@@ -2689,7 +2694,7 @@ compiledDA compile(const DA &da) {
     return da.compile();
 }
 
-/*! Convert DA object to a string.
+/** Convert DA object to a string.
     @param[in] da DA object
     @return A string representing the DA
     @throw DACE::DACEException
@@ -2699,7 +2704,7 @@ std::string toString(const DA &da) {
     return da.toString();
 }
 
-/*! Write binary representation of DA object to given output stream.
+/** Write binary representation of DA object to given output stream.
     @param[in] da DA object
     @param[in] os Output stream
     @throw DACE::DACEException
@@ -2711,7 +2716,7 @@ void write(const DA &da, std::ostream &os) {
 
 namespace abs_cons {
     double abs(const DA &da) {
-/*! Absolute value of constant part.
+/** Absolute value of constant part.
     @param[in] da DA object
     @throw DACE::DACEException
     @see DA::cons
@@ -2722,7 +2727,7 @@ namespace abs_cons {
 
 namespace abs_max {
     double abs(const DA &da) {
-/*! Largest coefficient in absolute value.
+/** Largest coefficient in absolute value.
     @param[in] da DA object
     @throw DACE::DACEException
     @see DA::norm
@@ -2733,7 +2738,7 @@ namespace abs_max {
 
 namespace abs_sum {
     double abs(const DA &da) {
-/*! Sum of absolute values of all coefficients.
+/** Sum of absolute values of all coefficients.
     @param[in] da DA object
     @throw DACE::DACEException
     @see DA::norm
@@ -2745,7 +2750,7 @@ namespace abs_sum {
 // static class variables
 const unsigned int storedDA::headerSize = daceBlobSize(NULL);
 
-/*! Create new storedDA from an existing DA.
+/** Create new storedDA from an existing DA.
     @param[in] da DA object
  */
 storedDA::storedDA(const DA &da) {
@@ -2757,13 +2762,13 @@ storedDA::storedDA(const DA &da) {
     if(daceGetError()) DACEException();
 }
 
-/*! Create new storedDA by copying from a buffer.
+/** Create new storedDA by copying from a buffer.
     @param[in] data vector of bytes
  */
 storedDA::storedDA(const std::vector<char> &data) : std::vector<char>(data) {
 }
 
-/*! Create a new storedDA by reading from a stream.
+/** Create a new storedDA by reading from a stream.
     @param[in] is Input stream
  */
 storedDA::storedDA(std::istream &is) : std::vector<char>(storedDA::headerSize) {
@@ -2793,7 +2798,7 @@ storedDA::storedDA(std::istream &is) : std::vector<char>(storedDA::headerSize) {
     }
 }
 
-/*! Return if this storedDA data appears to be valid.
+/** Return if this storedDA data appears to be valid.
     @return true if storedDA appears valid
  */
 bool storedDA::isValid() const {
@@ -2811,14 +2816,14 @@ bool storedDA::isValid() const {
     return s1 >= s2;
 }
 
-/*! Convert stored data to string.
+/** Convert stored data to string.
     @return string of the data
  */
 storedDA::operator std::string() const {
     return std::string(data(), size());
 }
 
-/*! Convert storedDA back to DA.
+/** Convert storedDA back to DA.
     @return DA
  */
 storedDA::operator DA() const {
@@ -2837,7 +2842,7 @@ storedDA::operator DA() const {
     return da;
 }
 
-/*! Write binary data to output stream.
+/** Write binary data to output stream.
     @param[in] out Output stream
     @param[in] sda storedDA
  */
@@ -2848,3 +2853,5 @@ std::ostream& operator<<(std::ostream &out, const storedDA &sda) {
 }
 
 }
+
+/** @}*/

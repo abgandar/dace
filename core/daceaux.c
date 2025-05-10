@@ -40,17 +40,17 @@
 #include "dace/daceaux.h"
 
 
-/*! Return the minimum between two unsigned integer.
+/** Return the minimum between two unsigned integer.
     @return Minimum between a and b
 */
 unsigned int umin(const unsigned int a, const unsigned int b) { return (a > b)? b : a; }
 
-/*! Return the maximum between two unsigned integer.
+/** Return the maximum between two unsigned integer.
     @return Maximum between a and b
 */
 unsigned int umax(const unsigned int a, const unsigned int b) { return (a < b)? b : a; }
 
-/*! Raise double a to positive integer power b.
+/** Raise double a to positive integer power b.
     @param[in] a base value
     @param[in] b power
     @return a raised to the power of b
@@ -68,7 +68,7 @@ double pown(double a, unsigned int b)
     return res;
 }
 
-/*! Raise integer a to positive integer power b.
+/** Raise integer a to positive integer power b.
     @param[in] a base value
     @param[in] b power
     @return a raised to the power of b
@@ -87,7 +87,7 @@ int npown(int a, unsigned int b)
 }
 
 #if DACE_MEMORY_MODEL != DACE_MEMORY_STATIC
-    /*! Wrapper for C calloc function (allocate memory and zero it) with DACE error handling.
+    /** Wrapper for C calloc function (allocate memory and zero it) with DACE error handling.
         @param[in] count number of elements to allocate
         @param[in] size size of each element
         @return pointer to newly allocated memory
@@ -103,7 +103,7 @@ int npown(int a, unsigned int b)
         return res;
     }
 
-    /*! Wrapper for C malloc function (allocate memory) with DACE error handling.
+    /** Wrapper for C malloc function (allocate memory) with DACE error handling.
         @param[in] size size of memory
         @return pointer to newly allocated memory
      */
@@ -118,7 +118,7 @@ int npown(int a, unsigned int b)
         return res;
     }
 
-    /*! Wrapper for C malloc and memset functions (allocate memory and zero it) with DACE error handling.
+    /** Wrapper for C malloc and memset functions (allocate memory and zero it) with DACE error handling.
         @param[in] size size of memory
         @return pointer to newly allocated memory
      */
@@ -130,7 +130,7 @@ int npown(int a, unsigned int b)
         return res;
     }
 
-    /*! Wrapper for C realloc function (reallocate memory) with DACE error handling.
+    /** Wrapper for C realloc function (reallocate memory) with DACE error handling.
         @param[in] ptr pointer to currently allocated memory
         @param[in] size size of new memory
         @return pointer to newly reallocated memory
@@ -146,7 +146,7 @@ int npown(int a, unsigned int b)
         return res;
     }
 
-    /*! Wrapper for C free function (free memory).
+    /** Wrapper for C free function (free memory).
         @param[in] ptr pointer to currently allocated memory
      */
     void dacefree(void* ptr)
@@ -155,7 +155,7 @@ int npown(int a, unsigned int b)
     }
 #endif      // DACE_MEMORY_MODEL != DACE_MEMORY_STATIC
 
-/*! Return a single integer containing all nv exponents in p[] with maximum order no.
+/** Return a single integer containing all nv exponents in p[] with maximum order no.
     @param[in] p C array of nv exponents
     @param[in] no Maximum computation order used for encoding. Must be strictly positive!
     @param[in] nv Number of exponents in p. May be zero, in which case zero is returned.
@@ -173,7 +173,7 @@ unsigned int daceEncodeExponents(const unsigned int p[], const unsigned int no, 
     return res;
 }
 
-/*! Decode a single integer containing nv exponents of maximum order no into p[].
+/** Decode a single integer containing nv exponents of maximum order no into p[].
     @param[in] ic Encoded integer to decode
     @param[in] no Maximum computation order used for encoding. Must be strictly positive!
     @param[in] nv Number of exponents in p. May be zero, in which case zero is returned.
@@ -203,7 +203,7 @@ unsigned int daceDecodeExponents(unsigned int ic, const unsigned int no, const u
     return order;
 }
 
-/*! Enumerate all monomials with nv variables and up to maximum order no in p.
+/** Enumerate all monomials with nv variables and up to maximum order no in p.
     The sequence of monomials is deterministic but NOT sorted by order. It
     depends on both nv and no.
     @param[out] p C array of nv exponents
@@ -239,7 +239,7 @@ unsigned int daceNextMonomial(unsigned int p[], const unsigned int no, const uns
     return 0;
 }
 
-/*! Enumerate all monomials with nv variables and up to maximum order no in p.
+/** Enumerate all monomials with nv variables and up to maximum order no in p.
     The sequence of monomials is sorted by order, i.e. first all first order
     monomials are returned, then all second order and so on.
     @param[out] p C array of nv exponents
@@ -266,7 +266,7 @@ unsigned int daceNextOrderedMonomial(unsigned int p[], const unsigned int no, co
     return o;
 }
 
-/*! Compute number of monomials of order no in nv variables.
+/** Compute number of monomials of order no in nv variables.
     @param[in] no Maximum order of monomials
     @param[in] nv Number of variables in monomials
     @return The total number of monomials
@@ -283,7 +283,7 @@ unsigned int daceCountMonomials(unsigned int no, unsigned int nv)
     return (unsigned int)dnumda;
 }
 
-/*! Encode the given exponents in jj[] into a DA coding integer as stored in monomial.ii.
+/** Encode the given exponents in jj[] into a DA coding integer as stored in monomial.ii.
     @param[in] jj C array of nvmax exponents to encode
     @return The DA coding integer as stored in monomial.ii
 */
@@ -313,7 +313,7 @@ unsigned int daceEncode(const unsigned int jj[])
     return DACECom.ia1[ic1] + DACECom.ia2[ic2];
 }
 
-/*! Decode the given DA coding integer as stored in monomial.ii into jj[].
+/** Decode the given DA coding integer as stored in monomial.ii into jj[].
     @param[in] jc DA coding integer as stored in monomial.ii to decode
     @param[out] jj C array of nvmax exponents
 */
@@ -330,7 +330,7 @@ void daceDecode(const unsigned int jc, unsigned int jj[])
     }
 }
 
-/*! Pack monomials in cc[] into DA object inc.
+/** Pack monomials in cc[] into DA object inc.
     @param[in] cc C array of nmmax monomials
     @param[in] inc Pointer to DA object to pack the monomials into
 */
@@ -404,7 +404,7 @@ void dacePack(double *restrict cc, DACEDA *restrict inc)
     daceSetLength(inc, ic-ipoc);
 }
 
-/*! Return a pseudo-random number between 0.0 and 1.0.
+/** Return a pseudo-random number between 0.0 and 1.0.
     @return A pseudo-random number in [0.0, 1.0]
 */
 double daceRandom()

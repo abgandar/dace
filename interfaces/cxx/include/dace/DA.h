@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Main DA class and related utilities.
+/*  Main DA class and related utilities.
 
     This header file contains the DA class representing a single DA polynomial.
     It implements an object oriented interface to access all math function, as
@@ -54,6 +52,10 @@
 
 #include "dace/dacecore.h"
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
 // forward declarations
@@ -65,7 +67,12 @@ class Interval;
 class DA;
 template<typename T> class AlgebraicVector;
 
-/*! Basic DA class representing a single polynomial.
+/** Basic DA class representing a single polynomial.
+
+    Implements an object oriented interface to access all math function, as
+    well as non-member functions for classical functional math notation.
+
+    @see DACE::storedDA
  */
 class DACE_API DA
 {
@@ -351,26 +358,31 @@ DACE_API DA translateVariable(const DA &da, const unsigned int var = 0, const do
 DACE_API std::string toString(const DA &da);
 DACE_API void write(const DA &da, std::ostream &os);
 
-/*! Namespace containing an implementation of abs(DA) using only the absolute constant part.
+/** Contains an implementation of abs(DA) using only the absolute constant part.
  */
 namespace abs_cons {
     double abs(const DA &da);
 }
 
-/*! Namespace containing an implementation of abs(DA) using the largest absolute coefficient.
+/** Contains an implementation of abs(DA) using the largest absolute coefficient.
  */
 namespace abs_max {
     double abs(const DA &da);
 }
 
-/*! Namespace containing an implementation of abs(DA) using the sum of all absolute coefficients.
+/** Contains an implementation of abs(DA) using the sum of all absolute coefficients.
  */
 namespace abs_sum {
     double abs(const DA &da);
 }
 
+/** Represents a DA vector in a binary, setup independent format.
 
-/*! Stored DA class representing a DA vector in a binary, setup independent format.
+    Use this class for serializing DA objects into an opaque binary representation
+    that can be stored, transmitted, and converted back into DA object without
+    loss of precision and across platforms.
+
+     @see DACE::storedDA
  */
 class DACE_API storedDA : std::vector<char>
 {
@@ -393,3 +405,5 @@ public:
 }
 
 #endif /* DINAMICA_DA_H_ */
+
+/** @}*/

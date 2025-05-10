@@ -42,7 +42,7 @@
  *     DACE input/output routines
  *********************************************************************************/
 
-/*! Print the DA object ina to string strs (of line length DACE_STRLEN).
+/** Print the DA object ina to string strs (of line length DACE_STRLEN).
     @param[in] ina Pointer to the DA object to be printed
     @param[out] strs C array of size (nmmax+2)*DACE_STRLEN containing the
     zero-terminated lines of length DACE_STRLEN
@@ -109,7 +109,8 @@ void daceWrite(const DACEDA *ina, char *strs, unsigned int *nstrs)
     (*nstrs)++;
 }
 
-/*! Read a DA object ina from a human readable string representation in strs,
+/** Read a DA object from a human readable string representation.
+    Read a DA object ina from a human readable string representation in strs,
     containing nstrs contiguous zero-terminated lines of line length DACE_STRLEN.
     @param[out] ina Pointer to the DA object to read into
     @param[in] strs C array of size nstrs*DACE_STRLEN containing the
@@ -329,7 +330,7 @@ void daceRead(DACEDA *ina, char* strs, unsigned int nstrs)
     }
 }
 
-/*! Print a DA object ina to the standard output.
+/** Print a DA object ina to the standard output.
     @param[out] ina Pointer to the DA object to printed
     @see daceWrite
     @see daceRead
@@ -375,7 +376,7 @@ void dacePrint(const DACEDA *ina)
 }
 
 
-/*! Export a DA object in a binary format.
+/** Export a DA object in a binary format.
     The binary data is not supposed to be modified and its format is considered
     internal to the DACE. It is guaranteed that a binary representation can
     be read back into a DA object even with differently initialized settings.
@@ -431,7 +432,7 @@ unsigned int daceExportBlob(const DACEDA *ina, void *blob, unsigned int *size)
     return illa - data->len;
 }
 
-/*! Determine the total size (in byte) of a DACE blob.
+/** Determine the total size (in byte) of a DACE blob.
     @param[in] blob Pointer to memory where the data is stored
     @note If called with blob==NULL, the routine will return the minimum size
     of data that must be read in order to determine the total size. A user can
@@ -459,7 +460,7 @@ unsigned int daceBlobSize(const void *blob)
     }
 }
 
-/*! Import a DA object in a binary format.
+/** Import a DA object in a binary format.
     @param[in] blob Pointer to memory where the data is stored
     @param[in] inc The DA object to import into
     @note This routine will silently truncate orders above the currently set

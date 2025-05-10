@@ -10,11 +10,11 @@
         http://www.netlib.org/f2c/libf2c.zip
 */
 
+/// @cond CONTRIB
+
 /** @addtogroup DACEContrib Contrib
  *  @{
  */
-
-/// @cond
 
 #include "f2c.h"
 
@@ -638,5 +638,6 @@ L300:
 /* ---------- Last line of RJBESL ---------- */
 } /* rjbesl_ */
 
-/// @endcond
 /** @}*/
+
+/// @endcond

@@ -6,11 +6,11 @@
         http://www.netlib.org/f2c/libf2c.zip
 */
 
+/// @cond CONTRIB
+
 /** @addtogroup DACEContrib Contrib
  *  @{
  */
-
-/// @cond
 
 #include "f2c.h"
 
@@ -62,5 +62,6 @@ return(pow);
 }
 #endif
 
-/// @endcond
 /** @}*/
+
+/// @endcond

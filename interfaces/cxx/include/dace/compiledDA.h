@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief DA representation for efficient repeated evaluation.
+/*  DA representation for efficient repeated evaluation.
 
     This header file contains the compiledDA class for a representation of one
     or more DA objects that is prepared ("compiled") for efficient repeated evaluation.
@@ -41,12 +39,16 @@
 #include <vector>
 #include <initializer_list>
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
 // forward declaration
 class DA;
 
-/*! Representation of a precomputed DA polynomial for efficient evaluation.
+/** Representation of a precomputed DA polynomial for efficient evaluation.
  */
 class DACE_API compiledDA
 {
@@ -97,3 +99,5 @@ template<> DACE_API void compiledDA::eval(const std::vector<double> &args, std::
 }
 
 #endif /* DINAMICA_COMPILEDDA_H_ */
+
+/** @}*/

@@ -54,7 +54,7 @@
  *     Basic DACE arithmetic operations
  *********************************************************************************/
 
-/*! Perform addition of two DA objects.
+/** Perform addition of two DA objects.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] inb Pointer to the first DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
@@ -76,7 +76,7 @@ void daceAdd(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
     }
 }
 
-/*! Perform subtraction of two DA objects.
+/** Perform subtraction of two DA objects.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] inb Pointer to the first DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
@@ -98,7 +98,7 @@ void daceSubtract(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
     }
 }
 
-/*! Perform multiplication of two DA objects.
+/** Perform multiplication of two DA objects.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] inb Pointer to the first DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
@@ -202,7 +202,7 @@ void daceMultiply(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
     dacePack(cc, inc);
 }
 
-/*! Multiply two DA vectors component-wise, i.e. each monomial of ina with the corresponding monomial of inb
+/** Multiply two DA vectors component-wise, i.e. each monomial of ina with the corresponding monomial of inb
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] inb Pointer to the first DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
@@ -241,7 +241,7 @@ void daceMultiplyMonomials(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
 	}
 }
 
-/*! Perform division of two DA objects.
+/** Perform division of two DA objects.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] inb Pointer to the first DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
@@ -261,7 +261,7 @@ void daceDivide(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
     daceFreeDA(&idadiv);
 }
 
-/*! Square a DA object.
+/** Square a DA object.
     @param[in] ina Pointer to the DA object to square
     @param[out] inb Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -271,7 +271,7 @@ void daceSquare(const DACEDA *ina, DACEDA *inb)
     daceMultiply(ina, ina, inb);
 }
 
-/*! Add constant to a DA object.
+/** Add constant to a DA object.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] ckon Constant value to add
     @param[out] inb Pointer to the DA object to store the result in
@@ -285,7 +285,7 @@ void daceAddDouble(const DACEDA *ina, const double ckon, DACEDA *inb)
     daceSetCoefficient0(inb, 0, daceGetConstant(inb)+ckon);
 }
 
-/*! Subtract DA object from constant.
+/** Subtract DA object from constant.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] ckon Constant value to subtract from
     @param[out] inb Pointer to the DA object to store the result in
@@ -297,7 +297,7 @@ void daceDoubleSubtract(const DACEDA *ina, const double ckon, DACEDA *inb)
     daceSetCoefficient0(inb, 0, daceGetConstant(inb)+ckon);
 }
 
-/*! Subtract constant from a DA object.
+/** Subtract constant from a DA object.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] ckon Constant value to subtract
     @param[out] inb Pointer to the DA object to store the result in
@@ -308,7 +308,7 @@ void daceSubtractDouble(const DACEDA *ina, const double ckon, DACEDA *inb)
     daceAddDouble(ina, -ckon, inb);
 }
 
-/*! Multiply constant and DA object.
+/** Multiply constant and DA object.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] ckon Constant value to multiply by
     @param[out] inb Pointer to the DA object to store the result in
@@ -366,7 +366,7 @@ void daceMultiplyDouble(const DACEDA *ina, const double ckon, DACEDA *inb)
     daceSetLength(inb, ib-ipob);
 }
 
-/*! Divide DA object by a constant.
+/** Divide DA object by a constant.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] ckon Constant value to divide by
     @param[out] inb Pointer to the DA object to store the result in
@@ -431,7 +431,7 @@ void daceDivideDouble(const DACEDA *ina, const double ckon, DACEDA *inb)
     daceSetLength(inb, ib-ipob);
 }
 
-/*! Divide constant by DA object.
+/** Divide constant by DA object.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] ckon Constant value to divide
     @param[out] inc Pointer to the DA object to store the result in
@@ -447,7 +447,7 @@ void daceDoubleDivide(const DACEDA *ina, const double ckon, DACEDA *inc)
         daceSetCoefficient0(inc, 0, cons);
 }
 
-/*! Divide a DA vector by a single variable to some power, if possible.
+/** Divide a DA vector by a single variable to some power, if possible.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] var Number of the independent variable by which to divide
     @param[in] p Power of independent variable
@@ -549,7 +549,7 @@ void daceDivideByVariable(const DACEDA *ina, const unsigned int var, const unsig
     daceSetLength(inc, ic-ipoc);
 }
 
-/*! Derivative of DA object with respect to a given independent variable.
+/** Derivative of DA object with respect to a given independent variable.
     @param[in] idif Number of the independent variable with respect to which the
     derivative is taken
     @param[in] ina Pointer to the DA object to operate on
@@ -622,7 +622,7 @@ void daceDifferentiate(const unsigned int idif, const DACEDA *ina, DACEDA *inc)
     daceSetLength(inc, ic-ipoc);
 }
 
-/*! Integral of DA object with respect to a given independent variable.
+/** Integral of DA object with respect to a given independent variable.
     @param[in] iint Number of the independent variable with respect to which the
     integral is taken
     @param[in] ina Pointer to the DA object to operate on
@@ -708,7 +708,7 @@ void daceIntegrate(const unsigned int iint, const DACEDA *ina, DACEDA *inc)
  *     DACE intrinsic function routines
  *********************************************************************************/
 
-/*! Absolute value of a DA object.
+/** Absolute value of a DA object.
     Returns either the DA or the negative of the DA based on the constant part.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
@@ -724,7 +724,7 @@ void daceAbsolute(const DACEDA *ina, DACEDA *inc)
         daceMultiplyDouble(inc, -1.0, inc);
 }
 
-/*! Truncate the constant part of a DA object to an integer.
+/** Truncate the constant part of a DA object to an integer.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -735,7 +735,7 @@ void daceTruncate(const DACEDA *ina, DACEDA *inc)
     daceSetCoefficient0(inc, 0, rint(daceGetConstant(inc)));
 }
 
-/*! Round the constant part of a DA object to an integer.
+/** Round the constant part of a DA object to an integer.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -746,7 +746,7 @@ void daceRound(const DACEDA *ina, DACEDA *inc)
     daceSetCoefficient0(inc, 0, round(daceGetConstant(inc)));
 }
 
-/*! Modulo the constant part of a DA object by p.
+/** Modulo the constant part of a DA object by p.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] p Value with respect to which to compute the modulo
     @param[out] inc Pointer to the DA object to store the result in
@@ -758,7 +758,7 @@ void daceModulo(const DACEDA *ina, const double p, DACEDA *inc)
     daceSetCoefficient0(inc, 0, fmod(daceGetConstant(inc), p));
 }
 
-/*! Raise a DA object to the p-th power.
+/** Raise a DA object to the p-th power.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] p Power to which to raise the DA object
     @param[out] inc Pointer to the DA object to store the result in
@@ -803,7 +803,7 @@ void dacePowerDouble(const DACEDA *ina, const double p, DACEDA *inc)
 #endif
 }
 
-/*! Raise a DA object to the p-th integer power.
+/** Raise a DA object to the p-th integer power.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] np Power to which to raise the DA object
     @param[out] inc Pointer to the DA object to store the result in
@@ -870,7 +870,7 @@ void dacePower(const DACEDA *ina, const int np, DACEDA *inc)
         daceMultiplicativeInverse(inc, inc);
 }
 
-/*! Take the np-th root of a DA object.
+/** Take the np-th root of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] np Root to take of the DA object
     @param[out] inc Pointer to the DA object to store the result in
@@ -922,7 +922,7 @@ void daceRoot(const DACEDA *ina, const int np, DACEDA *inc)
 #endif
 }
 
-/*! Compute the multiplicative inverse of a DA object.
+/** Compute the multiplicative inverse of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -962,7 +962,7 @@ void daceMultiplicativeInverse(const DACEDA *ina, DACEDA *inc)
     }
 }
 
-/*! Compute the multiplicative inverse of a DA object using series expansion.
+/** Compute the multiplicative inverse of a DA object using series expansion.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @param[in] a0 Constant part of ina
@@ -988,7 +988,7 @@ void daceMultiplicativeInverse0(const DACEDA *ina, DACEDA *inc, const double a0)
 #endif
 }
 
-/*! Compute the square root of a DA object.
+/** Compute the square root of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -998,7 +998,7 @@ void daceSquareRoot(const DACEDA *ina, DACEDA *inc)
     daceRoot(ina, 2, inc);
 }
 
-/*! Compute the inverse square root of a DA object.
+/** Compute the inverse square root of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1008,7 +1008,7 @@ void daceInverseSquareRoot(const DACEDA *ina, DACEDA *inc)
     daceRoot(ina, -2, inc);
 }
 
-/*! Compute the cubic root of a DA object.
+/** Compute the cubic root of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1018,7 +1018,7 @@ void daceCubicRoot(const DACEDA *ina, DACEDA *inc)
     daceRoot(ina, 3, inc);
 }
 
-/*! Compute the inverse cubic root of a DA object.
+/** Compute the inverse cubic root of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1028,7 +1028,7 @@ void daceInverseCubicRoot(const DACEDA *ina, DACEDA *inc)
     daceRoot(ina, -3, inc);
 }
 
-/*! Compute the hypothenuse of two DA objects.
+/** Compute the hypothenuse of two DA objects.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] inb Pointer to the second DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
@@ -1048,7 +1048,7 @@ void daceHypotenuse(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
     daceFreeDA(&itemp1);
 }
 
-/*! Compute the exponential of a DA object.
+/** Compute the exponential of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1071,7 +1071,7 @@ void daceExponential(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/*! Compute the natural logarithm root of a DA object.
+/** Compute the natural logarithm root of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1106,7 +1106,7 @@ void daceLogarithm(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/*! Compute the logarithm with respect to base b of a DA object.
+/** Compute the logarithm with respect to base b of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] b Base of the logarithm to use
     @param[out] inc Pointer to the DA object to store the result in
@@ -1125,7 +1125,7 @@ void daceLogarithmBase(const DACEDA *ina, const double b, DACEDA *inc)
     daceDivideDouble(inc, log(b), inc);
 }
 
-/*! Compute the decadic logarithm of a DA object.
+/** Compute the decadic logarithm of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1135,7 +1135,7 @@ void daceLogarithm10(const DACEDA *ina, DACEDA *inc)
     daceLogarithmBase(ina, 10.0, inc);
 }
 
-/*! Compute the binary logarithm of a DA object.
+/** Compute the binary logarithm of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1145,7 +1145,7 @@ void daceLogarithm2(const DACEDA *ina, DACEDA *inc)
     daceLogarithmBase(ina, 2.0, inc);
 }
 
-/*! Compute the sine of a DA object.
+/** Compute the sine of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1172,7 +1172,7 @@ void daceSine(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/*! Compute the cosine of a DA object.
+/** Compute the cosine of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1199,7 +1199,7 @@ void daceCosine(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/*! Compute the tangent of a DA object.
+/** Compute the tangent of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1222,7 +1222,7 @@ void daceTangent(const DACEDA *ina, DACEDA *inc)
     daceFreeDA(&itemp);
 }
 
-/*! Compute the arcsine of a DA object.
+/** Compute the arcsine of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1247,7 +1247,7 @@ void daceArcSine(const DACEDA *ina, DACEDA *inc)
     daceFreeDA(&itemp);
 }
 
-/*! Compute the arccosine of a DA object.
+/** Compute the arccosine of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1264,7 +1264,7 @@ void daceArcCosine(const DACEDA *ina, DACEDA *inc)
     daceDoubleSubtract(inc, M_PI_2, inc);
 }
 
-/*! Compute the arctangent of a DA object.
+/** Compute the arctangent of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1300,8 +1300,8 @@ void daceArcTangent(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/*! Arctangent of ina/inb with proper sign in [-pi, pi]. This function follows
-    the C standard atan2(y,x) function syntax.
+/** Arctangent of ina/inb with proper sign in [-pi, pi].
+    This function follows the C standard atan2(y,x) function syntax.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] inb Pointer to the second DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
@@ -1350,7 +1350,7 @@ void daceArcTangent2(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
     }
 }
 
-/*! Compute the hyperbolic sine of a DA object.
+/** Compute the hyperbolic sine of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1378,7 +1378,7 @@ void daceHyperbolicSine(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/*! Compute the hyperbolic cosine of a DA object.
+/** Compute the hyperbolic cosine of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1406,7 +1406,7 @@ void daceHyperbolicCosine(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/*! Compute the hyperbolic tangent of a DA object.
+/** Compute the hyperbolic tangent of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1436,7 +1436,7 @@ void daceHyperbolicTangent(const DACEDA *ina, DACEDA *inc)
     daceFreeDA(&itemp);
 }
 
-/*! Compute the hyperbolic arcsince of a DA object.
+/** Compute the hyperbolic arcsince of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1454,7 +1454,7 @@ void daceHyperbolicArcSine(const DACEDA *ina, DACEDA *inc)
     daceFreeDA(&itemp);
 }
 
-/*! Compute the hyperbolic arccosine of a DA object.
+/** Compute the hyperbolic arccosine of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1479,7 +1479,7 @@ void daceHyperbolicArcCosine(const DACEDA *ina, DACEDA *inc)
     daceFreeDA(&itemp);
 }
 
-/*! Compute the hyperbolic arctangent of a DA object.
+/** Compute the hyperbolic arctangent of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1504,7 +1504,7 @@ void daceHyperbolicArcTangent(const DACEDA *ina, DACEDA *inc)
     daceFreeDA(&itemp);
 }
 
-/*! Compute the error function of a DA object.
+/** Compute the error function of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1539,7 +1539,7 @@ void daceErrorFunction(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/*! Compute the complementary error function of a DA object.
+/** Compute the complementary error function of a DA object.
     @param[in] ina Pointer to the DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1579,7 +1579,7 @@ void daceComplementaryErrorFunction(const DACEDA *ina, DACEDA *inc)
 
 // Wrappers for contributed netlib Bessel functions (not for public use)
 
-/*! Compute value of Bessel functions J_n, Y_n for n in [n0, n1].
+/** Compute value of Bessel functions J_n, Y_n for n in [n0, n1].
     @param[in] x function argument (non-negative)
     @param[in] n0 Lowest order of the Bessel functions to calculate (n0 <= n1)
     @param[in] n1 Highest order of the Bessel functions to calculate (n0 <= n1)
@@ -1632,7 +1632,7 @@ int BesselWrapper(const double x, const int n0, const int n1, const int type, do
     return ncalc < 0 ? -1 : ncalc;
 }
 
-/*! Compute value of modified Bessel functions I_n, K_n for n in [n0, n1].
+/** Compute value of modified Bessel functions I_n, K_n for n in [n0, n1].
     @param[in] x function argument (non-negative)
     @param[in] n0 Lowest order of the Bessel functions to calculate (n0 <= n1)
     @param[in] n1 Highest order of the Bessel functions to calculate (n0 <= n1)
@@ -1680,7 +1680,7 @@ int ModifiedBesselWrapper(const double x, const int n0, const int n1, const int 
 
 /// @endcond
 
-/*! Compute the modified Bessel function I_n of a DA object.
+/** Compute the modified Bessel function I_n of a DA object.
     @param[in] ina Pointer to the DA object to operate on (constant part >= 0)
     @param[in] n Order of the Bessel function
     @param[in] scaled If true, the scaled Bessel function is computed (i.e. exp(-x)*I_n(x))
@@ -1722,7 +1722,7 @@ void daceBesselIFunction(const DACEDA *ina, const int n, const bool scaled, DACE
 #endif
 }
 
-/*! Compute the modified Bessel function K_n of a DA object.
+/** Compute the modified Bessel function K_n of a DA object.
     @param[in] ina Pointer to the DA object to operate on (constant part >= 0)
     @param[in] n Order of the Bessel function
     @param[in] scaled If true, the scaled Bessel function is computed (i.e. exp(x)*K_n(x))
@@ -1764,7 +1764,7 @@ void daceBesselKFunction(const DACEDA *ina, const int n, const bool scaled, DACE
 #endif
 }
 
-/*! Compute the Bessel function J_n of a DA object.
+/** Compute the Bessel function J_n of a DA object.
     @param[in] ina Pointer to the DA object to operate on (constant part >= 0)
     @param[in] n Order of the Bessel function
     @param[out] inc Pointer to the DA object to store the result in
@@ -1800,7 +1800,7 @@ void daceBesselJFunction(const DACEDA *ina, const int n, DACEDA *inc)
 #endif
 }
 
-/*! Compute the Bessel function Y_n of a DA object.
+/** Compute the Bessel function Y_n of a DA object.
     @param[in] ina Pointer to the DA object to operate on (constant part >= 0)
     @param[in] n Order of the Bessel function
     @param[out] inc Pointer to the DA object to store the result in
@@ -1836,7 +1836,7 @@ void daceBesselYFunction(const DACEDA *ina, const int n, DACEDA *inc)
 #endif
 }
 
-/*! Evaluate a Bessel function with coefficients bz with the non-constant part of ina.
+/** Evaluate a Bessel function with coefficients bz with the non-constant part of ina.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] bz C array of 2*nocut+1 elements containing Bessel functions of orders n-nocut, ..., n+nocut
     @param[in] type Either -1.0 for normal Bessel functions, or +1.0 for modified Bessel functions.
@@ -1889,7 +1889,7 @@ void daceEvaluateBesselFunction(const DACEDA *ina, const double bz[], const doub
 #endif
 }
 
-/*! Evaluate a scaled modified Bessel function with coefficients bz with the non-constant part of ina.
+/** Evaluate a scaled modified Bessel function with coefficients bz with the non-constant part of ina.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] bz C array of 2*nocut+1 elements containing modified Bessel functions of orders n-nocut, ..., n+nocut
     @param[in] ktype Either -1.0 for scaled Bessel K function, or +1.0 for scaled Bessel I function
@@ -1945,7 +1945,7 @@ void daceEvaluateScaledModifiedBesselFunction(const DACEDA *ina, const double bz
 #endif
 }
 
-/*! Compute the partial Logarithmic Gamma function of a DA object (without constant part).
+/** Compute the partial Logarithmic Gamma function of a DA object (without constant part).
     @param[in] ina Pointer to the DA object to operate on
     @param[in] a0 Constant part
     @param[out] inc Pointer to the DA object to store the result in
@@ -1976,7 +1976,7 @@ void daceLogGammaFunction0(const DACEDA *ina, const double a0, DACEDA *inc)
 #endif
 }
 
-/*! Compute the Logarithmic Gamma function of a DA object.
+/** Compute the Logarithmic Gamma function of a DA object.
     @param[in] ina Pointer to the DA object to operate on (constant part != 0, -1, -2, ...)
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -1995,7 +1995,7 @@ void daceLogGammaFunction(const DACEDA *ina, DACEDA *inc)
     daceSetCoefficient0(inc, 0, log(dgamma_(&a0)));
 }
 
-/*! Compute the Gamma function of a DA object.
+/** Compute the Gamma function of a DA object.
     @param[in] ina Pointer to the DA object to operate on (constant part != 0, -1, -2, ...)
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
@@ -2015,7 +2015,7 @@ void daceGammaFunction(const DACEDA *ina, DACEDA *inc)
     daceMultiplyDouble(inc, dgamma_(&a0), inc);
 }
 
-/*! Compute the n-th Psi function (i.e. the n+1 derivative of the logarithmic gamma function) of a DA object.
+/** Compute the n-th Psi function (i.e. the n+1 derivative of the logarithmic gamma function) of a DA object.
     @param[in] ina Pointer to the DA object to operate on (constant part != 0, -1, -2, ...)
     @param[in] n Order of the Psi function (n >= 0)
     @param[out] inc Pointer to the DA object to store the result in
@@ -2065,7 +2065,7 @@ void dacePsiFunction(const DACEDA *ina, const unsigned int n, DACEDA *inc)
 #endif
 }
 
-/*! Evaluate a polynomial with coefficients xf with the non-constant part of ina.
+/** Evaluate a polynomial with coefficients xf with the non-constant part of ina.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] xf C array of nocut+1 elements containing the coefficients of the polynomial
     @param[out] inc Pointer to the DA object to store the result in
@@ -2096,7 +2096,7 @@ void daceEvaluateSeries(const DACEDA *ina, const double xf[], DACEDA *inc)
     daceFreeDA(&inon);
 }
 
-/*! Compute the weighted sum of two DA objects.
+/** Compute the weighted sum of two DA objects.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] afac Weighting factor to multiply ina by
     @param[in] inb Pointer to the second DA object to operate on

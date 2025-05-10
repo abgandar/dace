@@ -41,7 +41,7 @@
  *     DACE polynomial evaluation routines
  *********************************************************************************/
 
-/*! Evaluate DA object ina by providing the value to use for each monomial in
+/** Evaluate DA object ina by providing the value to use for each monomial in
     DA object inb.
     This is equivalent to a monomial-wise DA dot product.
     @param[in] ina Pointer to first DA object to evaluate
@@ -72,7 +72,7 @@ double daceEvalMonomials(const DACEDA *ina, const DACEDA *inb)
 	return res;
 }
 
-/*! Perform partial evaluation of DA object ina by replacing independent variable
+/** Perform partial evaluation of DA object ina by replacing independent variable
     number nvar by the value val.
     @param[in] ina Pointer to DA object to evaluate
     @param[in] nvar Number of the independent variable to replace (one-based)
@@ -146,7 +146,7 @@ void daceEvalVariable(const DACEDA *ina, const unsigned int nvar, const double v
 #endif
 }
 
-/*! Replace independent variable with index from by val times the independent
+/** Replace independent variable with index from by val times the independent
     variable with index to.
     @param[in] ina Pointer to DA object to evaluate
     @param[in] from Number of the independent variable to replace
@@ -204,7 +204,7 @@ void daceReplaceVariable(const DACEDA *ina, const unsigned int from, const unsig
 #endif
 }
 
-/*! Scale independent variable nvar by val.
+/** Scale independent variable nvar by val.
     @param[in] ina Pointer to DA object to scale
     @param[in] nvar Number of the independent variable to scale
     @param[in] val Value to scale independent variable with
@@ -263,7 +263,7 @@ void daceScaleVariable(const DACEDA *ina, const unsigned int nvar, const double 
 #endif
 }
 
-/*! Translate independent variable nvar to (a*x + c).
+/** Translate independent variable nvar to (a*x + c).
     @param[in] ina Pointer to DA object to translate
     @param[in] nvar Number of the independent variable to translate
     @param[in] a Linear value to scale independent variable by
@@ -345,7 +345,7 @@ void daceTranslateVariable(const DACEDA *ina, const unsigned int nvar, const dou
 #endif
 }
 
-/*! Compute an evaluation tree to efficiently evaluate several DA objects.
+/** Compute an evaluation tree to efficiently evaluate several DA objects.
     @param[in] das C array of pointers to DA objects to evaluate
     @param[in] count Number of DA objects in das[]
     @param[out] ac C array of doubles containing compiled coefficients

@@ -42,7 +42,7 @@
  *     DACE norm and norm estimation routines
  *********************************************************************************/
 
-/*! Compute a norm of a DA object.
+/** Compute a norm of a DA object.
     @param[in] ina Pointer to the DA object to take norm of
     @param[in] ityp Type of norm to compute.
      0 = max norm
@@ -79,7 +79,7 @@ double daceNorm(const DACEDA *ina, const unsigned int ityp)
     return anorm;
 }
 
-/*! Compute an order sorted norm of a DA object.
+/** Compute an order sorted norm of a DA object.
     @param[in] ina Pointer to the DA object to take norm of
     @param[in] ivar Independent variable with respect to which to group.
      0 = group by monomial order
@@ -179,7 +179,7 @@ void daceOrderedNorm(const DACEDA *ina, const unsigned int ivar, const unsigned 
     }
 }
 
-/*! Estimate order sorted norms of DA object ina up to given order.
+/** Estimate order sorted norms of DA object ina up to given order.
     @param[in] ina Pointer to the DA object to take norm of
     @param[in] ivar Independent variable with respect to which to group
      0 = group by monomial order
@@ -264,7 +264,7 @@ void daceEstimate(const DACEDA *ina, const unsigned int ivar, const unsigned int
 #endif
 }
 
-/*! Compute an upper and lower bound of DA object ina over the domain [-1,1]^n.
+/** Compute an upper and lower bound of DA object ina over the domain [-1,1]^n.
     @param[in] ina Pointer to the DA object to bound
     @param[out] alo Pointer where to store the lower bound
     @param[out] aup Pointer where to store the upper bound

@@ -1,71 +1,17 @@
-/*                            zeta.c
- *
- *    Riemann zeta function of two arguments
- *
- *
- *
- * SYNOPSIS:
- *
- * double x, q, y, zeta();
- *
- * y = zeta( x, q );
- *
- *
- *
- * DESCRIPTION:
- *
- *
- *
- *                 inf.
- *                  -        -x
- *   zeta(x,q)  =   >   (k+q)
- *                  -
- *                 k=0
- *
- * where x > 1 and q is not a negative integer or zero.
- * The Euler-Maclaurin summation formula is used to obtain
- * the expansion
- *
- *                n
- *                -       -x
- * zeta(x,q)  =   >  (k+q)
- *                -
- *               k=1
- *
- *           1-x                 inf.  B   x(x+1)...(x+2j)
- *      (n+q)           1         -     2j
- *  +  ---------  -  -------  +   >    --------------------
- *        x-1              x      -                   x+2j+1
- *                   2(n+q)      j=1       (2j)! (n+q)
- *
- * where the B2j are Bernoulli numbers.  Note that (see zetac.c)
- * zeta(x,1) = zetac(x) + 1.
- *
- *
- *
- * ACCURACY:
- *
- *
- *
- * REFERENCE:
- *
- * Gradshteyn, I. S., and I. M. Ryzhik, Tables of Integrals,
- * Series, and Products, p. 1073; Academic Press, 1980.
- *
- */
-
 /*
+Riemann zeta function of two arguments
+
 Cephes Math Library Release 2.8:  June, 2000
 Copyright 1984, 1987, 2000 by Stephen L. Moshier
 
 Modified interface by Alexander Wittig, November 2019.
 */
 
+/// @cond CONTRIB
+
 /** @addtogroup DACEContrib Contrib
  *  @{
  */
-
-/// @cond
 
 #include <math.h>
 
@@ -74,7 +20,7 @@ Modified interface by Alexander Wittig, November 2019.
  * (2k)! / B2k
  * where B2k are Bernoulli numbers
  */
-static double A[] = {
+static const double A[] = {
 12.0,
 -720.0,
 30240.0,
@@ -92,6 +38,24 @@ static double A[] = {
 
 static const double MACHEP = 1.11022302462515654042E-16;
 
+/** Riemann zeta function of two arguments.
+
+    @f[ \zeta(x,q) = \sum_{k=0}^\inty (k+q)^{-x}  @f]
+    where x > 1 and q is not a negative integer or zero.
+
+    The Euler-Maclaurin summation formula is used to obtain
+    the expansion
+    @f[ \zeta(x,q) = \sum_{k=1}^n (k+q)^{-x} + \frac{(n+q)^{1-x}}{x-1} -
+                     \frac{1}{2(n+q)^x} +
+                     \sum_{j=1}^\infty \frac{B_{2j}x(x+1)\dots(x+2j)}{(2j)!(n+q)^{x+2j+1}} @f]
+    where the B_2j are Bernoulli numbers.
+
+    Reference: Gradshteyn, I. S., and I. M. Ryzhik, Tables of Integrals,
+    Series, and Products, p. 1073; Academic Press, 1980.
+
+    @copyright Copyright 1984, 1987, 2000 by Stephen L. Moshier
+    Cephes Math Library Release 2.8:  June, 2000
+ */
 double zeta_(const double x, const double q, unsigned int *err)
 {
     double a, b, k, s, t, w;
@@ -160,5 +124,6 @@ done:
     return(s);
 }
 
-/// @endcond
 /** @}*/
+
+/// @endcond

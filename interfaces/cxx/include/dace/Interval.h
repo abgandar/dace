@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Simple storage class for a real Interval
+/*  Simple storage class for a real Interval
 
     This class is trivial and just used to return a pair of an upper and lower bound for convenience.
 */
@@ -36,9 +34,16 @@
 #ifndef DINAMICA_INTERVAL_H_
 #define DINAMICA_INTERVAL_H_
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
-/*! Class representing an interval. */
+/** Represents an interval.
+
+    This class is trivial and just used to return a pair of an upper and lower bound for convenience.
+ */
 class DACE_API Interval
 {
 public:
@@ -49,3 +54,5 @@ public:
 }
 
 #endif /* DINAMICA_INTERVAL_H_ */
+
+/** @}*/

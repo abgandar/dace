@@ -10,11 +10,11 @@
         http://www.netlib.org/f2c/libf2c.zip
 */
 
+/// @cond CONTRIB
+
 /** @addtogroup DACEContrib Contrib
  *  @{
  */
-
-/// @cond
 
 #include "f2c.h"
 
@@ -515,5 +515,6 @@ L450:
 /* ---------- Last line of RYBESL ---------- */
 } /* rybesl_ */
 
-/// @endcond
 /** @}*/
+
+/// @endcond

@@ -26,18 +26,21 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief PromotionTrait template to determine the result of algebraic operations between types
+/*  PromotionTrait template to determine the result of algebraic operations between types
 
     This file provides the PromotionTrait template that is used to determine the resulting
     type when performing algebraic operations between different types. This is used for e.g.
     the AlgebraicVector class to know that operations between DA and double yield a DA.
-    @note Normal users should not need to know or call this mechanism.
-*/
+
+    Normal users should not need to know or call this mechanism.
+ */
 
 #ifndef DINAMICA_PROMOTIONTRAIT_H_
 #define DINAMICA_PROMOTIONTRAIT_H_
+
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
 
 namespace DACE {
 
@@ -76,3 +79,5 @@ ADD_PROMOTION_ALL(DA,DA)
 //#define PROMOTE(A,B) typename PromotionTrait<A,B>::returnType
 
 #endif /* DINAMICA_PROMOTIONTRAIT_H_ */
+
+/** @}*/

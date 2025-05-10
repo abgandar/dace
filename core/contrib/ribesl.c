@@ -10,11 +10,11 @@
         http://www.netlib.org/f2c/libf2c.zip
 */
 
+/// @cond CONTRIB
+
 /** @addtogroup DACEContrib Contrib
  *  @{
  */
-
-/// @cond
 
 #include "f2c.h"
 
@@ -552,5 +552,6 @@ L230:
 /* ---------- Last line of RIBESL ---------- */
 } /* ribesl_ */
 
-/// @endcond
 /** @}*/
+
+/// @endcond

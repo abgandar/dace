@@ -26,29 +26,19 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief DACE extensions to standard math routines provided by the standard library
+/*  DACE extensions to standard math routines provided by the standard library
 
     This file provides double overloads of math functions provided by DACE for DA and not
     available in the standard library. These overloads provide sensible double versions,
     allowing using the same code for both DA and double data types (e.g. via templates).
-
-    Example:
-    @code
-        template<typename T> T my_function(const T& x)
-        {
-            return absolute(x-1.0)*root(x, 4);
-        }
-
-        // my_function can be used with double and DA
-        my_function(2.0)
-        my_function(2.0 + DA(1))
-    @endcode
-*/
+ */
 
 #ifndef DINAMICA_MATHEXTENSION_H_
 #define DINAMICA_MATHEXTENSION_H_
+
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
 
 namespace DACE {
 
@@ -66,3 +56,5 @@ DACE_API double norm(const double x, const int type = 0);
 }
 
 #endif /* DINAMICA_MATHEXTENSION_H_ */
+
+/** @}*/

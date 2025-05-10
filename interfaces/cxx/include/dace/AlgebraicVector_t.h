@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Templated function definitions for AlgebraicVector class.
+/*  Templated function definitions for AlgebraicVector class.
 
     This header file contains the definition of templated functions in the AlgebraicVector class.
 */
@@ -52,12 +50,16 @@
 #include "dace/AlgebraicMatrix_t.h"
 #endif /* WITH_ALGEBRAICMATRIX */
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
 /***********************************************************************************
 *     Coefficient access routines
 ************************************************************************************/
-/*! Return the constant parts of each element.
+/** Return the constant parts of each element.
     @return AlgebraicVector<double> containing the constant part of each element
  */
 template<typename T> AlgebraicVector<double> AlgebraicVector<T>::cons() const {
@@ -71,7 +73,7 @@ template<typename T> AlgebraicVector<double> AlgebraicVector<T>::cons() const {
     return temp;
 }
 
-/*! Extracts elements from AlgebraicVector.
+/** Extracts elements from AlgebraicVector.
     @param[in] first index of first element to be extracted
     @param[in] last  index of last element to be extracted
     @return A new AlgebraicVector with elements from position first to last
@@ -85,7 +87,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::extract(const size_t
     return AlgebraicVector<T>(*this, first, last);
 }
 
-/*! Append an AlgebraicVector to the end of the current one and return the new vector.
+/** Append an AlgebraicVector to the end of the current one and return the new vector.
     @param[in] obj The AlgebraicVector to be appended
     @return A new AlgebraicVector containing the elements of both vectors, cast upwards if necessary
 */
@@ -105,14 +107,14 @@ template<typename T> template<typename V> AlgebraicVector<typename PromotionTrai
 /***********************************************************************************
 *     Algebraic operations
 ************************************************************************************/
-/*! Returns the additive inverse of the vector.
+/** Returns the additive inverse of the vector.
     @return A new AlgebraicVector, with the opposite sign
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::operator-() const {
     return -1.0*(*this);
 }
 
-/*! Add the given AlgebraicVector to ourselves componentwise.
+/** Add the given AlgebraicVector to ourselves componentwise.
     @param[in] obj An AlgebraicVector
     @return A reference to ourselves
     @throw std::runtime_error
@@ -128,7 +130,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/*! Add the given scalar to ourselves componentwise.
+/** Add the given scalar to ourselves componentwise.
     @param[in] obj A scalar value
     @return A reference to ourselves
  */
@@ -140,7 +142,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/*! Subtract the given AlgebraicVector from ourselves componentwise.
+/** Subtract the given AlgebraicVector from ourselves componentwise.
     @param[in] obj An AlgebraicVector
     @return A reference to ourselves
     @throw std::runtime_error
@@ -156,7 +158,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/*! Subtract the given scalar from ourselves componentwise.
+/** Subtract the given scalar from ourselves componentwise.
     @param[in] obj A scalar value
     @return A reference to ourselves
  */
@@ -168,7 +170,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/*! Multiply the given AlgebraicVector with ourselves componentwise.
+/** Multiply the given AlgebraicVector with ourselves componentwise.
     @param[in] obj An AlgebraicVector
     @return A reference to ourselves
  */
@@ -183,7 +185,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/*! Multiply the given scalar with ourselves.
+/** Multiply the given scalar with ourselves.
     @param[in] obj A scalar value
     @return A reference to ourselves
  */
@@ -195,7 +197,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/*! Divide ourselves by the given AlgebraicVector componentwise.
+/** Divide ourselves by the given AlgebraicVector componentwise.
     @param[in] obj An AlgebraicVector
     @return A reference to ourselves
     @throw std::runtime_error
@@ -211,7 +213,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/*! Divide ourselves by the given scalar.
+/** Divide ourselves by the given scalar.
     @param[in] obj A scalar value
     @return A reference to ourselves
  */
@@ -223,7 +225,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/*! Append elements of vector obj to the end of ourself, converting the type to match ours if necessary.
+/** Append elements of vector obj to the end of ourself, converting the type to match ours if necessary.
     @param[in] obj Vector of elements to append
     @return A reference to ourselves
  */
@@ -235,7 +237,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/*! Componentwise addition between two AlgebraicVectors.
+/** Componentwise addition between two AlgebraicVectors.
     @param[in] obj1 first AlgebraicVector
     @param[in] obj2 second AlgebraicVector
     @return A new AlgebraicVector
@@ -253,7 +255,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise addition between a AlgebraicVector and a scalar value.
+/** Componentwise addition between a AlgebraicVector and a scalar value.
     @param[in] obj1 a AlgebraicVector
     @param[in] obj2 a scalar value
     @return A new AlgebraicVector
@@ -267,7 +269,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise addition between a scalar value and a AlgebraicVector.
+/** Componentwise addition between a scalar value and a AlgebraicVector.
     @param[in] obj1 a scalar value
     @param[in] obj2 a AlgebraicVector
     @return A new AlgebraicVector
@@ -281,7 +283,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise subtraction between two AlgebraicVectors.
+/** Componentwise subtraction between two AlgebraicVectors.
     @param[in] obj1 first AlgebraicVector
     @param[in] obj2 second AlgebraicVector
     @return A new AlgebraicVector
@@ -299,7 +301,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise subtraction between a AlgebraicVector and a scalar value.
+/** Componentwise subtraction between a AlgebraicVector and a scalar value.
     @param[in] obj1 a AlgebraicVector
     @param[in] obj2 a scalar value
     @return A new AlgebraicVector
@@ -313,7 +315,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise subtraction between a scalar value and a AlgebraicVector.
+/** Componentwise subtraction between a scalar value and a AlgebraicVector.
     @param[in] obj1 a scalar value
     @param[in] obj2 a AlgebraicVector
     @return A new AlgebraicVector
@@ -327,7 +329,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise Componentwise multiplication between two AlgebraicVectors.
+/** Componentwise Componentwise multiplication between two AlgebraicVectors.
     @param[in] obj1 first AlgebraicVector
     @param[in] obj2 second AlgebraicVector
     @return A new AlgebraicVector
@@ -345,7 +347,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise multiplication between a AlgebraicVector and a scalar value.
+/** Componentwise multiplication between a AlgebraicVector and a scalar value.
     @param[in] obj1 a AlgebraicVector
     @param[in] obj2 a scalar value
     @return A new AlgebraicVector
@@ -359,7 +361,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise multiplication between a scalar value and a AlgebraicVector.
+/** Componentwise multiplication between a scalar value and a AlgebraicVector.
     @param[in] obj1 a scalar value
     @param[in] obj2 a AlgebraicVector
     @return A new AlgebraicVector
@@ -373,7 +375,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise division between two AlgebraicVectors.
+/** Componentwise division between two AlgebraicVectors.
     @param[in] obj1 first AlgebraicVector
     @param[in] obj2 second AlgebraicVector
     @return A new AlgebraicVector
@@ -391,7 +393,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise division between a AlgebraicVector and a scalar value.
+/** Componentwise division between a AlgebraicVector and a scalar value.
     @param[in] obj1 a AlgebraicVector
     @param[in] obj2 a scalar value
     @return A new AlgebraicVector
@@ -405,7 +407,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     return temp;
 }
 
-/*! Componentwise division between a scalar value and a AlgebraicVector.
+/** Componentwise division between a scalar value and a AlgebraicVector.
     @param[in] obj1 a scalar value.
     @param[in] obj2 a AlgebraicVector.
     @return A new AlgebraicVector
@@ -422,7 +424,7 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
 /***********************************************************************************
 *     Math routines
 ************************************************************************************/
-/*! Componentwise application of the absolute value function.
+/** Componentwise application of the absolute value function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::absolute() const {
@@ -434,7 +436,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::absolute() const {
     return temp;
 }
 
-/*! Componentwise application of the truncation function.
+/** Componentwise application of the truncation function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::trunc() const {
@@ -448,7 +450,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::trunc() const {
     return temp;
 }
 
-/*! Componentwise application of the round function.
+/** Componentwise application of the round function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::round() const {
@@ -462,7 +464,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::round() const {
     return temp;
 }
 
-/*! Componentwise application of the mod function.
+/** Componentwise application of the mod function.
     @param[in] p
     @return A new AlgebraicVector
  */
@@ -477,7 +479,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::mod(const double p) 
     return temp;
 }
 
-/*! Componentwise application of the integer power function.
+/** Componentwise application of the integer power function.
     @param[in] p power to raise each element to
     @return A new AlgebraicVector
  */
@@ -492,7 +494,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::pow(const int p) con
     return temp;
 }
 
-/*! Componentwise application of the double power function.
+/** Componentwise application of the double power function.
     @param[in] p power to raise each element to
     @return A new AlgebraicVector
  */
@@ -507,7 +509,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::pow(const double p) 
     return temp;
 }
 
-/*! Componentwise application of the p-th root function.
+/** Componentwise application of the p-th root function.
     @param[in] p root to be computed
     @return A new AlgebraicVector
  */
@@ -522,7 +524,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::root(const int p) co
     return temp;
 }
 
-/*! Componentwise application of the multiplicative inverse function.
+/** Componentwise application of the multiplicative inverse function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::minv() const {
@@ -536,7 +538,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::minv() const {
     return temp;
 }
 
-/*! Componentwise application of the square function.
+/** Componentwise application of the square function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::sqr() const {
@@ -550,7 +552,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::sqr() const {
     return temp;
 }
 
-/*! Componentwise application of the square root function.
+/** Componentwise application of the square root function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::sqrt() const {
@@ -564,7 +566,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::sqrt() const {
     return temp;
 }
 
-/*! Componentwise application of the inverse square root function.
+/** Componentwise application of the inverse square root function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::isrt() const {
@@ -578,7 +580,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::isrt() const {
     return temp;
 }
 
-/*! Componentwise application of the cube root function.
+/** Componentwise application of the cube root function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::cbrt() const {
@@ -592,7 +594,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::cbrt() const {
     return temp;
 }
 
-/*! Componentwise application of the inverse cube root function.
+/** Componentwise application of the inverse cube root function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::icbrt() const {
@@ -606,7 +608,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::icbrt() const {
     return temp;
 }
 
-/*! Componentwise application of the hypotenuse function hypot(x,y).
+/** Componentwise application of the hypotenuse function hypot(x,y).
     @param[in] Y AlgebraicVector<T> second argument
     @return A new AlgebraicVector
 */
@@ -624,7 +626,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::hypot(const Algebrai
     return temp;
 }
 
-/*! Componentwise application of the exponential function.
+/** Componentwise application of the exponential function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::exp() const {
@@ -638,7 +640,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::exp() const {
     return temp;
 }
 
-/*! Componentwise application of the natural logarithm function.
+/** Componentwise application of the natural logarithm function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::log() const {
@@ -652,7 +654,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::log() const {
     return temp;
 }
 
-/*! Componentwise application of the logarithm function relative to given base.
+/** Componentwise application of the logarithm function relative to given base.
     @param[in] b base for the logarithm
     @return A new AlgebraicVector
  */
@@ -666,7 +668,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::logb(const double b)
     return temp;
 }
 
-/*! Componentwise application of the decadic logarithm function.
+/** Componentwise application of the decadic logarithm function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::log10() const {
@@ -680,7 +682,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::log10() const {
     return temp;
 }
 
-/*! Componentwise application of the binary logarithm function.
+/** Componentwise application of the binary logarithm function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::log2() const {
@@ -694,7 +696,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::log2() const {
     return temp;
 }
 
-/*! Componentwise application of the sine function.
+/** Componentwise application of the sine function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::sin() const {
@@ -708,7 +710,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::sin() const {
     return temp;
 }
 
-/*! Componentwise application of the cosine function.
+/** Componentwise application of the cosine function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::cos() const {
@@ -722,7 +724,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::cos() const {
     return temp;
 }
 
-/*! Componentwise application of the tangent function.
+/** Componentwise application of the tangent function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::tan() const {
@@ -736,7 +738,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::tan() const {
     return temp;
 }
 
-/*! Componentwise application of the arcsine function.
+/** Componentwise application of the arcsine function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::asin() const {
@@ -750,7 +752,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::asin() const {
     return temp;
 }
 
-/*! Componentwise application of the arccosine function.
+/** Componentwise application of the arccosine function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::acos() const {
@@ -764,7 +766,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::acos() const {
     return temp;
 }
 
-/*! Componentwise application of the arctangent function.
+/** Componentwise application of the arctangent function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::atan() const {
@@ -778,7 +780,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::atan() const {
     return temp;
 }
 
-/*! Componentwise application of the four-quadrant arctangent of Y/X.
+/** Componentwise application of the four-quadrant arctangent of Y/X.
     Y is the current object, whereas X is the argument.
     @param[in] X AlgebraicVector<T> representing X
     @return A new AlgebraicVector with elements in [-pi, pi].
@@ -798,7 +800,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::atan2(const Algebrai
     return temp;
 }
 
-/*! Componentwise application of the hyperbolic sine function.
+/** Componentwise application of the hyperbolic sine function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::sinh() const {
@@ -812,7 +814,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::sinh() const {
     return temp;
 }
 
-/*! Componentwise application of the hyperbolic cosine function.
+/** Componentwise application of the hyperbolic cosine function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::cosh() const {
@@ -826,7 +828,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::cosh() const {
     return temp;
 }
 
-/*! Componentwise application of the hyperbolic tangent function.
+/** Componentwise application of the hyperbolic tangent function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::tanh() const {
@@ -840,7 +842,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::tanh() const {
     return temp;
 }
 
-/*! Componentwise application of the hyperbolic arcsine function.
+/** Componentwise application of the hyperbolic arcsine function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::asinh() const {
@@ -854,7 +856,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::asinh() const {
     return temp;
 }
 
-/*! Componentwise application of the hyperbolic arccosine function.
+/** Componentwise application of the hyperbolic arccosine function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::acosh() const {
@@ -868,7 +870,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::acosh() const {
     return temp;
 }
 
-/*! Componentwise application of the hyperbolic arctangent function.
+/** Componentwise application of the hyperbolic arctangent function.
     @return A new AlgebraicVector
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::atanh() const {
@@ -885,7 +887,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::atanh() const {
 /***********************************************************************************
 *    Vector routines
 ************************************************************************************/
-/*! Compute the dot product with another AlgebraicVector.
+/** Compute the dot product with another AlgebraicVector.
     @param[in] obj the other AlgebraicVector
     @return A scalar value representing dot (inner) product
     @throw std::runtime_error
@@ -902,7 +904,7 @@ template<typename T> template<typename V> typename PromotionTrait<T,V>::returnTy
     return temp;
 }
 
-/*! Compute the cross product with another 3D AlgebraicVector.
+/** Compute the cross product with another 3D AlgebraicVector.
     @param[in] obj The other AlgebraicVector
     @return A new AlgebraicVector
     @throw std::runtime_error
@@ -919,7 +921,7 @@ template<typename T> template<typename V> AlgebraicVector<typename PromotionTrai
     return temp;
 }
 
-/*! Compute the length (Euclidean vector norm).
+/** Compute the length (Euclidean vector norm).
     @return Euclidean length of the vector
  */
 template<typename T> T AlgebraicVector<T>::length() const {
@@ -935,7 +937,7 @@ template<typename T> T AlgebraicVector<T>::length() const {
     return sqrt(norm);
 }
 
-/*! Normalize the vector.
+/** Normalize the vector.
     @return An AlgebraicVector<T> of unit length
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::normalize() const {
@@ -948,7 +950,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::normalize() const {
 /***********************************************************************************
 *     Polynomial evaluation routines
 ************************************************************************************/
-/*! Evaluate a vector of polynomials with any vector type V with arguments
+/** Evaluate a vector of polynomials with any vector type V with arguments
     and return a vector of results of the same type V.
    @param[in] args vector (e.g. AlgebraicVector<>) of arguments
    @return A new vector of same type as argument args containing the
@@ -961,7 +963,7 @@ template<> template<typename V> V AlgebraicVector<DA>::eval(const V &args) const
     return compiledDA(*this).eval(args);
 }
 
-/*! Evaluate a vector of polynomials with an braced initializer list of type U
+/** Evaluate a vector of polynomials with an braced initializer list of type U
     and return an AlgebraicVector of type U with the results.
     @param[in] l Braced initializer list containing the arguments
     @return A new AlgebraicVector of type U containing the results of the evaluation
@@ -973,7 +975,7 @@ template<> template<typename U> AlgebraicVector<U> AlgebraicVector<DA>::eval(con
     return compiledDA(*this).eval<U>(l);
 }
 
-/*! Evaluate a vector of polynomials with a single arithmetic type U argument.
+/** Evaluate a vector of polynomials with a single arithmetic type U argument.
     @param[in] arg single variable of arithmetic type T of the first independent DA variable
     @return The result of the evaluation
     @note This DA specific function is only available in AlgebraicVector<DA>,
@@ -992,7 +994,7 @@ template<> template<typename U> AlgebraicVector<U> AlgebraicVector<DA>::evalScal
 /***********************************************************************************
 *     DA norm routines
 ************************************************************************************/
-/*! Componentwise application of the norm function.
+/** Componentwise application of the norm function.
     @param[in] type type of norm to be computed
     @return A new AlgebraicVector
     @see DA::norm()
@@ -1011,7 +1013,7 @@ template<typename T> AlgebraicVector<double> AlgebraicVector<T>::norm(const unsi
 /***********************************************************************************
 *     Input/Output routines
 ************************************************************************************/
-/*! Output a vector to a C++ output stream.
+/** Output a vector to a C++ output stream.
     @param[in] out standard output stream
     @param[in] obj AlgebraicVector to be written to the stream
     @return Reference to output stream out
@@ -1028,7 +1030,7 @@ template<typename U> std::ostream& operator<<(std::ostream &out, const Algebraic
     return out;
 }
 
-/*! Read a vector from a C++ input stream.
+/** Read a vector from a C++ input stream.
     @param[in] in standard input stream
     @param[in] obj AlgebraicVector to be read from the stream
     @return Reference to input stream in
@@ -1065,7 +1067,7 @@ template<typename U> std::istream& operator>>(std::istream &in, AlgebraicVector<
     return in;
 }
 
-/*! Convert to string.
+/** Convert to string.
     @return String representing the AlgebraicVector
  */
 template<typename T> std::string AlgebraicVector<T>::toString() const {
@@ -1078,7 +1080,7 @@ template<typename T> std::string AlgebraicVector<T>::toString() const {
 /***********************************************************************************
 *     Non-member functions
 ************************************************************************************/
-/*! Return the constant parts.
+/** Return the constant parts.
     @return An AlgebraicVector<double>
     @see AlgebraicVector<T>::cons
  */
@@ -1086,7 +1088,7 @@ template<typename T> AlgebraicVector<double> cons(const AlgebraicVector<T> &obj)
     return obj.cons();
 }
 
-/*! Componentwise application of the absolute value function.
+/** Componentwise application of the absolute value function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::absolute
@@ -1095,7 +1097,7 @@ template<typename T> AlgebraicVector<T> absolute(const AlgebraicVector<T> &obj) 
     return obj.absolute();
 }
 
-/*! Componentwise application of the truncation function.
+/** Componentwise application of the truncation function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::trunc
@@ -1104,7 +1106,7 @@ template<typename T> AlgebraicVector<T> trunc(const AlgebraicVector<T> &obj) {
     return obj.trunc();
 }
 
-/*! Componentwise application of the round function.
+/** Componentwise application of the round function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::round
@@ -1113,7 +1115,7 @@ template<typename T> AlgebraicVector<T> round(const AlgebraicVector<T> &obj) {
     return obj.round();
 }
 
-/*! Componentwise application of the modulo function.
+/** Componentwise application of the modulo function.
     @param[in] obj AlgebraicVector<T>
     @param[in] p divisor
     @return A new AlgebraicVector
@@ -1123,7 +1125,7 @@ template<typename T> AlgebraicVector<T> mod(const AlgebraicVector<T> &obj, const
     return obj.mod(p);
 }
 
-/*! Componentwise application of the integer power function.
+/** Componentwise application of the integer power function.
     @param[in] obj AlgebraicVector<T>
     @param[in] p power to raise each element to
     @return A new AlgebraicVector
@@ -1133,7 +1135,7 @@ template<typename T> AlgebraicVector<T> pow(const AlgebraicVector<T> &obj, const
     return obj.pow(p);
 }
 
-/*! Componentwise application of the double power function.
+/** Componentwise application of the double power function.
     @param[in] obj AlgebraicVector<T>
     @param[in] p power to raise each element to
     @return A new AlgebraicVector
@@ -1143,7 +1145,7 @@ template<typename T> AlgebraicVector<T> pow(const AlgebraicVector<T> &obj, const
     return obj.pow(p);
 }
 
-/*! Componentwise application of the root function.
+/** Componentwise application of the root function.
     @param[in] obj AlgebraicVector<T>
     @param[in] p root to be computed
     @return A new AlgebraicVector
@@ -1153,7 +1155,7 @@ template<typename T> AlgebraicVector<T> root(const AlgebraicVector<T> &obj, cons
     return obj.root(p);
 }
 
-/*! Componentwise application of the multiplicative inverse function.
+/** Componentwise application of the multiplicative inverse function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::minv
@@ -1162,7 +1164,7 @@ template<typename T> AlgebraicVector<T> minv(const AlgebraicVector<T> &obj) {
     return obj.minv();
 }
 
-/*! Componentwise application of the square function.
+/** Componentwise application of the square function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::sqr
@@ -1171,7 +1173,7 @@ template<typename T> AlgebraicVector<T> sqr(const AlgebraicVector<T> &obj) {
     return obj.sqr();
 }
 
-/*! Componentwise application of the square root function.
+/** Componentwise application of the square root function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::sqrt
@@ -1180,7 +1182,7 @@ template<typename T> AlgebraicVector<T> sqrt(const AlgebraicVector<T> &obj) {
     return obj.sqrt();
 }
 
-/*! Componentwise application of the inverse square root function.
+/** Componentwise application of the inverse square root function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::isrt
@@ -1189,7 +1191,7 @@ template<typename T> AlgebraicVector<T> isrt(const AlgebraicVector<T> &obj) {
     return obj.isrt();
 }
 
-/*! Componentwise application of the cube root function.
+/** Componentwise application of the cube root function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::cbrt
@@ -1198,7 +1200,7 @@ template<typename T> AlgebraicVector<T> cbrt(const AlgebraicVector<T> &obj) {
     return obj.cbrt();
 }
 
-/*! Componentwise application of the inverse cube root function.
+/** Componentwise application of the inverse cube root function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::icbrt
@@ -1207,7 +1209,7 @@ template<typename T> AlgebraicVector<T> icbrt(const AlgebraicVector<T> &obj) {
     return obj.icbrt();
 }
 
-/*! Componentwise application of the hypotenuse function.
+/** Componentwise application of the hypotenuse function.
     @param[in] X AlgebraicVector<T> containing X.
     @param[in] Y AlgebraicVector<T> containing Y.
     @return A new AlgebraicVector
@@ -1217,7 +1219,7 @@ template<typename T> AlgebraicVector<T> hypot(const AlgebraicVector<T> &X, const
     return X.hypot(Y);
 }
 
-/*! Componentwise application of the exponential function.
+/** Componentwise application of the exponential function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::exp
@@ -1226,7 +1228,7 @@ template<typename T> AlgebraicVector<T> exp(const AlgebraicVector<T> &obj) {
     return obj.exp();
 }
 
-/*! Componentwise application of the natural logarithm function.
+/** Componentwise application of the natural logarithm function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::log
@@ -1235,7 +1237,7 @@ template<typename T> AlgebraicVector<T> log(const AlgebraicVector<T> &obj) {
     return obj.log();
 }
 
-/*! Componentwise application of the logarithm function relative to given base.
+/** Componentwise application of the logarithm function relative to given base.
     @param[in] obj AlgebraicVector<T>
     @param[in] b base for the logarithm
     @return A new AlgebraicVector
@@ -1245,7 +1247,7 @@ template<typename T> AlgebraicVector<T> logb(const AlgebraicVector<T> &obj, cons
     return obj.logb(b);
 }
 
-/*! Componentwise application of the decadic logarithm function.
+/** Componentwise application of the decadic logarithm function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::log10
@@ -1254,7 +1256,7 @@ template<typename T> AlgebraicVector<T> log10(const AlgebraicVector<T> &obj) {
     return obj.log10();
 }
 
-/*! Componentwise application of the binary logarithm function.
+/** Componentwise application of the binary logarithm function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::log2
@@ -1263,7 +1265,7 @@ template<typename T> AlgebraicVector<T> log2(const AlgebraicVector<T> &obj) {
     return obj.log2();
 }
 
-/*! Componentwise application of the sine function.
+/** Componentwise application of the sine function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::sin
@@ -1272,7 +1274,7 @@ template<typename T> AlgebraicVector<T> sin(const AlgebraicVector<T> &obj) {
     return obj.sin();
 }
 
-/*! Componentwise application of the cosine function.
+/** Componentwise application of the cosine function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::cos
@@ -1281,7 +1283,7 @@ template<typename T> AlgebraicVector<T> cos(const AlgebraicVector<T> &obj) {
     return obj.cos();
 }
 
-/*! Componentwise application of the tangent function.
+/** Componentwise application of the tangent function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::tan
@@ -1290,7 +1292,7 @@ template<typename T> AlgebraicVector<T> tan(const AlgebraicVector<T> &obj) {
     return obj.tan();
 }
 
-/*! Componentwise application of the arcsine function.
+/** Componentwise application of the arcsine function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::asin
@@ -1299,7 +1301,7 @@ template<typename T> AlgebraicVector<T> asin(const AlgebraicVector<T> &obj) {
     return obj.asin();
 }
 
-/*! Componentwise application of the arccosine function.
+/** Componentwise application of the arccosine function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::acos
@@ -1308,7 +1310,7 @@ template<typename T> AlgebraicVector<T> acos(const AlgebraicVector<T> &obj) {
     return obj.acos();
 }
 
-/*! Componentwise application of the arctangent function.
+/** Componentwise application of the arctangent function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::atan
@@ -1317,7 +1319,7 @@ template<typename T> AlgebraicVector<T> atan(const AlgebraicVector<T> &obj) {
     return obj.atan();
 }
 
-/*! Componentwise application of the four-quadrant arctangent of Y/X.
+/** Componentwise application of the four-quadrant arctangent of Y/X.
     @param[in] Y AlgebraicVector<T> containing Y
     @param[in] X AlgebraicVector<T> containing X
     @return A new AlgebraicVector with elements in [-pi, pi]
@@ -1327,7 +1329,7 @@ template<typename T> AlgebraicVector<T> atan2(const AlgebraicVector<T> &Y, const
     return Y.atan2(X);
 }
 
-/*! Componentwise application of the hyperbolic sine function.
+/** Componentwise application of the hyperbolic sine function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::sinh
@@ -1336,7 +1338,7 @@ template<typename T> AlgebraicVector<T> sinh(const AlgebraicVector<T> &obj) {
     return obj.sinh();
 }
 
-/*! Componentwise application of the hyperbolic cosine function.
+/** Componentwise application of the hyperbolic cosine function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::cosh
@@ -1345,7 +1347,7 @@ template<typename T> AlgebraicVector<T> cosh(const AlgebraicVector<T> &obj) {
     return obj.cosh();
 }
 
-/*! Componentwise application of the hyperbolic tangent function.
+/** Componentwise application of the hyperbolic tangent function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::tanh
@@ -1354,7 +1356,7 @@ template<typename T> AlgebraicVector<T> tanh(const AlgebraicVector<T> &obj) {
     return obj.tanh();
 }
 
-/*! Componentwise application of the hyperbolic arcsine function.
+/** Componentwise application of the hyperbolic arcsine function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::asinh
@@ -1363,7 +1365,7 @@ template<typename T> AlgebraicVector<T> asinh(const AlgebraicVector<T> &obj) {
     return obj.asinh();
 }
 
-/*! Componentwise application of the hyperbolic arccosine function.
+/** Componentwise application of the hyperbolic arccosine function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::acosh
@@ -1372,7 +1374,7 @@ template<typename T> AlgebraicVector<T> acosh(const AlgebraicVector<T> &obj) {
     return obj.acosh();
 }
 
-/*! Componentwise application of the hyperbolic arctangent function.
+/** Componentwise application of the hyperbolic arctangent function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::atanh
@@ -1381,7 +1383,7 @@ template<typename T> AlgebraicVector<T> atanh(const AlgebraicVector<T> &obj) {
     return obj.atanh();
 }
 
-/*! Compute the dot product between two AlgebraicVectors.
+/** Compute the dot product between two AlgebraicVectors.
    @param[in] obj1 a AlgebraicVector
    @param[in] obj2 a AlgebraicVector
    @return A scalar value
@@ -1390,7 +1392,7 @@ template<typename U, typename V> typename PromotionTrait<U,V>::returnType dot(co
     return obj1.dot(obj2);
 }
 
-/*! Compute the cross product between two 3D AlgebraicVectors.
+/** Compute the cross product between two 3D AlgebraicVectors.
     @param[in] obj1 a AlgebraicVector
     @param[in] obj2 a AlgebraicVector
     @return A new AlgebraicVector
@@ -1399,7 +1401,7 @@ template<typename U, typename V> AlgebraicVector<typename PromotionTrait<U,V>::r
     return obj1.cross(obj2);
 }
 
-/*! Compute vector length (Euclidean vector norm).
+/** Compute vector length (Euclidean vector norm).
     @param[in] obj AlgebraicVector<T>
     @return Euclidean length of the vector
  */
@@ -1407,7 +1409,7 @@ template<typename T> T length(const AlgebraicVector<T> &obj) {
     return obj.length();
 }
 
-/*! Normalize an AlgebraicVector<T>.
+/** Normalize an AlgebraicVector<T>.
     @param[in] obj An AlgebraicVector<T> to normalize
     @return An AlgebraicVector<T> of unit length
     @see AlgebraicVector<T>::normalize
@@ -1416,7 +1418,7 @@ template<typename T> AlgebraicVector<T> normalize(const AlgebraicVector<T> &obj)
     return obj.normalize();
 }
 
-/*! Evaluate an AlgebraicVector<DA> with a vector type V of arguments
+/** Evaluate an AlgebraicVector<DA> with a vector type V of arguments
     and return a vector of type V with the results.
     @param[in] obj An AlgebraicVector<DA>
     @param[in] args Vector type V containing the arguments
@@ -1427,7 +1429,7 @@ template<typename V> V eval(const AlgebraicVector<DA> &obj, const V &args) {
     return obj.eval(args);
 }
 
-/*! Evaluate an AlgebraicVector<DA> with an braced initializer list of type T
+/** Evaluate an AlgebraicVector<DA> with an braced initializer list of type T
     and return an AlgebraicVector of type T with the results.
     @param[in] obj An AlgebraicVector<DA>
     @param[in] l Braced initializer list containing the arguments
@@ -1441,7 +1443,7 @@ template<typename T> AlgebraicVector<T> eval(const AlgebraicVector<DA> &obj, con
     return obj.eval<T>(l);
 }
 
-/*! Evaluate an AlgebraicVector<DA> with a single scalar argument of type U
+/** Evaluate an AlgebraicVector<DA> with a single scalar argument of type U
     and return an AlgebraicVector<T> containing the results.
     @param[in] obj The AlgebraicVector<T> to evaluate
     @param[in] arg The argument of type T
@@ -1452,7 +1454,7 @@ template<typename T> AlgebraicVector<T> evalScalar(const AlgebraicVector<DA> &ob
     return obj.evalScalar(arg);
 }
 
-/*! Componentwise application of the norm function.
+/** Componentwise application of the norm function.
     @param[in] obj AlgebraicVector<T>
     @param[in] type type of norm to be computed
     @return A new AlgebraicVector
@@ -1466,3 +1468,5 @@ template<typename T> AlgebraicVector<double> norm(const AlgebraicVector<T> &obj,
 }
 
 #endif /* DINAMICA_ALGEBRAICVECTOR_T_H_ */
+
+/** @}*/
