@@ -41,6 +41,10 @@
 #include <string>
 #include <ostream>
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
 /*! Class representing a single monomial.
@@ -65,3 +69,5 @@ DACE_API std::ostream& operator<< (std::ostream &out, const Monomial &m);
 }
 
 #endif /* DINAMICA_MONOMIAL_H_ */
+
+/** @}*/

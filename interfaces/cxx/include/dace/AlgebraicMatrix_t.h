@@ -34,6 +34,10 @@
 #ifndef DINAMICA_DAMATRIX_T_H_
 #define DINAMICA_DAMATRIX_T_H_
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 // C++ stdlib classes used only internally in this implementation
 #include <cmath>
 #include <sstream>
@@ -741,3 +745,5 @@ template<class T> AlgebraicMatrix<double> cons(const AlgebraicMatrix<T>& obj) {
 }
 
 #endif/* DINAMICA_DAMATRIX_T_H_ */
+
+/** @}*/

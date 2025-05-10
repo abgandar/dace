@@ -46,6 +46,10 @@
 #include <vector>
 #include <string>
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
 // forward declaration
@@ -144,3 +148,5 @@ public:
 }
 
 #endif /* DINAMICA_DAFORMATTER_H_ */
+
+/** @}*/

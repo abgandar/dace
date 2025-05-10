@@ -26,6 +26,10 @@
  *      Author: Dinamica Srl
  */
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 // C++ stdlib classes used only internally in the implementation
 #include <algorithm>
 #include <exception>
@@ -53,7 +57,7 @@ std::stack<unsigned int> DA::TOstack;   // truncation order stack, initially emp
 /********************************************************************************
 *     DACE Setup
 *********************************************************************************/
-/*! Initialize the DACE control arrays and set the maximum order and the
+/*! Initialize the DACE and set the maximum order and the
     maximum number of variables.
     @note MUST BE CALLED BEFORE ANY OTHER DA ROUTINE CAN BE USED.
     @note This routine performs a mandatory version check to compare the version
@@ -96,7 +100,8 @@ void DA::version(int &maj, int &min, int &patch) {
     if(daceGetError()) DACEException();
 }
 
-/*! Check the DACE core library version linked to this C++ interface
+/*! Check the DACE core library version.
+    Check the DACE core library version linked to this C++ interface
     against the interface version and throw an exception if the versions don't
     match.
     @throw DACE::DACEException
@@ -2848,3 +2853,5 @@ std::ostream& operator<<(std::ostream &out, const storedDA &sda) {
 }
 
 }
+
+/** @}*/

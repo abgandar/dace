@@ -26,6 +26,10 @@
  *      Author: Dinamica Srl
  */
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 // C++ stdlib classes used only internally in the implementation
 #include <sstream>
 #include <iostream>
@@ -239,3 +243,5 @@ namespace DACE {
     }
 
 }
+
+/** @}*/

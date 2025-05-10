@@ -32,8 +32,12 @@
     not supported by default. It may have bugs or not work as expected.
 */
 
-#ifndef DINAMICA_DAMATRIX_H_
-#define DINAMICA_DAMATRIX_H_
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
+#ifndef DINAMICA_ALGEBRAICMATRIX_H_
+#define DINAMICA_ALGEBRAICMATRIX_H_
 
 // C++ stdlib classes required for interface definition
 #include <vector>
@@ -170,4 +174,6 @@ typedef AlgebraicMatrix<double> matrixdb;       //!< Short for AlgebraicMatrix<d
 
 }
 
-#endif /* AlgebraicMatrix_H_ */
+#endif /* DINAMICA_ALGEBRAICMATRIX_H_ */
+
+/** @}*/

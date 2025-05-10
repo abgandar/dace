@@ -45,7 +45,7 @@
 
 /*! Set up the ordering and addressing arrays in the common data structure
     and initialize DA memory.
-    @note MUST BE CALLED BEFORE ANY OTHER DA ROUTINE CAN BE USED.
+    @warning MUST BE CALLED BEFORE ANY OTHER DA ROUTINE CAN BE USED.
     @note Also initializes the truncation order to the maximum computation order
     and disables the DA epsilon cutoff by setting it to 0.0.
     @param[in] no order of the Taylor polynomials
@@ -189,7 +189,7 @@ void daceInitialize(unsigned int no, unsigned int nv)
     @note The main thread must call daceInitialize once before spawning new threads.
     All spawned threads must then call daceInitializeThread to initialize the
     thread before performing any other operations.
-    @note daceInitialize MUST NOT be called again by any thread while other threads
+    @warning daceInitialize MUST NOT be called again by any thread while other threads
     are active.
     @note Also initializes the truncation order to the maximum computation order
     and disables the DA epsilon cutoff by setting it to 0.0.
@@ -218,7 +218,7 @@ void daceCleanupThread()
 #endif
 }
 
-/*! Set up thread local data structures without resetting error.
+/*! Set up thread local data structures without resetting DACE error.
     Also initializes the truncation order to the maximum computation order
     and disables the DA epsilon cutoff by setting it to 0.0.
 */
@@ -259,7 +259,7 @@ void daceGetVersion(int *imaj, int *imin, int *ipat)
     @param[in] eps New cutoff value at or below which coefficients can be flushed to
     zero for efficiency purposes
     @return The previous value of the cutoff
-    @note This feature can have severe unintended consequences if used incorrectly!
+    @warning This feature can have severe unintended consequences if used incorrectly!
     Flushing occurs for any intermediate result also within the DACE, and can result
     in wrong solutions whenever DA coefficients become very small relative to epsilon.
     For example, division by a large DA divisor can cause the (internally calculated)

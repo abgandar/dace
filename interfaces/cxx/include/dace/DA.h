@@ -52,6 +52,10 @@
 
 #include "dace/dacecore.h"
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
 // forward declarations
@@ -401,3 +405,5 @@ public:
 }
 
 #endif /* DINAMICA_DA_H_ */
+
+/** @}*/

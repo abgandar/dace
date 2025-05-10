@@ -109,7 +109,8 @@ void daceWrite(const DACEDA *ina, char *strs, unsigned int *nstrs)
     (*nstrs)++;
 }
 
-/*! Read a DA object ina from a human readable string representation in strs,
+/*! Read a DA object from a human readable string representation.
+    Read a DA object ina from a human readable string representation in strs,
     containing nstrs contiguous zero-terminated lines of line length DACE_STRLEN.
     @param[out] ina Pointer to the DA object to read into
     @param[in] strs C array of size nstrs*DACE_STRLEN containing the

@@ -1300,8 +1300,8 @@ void daceArcTangent(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/*! Arctangent of ina/inb with proper sign in [-pi, pi]. This function follows
-    the C standard atan2(y,x) function syntax.
+/*! Arctangent of ina/inb with proper sign in [-pi, pi].
+    This function follows the C standard atan2(y,x) function syntax.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] inb Pointer to the second DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in

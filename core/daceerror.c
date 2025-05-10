@@ -95,7 +95,7 @@ const char* daceGetErrorMSG()
  *     Should be called by the interface once the error has been corrected
  *
  */
-/*! Clear the error code.
+/*! Clear the DACE error code.
 */
 void daceClearError()
 {
@@ -106,7 +106,7 @@ void daceClearError()
     *DACEDbg.msg = '\0';
 }
 
-/*!   This subroutine serves as an error handler for errors within the dace.
+/*!   Error handler for errors within the DACE.
       It is intended mostly for development and debugging. More descriptive error messages should be
       displayed by the user interface.
 

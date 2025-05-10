@@ -26,6 +26,10 @@
  *      Author: Dinamica Srl
  */
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 // C++ stdlib classes used only internally in the implementation
 #include <sstream>
 #include <iomanip>
@@ -88,3 +92,5 @@ std::ostream& operator<< (std::ostream &out, const Monomial &m) {
 }
 
 }
+
+/** @}*/

@@ -425,7 +425,8 @@ void daceSetCoefficient0(DACEDA *ina, const unsigned int ic, const double cjj)
     }
 }
 
-/*! Extract coefficient at position npos (starting with 1) in the list of
+/*! Extract coefficient at position.
+    Extract coefficient at position npos (starting with 1) in the list of
     non-zero coefficients in the DA object and return its exponents and
     coefficient. If the monomial does not exist, the value 0.0 is returned.
     @param[in] ina Pointer to DA object to extract monomial from
@@ -526,8 +527,8 @@ void daceCopy(const DACEDA *ina, DACEDA *inb)
     daceSetLength(inb, illa);
 }
 
-/*! Copy content of one DA object into another DA object filtering out terms
-    below a certain threshold.
+/*! Copy content of one DA object into another while filtering out terms
+    below threshold.
     @param[in] ina Pointer to DA object to copy from
     @param[in] inb Pointer to DA object to copy to
     @note This routine is slightly worse than non-filtering version (about 10%)
@@ -607,7 +608,7 @@ void daceTrim(const DACEDA *ina, const unsigned int imin, const unsigned int ima
 }
 
 /*! Copy monomials from a DA object ina to DA object inb if the same monomial
-    is non-zero in DA object inc, while filtering out terms below the current
+    is non-zero in DA object inc. Also filters out terms below the current
     cutoff.
     @param[in] ina Pointer to DA object to filter
     @param[in] inb Pointer to DA object to store the filtered result in

@@ -35,6 +35,7 @@
     for static linking.
 
     @see dace_s.h
+    @addtogroup DACECXX C++ Interface
 */
 
 #ifndef DINAMICA_DACE_H_

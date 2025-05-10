@@ -26,6 +26,10 @@
  *      Author: Dinamica Srl
  */
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 // C++ stdlib classes used only internally in this implementation
 #include <string>
 #include <sstream>
@@ -118,3 +122,5 @@ template<> std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj){
 }
 
 }
+
+/** @}*/

@@ -41,6 +41,10 @@
 #include <string>
 #include <ostream>
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
 /*! DACEException class containing methods for error handling within the DACE C++ interface.
@@ -74,3 +78,5 @@ public:
 }
 
 #endif /* DINAMICA_DACEEXCEPTION_H_ */
+
+/** @}*/

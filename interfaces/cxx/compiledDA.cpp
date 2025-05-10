@@ -26,6 +26,10 @@
  *      Author: Dinamica Srl
  */
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 // DACE classes
 #include "dace/config.h"
 #include "dace/compiledDA.h"
@@ -95,7 +99,7 @@ compiledDA::~compiledDA() throw() {
 *     Assignments
 *********************************************************************************/
 /*! Copy the content of a given compiledDA object into the current
-    compiledDA (the one the method belongs to).
+    compiledDA.
     @param[in] cda compiledDA vector to be copied
     @return The compiledDA object with the same content of the given compiledDA
  */
@@ -228,3 +232,5 @@ unsigned int compiledDA::getTerms() const {
 }
 
 }
+
+/** @}*/

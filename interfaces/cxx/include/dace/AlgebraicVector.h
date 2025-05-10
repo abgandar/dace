@@ -44,6 +44,10 @@
 #include "dace/PromotionTrait.h"
 #include "dace/DA.h"
 
+/** @addtogroup DACECXX C++ Interface
+ *  @{
+ */
+
 namespace DACE {
 
 // forward declarations
@@ -305,3 +309,5 @@ typedef AlgebraicVector<double> vectordb;       //!< Shorthand notation for Alge
 }
 
 #endif /* DINAMICA_ALGEBRAICVECTOR_H_ */
+
+/** @}*/
