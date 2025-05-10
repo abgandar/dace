@@ -30,9 +30,7 @@
  *  @{
  */
 
-/*! @file
-
-    @brief Internal auxiliary DACE functions.
+/*  Internal auxiliary DACE functions.
 
     This file contains all internal DACE auxiliary functions used by the DACE core.
     It is not meant to be included publicly by DACE users or high level interfaces.

@@ -30,9 +30,7 @@
  *  @{
  */
 
-/*! @file
-
-    @brief Internal DACE core interface functions and structures.
+/*  Internal DACE core interface functions and structures.
 
     This file contains all routines in the public interface to the DACE core.
     DACE core users or high level interfaces should include this file indirectly

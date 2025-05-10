@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Templated function definitions for main DA class.
+/*  Templated function definitions for main DA class.
 
     This header file contains the definition of templated functions in the DA class.
 */

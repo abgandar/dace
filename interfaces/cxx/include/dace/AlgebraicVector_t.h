@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Templated function definitions for AlgebraicVector class.
+/*  Templated function definitions for AlgebraicVector class.
 
     This header file contains the definition of templated functions in the AlgebraicVector class.
 */

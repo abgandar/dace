@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Templated function definitions for compiledDA class.
+/*  Templated function definitions for compiledDA class.
 
     This header file contains the definition of templated functions in the compiledDA class.
 */

@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Experimental AlgebraicMatrix class.
+/*  Experimental AlgebraicMatrix class.
 
     This header file contains the AlgebraicMatrix class. This is experimental and
     not supported by default. It may have bugs or not work as expected.

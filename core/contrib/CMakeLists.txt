@@ -3,8 +3,8 @@
 set(SRCCCONTRIB libf2c.c dgamma.c ribesl.c rjbesl.c rkbesl.c rybesl.c psi.c zeta.c)
 include_directories(include)
 
-add_library(c_core_contrib_s OBJECT ${SRCCCONTRIB})
 add_library(c_core_contrib OBJECT ${SRCCCONTRIB})
-set_target_properties(c_core_contrib PROPERTIES POSITION_INDEPENDENT_CODE True)
-set_target_properties(c_core_contrib PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
-set_target_properties(c_core_contrib_s PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+add_library(c_core_contrib_s OBJECT ${SRCCCONTRIB})
+set_target_properties(c_core_contrib PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+set_target_properties(c_core_contrib PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${HAVE_IPO})
+set_target_properties(c_core_contrib_s PROPERTIES INTERPROCEDURAL_OPTIMIZATION ${HAVE_IPO})

@@ -10,11 +10,11 @@
         http://www.netlib.org/f2c/libf2c.zip
 */
 
+/// @cond CONTRIB
+
 /** @addtogroup DACEContrib Contrib
  *  @{
  */
-
-/// @cond
 
 #include "f2c.h"
 
@@ -316,6 +316,6 @@ L500:
 /* ---------- Last card of PSI ---------- */
 } /* psi_ */
 
+/** @}*/
 
 /// @endcond
-/** @}*/

@@ -34,6 +34,8 @@
      It is identical to include/dace/dace.h except on Windows where it explicitly
      sets the linkage of all DACE functions to local. Use this when linking with
      the static version of the DACE library (instead of the DLL).
+
+     @see dace.h
 */
 
 #ifndef DINAMICA_DACE_S_H_

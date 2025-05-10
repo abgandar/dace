@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Simple storage class for a single monomial
+/*  Simple storage class for a single monomial
 
     The Monomial class represents a single monomial, containing a vector of exponents
     and the corresponding coefficient. This class is only used for user convenience
@@ -45,7 +43,12 @@
 
 namespace DACE {
 
-/*! Class representing a single monomial. */
+/*! Class representing a single monomial.
+
+    This class represents a single monomial, containing a vector of exponents
+    and the corresponding coefficient. This class is only used for user convenience
+    when extracting monomials from DAs and is not related to the internal representation.
+ */
 class DACE_API Monomial
 {
 public:

@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Main DA class and related utilities.
+/*  Main DA class and related utilities.
 
     This header file contains the DA class representing a single DA polynomial.
     It implements an object oriented interface to access all math function, as
@@ -66,6 +64,11 @@ class DA;
 template<typename T> class AlgebraicVector;
 
 /*! Basic DA class representing a single polynomial.
+
+    Implements an object oriented interface to access all math function, as
+    well as non-member functions for classical functional math notation.
+
+    @see DACE::storedDA
  */
 class DACE_API DA
 {
@@ -369,8 +372,13 @@ namespace abs_sum {
     double abs(const DA &da);
 }
 
-
 /*! Stored DA class representing a DA vector in a binary, setup independent format.
+
+    Use this class for serializing DA objects into an opaque binary representation
+    that can be stored, transmitted, and converted back into DA object without
+    loss of precision and across platforms.
+
+     @see DACE::storedDA
  */
 class DACE_API storedDA : std::vector<char>
 {

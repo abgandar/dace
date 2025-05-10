@@ -28,7 +28,7 @@
 
 /*! @file
 
-    @brief Boost library boost::numeric::odeint compatibility shim
+    @brief Boost library boost::numeric::odeint compatibility shim.
 
     This file needs to be included after boost/numeric/odeint.hpp and dace/dace.h to provide
     a compatibility shim to allow odeint to work with DACE::AlgebraicVector as a state type.

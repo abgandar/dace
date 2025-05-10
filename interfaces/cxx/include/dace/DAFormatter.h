@@ -26,9 +26,7 @@
  *      Author: Dinamica Srl
  */
 
-/*! @file
-
-    @brief Formatters allow printing of DAs in a variety of formats other than the standard output
+/*  Formatters allow printing of DAs in a variety of formats other than the standard output
 
     The standard output format of DA via the C++ iostream interface provides a human-readable text
     representation of a DA vector. In some circumstances it is preferable to print a DA vector in
@@ -53,7 +51,21 @@ namespace DACE {
 // forward declaration
 class DA;
 
-/*! Abstract class providing a DA formatter to output DA vectors in some advanced format. */
+/*! Abstract class providing a DA formatter to output DA vectors in some advanced format.
+
+    The standard output format of DA via the C++ iostream interface provides a human-readable text
+    representation of a DA vector. In some circumstances it is preferable to print a DA vector in
+    a different format, e.g. to output the polynomial in a particular programming language or in
+    LaTeX format.
+
+    This abstract class provides an interface for this functionality.
+    The DACE::DADefaultFormatter and DACE::DASimpleFormatter classes are an implementation of
+    simple formatters that can output DAs in various pre-defined or user-supplied formats
+    including Python, C, Matlab, Fortran, and LaTeX code.
+
+    @see DACE::DADefaultFormatter
+    @see DACE::DASimpleFormatter
+ */
 class DACE_API DAFormatter
 {
 public:
