@@ -104,8 +104,8 @@ DACE_API unsigned int daceSetTruncationOrder(const unsigned int fnot);
 DACE_API unsigned int daceGetError();
 DACE_API unsigned int daceGetErrorX();
 DACE_API unsigned int daceGetErrorYY();
-DACE_API const char* daceGetErrorFunName();
-DACE_API const char* daceGetErrorMSG();
+DACE_API const char* daceGetErrorFunctionName();
+DACE_API const char* daceGetErrorMessage();
 DACE_API void daceClearError();
 
 /********************************************************************************

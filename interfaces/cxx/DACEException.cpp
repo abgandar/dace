@@ -47,9 +47,9 @@ namespace DACE {
     /********************************************************************************
     *     Constructors & Destructors
     *********************************************************************************/
-    /** Create a DACEException object from current error codes set in DACE core
-        and clear DACE core errors.
-        Execute the appropriate action for the exception based on current settings.
+    /** Create DACEException from current error code in DACE core.
+        This also clears the current DACE core error code. It then executes the
+        appropriate action for the exception based on current settings.
      */
     DACEException::DACEException() {
         m_x = daceGetErrorX();
@@ -61,7 +61,7 @@ namespace DACE {
 
     /** Create a DACEException object with given severity and ID codes.
         Execute the appropriate action for the exception based on current settings.
-        @param exc_sv severity code of the error
+        @param exc_sv severity code of the error plus 10 to indicate it originated in the C++ interface
         @param exc_id ID code of the error
      */
     DACEException::DACEException(const int exc_sv, const int exc_id) {
@@ -83,100 +83,37 @@ namespace DACE {
     /** Update the error message of this exception based on its ID.
      */
     void DACEException::updateMessage() {
-        struct errstrings{
+        struct errstrings {
             int ID;
-            const char* msg;};
+            const char* msg;
+        };
 
+        // error codes known to the DACE C++ interface
         static const errstrings DACEerr[] = {
-            { 000, "DACE: Unknown DACE error. Contact Dinamica SRL for filing a bug report."},
-/*
-            { 101, "DACEDAL: Attempt to deallocate protected or unallocated variable, ignored"},
-            { 102, "DACESETNOT: Truncation order set to value larger then maximum order, setting to maximum order"},
-            { 103, "DACEEST: Not enough non-zero monomials found, returned estimate may be inaccurate"},
-            { 104, "DACEREAD: Line numbering out of order, ignoring line numbers"},
-            { 105, "DACEREAD: DA vector contains more variables than current setup, ignoring coefficient"},
-            { 106, "DACEREAD: Duplicate monomial in DA vector"},
-            { 107, "DACEINI: Requested order has been increased to the minimum required order of 1"},
-            { 108, "DACEINI: Requested number of variables has been increased to the minimum required number of variables 1"},
-
-            { 601, "DACEVAR: Requested independent variable is out of bounds of current setup, returning zero DA"},
-            { 602, "DACEPOK: Not enough storage to insert monomials, truncating"},
-            { 603, "DACEVAR: Not enough storage to set up variable, returning zero DA"},
-            { 604, "DACECOEF: Not enough storage to set coefficient, truncating"},
-            { 605, "DACEDIVC: Divide by zero, returning zero DA"},
-            { 606, "DACEINT: Requested independent variable out of bounds of current setup, returning zero DA"},
-            { 607, "DACEDER: Requested independent variable out of bounds of current setup, returning zero DA"},
-            { 608, "DACEMINV: Divide by zero, returning zero DA"},
-            { 609, "DACESQRT: Negative constant part in square root, returning zero DA"},
-            { 610, "DACEISQRT: Negative constant part in inverse square root, returning zero DA"},
-            { 611, "DACELOG: Negative constant part in logarithm, returning zero DA"},
-            { 612, "DACETAN: Cosine is zero in tangent, returning zero DA"},
-            { 613, "DACEASIN: Constant part is out of domain [-1,1] in arcsine, returning zero DA"},
-            { 614, "DACEACOS: Constant part is out of domain [-1,1] in arccosine, returning zero DA"},
-            { 617, "DACEACOSH: Constant part is out of domain [1,infinity) in hyperbolic arccosine, returning zero DA"},
-            { 618, "DASEATANH: Constant part is out of domain [-1,1], returning zero DA"},
-            { 619, "DACEONORM: Requested independent variable out of bounds of current setup, returning zero"},
-            { 620, "DACEEST: Maximum order must be at least 2 in order to use DA estimation"},
-            { 622, "DACEPLUG: Requested independent variable out of bounds of current setup, returning zero DA"},
-            { 623, "DACELOGB: Logarithm base must be positive, returning zero DA"},
-            { 624, "DACEREAD: Not enough lines provided to read a DA vector, returning zero DA"},
-            { 625, "DACEREAD: Unrecognized DA input format, returning zero DA"},
-            { 627, "DACEENC: Invalid exponents with order larger than maximum order, returning zero"},
-            { 628, "DACEDEC: Invalid DA codes provided, returning zero"},
-            { 629, "DACEROOT: Zero-th root does not exists, returning zero DA"},
-            { 630, "DACEROOT: Negative or zero constant part in even root, returning zero DA"},
-            { 631, "DACEROOT: Zero constant part in odd root, returning zero DA"},
-            { 632, "DACEPAC: Not enough storage in the target object, truncating"},
-            { 633, "DACECMUL: Not enough storage in the target object, truncating"},
-            { 634, "DACELIN: Not enough storage in the target object, truncating"},
-            { 635, "DACEINT: Not enough storage in the target object, truncating"},
-            { 636, "DACEDER: Not enough storage in the target object, truncating"},
-            { 637, "DACECOP: Not enough storage in the target object, truncating"},
-            { 638, "DACEPUSH: Not enough space to store the provided data, truncating"},
-            { 639, "DACEPULL: Not enough space to store the requested data, truncating"},
-            { 640, "DACETRIM: Not enough space to store the requested data, truncating"},
-            { 641, "DACENORM: Unknown norm type, resorting to max norm"},
-            { 642, "DACEONORM: Unknown norm type, resorting to max norm"},
-            { 643, "DACETRIM: Not enough storage in the target object, truncating"},
-            { 644, "DACEWRITE: DA vector contains more monomials than expected, truncating"},
-
-            { 901, "DACEINI: Internal array size exceeds available addressing space"},
-
-            {1098, "DACEINI: Internal error, size of generated DA coding arrays does not match number of monomials"},
-            {1097, "DACEINI: Internal error, generated DA coding arrays are faulty"},
-            {1096, "DACEINI: Internal error, unable to correctly allocate scratch variables"},
-            {1094, "DACEINI: Internal error, memory allocation failure"},
-            {1093, "DACEREALL: Internal error, memory allocation failure"},
-            {1092, "DACEALL: DACE has not been initialized"},
-            {1090, "DACEINFO: DA Object not allocated"},
-*/
+            { 000, "DACE: Unknown DACE C++ interface error. Contact DACE Developers for filing a bug report."},
             {1101, "DA::getCoeff: Not enough exponents, missing exponents treated as zero"},
             {1102, "DA::setCoeff: Not enough exponents, missing exponents treated as zero"},
             {1103, "DA::getCoeff: More exponents than variables, ignoring extra exponents"},
             {1104, "DA::setCoeff: More exponents than variables, ignoring extra exponents"},
-
             {1604, "compiledDA::compiledDA(): Dimension lower than 1"},
             {1605, "compiledDA::eval: Argument size lower than the number of variables in the polynomial"},
-
             {2099, "DA::checkVersion: DACE C++ interface header file and DACE core library version mismatch"}
         };
         static const int length = sizeof(DACEerr)/sizeof(errstrings);
 
-        const int id = m_x*100+m_yy;
-        int i = 0;
+        const int id = m_x*100 + m_yy;
         std::stringstream s;
 
+        // severity above 10 is C++ interface error (subtract 10 to get severity)
         if(m_x > 10)
         {
-            for(i=length-1; (i>0)&&(DACEerr[i].ID != id); i--);
-
-
+            int i;
+            for(i = length-1; (i > 0) && (DACEerr[i].ID != id); i--);
             s << DACEerr[i].msg << " (ID: " << DACEerr[i].ID << ")" ;
-
         }
         else
         {
-            s << daceGetErrorMSG() << " (ID: " << id << ")";
+            s << daceGetErrorMessage() << " (ID: " << id << ")";
         }
         msg = s.str();
     }
