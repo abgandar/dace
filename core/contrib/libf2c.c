@@ -9,7 +9,7 @@
 /// @cond CONTRIB
 
 /** @addtogroup DACEContrib Contrib
- *  @{
+    @{
  */
 
 #include "f2c.h"
@@ -62,6 +62,6 @@ return(pow);
 }
 #endif
 
-/** @}*/
+/** @} */
 
 /// @endcond

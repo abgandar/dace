@@ -47,7 +47,7 @@
 #include <string>
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 namespace DACE {
@@ -175,4 +175,4 @@ public:
 
 #endif /* DINAMICA_DAFORMATTER_H_ */
 
-/** @}*/
+/** @} */

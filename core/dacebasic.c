@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 #include <limits.h>
@@ -704,4 +704,4 @@ unsigned int daceIsInf(const DACEDA *ina)
     return false;
 }
 
-/** @}*/
+/** @} */

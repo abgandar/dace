@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 /** @file
@@ -46,5 +46,5 @@
 // explicitly define DACE_API to be empty for static linking
 #define DACE_API
 #include "dace/dacecore.h"
-/** @}*/
+/** @} */
 #endif /* DINAMICA_DACECORE_S_H_ */

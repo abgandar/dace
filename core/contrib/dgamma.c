@@ -13,7 +13,7 @@
 /// @cond CONTRIB
 
 /** @addtogroup DACEContrib Contrib
- *  @{
+    @{
  */
 
 #include "f2c.h"
@@ -300,6 +300,6 @@ L900:
 /* ---------- Last line of GAMMA ---------- */
 } /* dgamma_ */
 
-/** @}*/
+/** @} */
 
 /// @endcond

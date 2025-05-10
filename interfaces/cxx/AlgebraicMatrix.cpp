@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 // C++ stdlib classes used only internally in this implementation
@@ -123,4 +123,4 @@ template<> std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj){
 
 }
 
-/** @}*/
+/** @} */

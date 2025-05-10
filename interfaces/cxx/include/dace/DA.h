@@ -53,9 +53,13 @@
 #include "dace/dacecore.h"
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
+/** DACE C++ interface.
+
+    All components of the DACE C++ interface live in this namespace.
+ */
 namespace DACE {
 
 // forward declarations
@@ -358,19 +362,19 @@ DACE_API DA translateVariable(const DA &da, const unsigned int var = 0, const do
 DACE_API std::string toString(const DA &da);
 DACE_API void write(const DA &da, std::ostream &os);
 
-/** Contains an implementation of abs(DA) using only the absolute constant part.
+/** Implementation of abs(DA) using only the absolute constant part.
  */
 namespace abs_cons {
     double abs(const DA &da);
 }
 
-/** Contains an implementation of abs(DA) using the largest absolute coefficient.
+/** Implementation of abs(DA) using the largest absolute coefficient.
  */
 namespace abs_max {
     double abs(const DA &da);
 }
 
-/** Contains an implementation of abs(DA) using the sum of all absolute coefficients.
+/** Implementation of abs(DA) using the sum of all absolute coefficients.
  */
 namespace abs_sum {
     double abs(const DA &da);
@@ -382,7 +386,21 @@ namespace abs_sum {
     that can be stored, transmitted, and converted back into DA object without
     loss of precision and across platforms.
 
-     @see DACE::storedDA
+    Example:
+    @code
+        DA x0 = sin(DA(1));
+        DA y0 = cos(DA(1));
+        std::fstream f("DA.bin", f.binary | f.trunc | f.in | f.out);
+        f << storedDA(x0) << storedDA(y0);      // write as binary DAs
+        f.seekp(0);
+        DA x;
+        f >> x;           // read directly into DA, handles both storedDA and text format
+        storedDA ys(f);   // read storedDA from stream (uncommon)
+        DA y = ys;        // convert storedDA back to DA
+        std::cout << x0-x << y0-y;
+    @endcode
+
+    @see DACE::DA
  */
 class DACE_API storedDA : std::vector<char>
 {
@@ -406,4 +424,4 @@ public:
 
 #endif /* DINAMICA_DA_H_ */
 
-/** @}*/
+/** @} */

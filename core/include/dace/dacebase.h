@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 /*  Internal DACE core interface functions and structures.
@@ -104,8 +104,8 @@ DACE_API unsigned int daceSetTruncationOrder(const unsigned int fnot);
 DACE_API unsigned int daceGetError();
 DACE_API unsigned int daceGetErrorX();
 DACE_API unsigned int daceGetErrorYY();
-DACE_API const char* daceGetErrorFunName();
-DACE_API const char* daceGetErrorMSG();
+DACE_API const char* daceGetErrorFunctionName();
+DACE_API const char* daceGetErrorMessage();
 DACE_API void daceClearError();
 
 /********************************************************************************
@@ -252,6 +252,6 @@ DACE_API double daceRandom();
     }
 #endif /* _cplusplus */
 
-/** @}*/
+/** @} */
 
 #endif /* DINAMICA_DACEBASE_H_ */

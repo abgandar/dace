@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 // DACE classes
@@ -233,4 +233,4 @@ unsigned int compiledDA::getTerms() const {
 
 }
 
-/** @}*/
+/** @} */

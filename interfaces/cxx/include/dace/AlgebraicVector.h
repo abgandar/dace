@@ -45,7 +45,7 @@
 #include "dace/DA.h"
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 namespace DACE {
@@ -56,6 +56,7 @@ template<typename T> class AlgebraicMatrix;
 #endif
 
 /** Vector of any algebraic type.
+
     Provides vector-vector, vector-scalar, and componentwise operations.
  */
 template<typename T> class AlgebraicVector : public std::vector<T>
@@ -312,4 +313,4 @@ typedef AlgebraicVector<double> vectordb;       //!< Short for AlgebraicVector<d
 
 #endif /* DINAMICA_ALGEBRAICVECTOR_H_ */
 
-/** @}*/
+/** @} */

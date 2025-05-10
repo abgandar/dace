@@ -39,7 +39,7 @@
 #define DINAMICA_PROMOTIONTRAIT_H_
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 namespace DACE {
@@ -80,4 +80,4 @@ ADD_PROMOTION_ALL(DA,DA)
 
 #endif /* DINAMICA_PROMOTIONTRAIT_H_ */
 
-/** @}*/
+/** @} */

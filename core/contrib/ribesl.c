@@ -13,7 +13,7 @@
 /// @cond CONTRIB
 
 /** @addtogroup DACEContrib Contrib
- *  @{
+    @{
  */
 
 #include "f2c.h"
@@ -552,6 +552,6 @@ L230:
 /* ---------- Last line of RIBESL ---------- */
 } /* ribesl_ */
 
-/** @}*/
+/** @} */
 
 /// @endcond

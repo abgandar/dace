@@ -13,7 +13,7 @@
 /// @cond CONTRIB
 
 /** @addtogroup DACEContrib Contrib
- *  @{
+    @{
  */
 
 #include "f2c.h"
@@ -316,6 +316,6 @@ L500:
 /* ---------- Last card of PSI ---------- */
 } /* psi_ */
 
-/** @}*/
+/** @} */
 
 /// @endcond

@@ -33,7 +33,7 @@
 */
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 #ifndef DINAMICA_ALGEBRAICMATRIX_H_
@@ -176,4 +176,4 @@ typedef AlgebraicMatrix<double> matrixdb;       //!< Short for AlgebraicMatrix<d
 
 #endif /* DINAMICA_ALGEBRAICMATRIX_H_ */
 
-/** @}*/
+/** @} */

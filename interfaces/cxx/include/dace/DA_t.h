@@ -39,7 +39,7 @@
 #include "dace/DA.h"
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 namespace DACE {
@@ -141,4 +141,4 @@ template<class T> T evalScalar(const DA &da, const T &arg) {
 
 #endif /* DINAMICA_DA_T_H_ */
 
-/** @}*/
+/** @} */

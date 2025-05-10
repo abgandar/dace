@@ -40,7 +40,7 @@
 #include <initializer_list>
 
 /** @addtogroup DACECXX C++ Interface
- *  @{
+    @{
  */
 
 namespace DACE {
@@ -100,4 +100,4 @@ template<> DACE_API void compiledDA::eval(const std::vector<double> &args, std::
 
 #endif /* DINAMICA_COMPILEDDA_H_ */
 
-/** @}*/
+/** @} */

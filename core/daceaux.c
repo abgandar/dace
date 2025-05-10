@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 #include <stdlib.h>
@@ -412,4 +412,4 @@ double daceRandom()
     return (double)rand()/(double)RAND_MAX;
 }
 
-/** @}*/
+/** @} */

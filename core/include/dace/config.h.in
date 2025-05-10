@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACE Core
- *  @{
+    @{
  */
 
 /** @file
@@ -93,5 +93,5 @@
     #define DACE_THREAD_LOCAL
 #endif
 
-/** @}*/
+/** @} */
 #endif /* DINAMICA_CONFIG_H_ */

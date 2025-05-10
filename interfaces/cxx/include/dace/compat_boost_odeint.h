@@ -27,7 +27,7 @@
  */
 
 /** @addtogroup DACECOMPAT C++ Compatibility
- *  @{
+    @{
  */
 
 /** @file
@@ -124,4 +124,4 @@ namespace DACE {
 
 #endif /* DINAMICA_COMPAT_BOOST_ODEINT_H_ */
 
-/** @}*/
+/** @} */
