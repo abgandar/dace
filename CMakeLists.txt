@@ -8,7 +8,8 @@ if(APPLE AND NOT DEFINED ENV{SDKROOT})
   set(CMAKE_OSX_SYSROOT "${RES}" CACHE PATH "Build against headers and libraries in this SDK.")
 endif(APPLE AND NOT DEFINED ENV{SDKROOT})
 
-# global OS specific settings
+# global and OS specific settings
+cmake_policy(SET CMP0048 NEW)
 if(WIN32)
   cmake_policy(SET CMP0054 NEW)
 elseif(APPLE)
@@ -20,12 +21,12 @@ elseif(APPLE)
 endif(WIN32)
 
 
-project(DACE C CXX)
-
-# versioning
-set(DACE_MAJOR_VERSION 2)
-set(DACE_MINOR_VERSION 1)
-set(DACE_PATCH_VERSION 0)
+project(DACE
+  VERSION 2.1.0
+  DESCRIPTION "Differential Algebra Core Engine"
+  HOMEPAGE_URL "https://www.dacelib.org"
+  LANGUAGES C CXX
+)
 
 # CMake includes
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
@@ -103,16 +104,16 @@ set_target_properties(dace PROPERTIES
   INTERPROCEDURAL_OPTIMIZATION ${HAVE_IPO}
 #  INTERFACE_COMPILE_FEATURES "cxx_std_14;c_std_99"
   INTERFACE_COMPILE_FEATURES "cxx_std_14"
-  VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}"
-  SOVERSION ${DACE_MAJOR_VERSION}
-  INTERFACE_dace_MAJOR_VERSION ${DACE_MAJOR_VERSION})
+  VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}"
+  SOVERSION ${PROJECT_VERSION_MAJOR}
+  INTERFACE_PROJECT_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set_target_properties(dace_s PROPERTIES
   INTERPROCEDURAL_OPTIMIZATION ${HAVE_IPO}
 #  INTERFACE_COMPILE_FEATURES "cxx_std_14;c_std_99"
   INTERFACE_COMPILE_FEATURES "cxx_std_14"
-  VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}"
-  SOVERSION ${DACE_MAJOR_VERSION}
-  INTERFACE_dace_s_MAJOR_VERSION ${DACE_MAJOR_VERSION})
+  VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}"
+  SOVERSION ${PROJECT_VERSION_MAJOR}
+  INTERFACE_dace_s_MAJOR_VERSION ${PROJECT_VERSION_MAJOR})
 
 # hard code all required include directories when building from source (C++ includes, core includes, config.h include)
 target_include_directories(dace INTERFACE $<INSTALL_INTERFACE:include>
@@ -150,7 +151,7 @@ install(FILES ${PROJECT_BINARY_DIR}/core/include/dace/config.h DESTINATION inclu
 # Automatically create cmake package files to find the DACE
 write_basic_package_version_file(
   "${CMAKE_CURRENT_BINARY_DIR}/dace/daceConfigVersion.cmake"
-  VERSION "${DACE_MAJOR_VERSION}.${DACE_MINOR_VERSION}.${DACE_PATCH_VERSION}"
+  VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}"
   COMPATIBILITY AnyNewerVersion
 )
 
@@ -167,3 +168,26 @@ configure_file("cmake/daceConfig.cmake"
 # install cmake package files
 install(EXPORT dace NAMESPACE dace:: DESTINATION lib/cmake/dace COMPONENT cmake)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/dace/daceConfig.cmake" "${CMAKE_CURRENT_BINARY_DIR}/dace/daceConfigVersion.cmake" DESTINATION lib/cmake/dace COMPONENT cmake)
+
+# Doxygen documentation
+find_package(Doxygen OPTIONAL_COMPONENTS dot mscgen dia)
+#set(DOXYGEN_PROJECT_NAME "DACE ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
+set(DOXYGEN_OUTPUT_DIRECTORY "docs")        # relative to CURRENT_BINARY_DIR
+set(DOXYGEN_STRIP_FROM_INC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/interfaces/cxx/include" "${CMAKE_CURRENT_SOURCE_DIR}/core/include" "${CMAKE_CURRENT_BINARY_DIR}/core/include")
+set(DOXYGEN_STRIP_FROM_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
+set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
+set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
+set(DOXYGEN_TIMESTAMP YES)
+#set(DOXYGEN_EXTRACT_ALL YES)    # do we really want this?
+set(DOXYGEN_EXCLUDE "core/contrib/netlib" )
+set(DOXYGEN_HTML_COLORSTYLE "LIGHT")
+set(DOXYGEN_HTML_DYNAMIC_SECTIONS YES)
+set(DOXYGEN_HTML_PROJECT_COOKIE org.dacelib.dace)
+set(DOXYGEN_GENERATE_TREEVIEW YES)
+set(DOXYGEN_FULL_SIDEBAR YES)
+set(DOXYGEN_INCLUDE_PATH "${CMAKE_CURRENT_BINARY_DIR}/core/include")    # to find config.h with CMake settings
+doxygen_add_docs(docs
+  "docs"
+  "interfaces/cxx"
+  "core"
+)

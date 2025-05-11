@@ -26,11 +26,8 @@
  *      Author: Alexander Wittig
  */
 
-/** @addtogroup DACECOMPAT C++ Compatibility
-    @{
- */
-
 /** @file
+    @ingroup DACECOMPAT
 
     @brief Boost library compatibility shim for boost::numeric::odeint.
 
@@ -124,4 +121,3 @@ namespace DACE {
 
 #endif /* DINAMICA_COMPAT_BOOST_ODEINT_H_ */
 
-/** @} */
