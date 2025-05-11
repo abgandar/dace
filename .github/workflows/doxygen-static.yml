@@ -30,19 +30,35 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Install doxygen
-        run: sudo apt-get update && sudo apt-get install -y doxygen doxygen-latex graphviz
+        run: sudo apt-get install -y doxygen doxygen-latex graphviz
+
+      - name: Set reusable strings
+        # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
+        id: strings
         shell: bash
-      - name: Run doxygen
-        run: doxygen
-        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+      - name: Configure CMake
+        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        run: cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }} -DCMAKE_BUILD_TYPE=RelWithDebInfo
+
+      - name: Build Documentation
+        # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --target docs --config RelWithDebInfo
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload only generated html documentation
-          path: 'documentation/html'
+          path: "${{ steps.strings.outputs.build-output-dir }}/docs/html"
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

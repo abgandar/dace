@@ -1,45 +1,15 @@
-/** @defgroup DACECOMPAT C++ Compatibility
-    The @ref DACECXX "DACE C++ interface" provides some comaptibility shims that make DACE
-    compatible with other common C++ libraries where needed.
-
-    Each compatibility shim is provided as a separate header file, see
-    documentation and example for use in those for details.
-
-
-    @defgroup DACECXX C++ Interface
-    The DACE C++ interface exposes the @ref DACE "DACE Core" functionality to C++.
-
-    The entire interface lives in the DACE namespace. The main class is DACE::DA
-    which represents a single DA polynomial object. Math operations are defined both
-    as object-oriented member functions (e.g. `x.sin()`) and as non-member functions
-    (e.g. `sin(x)`). An algebraic vector class that allows vector-vector, vector-scalar,
-    and componentwise operations on any algebraic type (e.g. DACE::DA or double) is provided
-    as DACE::AlgebraicVector.
-
-    Example:
-    @code
-        #include <iostream>
-        #include "dace/dace.h"
-
-        using namespace DACE;
-
-        DA::init(10, 1)             // order 10, 1 variable
-        DA x = 1.0 + DA(1);
-        x = sin(x);
-        std::cout << x;             // Prints expansion of sin(1+x) to order 10
-    @endcode
-
+/**
     @defgroup DACE Core
-    The DACE Core implements the basic DA math functionality as a C library.
+    The %DACE Core implements the basic DA math functionality as a compact and portable C library.
 
-    The basic datatype is DACEDA, which is an opaque reference to a DA object.
-    The user then allocates, manipulates, and frees these DA objects using the
-    daceXXX functions provided in the DACE Core. DACEDA objects are passed by
-    pointer to all internal DACE routines, and must be allocated and freed by
-    the user before first use.
+    The basic datatype is DACEDA, which is an opaque reference to a DA object. The
+    user then allocates, manipulates, and frees these DA objects using the daceXXX
+    functions provided in the %DACE Core. DACEDA objects are passed by pointer to
+    all internal %DACE routines, and must be allocated and freed by the user before
+    first use.
 
-    For convenience, these routines can be wrapped in a higher level language
-    such as the @ref DACECXX "C++ Interface".
+    For convenience, these routines can be wrapped in a higher level language such
+    as the @ref DACECXX "C++ Interface".
 
     Example:
     @code
@@ -55,3 +25,35 @@
     @endcode
  */
 
+/**
+    @defgroup DACECXX C++ Interface
+    The %DACE C++ interface exposes the @ref DACE "DACE Core" functionality to C++.
+
+    The entire interface lives in the %DACE namespace. The main class is DACE::DA which
+    represents a single DA polynomial object. Math operations are defined both as
+    object-oriented member functions (e.g. `x.sin()`) and as non-member functions (e.g.
+    `sin(x)`). An algebraic vector class that allows vector-vector, vector-scalar, and
+    componentwise operations on any algebraic type (e.g. DACE::DA or double) is provided
+    as DACE::AlgebraicVector.
+
+    Example:
+    @code
+        #include <iostream>
+        #include "dace/dace.h"
+
+        using namespace DACE;
+
+        DA::init(10, 1)             // order 10, 1 variable
+        DA x = 1.0 + DA(1);
+        x = sin(x);
+        std::cout << x;             // Prints expansion of sin(1+x) to order 10
+    @endcode
+ */
+
+/**
+    @defgroup DACECOMPAT C++ Compatibility
+    Provides comaptibility shims that make %DACE compatible with other common C++ libraries where needed.
+
+    Each compatibility shim is provided as a separate header file, see documentation and
+    example for use in those for details.
+ */
