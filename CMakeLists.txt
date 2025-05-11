@@ -171,6 +171,7 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/dace/daceConfig.cmake" "${CMAKE_CURRE
 
 # Doxygen documentation
 find_package(Doxygen OPTIONAL_COMPONENTS dot mscgen dia)
+
 set(DOXYGEN_OUTPUT_DIRECTORY "docs")        # relative to CURRENT_BINARY_DIR
 set(DOXYGEN_STRIP_FROM_INC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/interfaces/cxx/include" "${CMAKE_CURRENT_SOURCE_DIR}/core/include" "${CMAKE_CURRENT_BINARY_DIR}/core/include")
 set(DOXYGEN_STRIP_FROM_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
@@ -185,8 +186,11 @@ set(DOXYGEN_HTML_PROJECT_COOKIE org.dacelib.dace)
 set(DOXYGEN_GENERATE_TREEVIEW YES)
 set(DOXYGEN_FULL_SIDEBAR YES)
 set(DOXYGEN_INCLUDE_PATH "${CMAKE_CURRENT_BINARY_DIR}/core/include")    # to find config.h with CMake settings
-doxygen_add_docs(docs
-  "docs"
-  "interfaces/cxx"
-  "core"
-)
+
+if(DOXYGEN_FOUND)
+  doxygen_add_docs(docs
+    "docs"
+    "interfaces/cxx"
+    "core"
+  )
+endif(DOXYGEN_FOUND)
