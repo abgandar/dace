@@ -46,10 +46,6 @@
 #include <vector>
 #include <string>
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
 // forward declaration
@@ -112,6 +108,7 @@ struct DASimpleFormat {
 };
 
 /** Formats a DA vector using simple rules to output code suitable for various programming languages.
+    @ingroup DACECXX
 
     Example:
     @code
@@ -147,5 +144,3 @@ public:
 }
 
 #endif /* DINAMICA_DAFORMATTER_H_ */
-
-/** @} */

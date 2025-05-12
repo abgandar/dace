@@ -26,11 +26,8 @@
  *      Author: University of Southampton
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 /** @file
+    @ingroup DACE
 
     @brief Public DACE core header for static linking.
 
@@ -46,5 +43,5 @@
 // explicitly define DACE_API to be empty for static linking
 #define DACE_API
 #include "dace/dacecore.h"
-/** @} */
+
 #endif /* DINAMICA_DACECORE_S_H_ */

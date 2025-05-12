@@ -44,10 +44,6 @@
 #include "dace/PromotionTrait.h"
 #include "dace/DA.h"
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
 // forward declarations
@@ -56,6 +52,7 @@ template<typename T> class AlgebraicMatrix;
 #endif
 
 /** Vector of any algebraic type.
+    @ingroup DACECXX
 
     Provides vector-vector, vector-scalar, and componentwise operations.
  */
@@ -230,6 +227,10 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::re
 template<typename U> std::ostream& operator<<(std::ostream &out, const AlgebraicVector<U> &obj);
 template<typename U> std::istream& operator>>(std::istream &in, AlgebraicVector<U> &obj);
 
+/** @addtogroup DACECXX C++ Interface
+    @{
+ */
+
 // Declaration of external functional style wrappers to access AlgebraicVector functions
 template<typename T> AlgebraicVector<double> cons(const AlgebraicVector<T> &obj);
 #ifdef WITH_ALGEBRAICMATRIX
@@ -305,6 +306,8 @@ template<> DACE_API AlgebraicVector<DA> integ(const AlgebraicVector<DA> &obj, co
 template<> DACE_API compiledDA compile(const AlgebraicVector<DA> &obj);
 template<> DACE_API AlgebraicVector<DA> plug(const AlgebraicVector<DA> &obj, const unsigned int var, const double val);
 
+/** @} */
+
 // shortcuts for common vector types
 typedef AlgebraicVector<DA> vectorDA;           //!< Short for AlgebraicVector<DA>.
 typedef AlgebraicVector<double> vectordb;       //!< Short for AlgebraicVector<double>.
@@ -312,5 +315,3 @@ typedef AlgebraicVector<double> vectordb;       //!< Short for AlgebraicVector<d
 }
 
 #endif /* DINAMICA_ALGEBRAICVECTOR_H_ */
-
-/** @} */

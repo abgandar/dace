@@ -4,5 +4,14 @@
 
     Document more here.
 
+    @section USEAGE Using %DACE
+
+    @subsection FETCH Embedding in CMake Projects
+
+    @subsection BUILD Building & Installing
+
+    @section DOCS Documentation
+
+    @section CITE Citing %DACE
     Cite like this:
  */

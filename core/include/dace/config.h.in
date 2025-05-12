@@ -26,10 +26,6 @@
  *      Author: University of Southampton
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 /*  Internal build-time DACE configuration options.
 
     This file contains the build time configuration options used for building the DACE library.
@@ -92,5 +88,4 @@
     #define DACE_THREAD_LOCAL
 #endif
 
-/** @} */
 #endif /* DINAMICA_CONFIG_H_ */

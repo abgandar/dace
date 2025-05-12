@@ -32,10 +32,6 @@
     not supported by default. It may have bugs or not work as expected.
 */
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 #ifndef DINAMICA_ALGEBRAICMATRIX_H_
 #define DINAMICA_ALGEBRAICMATRIX_H_
 
@@ -175,5 +171,3 @@ typedef AlgebraicMatrix<double> matrixdb;       //!< Short for AlgebraicMatrix<d
 }
 
 #endif /* DINAMICA_ALGEBRAICMATRIX_H_ */
-
-/** @} */

@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 // MS C library needs this to trigger it to define math constants
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -2235,5 +2231,3 @@ void daceWeightedSum(const DACEDA *ina, const double afac, const DACEDA *inb, co
 
     daceSetLength(inc, ic-ipoc);
 }
-
-/** @} */

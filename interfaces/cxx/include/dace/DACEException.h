@@ -41,10 +41,6 @@
 #include <string>
 #include <ostream>
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
 /** Contains methods for error handling within the DACE C++ interface.
@@ -69,6 +65,7 @@ public:
     ~DACEException() throw();
 
     const char* what() const throw();
+
     static void setSeverity(const int n);
     static void setWarning(const bool w);
 
@@ -78,5 +75,3 @@ public:
 }
 
 #endif /* DINAMICA_DACEEXCEPTION_H_ */
-
-/** @} */

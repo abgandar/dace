@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 /*  Internal auxiliary DACE functions.
 
     This file contains all internal DACE auxiliary functions used by the DACE core.
@@ -102,7 +98,6 @@ extern dacecom DACECom;
 extern DACE_THREAD_LOCAL dacecom_t DACECom_t;
 extern DACE_THREAD_LOCAL dacedbg DACEDbg;
 
-/// @cond
 // math utility routines
 unsigned int umin(const unsigned int a, const unsigned int b);
 unsigned int umax(const unsigned int a, const unsigned int b);
@@ -144,6 +139,5 @@ void daceEvaluateBesselFunction(const DACEDA *ina, const double bz[], const doub
 void daceEvaluateScaledModifiedBesselFunction(const DACEDA *ina, const double bz[], const double type, DACEDA *inc);
 void daceLogGammaFunction0(const DACEDA *ina, const double a0, DACEDA *inc);
 void daceEvaluateSeries(const DACEDA *ina, const double xf[], DACEDA *inc);
-/// @endcond
-/** @} */
+
 #endif /* DINAMICA_DACEAUX_H_ */

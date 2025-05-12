@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -342,5 +338,3 @@ unsigned int daceSetTruncationOrder(const unsigned int fnot)
     DACECom_t.nocut = umax(umin(fnot, DACECom.nomax), 1);
     return old_nocut;
 }
-
-/** @} */

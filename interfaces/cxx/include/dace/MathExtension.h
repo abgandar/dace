@@ -36,10 +36,6 @@
 #ifndef DINAMICA_MATHEXTENSION_H_
 #define DINAMICA_MATHEXTENSION_H_
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
 DACE_API double absolute(const double x);
@@ -57,4 +53,3 @@ DACE_API double norm(const double x, const int type = 0);
 
 #endif /* DINAMICA_MATHEXTENSION_H_ */
 
-/** @} */

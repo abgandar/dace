@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 /*  Internal DACE core interface functions and structures.
 
     This file contains all routines in the public interface to the DACE core.
@@ -44,21 +40,26 @@
 
 #include "dace/config.h"
 
+#ifdef __cplusplus
+    // in C++, functions pass values by reference. This is ABI compatible with C pointers in all supported C++ compilers.
+    #define REF(x) &(x)
+    //#define ARG(x) (x)
+    extern "C" {
+#else /* __cplusplus */
+    // in C, and hence when compiling the DACE core library, functions pass values by pointer.
+    #define REF(x) *(x)
+    //#define ARG(x) &(x)
+#endif  /* __cplusplus */
+
+/** @addtogroup DACE Core
+    @{
+ */
+
 /// Maximum line length of the DACE string I/O interface
 #define DACE_STRLEN (140)
 
-#ifdef __cplusplus
-    // in C++ pass values by reference (which is ABI compatible with C pointers in all supported C++ compilers)
-    #define REF(x) &(x)
-    #define ARG(x) (x)
-    extern "C" {
-#else /* __cplusplus */
-    // in C, and hence when compiling the DACE core library, pass values by pointer
-    #define REF(x) *(x)
-    #define ARG(x) &(x)
-#endif  /* __cplusplus */
-
 // Error handling symbolic constants
+#define DACE_OK         0
 #define DACE_INFO       1
 #define DACE_WARNING    3
 #define DACE_ERROR      6
@@ -69,7 +70,7 @@
     /// Type of a DACE core DA object
     typedef int DACEDA;
 #elif DACE_MEMORY_MODEL == DACE_MEMORY_DYNAMIC
-    /// A DACE core variable containing a DA
+    // A DACE core variable containing a DA
     typedef struct dvariable {
         unsigned int len, max;
         struct dmonomial *mem;
@@ -81,7 +82,6 @@
     #error Invalid DACE memory model selected!
 #endif
 
-/// @cond
 /********************************************************************************
 *     DACE initialization and state related routines
 *********************************************************************************/
@@ -246,12 +246,10 @@ DACE_API void daceImportBlob(const void *blob, DACEDA REF(inc));
 *********************************************************************************/
 DACE_API double daceRandom();
 
-/// @endcond
+/** @} */
 
 #ifdef __cplusplus
     }
 #endif /* _cplusplus */
-
-/** @} */
 
 #endif /* DINAMICA_DACEBASE_H_ */

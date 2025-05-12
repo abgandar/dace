@@ -52,11 +52,8 @@
 
 #include "dace/dacecore.h"
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 /** DACE C++ interface.
+    @ingroup DACECXX
 
     All components of the DACE C++ interface live in this namespace.
  */
@@ -72,6 +69,7 @@ class DA;
 template<typename T> class AlgebraicVector;
 
 /** Basic DA class representing a single polynomial.
+    @ingroup DACECXX
 
     Implements an object oriented interface to access all math function, as
     well as non-member functions for classical functional math notation.
@@ -279,6 +277,10 @@ public:
     static void memdump();
 };
 
+/** @addtogroup DACECXX C++ Interface
+    @{
+ */
+
 /********************************************************************************
 *     DACE non-member functions
 *********************************************************************************/
@@ -362,6 +364,8 @@ DACE_API DA translateVariable(const DA &da, const unsigned int var = 0, const do
 DACE_API std::string toString(const DA &da);
 DACE_API void write(const DA &da, std::ostream &os);
 
+/** @} */
+
 /** Implementation of abs(DA) using only the absolute constant part.
  */
 namespace abs_cons {
@@ -381,6 +385,7 @@ namespace abs_sum {
 }
 
 /** Represents a DA vector in a binary, setup independent format.
+    @ingroup DACECXX
 
     Use this class for serializing DA objects into an opaque binary representation
     that can be stored, transmitted, and converted back into DA object without

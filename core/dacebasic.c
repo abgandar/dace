@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 #include <limits.h>
 #include <math.h>
 #include <stdlib.h>
@@ -703,5 +699,3 @@ unsigned int daceIsInf(const DACEDA *ina)
     }
     return false;
 }
-
-/** @} */

@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -411,5 +407,3 @@ double daceRandom()
 {
     return (double)rand()/(double)RAND_MAX;
 }
-
-/** @} */

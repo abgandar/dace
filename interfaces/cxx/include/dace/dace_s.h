@@ -27,6 +27,7 @@
  */
 
 /** @file
+    @ingroup DACECXX
 
     @brief Public DACE C++ header file for static linking.
 
@@ -36,7 +37,6 @@
     the static version of the DACE library (instead of the DLL).
 
     @see dace.h
-    @addtogroup DACECXX C++ Interface
 */
 
 #ifndef DINAMICA_DACE_S_H_

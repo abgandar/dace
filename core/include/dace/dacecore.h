@@ -26,11 +26,8 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 /** @file
+    @ingroup DACE
 
     @brief Public DACE core header.
 
@@ -42,5 +39,5 @@
 #define DINAMICA_DACECORE_H_
 
 #include "dace/dacebase.h"
-/** @} */
+
 #endif /* DINAMICA_DACECORE_H_ */
