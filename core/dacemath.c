@@ -1023,7 +1023,7 @@ void daceInverseCubicRoot(const DACEDA *ina, DACEDA *inc)
     daceRoot(ina, -3, inc);
 }
 
-/** Compute the hypothenuse of two DA objects.
+/** Compute the hypotenuse of two DA objects.
     @param[in] ina Pointer to the first DA object to operate on
     @param[in] inb Pointer to the second DA object to operate on
     @param[out] inc Pointer to the DA object to store the result in

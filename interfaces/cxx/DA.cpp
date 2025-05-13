@@ -26,10 +26,6 @@
  *      Author: Dinamica Srl
  */
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 // C++ stdlib classes used only internally in the implementation
 #include <algorithm>
 #include <exception>
@@ -684,12 +680,13 @@ DA& DA::operator/=(const double c) {
 *********************************************************************************/
 /** Compute the additive inverse of the given DA object.
     The result is copied in a new DA vector.
+    @param[in] da DA object.
     @return A new DA object with the opposite sign.
     @throw DACE::DACEException
 */
-DA DA::operator-() const {
+DA operator-(const DA &da) {
     DA temp;
-    daceMultiplyDouble(m_index,-1.0,temp.m_index);
+    daceMultiplyDouble(da.m_index, -1.0, temp.m_index);
     if(daceGetError()) DACEException();
 
     return temp;
@@ -698,7 +695,7 @@ DA DA::operator-() const {
 /** Compute the addition between two DA objects.
     @param[in] da1 first DA object.
     @param[in] da2 second DA object.
-    @return A new DA object containing the result of the operation (da1+da2).
+    @return A new DA object containing the result of the operation (*this+da2).
     @throw DACE::DACEException
  */
 DA operator+(const DA &da1, const DA &da2) {
@@ -710,9 +707,9 @@ DA operator+(const DA &da1, const DA &da2) {
 }
 
 /** Compute the addition between a DA object and a given constant.
-    @param[in] da DA object
+    @param[in] da DA object.
     @param[in] c given constant.
-    @return A new DA object containing the result of the operation (da+c).
+    @return A new DA object containing the result of the operation (*this+c).
     @throw DACE::DACEException
  */
 DA operator+(const DA &da, const double c) {
@@ -740,7 +737,7 @@ DA operator+(const double c, const DA &da) {
 /** Compute the subtraction between two DA objects.
     @param[in] da1 first DA object.
     @param[in] da2 second DA object.
-    @return A new DA object containing the result of the operation (da1-da2).
+    @return A new DA object containing the result of the operation (*this-da2).
     @throw DACE::DACEException
  */
 DA operator-(const DA &da1, const DA &da2) {
@@ -752,9 +749,9 @@ DA operator-(const DA &da1, const DA &da2) {
 }
 
 /** Compute the subtraction between a DA object and a given constant.
-    @param[in] da DA object
+    @param[in] da DA object.
     @param[in] c given constant.
-    @return A new DA object containing the result of the operation (da-c).
+    @return A new DA object containing the result of the operation (*this-c).
     @throw DACE::DACEException
  */
 DA operator-(const DA &da, const double c) {
@@ -782,7 +779,7 @@ DA operator-(const double c, const DA &da) {
 /** Compute the multiplication between two DA objects.
     @param[in] da1 first DA object.
     @param[in] da2 second DA object.
-    @return A new DA object containing the result of the operation (da1*da2).
+    @return A new DA object containing the result of the operation (*this*da2).
     @throw DACE::DACEException
  */
 DA operator*(const DA &da1, const DA &da2) {
@@ -794,9 +791,9 @@ DA operator*(const DA &da1, const DA &da2) {
 }
 
 /** Compute the multiplication between a DA object and a given constant.
-    @param[in] da DA object
+    @param[in] da DA object.
     @param[in] c given constant.
-    @return A new DA object containing the result of the operation (da*c).
+    @return A new DA object containing the result of the operation (*this*c).
     @throw DACE::DACEException
  */
 DA operator*(const DA &da, const double c) {
@@ -824,7 +821,7 @@ DA operator*(const double c, const DA &da) {
 /** Compute the division between two DA objects.
     @param[in] da1 first DA object.
     @param[in] da2 second DA object.
-    @return A new DA object containing the result of the operation (da1/da2).
+    @return A new DA object containing the result of the operation (*this/da2).
     @throw DACE::DACEException
  */
 DA operator/(const DA &da1, const DA &da2) {
@@ -836,9 +833,9 @@ DA operator/(const DA &da1, const DA &da2) {
 }
 
 /** Compute the division between a DA object and a given constant.
-    @param[in] da DA object
+    @param[in] da DA object.
     @param[in] c given constant.
-    @return A new DA object containing the result of the operation (da/c).
+    @return A new DA object containing the result of the operation (*this/c).
     @throw DACE::DACEException
  */
 DA operator/(const DA &da, const double c) {
@@ -866,7 +863,6 @@ DA operator/(const double c, const DA &da) {
 /********************************************************************************
 *     Math routines
 *********************************************************************************/
-
 /** Multiply the DA vector with another DA vector da monomial by monomial.
     This is the equivalent of coefficient-wise multiplication (like in DA addition).
     @param[in] da DA vector to multiply with coefficient-wise
@@ -1736,7 +1732,6 @@ std::ostream& operator<<(std::ostream &out, const DA &da) {
 
     return out;
 }
-
 
 /** Input operator. Reads both string and binary DA representations from a stream.
     @param[in] in Input stream.
@@ -2747,7 +2742,7 @@ namespace abs_sum {
     }
 }
 
-// static class variables
+// static class variable with size of binary header as reported by DACE core
 const unsigned int storedDA::headerSize = daceBlobSize(NULL);
 
 /** Create new storedDA from an existing DA.
@@ -2836,15 +2831,16 @@ storedDA::operator DA() const {
     }
     else
     {
-        DACEException(15, 111);     // XXX: number
+        DACEException(15, 06);
     }
 
     return da;
 }
 
-/** Write binary data to output stream.
+/** storedDA stream output operator. Writes binary data to output stream.
     @param[in] out Output stream
     @param[in] sda storedDA
+    @return Output stream
  */
 std::ostream& operator<<(std::ostream &out, const storedDA &sda) {
     out.write(sda.data(), sda.size());
@@ -2853,5 +2849,3 @@ std::ostream& operator<<(std::ostream &out, const storedDA &sda) {
 }
 
 }
-
-/** @} */

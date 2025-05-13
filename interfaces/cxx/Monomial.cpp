@@ -26,10 +26,6 @@
  *      Author: Dinamica Srl
  */
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 // C++ stdlib classes used only internally in the implementation
 #include <sstream>
 #include <iomanip>
@@ -81,16 +77,13 @@ std::string Monomial::toString() const {
     return oss.str();
 }
 
-/** Output operator.
+/** Monomial stream output operator.
     @param[in] out Output stream
-    @param[in] m Monomial vector to be printed in the stream
-    @return The output stream
+    @param[in] m Monomial to be printed to the stream
+    @return Output stream
  */
 std::ostream& operator<< (std::ostream &out, const Monomial &m) {
-    out << m.toString();
-    return out;
+    return out << m.toString();
 }
 
 }
-
-/** @} */

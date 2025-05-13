@@ -26,10 +26,6 @@
  *      Author: Dinamica Srl
  */
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 // C++ stdlib classes
 #include <cmath>
 
@@ -114,5 +110,3 @@ double norm(const double x, const int type) {
 }
 
 }
-
-/** @} */

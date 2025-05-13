@@ -68,9 +68,13 @@ public:
 
     static void setSeverity(const int n);
     static void setWarning(const bool w);
-
-    friend DACE_API std::ostream& operator<< (std::ostream &out, const DACEException &ex);
 };
+
+/** @name Input/Output Functions
+ * @{
+ */
+DACE_API std::ostream& operator<< (std::ostream &out, const DACEException &ex);
+/** @} */
 
 }
 

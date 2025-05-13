@@ -29,12 +29,12 @@
 /** @file
     @ingroup DACECXX
 
-    @brief Public DACE C++ header file for static linking.
+    @brief Public %DACE C++ header file for static linking.
 
-    This header file just includes all other DACE C++ headers in the right order.
-    It is identical to include/dace/dace.h except on Windows where it explicitly
-    sets the linkage of all DACE functions to local. Use this when linking with
-    the static version of the DACE library (instead of the DLL).
+    This header file just includes all other %DACE C++ headers in the right order.
+    It is identical to dace.h except on Windows where it explicitly sets the linkage
+    of all %DACE functions to local. Use this when linking with the static version of
+    the %DACE library (instead of the DLL).
 
     @see dace.h
 */

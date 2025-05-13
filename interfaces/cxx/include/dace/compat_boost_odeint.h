@@ -120,4 +120,3 @@ namespace DACE {
 }
 
 #endif /* DINAMICA_COMPAT_BOOST_ODEINT_H_ */
-

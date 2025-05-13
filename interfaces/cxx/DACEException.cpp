@@ -26,10 +26,6 @@
  *      Author: Dinamica Srl
  */
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 // C++ stdlib classes used only internally in the implementation
 #include <sstream>
 #include <iostream>
@@ -97,6 +93,7 @@ namespace DACE {
             {1104, "DA::setCoeff: More exponents than variables, ignoring extra exponents"},
             {1604, "compiledDA::compiledDA(): Dimension lower than 1"},
             {1605, "compiledDA::eval: Argument size lower than the number of variables in the polynomial"},
+            {1506, "storedDA::operator DA(): Invalid data, can't convert to DA"},
             {2099, "DA::checkVersion: DACE C++ interface header file and DACE core library version mismatch"}
         };
         static const int length = sizeof(DACEerr)/sizeof(errstrings);
@@ -168,17 +165,15 @@ namespace DACE {
     }
 
     /********************************************************************************
-    *     Friend functions
+    *     Related functions
     *********************************************************************************/
-    /** Output operator.
-        @param[in] out output stream
+    /** DACEException stream output operator.
+        @param[in] out Output stream
         @param[in] ex Exception to be printed to the stream
         @return Output stream
      */
     std::ostream& operator<< (std::ostream &out, const DACEException &ex) {
-        return out << ex.msg << std::endl;
+        return out << ex.what() << std::endl;
     }
 
 }
-
-/** @} */

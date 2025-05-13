@@ -60,8 +60,11 @@ public:
     std::string toString() const;
 };
 
+/** @name Input/Output Functions
+ * @{
+ */
 DACE_API std::ostream& operator<< (std::ostream &out, const Monomial &m);
-
+/** @} */
 }
 
 #endif /* DINAMICA_MONOMIAL_H_ */

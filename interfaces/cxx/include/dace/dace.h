@@ -29,10 +29,10 @@
 /** @file
     @ingroup DACECXX
 
-    @brief Public DACE C++ header file.
+    @brief Public %DACE C++ header file.
 
-    This header file includes all other DACE C++ headers in the right order.
-    Users of the C++ interface should include (only) this file or dace_s.h
+    This header file includes all other %DACE C++ headers in the right order.
+    Users of the @ref DACECXX "C++ interface" should include (only) this file or dace_s.h
     for static linking.
 
     @see dace_s.h
