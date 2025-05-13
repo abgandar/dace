@@ -184,19 +184,19 @@ public:
     *     Basic arithmetic operations
     *********************************************************************************/
     /** @cond */
-    friend DA operator-(const DA &da);
-    friend DA operator+(const DA &da1, const DA &da2);
-    friend DA operator+(const DA &da, const double c);
-    friend DA operator+(const double c, const DA &da);
-    friend DA operator-(const DA &da1, const DA &da2);
-    friend DA operator-(const DA &da, const double c);
-    friend DA operator-(const double c, const DA &da);
-    friend DA operator*(const DA &da1, const DA &da2);
-    friend DA operator*(const DA &da, const double c);
-    friend DA operator*(const double c, const DA &da);
-    friend DA operator/(const DA &da1, const DA &da2);
-    friend DA operator/(const DA &da, const double c);
-    friend DA operator/(const double c, const DA &da);
+    friend DACE_API DA operator-(const DA &da);
+    friend DACE_API DA operator+(const DA &da1, const DA &da2);
+    friend DACE_API DA operator+(const DA &da, const double c);
+    friend DACE_API DA operator+(const double c, const DA &da);
+    friend DACE_API DA operator-(const DA &da1, const DA &da2);
+    friend DACE_API DA operator-(const DA &da, const double c);
+    friend DACE_API DA operator-(const double c, const DA &da);
+    friend DACE_API DA operator*(const DA &da1, const DA &da2);
+    friend DACE_API DA operator*(const DA &da, const double c);
+    friend DACE_API DA operator*(const double c, const DA &da);
+    friend DACE_API DA operator/(const DA &da1, const DA &da2);
+    friend DACE_API DA operator/(const DA &da, const double c);
+    friend DACE_API DA operator/(const double c, const DA &da);
     /** @endcond */
 
     /** @name Basic Arithmetic
@@ -504,7 +504,7 @@ public:
     operator DA() const;
     operator std::string() const;
 
-    friend std::ostream& operator<<(std::ostream &out, const storedDA &sda);
+    friend DACE_API std::ostream& operator<<(std::ostream &out, const storedDA &sda);
 };
 
 /** @name Input/Output Functions
