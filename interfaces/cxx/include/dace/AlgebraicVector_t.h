@@ -50,10 +50,6 @@
 #include "dace/AlgebraicMatrix_t.h"
 #endif /* WITH_ALGEBRAICMATRIX */
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
 /***********************************************************************************
@@ -1468,5 +1464,3 @@ template<typename T> AlgebraicVector<double> norm(const AlgebraicVector<T> &obj,
 }
 
 #endif /* DINAMICA_ALGEBRAICVECTOR_T_H_ */
-
-/** @} */

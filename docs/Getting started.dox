@@ -1,0 +1,110 @@
+/**
+    @page START Getting started
+
+    This page contains a walkthrough of how to write a %DACE program from scratch.
+
+    @section STEP1 Setting up your system
+    To write a %DACE program, you need two things:
+    1. a working C/C++ compiler, and
+    2. the CMake build system
+
+    Fortunately, both are freely available for pretty much all platforms you may want to run the %DACE on.
+    If you already have both of those, you can skip to @ref STEP2.
+
+    @subsection STEP1WIN Windows
+    Download and install <a href="https://visualstudio.microsoft.com/vs/community/">Visual Studio Community Edition</a>
+    from Microsoft. The C/C++ developer preset contains everything needed.
+
+    Then download and install the latest version of <a href="https://cmake.org/download/">CMake</a>
+    (Windows x64 Installer).
+
+    @subsection STEP1LIN Linux
+    Most Linux distributions come with a working C/C++ compiler, but if not you should use your package
+    manager to install one. We like clang, but the GNU C Compiler (gcc) also works. You'll have to check
+    with your distribution what command to use to install packages, but common ones are:
+    - `apt-get install clang` (Ubuntu)
+    - `dnf install clang` (CentOS)
+    - `pacman -S clang` (Arch)
+
+    You also need to install CMake, the easiest way to do that is again using your package manager
+    - `apt-get install cmake` (Ubuntu)
+    - `dnf install cmake` (CentOS)
+    - `pacman -S cmake` (Arch)
+
+    @subsection STEP1MAC macOS X
+    Go to the App Store and install the free <a href="https://apps.apple.com/us/app/xcode/id497799835">Xcode App</a>
+    from Apple. Make sure to start it once after installing to finish the setup process and download
+    the macOS desktop development kit when prompted.
+
+    Then download and install the latest version of <a href="https://cmake.org/download/">CMake</a>
+    (macOS 10.10 or later).
+
+    @section STEP2 Creating a CMake file
+    To start your project, use a plain text editor to create a file named `CMakeLists.txt` and save
+    it in your project directory. Put the following content into it:
+    @code{cmake}
+        project("DACE demo" CXX)
+        include(FetchContent)
+        FetchContent_Declare(
+            DACE
+            GIT_REPOSITORY https://github.com/dacelib/dace.git
+            GIT_TAG master
+        )
+        FetchContent_MakeAvailable(DACE)
+        add_library(dace::dace ALIAS dace)
+        add_library(dace::dace_s ALIAS dace_s)
+
+        add_executable(DACEdemo DACEdemo.cpp)
+        target_link_libraries(DACEdemo PUBLIC dace::dace_s)
+    @endcode
+    This file instructs CMake to fetch the latest version of the %DACE from the official repository
+    on GitHub, and build it as part of the build process. It also creates another executable target
+    named DACEdemo to be compiled from `DACEdemo.cpp`.
+
+    @section STEP3 Writing the program
+    With you favorite text editor, create the following file and save it as `DACEdemo.cpp` in the
+    project folder.
+    @code
+        #include <iostream>
+        #include <dace/dace.h>
+        using namespace DACE;
+
+        template<typename T> T f(const T &x) {
+            T res;
+            return res;
+        }
+
+        int main() {
+            DA::init(5, 3);       // order 5, 3 variables
+            DA x = 1.0 + DA(1);
+            DA y = f(x);
+            std::cout << y;
+            return 0;
+        }
+    @endcode
+
+    @section STEP4 Building the program
+    To build the program you have two options: the CMake graphical user interface or calling CMake
+    from the terminal.
+
+    @subsection CMake GUI
+    Using the CMake graphical user interface, you first have to select the location of the project
+    folder. Then select the folder where to build the project, for example a folder named "build"
+    in the project folder.
+    Hit "Configure" at the bottom to let CMake configure the project. This may take a moment as CMake
+    also downloads a copy of the %DACE source during this step. If all goes well, you should now be
+    able to hit the "Generate" button to generate the build files.
+
+    @subsection Terminal
+    Using the Terminal (Shell, Command Line), `cd` into the project folder and then configure the project using
+
+        cmake -S . -B build/
+
+    followed by
+
+        cmake --build build/
+
+    to build the program.
+
+    If all goes well, you should find your compiled program `DACEdemo` ready to run in the `build` folder.
+ */

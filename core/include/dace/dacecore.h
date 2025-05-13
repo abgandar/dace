@@ -26,21 +26,18 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 /** @file
+    @ingroup DACE
 
-    @brief Public DACE core header.
+    @brief Public %DACE core header.
 
-    This file contains all routines in the public interface to the DACE core.
-    DACE core users or high level interfaces should only include this file.
+    This file contains all routines in the public interface to the @ref DACE "DACE core".
+    %DACE core users or high level interfaces should only include this file.
 */
 
 #ifndef DINAMICA_DACECORE_H_
 #define DINAMICA_DACECORE_H_
 
 #include "dace/dacebase.h"
-/** @} */
+
 #endif /* DINAMICA_DACECORE_H_ */

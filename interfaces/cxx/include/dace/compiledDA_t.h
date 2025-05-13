@@ -37,10 +37,6 @@
 // DACE classes
 #include "dace/compiledDA.h"
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
 /********************************************************************************
@@ -170,5 +166,3 @@ template<class T> void compiledDA::eval(const std::vector<T> &args, std::vector<
 }
 
 #endif /* DINAMICA_COMPILEDDA_T_H_ */
-
-/** @} */

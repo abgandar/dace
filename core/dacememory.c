@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 /********************************************************************************
  *     DACE memory handling routines
  *********************************************************************************/
@@ -250,6 +246,7 @@ void daceInvalidateDA(DACEDA *inc)
 }
 
 /** Dump information about the current memory management status to stdout.
+    This is primarily for memory debugging purposes.
  */
 void daceMemoryDump()
 {
@@ -404,6 +401,8 @@ void daceInvalidateDA(DACEDA *inc)
 }
 
 /** Dump information about the current memory management status to stdout.
+    For the dynamic memory model (default) this does nothing but print the
+    current memory model.
  */
 void daceMemoryDump()
 {
@@ -466,4 +465,3 @@ void daceFreeMemory()
 #else
 #error Invalid DACE memory model selected!
 #endif // DACE_MEMORY_MODEL
-/** @} */

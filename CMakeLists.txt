@@ -173,19 +173,24 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/dace/daceConfig.cmake" "${CMAKE_CURRE
 find_package(Doxygen OPTIONAL_COMPONENTS dot mscgen dia)
 
 set(DOXYGEN_OUTPUT_DIRECTORY "docs")        # relative to CURRENT_BINARY_DIR
+set(DOXYGEN_INCLUDE_PATH "${CMAKE_CURRENT_BINARY_DIR}/core/include")    # to find config.h with CMake settings
 set(DOXYGEN_STRIP_FROM_INC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/interfaces/cxx/include" "${CMAKE_CURRENT_SOURCE_DIR}/core/include" "${CMAKE_CURRENT_BINARY_DIR}/core/include")
 set(DOXYGEN_STRIP_FROM_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_BINARY_DIR}")
+set(DOXYGEN_EXCLUDE "core/contrib/netlib" )
+if(NOT WITH_ALGEBRAICMATRIX)
+  set(DOXYGEN_EXCLUDE_PATTERNS "*AlgebraicMatrix*" )
+endif(NOT WITH_ALGEBRAICMATRIX)
+#set(DOXYGEN_EXTRACT_ALL YES)    # for DACE developers: extract everything including private, internal APIs
 set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
 set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
-set(DOXYGEN_TIMESTAMP YES)
-#set(DOXYGEN_EXTRACT_ALL YES)    # do we really want this?
-set(DOXYGEN_EXCLUDE "core/contrib/netlib" )
+set(DOXYGEN_MACRO_EXPANSION YES)
+set(DOXYGEN_PREDEFINED "REF(x)=*x" "DACE_API=")   # help doxygen match declarations in header to definitions
 set(DOXYGEN_HTML_COLORSTYLE "LIGHT")
 set(DOXYGEN_HTML_DYNAMIC_SECTIONS YES)
 set(DOXYGEN_HTML_PROJECT_COOKIE org.dacelib.dace)
 set(DOXYGEN_GENERATE_TREEVIEW YES)
 set(DOXYGEN_FULL_SIDEBAR YES)
-set(DOXYGEN_INCLUDE_PATH "${CMAKE_CURRENT_BINARY_DIR}/core/include")    # to find config.h with CMake settings
+set(DOXYGEN_TIMESTAMP YES)
 
 if(DOXYGEN_FOUND)
   doxygen_add_docs(docs

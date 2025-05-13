@@ -52,13 +52,12 @@
 
 #include "dace/dacecore.h"
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
+/** Namespace containing the %DACE C++ interface.
+    @ingroup DACECXX
 
-/** DACE C++ interface.
-
-    All components of the DACE C++ interface live in this namespace.
+    All components of the %DACE @ref DACECXX "C++ interface" live in this namespace.
+    This includes the DA classes as well as the non-member functions acting on DA and
+    AlgebraicVector objects.
  */
 namespace DACE {
 
@@ -72,10 +71,14 @@ class DA;
 template<typename T> class AlgebraicVector;
 
 /** Basic DA class representing a single polynomial.
+    @ingroup DACECXX
 
-    Implements an object oriented interface to access all math function, as
-    well as non-member functions for classical functional math notation.
+    Implements an object oriented interface to access all math function.
 
+    Additionally, the DACE namespace provides non-member functions to access
+    the math functions in classical functional math notation.
+
+    @see DACE
     @see DACE::storedDA
  */
 class DACE_API DA
@@ -92,8 +95,11 @@ public:
    typedef double value_type;                                               //!< Underlying type of DA coefficients (for compatibility with C++ std lib, boost, etc)
 
     /********************************************************************************
-    *     DACE Setup
+    *     DACE initialization and state related routines
     *********************************************************************************/
+    /** @name Initialization & State
+     * @{
+     */
     static void init(const unsigned int ord, const unsigned int nvar);
     static bool isInitialized();
     static void version(int &maj, int &min, int &patch);
@@ -108,10 +114,14 @@ public:
     static unsigned int setTO(const unsigned int ot = DA::getMaxOrder());
     static void pushTO(const unsigned int ot = DA::getMaxOrder());
     static void popTO();
+    /** @} */
 
     /********************************************************************************
-    *     Constructors & Destructors
+    *     Constructors & Destructors (Variable Creation)
     *********************************************************************************/
+    /** @name Constructors & Destructors (Variable Creation)
+     * @{
+     */
     DA();
     DA(const DA &da);
 
@@ -121,10 +131,14 @@ public:
     explicit DA(const unsigned int i, const double c = 1.0);
     DA(const double c);
     ~DA() throw();
+    /** @} */
 
     /********************************************************************************
-    *     Coefficient information, access, and extraction routines
+    *     Coefficient information, access, and extraction
     *********************************************************************************/
+    /** @name Coefficient Access
+     * @{
+     */
     unsigned int size() const;
     unsigned int order() const;
     int degree() const;
@@ -138,10 +152,14 @@ public:
     Monomial getMonomial(const unsigned int npos) const;
     void getMonomial(const unsigned int npos, Monomial &m) const;
     std::vector<Monomial> getMonomials() const;
+    /** @} */
 
     /********************************************************************************
-    *     Assignments
+    *     Assignments, Copying & Filtering
     *********************************************************************************/
+    /** @name Assignment, Copying & Filtering
+     * @{
+     */
     DA& operator=(DA &&da);
 
     DA& operator=(const DA &da);
@@ -159,38 +177,46 @@ public:
     DA& operator/=(const DA &da);
     DA& operator/=(const double c);
 
-    /********************************************************************************
-    *     Algebraic operations
-    *********************************************************************************/
-    DA operator-() const;
-
-    friend DA DACE_API operator+(const DA &da1, const DA &da2);
-    friend DA DACE_API operator+(const DA &da, const double c);
-    friend DA DACE_API operator+(const double c, const DA &da);
-
-    friend DA DACE_API operator-(const DA &da1, const DA &da2);
-    friend DA DACE_API operator-(const DA &da, const double c);
-    friend DA DACE_API operator-(const double c, const DA &da);
-
-    friend DA DACE_API operator*(const DA &da1, const DA &da2);
-    friend DA DACE_API operator*(const DA &da, const double c);
-    friend DA DACE_API operator*(const double c, const DA &da);
-
-    friend DA DACE_API operator/(const DA &da1, const DA &da2);
-    friend DA DACE_API operator/(const DA &da, const double c);
-    friend DA DACE_API operator/(const double c, const DA &da);
+    DA trim(const unsigned int min, const unsigned int max = DA::getMaxOrder()) const;
+    /** @} */
 
     /********************************************************************************
-    *     Math routines
+    *     Basic arithmetic operations
     *********************************************************************************/
+    /** @cond */
+    friend DA operator-(const DA &da);
+    friend DA operator+(const DA &da1, const DA &da2);
+    friend DA operator+(const DA &da, const double c);
+    friend DA operator+(const double c, const DA &da);
+    friend DA operator-(const DA &da1, const DA &da2);
+    friend DA operator-(const DA &da, const double c);
+    friend DA operator-(const double c, const DA &da);
+    friend DA operator*(const DA &da1, const DA &da2);
+    friend DA operator*(const DA &da, const double c);
+    friend DA operator*(const double c, const DA &da);
+    friend DA operator/(const DA &da1, const DA &da2);
+    friend DA operator/(const DA &da, const double c);
+    friend DA operator/(const double c, const DA &da);
+    /** @endcond */
+
+    /** @name Basic Arithmetic
+     * See also: @ref DABasicArithmeticOperators "DA Basic Arithmetic Operators"
+     * @{
+     */
     DA multiplyMonomials(const DA &da) const;
     DA divide(const unsigned int var, const unsigned int p = 1) const;
     DA deriv(const unsigned int i) const;
     DA deriv(const std::vector<unsigned int> ind) const;
     DA integ(const unsigned int i) const;
     DA integ(const std::vector<unsigned int> ind) const;
-    DA trim(const unsigned int min, const unsigned int max = DA::getMaxOrder()) const;
+    /** @} */
 
+    /********************************************************************************
+    *     Intrinsic functions
+    *********************************************************************************/
+    /** @name Intrinsics
+     * @{
+     */
     DA absolute() const;
     DA trunc() const;
     DA round() const;
@@ -232,20 +258,28 @@ public:
     DA GammaFunction() const;
     DA LogGammaFunction() const;
     DA PsiFunction(const unsigned int n) const;
+    /** @} */
 
     /********************************************************************************
     *    Norm and estimation routines
     *********************************************************************************/
+    /** @name Norm & Estimation
+     * @{
+     */
     double norm(const unsigned int type = 0) const;
     std::vector<double> orderNorm(const unsigned int var = 0, const unsigned int type = 0) const;
     std::vector<double> estimNorm(const unsigned int var = 0, const unsigned int type = 0, const unsigned int nc = DA::getMaxOrder()) const;
     std::vector<double> estimNorm(std::vector<double> &err, const unsigned int var = 0, const unsigned int type = 0, const unsigned int nc = DA::getMaxOrder()) const;
     Interval bound() const;
     double convRadius(const double eps, const unsigned int type = 1) const;
+    /** @} */
 
     /********************************************************************************
-    *     DACE polynomial evaluation routines
+    *     Polynomial evaluation routines
     *********************************************************************************/
+    /** @name Evaluation
+     * @{
+     */
     template<class T> T eval(const std::vector<T> &args) const;
     template<class T> T eval(const T args[], const unsigned int length) const;
     template<class T> T evalScalar(const T &arg) const;
@@ -255,33 +289,47 @@ public:
     DA replaceVariable(const unsigned int from = 0, const unsigned int to = 0, const double val = 1.0) const;
     DA scaleVariable(const unsigned int var = 0, const double val = 1.0) const;
     DA translateVariable(const unsigned int var = 0, const double a = 1.0, const double c = 0.0) const;
+    /** @} */
 
     /********************************************************************************
-    *     DACE input/output routines
+    *     Input/output routines
     *********************************************************************************/
+    /** @name Input/Output
+     * @{
+     */
     std::string toString() const;
     void write(std::ostream &os) const;
-    friend DACE_API std::ostream& operator<< (std::ostream &out, const DA &da);
-    friend DACE_API std::istream& operator>> (std::istream &in, DA &da);
+    /** @} */
 
     /********************************************************************************
     *     Static factory routines
     *********************************************************************************/
+    /** @name Factory routines
+     * @{
+     */
     static DA random(const double cm);
     static DA identity(const unsigned int var);
     static DA fromString(const std::string &str);
     static DA fromString(const std::vector<std::string> &str);
     static DA read(std::istream &is);
+    /** @} */
 
     /********************************************************************************
-    *     DACE various routines
+    *     Miscellaneous routines
     *********************************************************************************/
+    /** @name Miscellaneous
+     * @{
+     */
     static void memdump();
+    /** @} */
 };
 
 /********************************************************************************
 *     DACE non-member functions
 *********************************************************************************/
+/** @name DA Coefficient Access Functions
+ * @{
+ */
 DACE_API unsigned int size(const DA &da);
 DACE_API unsigned int order(const DA &da);
 DACE_API int degree(const DA &da);
@@ -290,7 +338,30 @@ DACE_API int isinf(const DA &da);
 DACE_API double cons(const DA &da);
 DACE_API AlgebraicVector<double> linear(const DA &da);
 DACE_API AlgebraicVector<DA> gradient(const DA &da);
+/** @} */
 
+/** @anchor DABasicArithmeticOperators
+ * @name DA Basic Arithmetic Operators
+ * @{
+ */
+DACE_API DA operator-(const DA &da);
+DACE_API DA operator+(const DA &da1, const DA &da2);
+DACE_API DA operator+(const DA &da, const double c);
+DACE_API DA operator+(const double c, const DA &da);
+DACE_API DA operator-(const DA &da1, const DA &da2);
+DACE_API DA operator-(const DA &da, const double c);
+DACE_API DA operator-(const double c, const DA &da);
+DACE_API DA operator*(const DA &da1, const DA &da2);
+DACE_API DA operator*(const DA &da, const double c);
+DACE_API DA operator*(const double c, const DA &da);
+DACE_API DA operator/(const DA &da1, const DA &da2);
+DACE_API DA operator/(const DA &da, const double c);
+DACE_API DA operator/(const double c, const DA &da);
+/** @} */
+
+/** @name DA Intrinsic Functions
+ *  @{
+ */
 DACE_API DA divide(const DA &da, const unsigned int var, const unsigned int p = 1);
 DACE_API DA deriv(const DA &da, const unsigned int i);
 DACE_API DA deriv(const DA &da, const std::vector<unsigned int> ind);
@@ -342,14 +413,22 @@ DACE_API DA lgamma(const DA &da);
 DACE_API DA GammaFunction(const DA &da);
 DACE_API DA LogGammaFunction(const DA &da);
 DACE_API DA PsiFunction(const unsigned int n, const DA &da);
+/** @} */
 
+/** @name DA Norm & Estimation Functions
+ * @{
+ */
 DACE_API double norm(const DA &da, unsigned int type = 0);
 DACE_API std::vector<double> orderNorm(const DA &da, unsigned int var = 0, unsigned int type = 0);
 DACE_API std::vector<double> estimNorm(const DA &da, unsigned int var = 0, unsigned int type = 0, unsigned int nc = DA::getMaxOrder());
 DACE_API std::vector<double> estimNorm(const DA &da, std::vector<double> &err, unsigned int var = 0, unsigned int type = 0, unsigned int nc = DA::getMaxOrder());
 DACE_API Interval bound(const DA &da);
 DACE_API double convRadius(const DA &da, const double eps, const unsigned int type = 1);
+/** @} */
 
+/** @name DA Evaluation Functions
+ * @{
+ */
 template<class T> T eval(const DA &da, const std::vector<T> &args);
 template<class T> T eval(const DA &da, const T args[], const unsigned int length);
 template<class T> T evalScalar(const DA &da, const T &arg);
@@ -358,9 +437,16 @@ DACE_API DA plug(const DA &da, const unsigned int var, const double val = 0.0);
 DACE_API DA replaceVariable(const DA &da, const unsigned int from = 0, const unsigned int to = 0, const double val = 1.0);
 DACE_API DA scaleVariable(const DA &da, const unsigned int var = 0, const double val = 1.0);
 DACE_API DA translateVariable(const DA &da, const unsigned int var = 0, const double a = 1.0, const double c = 0.0);
+/** @} */
 
+/** @name DA Input/Output Functions
+ * @{
+ */
 DACE_API std::string toString(const DA &da);
 DACE_API void write(const DA &da, std::ostream &os);
+DACE_API std::ostream& operator<< (std::ostream &out, const DA &da);
+DACE_API std::istream& operator>> (std::istream &in, DA &da);
+/** @} */
 
 /** Implementation of abs(DA) using only the absolute constant part.
  */
@@ -381,6 +467,7 @@ namespace abs_sum {
 }
 
 /** Represents a DA vector in a binary, setup independent format.
+    @ingroup DACECXX
 
     Use this class for serializing DA objects into an opaque binary representation
     that can be stored, transmitted, and converted back into DA object without
@@ -417,11 +504,15 @@ public:
     operator DA() const;
     operator std::string() const;
 
-    friend DACE_API std::ostream& operator<<(std::ostream &out, const storedDA &sda);
+    friend std::ostream& operator<<(std::ostream &out, const storedDA &sda);
 };
+
+/** @name Input/Output Functions
+ * @{
+ */
+DACE_API std::ostream& operator<<(std::ostream &out, const storedDA &sda);
+/** @} */
 
 }
 
 #endif /* DINAMICA_DA_H_ */
-
-/** @} */

@@ -26,10 +26,6 @@
  *      Author: Dinamica Srl
  */
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 // C++ stdlib classes used only internally in the implementation
 #include <sstream>
 
@@ -116,5 +112,3 @@ std::string DASimpleFormatter::operator()(const DA &da){
 }
 
 }
-
-/** @} */

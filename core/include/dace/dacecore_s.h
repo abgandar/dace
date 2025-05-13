@@ -26,18 +26,15 @@
  *      Author: University of Southampton
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 /** @file
+    @ingroup DACE
 
-    @brief Public DACE core header for static linking.
+    @brief Public %DACE core header for static linking.
 
-    This file contains all routines in the public interface to the DACE core.
+    This file contains all routines in the public interface to the @ref DACE "DACE core".
     It is identical to include/dace/dacecore.h except on Windows where it explicitly
-    sets the linkage of all DACE functions to local. Use this when linking with
-    the static version of the DACE core library (instead of the DLL).
+    sets the linkage of all %DACE functions to local. Use this when linking with
+    the static version of the %DACE core library (instead of the DLL).
 */
 
 #ifndef DINAMICA_DACECORE_S_H_
@@ -46,5 +43,5 @@
 // explicitly define DACE_API to be empty for static linking
 #define DACE_API
 #include "dace/dacecore.h"
-/** @} */
+
 #endif /* DINAMICA_DACECORE_S_H_ */

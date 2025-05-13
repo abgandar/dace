@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 #include <math.h>
 
 #include "dace/config.h"
@@ -482,5 +478,3 @@ void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], un
     dacefree(stack);
 #endif
 }
-
-/** @} */

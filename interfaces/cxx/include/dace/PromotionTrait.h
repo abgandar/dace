@@ -38,10 +38,6 @@
 #ifndef DINAMICA_PROMOTIONTRAIT_H_
 #define DINAMICA_PROMOTIONTRAIT_H_
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
 // forward declaration
@@ -79,5 +75,3 @@ ADD_PROMOTION_ALL(DA,DA)
 //#define PROMOTE(A,B) typename PromotionTrait<A,B>::returnType
 
 #endif /* DINAMICA_PROMOTIONTRAIT_H_ */
-
-/** @} */

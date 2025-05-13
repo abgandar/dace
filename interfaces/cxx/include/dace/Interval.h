@@ -34,10 +34,6 @@
 #ifndef DINAMICA_INTERVAL_H_
 #define DINAMICA_INTERVAL_H_
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
 /** Represents an interval.
@@ -54,5 +50,3 @@ public:
 }
 
 #endif /* DINAMICA_INTERVAL_H_ */
-
-/** @} */

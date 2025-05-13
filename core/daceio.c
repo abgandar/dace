@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -519,5 +515,3 @@ void daceImportBlob(const void *blob, DACEDA *inc)
     dacefree(p);
 #endif
 }
-
-/** @} */

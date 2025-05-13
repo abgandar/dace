@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 #include <math.h>
 #include <stdbool.h>
 
@@ -326,5 +322,3 @@ void daceGetBounds(const DACEDA *ina, double *alo, double *aup)
     dacefree(jj);
 #endif
 }
-
-/** @} */

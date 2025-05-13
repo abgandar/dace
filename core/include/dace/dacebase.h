@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 /*  Internal DACE core interface functions and structures.
 
     This file contains all routines in the public interface to the DACE core.
@@ -44,47 +40,57 @@
 
 #include "dace/config.h"
 
-/// Maximum line length of the DACE string I/O interface
-#define DACE_STRLEN (140)
-
 #ifdef __cplusplus
-    // in C++ pass values by reference (which is ABI compatible with C pointers in all supported C++ compilers)
+    // in C++, functions pass values by reference. This is ABI compatible with C pointers in all supported C++ compilers.
     #define REF(x) &(x)
-    #define ARG(x) (x)
+    //#define ARG(x) (x)
     extern "C" {
 #else /* __cplusplus */
-    // in C, and hence when compiling the DACE core library, pass values by pointer
+    // in C, and hence when compiling the DACE core library, functions pass values by pointer.
     #define REF(x) *(x)
-    #define ARG(x) &(x)
+    //#define ARG(x) &(x)
 #endif  /* __cplusplus */
 
-// Error handling symbolic constants
+/** @addtogroup DACE
+    @{
+ */
+
+/// Maximum line length of the %DACE string I/O interface
+#define DACE_STRLEN (140)
+
+/** @name Error severity (X) symbolic constants
+ *  @{
+ */
+#define DACE_OK         0
 #define DACE_INFO       1
 #define DACE_WARNING    3
 #define DACE_ERROR      6
 #define DACE_SEVERE     9
 #define DACE_PANIC     10
+/** @} */
 
 #if DACE_MEMORY_MODEL == DACE_MEMORY_HYBRID || DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
     /// Type of a DACE core DA object
     typedef int DACEDA;
 #elif DACE_MEMORY_MODEL == DACE_MEMORY_DYNAMIC
-    /// A DACE core variable containing a DA
+    // A DACE core variable containing a DA
     typedef struct dvariable {
         unsigned int len, max;
         struct dmonomial *mem;
     } variable;
 
-    /// Type of a DACE core DA object
+    /// Type of a %DACE core DA object. Users should treat these as opaque.
     typedef variable DACEDA;
 #else
     #error Invalid DACE memory model selected!
 #endif
 
-/// @cond
 /********************************************************************************
 *     DACE initialization and state related routines
 *********************************************************************************/
+/** @name Initialization & State
+ * @{
+ */
 DACE_API void daceInitialize(unsigned int no, unsigned int nv);
 DACE_API void daceInitializeThread();
 DACE_API void daceCleanupThread();
@@ -97,37 +103,53 @@ DACE_API unsigned int daceGetMaxVariables();
 DACE_API unsigned int daceGetMaxMonomials();
 DACE_API unsigned int daceGetTruncationOrder();
 DACE_API unsigned int daceSetTruncationOrder(const unsigned int fnot);
+/** @} */
 
 /********************************************************************************
 *     DACE error state routine
 *********************************************************************************/
+/** @name Errors
+ * @{
+ */
 DACE_API unsigned int daceGetError();
 DACE_API unsigned int daceGetErrorX();
 DACE_API unsigned int daceGetErrorYY();
 DACE_API const char* daceGetErrorFunctionName();
 DACE_API const char* daceGetErrorMessage();
 DACE_API void daceClearError();
+/** @} */
 
 /********************************************************************************
 *     DACE memory handling routines
 *********************************************************************************/
+/** @name Memory
+ * @{
+ */
 DACE_API void daceAllocateDA(DACEDA REF(inc), const unsigned int len);
 DACE_API void daceFreeDA(DACEDA REF(inc));
 DACE_API void daceInvalidateDA(DACEDA REF(inc));
 DACE_API void daceMemoryDump();     // really just an internal debugging routine
+/** @} */
 
 /********************************************************************************
 *     DACE variable creation routines
 *********************************************************************************/
+/** @name Variable Creation
+ * @{
+ */
 DACE_API void daceCreateVariable(DACEDA REF(ina), const unsigned int i, const double ckon);
 DACE_API void daceCreateMonomial(DACEDA REF(ina), const unsigned int jj[], const double ckon);
 DACE_API void daceCreateConstant(DACEDA REF(ina), const double ckon);
 DACE_API void daceCreateFilled(DACEDA REF(ina), const double ckon);
 DACE_API void daceCreateRandom(DACEDA REF(ina), const double cm);
+/** @} */
 
 /********************************************************************************
 *     DACE coefficient access routines
 *********************************************************************************/
+/** @name Coefficient Access
+ * @{
+ */
 DACE_API double daceGetConstant(const DACEDA REF(ina));
 DACE_API void daceGetLinear(const DACEDA REF(ina), double c[]);
 DACE_API double daceGetCoefficient(const DACEDA REF(ina), const unsigned int jj[]);
@@ -138,20 +160,28 @@ DACE_API void daceGetCoefficientAt(const DACEDA REF(ina), const unsigned int npo
 DACE_API unsigned int daceGetLength(const DACEDA REF(ina));
 DACE_API unsigned int daceGetOrder(const DACEDA REF(ina));
 DACE_API int daceGetDegree(const DACEDA REF(ina));
+/** @} */
 
 /********************************************************************************
 *     DACE DA copying and filtering
 *********************************************************************************/
+/** @name Copying & Filtering
+ * @{
+ */
 DACE_API void daceCopy(const DACEDA REF(ina), DACEDA REF(inb));
 DACE_API void daceCopyFiltering(const DACEDA REF(ina), DACEDA REF(inb));
 DACE_API void daceFilter(const DACEDA REF(ina), DACEDA REF(inb), const DACEDA REF(inc));
 DACE_API void daceTrim(const DACEDA REF(ina), const unsigned int imin, const unsigned int imax, DACEDA REF(inc));
 DACE_API unsigned int daceIsNan(const DACEDA REF(ina));
 DACE_API unsigned int daceIsInf(const DACEDA REF(ina));
+/** @} */
 
 /********************************************************************************
 *     Basic DACE arithmetic operations
 *********************************************************************************/
+/** @name Basic Arithmetic
+ * @{
+ */
 DACE_API void daceWeightedSum(const DACEDA REF(ina), const double afac, const DACEDA REF(inb), const double bfac, DACEDA REF(inc));
 DACE_API void daceAdd(const DACEDA REF(ina), const DACEDA REF(inb), DACEDA REF(inc));
 DACE_API void daceSubtract(const DACEDA REF(ina), const DACEDA REF(inb), DACEDA REF(inc));
@@ -168,10 +198,14 @@ DACE_API void daceDoubleDivide(const DACEDA REF(ina), const double ckon, DACEDA 
 DACE_API void daceDivideByVariable(const DACEDA REF(ina), const unsigned int var, const unsigned int p, DACEDA REF(inc));
 DACE_API void daceDifferentiate(const unsigned int idif, const DACEDA REF(ina), DACEDA REF(inc));
 DACE_API void daceIntegrate(const unsigned int iint, const DACEDA REF(ina), DACEDA REF(inc));
+/** @} */
 
 /********************************************************************************
 *     DACE intrinsic function routines
 *********************************************************************************/
+/** @name Intrinsic Functions
+ * @{
+ */
 DACE_API void daceAbsolute(const DACEDA REF(ina), DACEDA REF(inc));
 DACE_API void daceTruncate(const DACEDA REF(ina), DACEDA REF(inc));
 DACE_API void daceRound(const DACEDA REF(ina), DACEDA REF(inc));
@@ -212,46 +246,61 @@ DACE_API void daceBesselYFunction(const DACEDA REF(ina), const int n, DACEDA REF
 DACE_API void daceLogGammaFunction(const DACEDA REF(ina), DACEDA REF(inc));
 DACE_API void daceGammaFunction(const DACEDA REF(ina), DACEDA REF(inc));
 DACE_API void dacePsiFunction(const DACEDA REF(ina), const unsigned int n, DACEDA REF(inc));
+/** @} */
 
 /********************************************************************************
 *     DACE norm and norm estimation routines
 *********************************************************************************/
+/** @name Norm & Estimation
+ * @{
+ */
 DACE_API double daceNorm(const DACEDA REF(ina), const unsigned int ityp);
 DACE_API void daceOrderedNorm(const DACEDA REF(ina), const unsigned int ivar, const unsigned int ityp, double onorm[]);
 DACE_API void daceEstimate(const DACEDA REF(ina), const unsigned int ivar, const unsigned int ityp, double c[], double err[], const unsigned int nc);
 DACE_API void daceGetBounds(const DACEDA REF(ina), double REF(alo), double REF(aup));
+/** @} */
 
 /********************************************************************************
 *     DACE polynomial evaluation routines
 *********************************************************************************/
+/** @name Evaluation
+ * @{
+ */
 DACE_API double daceEvalMonomials(const DACEDA REF(ina), const DACEDA REF(inb));
 DACE_API void daceReplaceVariable(const DACEDA REF(ina), const unsigned int from, const unsigned int to, const double val, DACEDA REF(inc));
 DACE_API void daceEvalVariable(const DACEDA REF(ina), const unsigned int nvar, const double val, DACEDA REF(inc));
 DACE_API void daceScaleVariable(const DACEDA REF(ina), const unsigned int nvar, const double val, DACEDA REF(inc));
 DACE_API void daceTranslateVariable(const DACEDA REF(ina), const unsigned int nvar, const double a, const double c, DACEDA REF(inc));
 DACE_API void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], unsigned int REF(nterm), unsigned int REF(nvar), unsigned int REF(nord));
+/** @} */
 
 /********************************************************************************
 *     DACE input/output routines
 *********************************************************************************/
+/** @name Input/Output
+ * @{
+ */
 DACE_API void daceWrite(const DACEDA REF(ina), char *strs, unsigned int REF(nstrs));
 DACE_API void daceRead(DACEDA REF(ina), char *strs, unsigned int nstrs);
 DACE_API void dacePrint(const DACEDA REF(ina));
 DACE_API unsigned int daceExportBlob(const DACEDA REF(ina), void *blob, unsigned int REF(size));
 DACE_API unsigned int daceBlobSize(const void *blob);
 DACE_API void daceImportBlob(const void *blob, DACEDA REF(inc));
+/** @} */
 
 /********************************************************************************
 *     DACE miscellaneous routines
 *********************************************************************************/
+/** @name Miscellaneous
+ * @{
+ */
 DACE_API double daceRandom();
+/** @} */
 
-/// @endcond
+/** @} */
 
 #ifdef __cplusplus
     }
 #endif /* _cplusplus */
-
-/** @} */
 
 #endif /* DINAMICA_DACEBASE_H_ */

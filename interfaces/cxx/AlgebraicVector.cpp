@@ -26,10 +26,6 @@
  *      Author: Dinamica Srl
  */
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
  // C++ stdlib classes used only internally in this implementation
 #include <algorithm>
 
@@ -384,5 +380,3 @@ template<> AlgebraicVector<DA> plug(const AlgebraicVector<DA> &obj, const unsign
 }
 
 }
-
-/** @} */

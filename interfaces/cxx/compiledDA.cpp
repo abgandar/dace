@@ -26,10 +26,6 @@
  *      Author: Dinamica Srl
  */
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 // DACE classes
 #include "dace/config.h"
 #include "dace/compiledDA.h"
@@ -232,5 +228,3 @@ unsigned int compiledDA::getTerms() const {
 }
 
 }
-
-/** @} */

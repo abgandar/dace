@@ -36,12 +36,11 @@
 #ifndef DINAMICA_MATHEXTENSION_H_
 #define DINAMICA_MATHEXTENSION_H_
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
+/** @name Double Intrinsic Functions
+ * @{
+ */
 DACE_API double absolute(const double x);
 DACE_API double cons(const double x);
 DACE_API double logb(const double x, const double b = 10.0);
@@ -52,9 +51,9 @@ DACE_API double minv(const double x);
 DACE_API double mod(const double x, const double p);
 DACE_API double root(const double x, const int p = 2);
 DACE_API double norm(const double x, const int type = 0);
+/** @} */
 
 }
 
 #endif /* DINAMICA_MATHEXTENSION_H_ */
 
-/** @} */

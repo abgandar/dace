@@ -26,10 +26,6 @@
  *      Author: Politecnico di Milano
  */
 
-/** @addtogroup DACE Core
-    @{
- */
-
 // indicate that we want to use strXXX_s functions, if available
 #define __STDC_WANT_LIB_EXT1__ 1
 #include <string.h>
@@ -199,6 +195,7 @@ const char* daceGetErrorMessage()
 }
 
 /** Clear the current DACE error code.
+    Should be called after an error state has been handled by the user or interface.
 */
 void daceClearError()
 {
@@ -209,31 +206,32 @@ void daceClearError()
     *DACEDbg.msg = '\0';
 }
 
-/**   Set DACE error state for errors within the DACE.
+/** Set DACE error state for errors within the DACE.
 
-      The error codes are defined as XYY with X indicating the severity and
-      YY corresponding to the actual error code
+    The error codes are defined as XYY with X indicating the severity and
+    YY corresponding to the actual error code
 
-      Severity Levels X
+    Severity Levels X
 
-      1  = Info:  Informative, no action required
+    0  = OK:       No error
 
-      3  = Warning:  Serious, possibly incorrect use of DACE routines
+    1  = Info:     Informative, no action required
 
-      6  = Error:    Recoverable, result may not be correct or assumptions have
-                     been made
+    3  = Warning:  Serious, possibly incorrect use of DACE routines
 
-      9  = Error:    Unrecoverable, new call to daceInitialize is required to
-                     reinitialize DACE, DACE objects are no longer valid
+    6  = Error:    Recoverable, result may not be correct or assumptions have
+                   been made
 
-      10 = Critical: Crash in the DACE, just printing as much as possible
-                     and die.
+    9  = Error:    Unrecoverable, new call to daceInitialize is required to
+                   reinitialize DACE, DACE objects are no longer valid
 
-      @param[in] c name of function where the error happened
-      @param[in] ix is the error severity code
-      @param[in] iyy is the error code
+    10 = Critical: Crash in the DACE, just printing as much as possible
+                   and die.
+
+    @param[in] c name of function where the error happened
+    @param[in] ix is the error severity code
+    @param[in] iyy is the error code
  */
-
 void daceSetError(const char *c, const unsigned int ix, const unsigned int iyy)
 {
     // check if it is a critical error
@@ -263,5 +261,3 @@ void daceSetError(const char *c, const unsigned int ix, const unsigned int iyy)
         }
     }
 }
-
-/** @} */

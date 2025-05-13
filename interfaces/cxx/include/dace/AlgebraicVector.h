@@ -44,10 +44,6 @@
 #include "dace/PromotionTrait.h"
 #include "dace/DA.h"
 
-/** @addtogroup DACECXX C++ Interface
-    @{
- */
-
 namespace DACE {
 
 // forward declarations
@@ -56,6 +52,7 @@ template<typename T> class AlgebraicMatrix;
 #endif
 
 /** Vector of any algebraic type.
+    @ingroup DACECXX
 
     Provides vector-vector, vector-scalar, and componentwise operations.
  */
@@ -211,6 +208,9 @@ private:
 };
 
 // operators
+/** @name Vector Basic Arithmetic Operators
+ * @{
+ */
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> operator+( const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2);
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> operator+( const AlgebraicVector<U> &obj1, const V &obj2);
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> operator+( const U &obj1, const AlgebraicVector<V> &obj2);
@@ -226,9 +226,14 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::re
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> operator/( const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2);
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> operator/( const AlgebraicVector<U> &obj1, const V &obj2);
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> operator/( const U &obj1, const AlgebraicVector<V> &obj2);
+/** @} */
 
+/** @name Vector Input/Output
+ * @{
+ */
 template<typename U> std::ostream& operator<<(std::ostream &out, const AlgebraicVector<U> &obj);
 template<typename U> std::istream& operator>>(std::istream &in, AlgebraicVector<U> &obj);
+/** @} */
 
 // Declaration of external functional style wrappers to access AlgebraicVector functions
 template<typename T> AlgebraicVector<double> cons(const AlgebraicVector<T> &obj);
@@ -237,6 +242,10 @@ template<typename T> AlgebraicMatrix<double> linear(const AlgebraicVector<T> &ob
 #else
 template<typename T> std::vector< std::vector<double> > linear(const AlgebraicVector<T> &obj);
 #endif /* WITH_ALGEBRAICMATRIX */
+
+/** @name Vector Intrinsic Functions
+ *  @{
+ */
 template<typename T> AlgebraicVector<T> deriv(const AlgebraicVector<T> &obj, const unsigned int p);
 template<typename T> AlgebraicVector<T> integ(const AlgebraicVector<T> &obj, const unsigned int p);
 template<typename T> AlgebraicVector<T> absolute(const AlgebraicVector<T> &obj);
@@ -271,19 +280,31 @@ template<typename T> AlgebraicVector<T> tanh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> asinh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> acosh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> atanh(const AlgebraicVector<T> &obj);
+/** @} */
+
+/** @name Vector Functions
+ *  @{
+ */
 template<typename U, typename V> typename PromotionTrait<U,V>::returnType dot(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2);
 template<typename U, typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> cross(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2);
 template<typename T> T length(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> normalize(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> trim(const AlgebraicVector<T> &obj, unsigned int min, unsigned int max = DA::getMaxOrder());
+/** @} */
+
+/** @name Vector Evaluation Functions
+ *  @{
+ */
 template<typename T, typename V> V eval(const AlgebraicVector<T> &obj, const V &args);
 template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T> &obj, const std::initializer_list<U> l);
 template<typename T, typename U> AlgebraicVector<U> evalScalar(const AlgebraicVector<T> &obj, const U &arg);
 template<typename T> compiledDA compile(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> plug(const AlgebraicVector<T> &obj, const unsigned int var, const double val = 0.0);
 template<typename T> AlgebraicVector<double> norm(const AlgebraicVector<T> &obj, const unsigned int type = 0);
+/** @} */
 
 // specializations for various DA specific routines implemented and instantiated directly in the library instead of in a template
+/** @cond */
 #ifdef WITH_ALGEBRAICMATRIX
 template<> DACE_API AlgebraicMatrix<double> AlgebraicVector<DA>::linear() const;
 template<> DACE_API AlgebraicMatrix<double> linear(const AlgebraicVector<DA> &obj);
@@ -304,6 +325,7 @@ template<> DACE_API AlgebraicVector<DA> deriv(const AlgebraicVector<DA> &obj, co
 template<> DACE_API AlgebraicVector<DA> integ(const AlgebraicVector<DA> &obj, const unsigned int p);
 template<> DACE_API compiledDA compile(const AlgebraicVector<DA> &obj);
 template<> DACE_API AlgebraicVector<DA> plug(const AlgebraicVector<DA> &obj, const unsigned int var, const double val);
+/** @endcond */
 
 // shortcuts for common vector types
 typedef AlgebraicVector<DA> vectorDA;           //!< Short for AlgebraicVector<DA>.
@@ -312,5 +334,3 @@ typedef AlgebraicVector<double> vectordb;       //!< Short for AlgebraicVector<d
 }
 
 #endif /* DINAMICA_ALGEBRAICVECTOR_H_ */
-
-/** @} */
