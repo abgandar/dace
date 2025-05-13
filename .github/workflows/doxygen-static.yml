@@ -35,7 +35,8 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Install doxygen
-        run: sudo apt-get install -y doxygen doxygen-latex graphviz
+        shell: bash
+        run: sudo apt-get update && sudo apt-get install -y doxygen doxygen-latex graphviz
 
       - name: Set reusable strings
         # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
