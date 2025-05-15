@@ -105,6 +105,7 @@ namespace boost { namespace numeric { namespace odeint {
 
 namespace DACE {
     // AlgebraicVector component-wise abs() with same output type. Required by vector_space_algebra in boost.
+    /** @cond */
     template<typename T> DACE::AlgebraicVector<T> abs(const DACE::AlgebraicVector<T> &x)
     {
         using DACE::abs;
@@ -117,6 +118,7 @@ namespace DACE {
         }
         return res;
     }
+    /** @endcond */
 }
 
 #endif /* DINAMICA_COMPAT_BOOST_ODEINT_H_ */

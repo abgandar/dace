@@ -124,12 +124,12 @@ public:
      */
     DA();
     DA(const DA &da);
-
     DA(DA &&da);
 
     explicit DA(const int i, const double c = 1.0);
     explicit DA(const unsigned int i, const double c = 1.0);
     DA(const double c);
+
     ~DA() throw();
     /** @} */
 
@@ -161,19 +161,15 @@ public:
      * @{
      */
     DA& operator=(DA &&da);
-
     DA& operator=(const DA &da);
     DA& operator=(const double c);
 
     DA& operator+=(const DA &da);
     DA& operator+=(const double c);
-
     DA& operator-=(const DA &da);
     DA& operator-=(const double c);
-
     DA& operator*=(const DA &da);
     DA& operator*=(const double c);
-
     DA& operator/=(const DA &da);
     DA& operator/=(const double c);
 
@@ -302,9 +298,9 @@ public:
     /** @} */
 
     /********************************************************************************
-    *     Static factory routines
+    *     Static creation routines
     *********************************************************************************/
-    /** @name Factory routines
+    /** @name Creation routines
      * @{
      */
     static DA random(const double cm);
@@ -325,7 +321,7 @@ public:
 };
 
 /********************************************************************************
-*     DACE non-member functions
+*     DA non-member functions
 *********************************************************************************/
 /** @name DA Coefficient Access Functions
  * @{
@@ -359,15 +355,25 @@ DACE_API DA operator/(const DA &da, const double c);
 DACE_API DA operator/(const double c, const DA &da);
 /** @} */
 
-/** @name DA Intrinsic Functions
- *  @{
+/** @name DA Basic Arithmetic
+ * @{
  */
 DACE_API DA divide(const DA &da, const unsigned int var, const unsigned int p = 1);
 DACE_API DA deriv(const DA &da, const unsigned int i);
 DACE_API DA deriv(const DA &da, const std::vector<unsigned int> ind);
 DACE_API DA integ(const DA &da, const unsigned int i);
 DACE_API DA integ(const DA &da, const std::vector<unsigned int> ind);
+/** @} */
+
+/** @name DA Filtering Functions
+ * @{
+ */
 DACE_API DA trim(const DA &da, const unsigned int min, const unsigned int max = DA::getMaxOrder());
+/** @} */
+
+/** @name DA Intrinsic Functions
+ *  @{
+ */
 DACE_API DA absolute(const DA &da);
 DACE_API DA trunc(const DA &da);
 DACE_API DA round(const DA &da);
