@@ -52,23 +52,9 @@
 
 namespace DACE {
 
-/***********************************************************************************
-*     Coefficient access routines
-************************************************************************************/
-/** Return the constant parts of each element.
-    @return AlgebraicVector<double> containing the constant part of each element
- */
-template<typename T> AlgebraicVector<double> AlgebraicVector<T>::cons() const {
-    using DACE::cons;
-
-    const size_t size = this->size();
-    AlgebraicVector<double> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = cons((*this)[i]);
-    }
-    return temp;
-}
-
+/********************************************************************************
+*     Element access
+*********************************************************************************/
 /** Extracts elements from AlgebraicVector.
     @param[in] first index of first element to be extracted
     @param[in] last  index of last element to be extracted
@@ -87,10 +73,10 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::extract(const size_t
     @param[in] obj The AlgebraicVector to be appended
     @return A new AlgebraicVector containing the elements of both vectors, cast upwards if necessary
 */
-template<typename T> template<typename V> AlgebraicVector<typename PromotionTrait< T, V >::returnType> AlgebraicVector<T>::concat(const std::vector<V> &obj) const {
+template<typename T> template<typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> AlgebraicVector<T>::concat(const std::vector<U> &obj) const {
     const size_t size1 = this->size();
     const size_t size2 = obj.size();
-    AlgebraicVector<typename PromotionTrait< T, V >::returnType> res(size1+size2);
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> res(size1+size2);
 
     for(size_t i=0; i<size1; i++)
         res[i] = (*this)[i];
@@ -100,16 +86,76 @@ template<typename T> template<typename V> AlgebraicVector<typename PromotionTrai
     return res;
 }
 
-/***********************************************************************************
-*     Algebraic operations
-************************************************************************************/
-/** Returns the additive inverse of the vector.
-    @return A new AlgebraicVector, with the opposite sign
+/** Append elements of vector obj to the end of ourself, converting the type to match ours if necessary.
+    @param[in] obj Vector of elements to append
+    @return A reference to ourselves
  */
-template<typename T> AlgebraicVector<T> AlgebraicVector<T>::operator-() const {
-    return -1.0*(*this);
+template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>::operator<<(const std::vector<U> &obj) {
+    const size_t size = obj.size();
+    for(size_t i=0; i<size; i++) {
+        (*this).push_back((T)obj[i]);
+    }
+    return *this;
 }
 
+/***********************************************************************************
+*     Coefficient access routines
+************************************************************************************/
+/** Return the constant parts of each element.
+    @return AlgebraicVector<double> containing the constant part of each element
+ */
+template<typename T> AlgebraicVector<double> AlgebraicVector<T>::cons() const {
+    using DACE::cons;
+
+    const size_t size = this->size();
+    AlgebraicVector<double> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = cons((*this)[i]);
+    }
+    return temp;
+}
+
+#ifdef WITH_ALGEBRAICMATRIX
+/** Return the linear part of a AlgebraicVector<T>. NOT DEFINED FOR TYPES OTHER THAN DA.
+    @return A AlgebraicMatrix<double> of dimension size by nvar, where size is the
+    size of the AlgebraicVector<T> considered and nvar is the number of variables defined
+    during the DACE initialization. Each row contains the linear part of the corresponding
+    DA included in the original AlgebraicVector<T>.
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler
+    error will be the result.
+ */
+template<typename T> AlgebraicMatrix<double> AlgebraicVector<T>::linear() const {
+    const size_t size = this->size();
+    const int nvar = DA::getMaxVariables();
+
+    AlgebraicMatrix<double> out(size, nvar);
+    for(size_t i=0; i<size; i++) {
+          out.setrow(i, (*this)[i].linear());
+    }
+    return out;
+}
+#else
+/** Return the linear part of a AlgebraicVector<T>. NOT DEFINED FOR TYPES OTHER THAN DA.
+    @return A std::vector< std::vector<double> >, where each std::vector<double> contains
+    the linear part of the corresponding DA included in the original AlgebraicVector<T>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+ */
+template<typename T> std::vector<std::vector<double>> AlgebraicVector<T>::linear() const {
+    const size_t size = this->size();
+
+    std::vector< std::vector<double> > out(size);
+    for(size_t i=0; i<size; i++) {
+          out[i] = (*this)[i].linear();
+    }
+    return out;
+}
+#endif /* WITH_ALGEBRAICMATRIX */
+
+/********************************************************************************
+*     Assignments, Copying & Filtering
+*********************************************************************************/
 /** Add the given AlgebraicVector to ourselves componentwise.
     @param[in] obj An AlgebraicVector
     @return A reference to ourselves
@@ -221,205 +267,70 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
     return *this;
 }
 
-/** Append elements of vector obj to the end of ourself, converting the type to match ours if necessary.
-    @param[in] obj Vector of elements to append
-    @return A reference to ourselves
- */
-template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>::operator<<(const std::vector<U> &obj) {
-    const size_t size = obj.size();
-    for(size_t i=0; i<size; i++) {
-        (*this).push_back((T)obj[i]);
+/** Returns an AlgebraicVector<DA> with all monomials of order less than min and greater than max removed (trimmed). The result is copied in a new AlgebraicVector<DA>.
+    @param[in] min minimum order to be preserved
+    @param[in] max maximum order to be preserved
+    @return A new AlgebraicVector<DA>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+*/
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::trim(const unsigned int min, const unsigned int max) const {
+    AlgebraicVector<T> tmp(this->size());
+
+    for(size_t i=0; i<this->size(); i++) {
+        tmp[i] = (*this)[i].trim(min, max);
     }
-    return *this;
+
+    return tmp;
 }
 
-/** Componentwise addition between two AlgebraicVectors.
-    @param[in] obj1 first AlgebraicVector
-    @param[in] obj2 second AlgebraicVector
-    @return A new AlgebraicVector
-    @throw std::runtime_error
+/********************************************************************************
+*     Basic arithmetic operations
+*********************************************************************************/
+/** Returns the additive inverse of the vector.
+    @return A new AlgebraicVector, with the opposite sign
  */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator+(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2) {
-    if(obj1.size() != obj2.size())
-        throw std::runtime_error("DACE::AlgebraicVector<T>::operator+: Vectors must have the same length.");
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::operator-() const {
+    return -1.0*(*this);
+}
 
-    const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
+/** Compute the derivative of a AlgebraicVector<T> with respect to variable p.
+    The result is copied in a new AlgebraicVector<T>. NOT DEFINED FOR TYPES OTHER THAN DA.
+    @param[in] p variable with respect to which the derivative is calculated
+    @return A new AlgebraicVector<T>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::deriv(const unsigned int p) const {
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
-        temp[i] = obj1[i] + obj2[i];
+        temp[i] = (*this)[i].deriv(p);
     }
+
     return temp;
 }
 
-/** Componentwise addition between a AlgebraicVector and a scalar value.
-    @param[in] obj1 a AlgebraicVector
-    @param[in] obj2 a scalar value
-    @return A new AlgebraicVector
+/** Compute the integral of a AlgebraicVector<T> with respect to variable p.
+    The result is copied in a new AlgebraicVector<T>. NOT DEFINED FOR TYPES OTHER THAN DA.
+    @param[in] p variable with respect to which the integral is calculated.
+    @return A new AlgebraicVector<T>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
  */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator+(const AlgebraicVector<U> &obj1, const V &obj2) {
-    const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::integ(const unsigned int p) const {
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
-        temp[i] = obj1[i] + obj2;
+        temp[i] = (*this)[i].integ(p);
     }
+
     return temp;
 }
 
-/** Componentwise addition between a scalar value and a AlgebraicVector.
-    @param[in] obj1 a scalar value
-    @param[in] obj2 a AlgebraicVector
-    @return A new AlgebraicVector
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator+(const U &obj1, const AlgebraicVector<V> &obj2) {
-    const size_t size = obj2.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1 + obj2[i];
-    }
-    return temp;
-}
-
-/** Componentwise subtraction between two AlgebraicVectors.
-    @param[in] obj1 first AlgebraicVector
-    @param[in] obj2 second AlgebraicVector
-    @return A new AlgebraicVector
-    @throw std::runtime_error
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator-(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2) {
-    if(obj1.size() != obj2.size())
-        throw std::runtime_error("DACE::AlgebraicVector<T>::operator-: Vectors must have the same length.");
-
-    const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1[i] - obj2[i];
-    }
-    return temp;
-}
-
-/** Componentwise subtraction between a AlgebraicVector and a scalar value.
-    @param[in] obj1 a AlgebraicVector
-    @param[in] obj2 a scalar value
-    @return A new AlgebraicVector
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator-(const AlgebraicVector<U> &obj1, const V &obj2) {
-    const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1[i] - obj2;
-    }
-    return temp;
-}
-
-/** Componentwise subtraction between a scalar value and a AlgebraicVector.
-    @param[in] obj1 a scalar value
-    @param[in] obj2 a AlgebraicVector
-    @return A new AlgebraicVector
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator-(const U &obj1, const AlgebraicVector<V> &obj2) {
-    const size_t size = obj2.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1 - obj2[i];
-    }
-    return temp;
-}
-
-/** Componentwise Componentwise multiplication between two AlgebraicVectors.
-    @param[in] obj1 first AlgebraicVector
-    @param[in] obj2 second AlgebraicVector
-    @return A new AlgebraicVector
-    @throw std::runtime_error
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator*(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2) {
-    if(obj1.size() != obj2.size())
-        throw std::runtime_error("DACE::AlgebraicVector<T>::operator*: Vectors must have the same length.");
-
-    const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1[i] * obj2[i];
-    }
-    return temp;
-}
-
-/** Componentwise multiplication between a AlgebraicVector and a scalar value.
-    @param[in] obj1 a AlgebraicVector
-    @param[in] obj2 a scalar value
-    @return A new AlgebraicVector
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator*(const AlgebraicVector<U> &obj1, const V &obj2) {
-    const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1[i] * obj2;
-    }
-    return temp;
-}
-
-/** Componentwise multiplication between a scalar value and a AlgebraicVector.
-    @param[in] obj1 a scalar value
-    @param[in] obj2 a AlgebraicVector
-    @return A new AlgebraicVector
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator*(const U &obj1, const AlgebraicVector<V> &obj2) {
-    const size_t size = obj2.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1 * obj2[i];
-    }
-    return temp;
-}
-
-/** Componentwise division between two AlgebraicVectors.
-    @param[in] obj1 first AlgebraicVector
-    @param[in] obj2 second AlgebraicVector
-    @return A new AlgebraicVector
-    @throw std::runtime_error
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator/(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2) {
-    if(obj1.size() != obj2.size())
-        throw std::runtime_error("DACE::AlgebraicVector<T>::operator/: Vectors must have the same length.");
-
-    const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1[i] / obj2[i];
-    }
-    return temp;
-}
-
-/** Componentwise division between a AlgebraicVector and a scalar value.
-    @param[in] obj1 a AlgebraicVector
-    @param[in] obj2 a scalar value
-    @return A new AlgebraicVector
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator/(const AlgebraicVector<U> &obj1, const V &obj2) {
-    const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1[i] / obj2;
-    }
-    return temp;
-}
-
-/** Componentwise division between a scalar value and a AlgebraicVector.
-    @param[in] obj1 a scalar value.
-    @param[in] obj2 a AlgebraicVector.
-    @return A new AlgebraicVector
- */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator/(const U &obj1, const AlgebraicVector<V> &obj2) {
-    const size_t size = obj2.size();
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(size);
-    for(size_t i=0; i<size; i++) {
-        temp[i] = obj1 / obj2[i];
-    }
-    return temp;
-}
-
-/***********************************************************************************
-*     Math routines
-************************************************************************************/
+/********************************************************************************
+*     Intrinsic functions
+*********************************************************************************/
 /** Componentwise application of the absolute value function.
     @return A new AlgebraicVector
  */
@@ -888,12 +799,12 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::atanh() const {
     @return A scalar value representing dot (inner) product
     @throw std::runtime_error
  */
-template<typename T> template<typename V> typename PromotionTrait<T,V>::returnType AlgebraicVector<T>::dot(const AlgebraicVector<V> &obj) const {
+template<typename T> template<typename U> typename PromotionTrait<T,U>::returnType AlgebraicVector<T>::dot(const AlgebraicVector<U> &obj) const {
     const size_t size = this->size();
     if(size != obj.size())
           throw std::runtime_error("DACE::AlgebraicVector<T>::dot(): Vectors must have the same length.");
 
-    typename PromotionTrait<T,V>::returnType temp = 0.0;
+    typename PromotionTrait<T,U>::returnType temp = 0.0;
     for(size_t i=0; i<size; i++) {
         temp += (*this)[i] * obj[i];
     }
@@ -905,11 +816,11 @@ template<typename T> template<typename V> typename PromotionTrait<T,V>::returnTy
     @return A new AlgebraicVector
     @throw std::runtime_error
  */
-template<typename T> template<typename V> AlgebraicVector<typename PromotionTrait<T,V>::returnType> AlgebraicVector<T>::cross(const AlgebraicVector<V> &obj) const {
+template<typename T> template<typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> AlgebraicVector<T>::cross(const AlgebraicVector<U> &obj) const {
     if((this->size() != 3) || (obj.size() != 3))
         throw std::runtime_error("DACE::AlgebraicVector<T>::cross(): Inputs must be 3 element AlgebraicVectors.");
 
-    AlgebraicVector<typename PromotionTrait<T,V>::returnType> temp(3);
+    AlgebraicVector<typename PromotionTrait<T,U>::returnType> temp(3);
 
     temp[0] = ((*this)[1] * obj[2]) - ((*this)[2] * obj[1]);
     temp[1] = ((*this)[2] * obj[0]) - ((*this)[0] * obj[2]);
@@ -940,7 +851,72 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::normalize() const {
     using DACE::minv;
 
     AlgebraicVector<T> temp(*this);
-    temp *= minv(this->length());    return temp;
+    temp *= minv(this->length());
+
+    return temp;
+}
+
+/** Invert the polynomial map given by this AlgebraicVector.
+    @return the inverted polynomials
+    @throw std::runtime_error
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::invert() const {
+    const unsigned int ord = DA::getTO();
+    const size_t nvar = this->size();
+
+    if(nvar > DA::getMaxVariables())
+        throw std::runtime_error("DACE::AlgebraicVector<DA>::inverse: dimension of vector exceeds maximum number of DA variables.");
+
+    // Create DA identity
+    AlgebraicVector<T> DDA = AlgebraicVector<T>::identity(nvar);
+
+    // Split map into constant part AC, non-constant part M, and non-linear part AN
+    AlgebraicVector<double> AC = this->cons();
+    AlgebraicVector<T> M = this->trim(1);
+    AlgebraicVector<T> AN = M.trim(2);
+
+#ifdef WITH_ALGEBRAICMATRIX
+    // Extract the linear coefficients matrix
+    AlgebraicMatrix<double> AL = M.linear();
+
+    // Compute the inverse of linear coefficients matrix
+    AlgebraicMatrix<double> AI = AL.inv();
+
+    // Compute DA representation of the inverse of the linear part of the map and its composition with non-linear part AN
+    compiledDA AIoAN(AI*AN);
+    AlgebraicVector<DA> Linv = AI*DDA;
+#else
+    // Compute the inverse of linear coefficients matrix
+    std::vector<std::vector<double>> AI = M.linear();
+    matrix_inverse(AI);
+
+    // Compute DA representation of the inverse of the linear part of the map and its composition with non-linear part AN
+    AlgebraicVector<T> Linv(nvar);
+    // Linv = AI*AN
+    for(size_t i=0; i<nvar; i++) {
+        Linv[i] = 0.0;
+        for(size_t j=0; j<nvar; j++)
+            Linv[i] += AI[i][j]*AN[j];
+    }
+    compiledDA AIoAN(Linv);
+    // Linv = AI*DDA
+    for(size_t i=0; i<nvar; i++) {
+        Linv[i] = 0.0;
+        for(size_t j=0; j<nvar; j++)
+            Linv[i] += AI[i][j]*DDA[j];
+    }
+#endif /* WITH_ALGEBRAICMATRIX */
+
+    // Iterate to obtain the inverse map
+    AlgebraicVector<T> MI = Linv;
+    for(unsigned int i=1; i<ord; i++) {
+        DA::setTO(i+1);
+        MI = Linv - AIoAN.eval(MI);
+    }
+
+    return MI.eval(DDA-AC);
 }
 
 /***********************************************************************************
@@ -948,14 +924,14 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::normalize() const {
 ************************************************************************************/
 /** Evaluate a vector of polynomials with any vector type V with arguments
     and return a vector of results of the same type V.
-   @param[in] args vector (e.g. AlgebraicVector<>) of arguments
-   @return A new vector of same type as argument args containing the
+    @param[in] args vector (e.g. AlgebraicVector<>) of arguments
+    @return A new vector of same type as argument args containing the
     results of the evaluation
-   @note This DA specific function is only available in AlgebraicVector<DA>,
+    @note This DA specific function is only available in AlgebraicVector<DA>,
     when called on AlgebraicVectors of other types (e.g. double), a compiler
     error will be the result.
  */
-template<> template<typename V> V AlgebraicVector<DA>::eval(const V &args) const {
+template<typename T> template<typename U> U AlgebraicVector<T>::eval(const U &args) const {
     return compiledDA(*this).eval(args);
 }
 
@@ -967,7 +943,7 @@ template<> template<typename V> V AlgebraicVector<DA>::eval(const V &args) const
     That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
     used with initializer lists.
  */
-template<> template<typename U> AlgebraicVector<U> AlgebraicVector<DA>::eval(const std::initializer_list<U> l) const {
+template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>::eval(const std::initializer_list<U> l) const {
     return compiledDA(*this).eval<U>(l);
 }
 
@@ -983,12 +959,42 @@ template<> template<typename U> AlgebraicVector<U> AlgebraicVector<DA>::eval(con
     @see compiledDA
     @see AlgebraicVector::compile()
  */
-template<> template<typename U> AlgebraicVector<U> AlgebraicVector<DA>::evalScalar(const U &arg) const {
+template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>::evalScalar(const U &arg) const {
     return compiledDA(*this).evalScalar(arg);
 }
 
 /***********************************************************************************
-*     DA norm routines
+*     Polynomial evaluation routines
+************************************************************************************/
+/** Compile vector of polynomials and create a compiledDA object.
+    @return The compiled DA object
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+ */
+template<typename T> compiledDA AlgebraicVector<T>::compile() const {
+    return compiledDA(*this);
+}
+
+/** Partial evaluation of vector of polynomials. In each element of the vector,
+    variable var is replaced by the value val. The resulting vector of DAs is returned.
+    @param[in] var variable number to be replaced
+    @param[in] val value by which to replace the variable
+    @return A new DA object
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::plug(const unsigned int var, const double val) const {
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = (*this)[i].plug(var,val);
+    }
+
+    return temp;
+}
+
+/***********************************************************************************
+*     Norm routines
 ************************************************************************************/
 /** Componentwise application of the norm function.
     @param[in] type type of norm to be computed
@@ -1009,60 +1015,6 @@ template<typename T> AlgebraicVector<double> AlgebraicVector<T>::norm(const unsi
 /***********************************************************************************
 *     Input/Output routines
 ************************************************************************************/
-/** Output a vector to a C++ output stream.
-    @param[in] out standard output stream
-    @param[in] obj AlgebraicVector to be written to the stream
-    @return Reference to output stream out
- */
-template<typename U> std::ostream& operator<<(std::ostream &out, const AlgebraicVector<U> &obj) {
-    const size_t size = obj.size();
-
-    out << "[[[ " << size << " vector" << std::endl;
-    for(size_t i=0; i<size;i++) {
-        out << obj[i] << std::endl;
-    }
-    out << "]]]" << std::endl;
-
-    return out;
-}
-
-/** Read a vector from a C++ input stream.
-    @param[in] in standard input stream
-    @param[in] obj AlgebraicVector to be read from the stream
-    @return Reference to input stream in
- */
-template<typename U> std::istream& operator>>(std::istream &in, AlgebraicVector<U> &obj) {
-    std::string init_line;
-    size_t vec_size;
-
-    // try to read the first line
-    getline(in, init_line);
-    if(in.good()) {
-        // retrieve the size of the vector to be read
-        std::size_t found = init_line.find_first_of(' ');
-        std::string size_str(init_line,4,found-4);
-        if(!(std::istringstream(size_str) >> vec_size)) vec_size = 0;
-
-        // resize the object to meet the size of the vector to be read
-        obj.resize(vec_size);
-
-        // fill the AlgebraicVector
-        for (size_t i = 0; in.good() && (i < vec_size); i++) {
-            in >> obj[i];
-
-            // check the next character
-            if (in.peek() == '\n')       // the previous operator>> does not consume the \n character when an AlgebraicVector<T> (with T != DA) is considered
-                in.ignore();            // ignore the next character
-        }
-        // skip the line at the end of a AlgebraicVector (containing ]]])
-        getline(in, init_line);
-    } else {
-        obj.resize(0);
-    }
-
-    return in;
-}
-
 /** Convert to string.
     @return String representing the AlgebraicVector
  */
@@ -1073,8 +1025,85 @@ template<typename T> std::string AlgebraicVector<T>::toString() const {
     return strs.str();
 }
 
+/********************************************************************************
+*     Static creation routines
+*********************************************************************************/
+/** Return the DA identity of dimension n.
+    @param[in] n The dimension
+    @return AlgebraicVector<DA> containing the DA identity in n dimensions
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler
+    error will be the result.
+ */
+template<typename T> AlgebraicVector<DA> AlgebraicVector<T>::identity(const size_t n) {
+    AlgebraicVector<DA> temp(n);
+    for(size_t i=0; i < n; i++) {
+        temp[i] = DA((int)(i+1));
+    }
+
+    return temp;
+}
+
+/********************************************************************************
+*     Private routines
+*********************************************************************************/
+#ifndef WITH_ALGEBRAICMATRIX
+/** @cond */
+/* Internal routine to compute a matrix inverse of a double precision matrix.
+   Algorithm based on the Gauss elimination with full pivot (from the Numerical
+   Cookbook) adapted for C++. This is the same algorithm but a different
+   implementation than in the AlgebraicMatrix class.
+   This is NOT intended for public use. Limited error checking is performed
+   in accordance with the exclusive use of this routine in map inversion.
+ */
+template<typename T> void AlgebraicVector<T>::matrix_inverse(std::vector<std::vector<double>> &A) {
+    using std::abs;
+
+    const size_t n = A.size();
+    std::vector<size_t> indexc(n), indexr(n), ipiv(n, 0);
+
+    for (size_t i=0; i<n; i++) {
+        size_t icol = 0, irow = 0;
+        double big = 0.0;
+        for (size_t j=0; j<n; j++)
+            if (ipiv[j] == 0)
+                for (size_t k=0; k<n; k++)
+                    if (ipiv[k] == 0)
+                        if (abs(A[j][k]) >= big) {
+                            big = abs(A[j][k]);
+                            irow = j;
+                            icol = k;}
+        ipiv[icol] = 1;
+        if (irow != icol)
+            for (size_t l=0; l<n; l++) std::swap(A[irow][l], A[icol][l]);
+        indexr[i] = irow;
+        indexc[i] = icol;
+        if (A[icol][icol] == 0.0) throw std::runtime_error("DACE::AlgebraicVector<DA>::inverse: linear matrix inverse does not exist.");
+        const double pivinv = 1.0/A[icol][icol];
+        A[icol][icol] = 1.0;
+        for (size_t l=0; l<n; l++) A[icol][l] *= pivinv;
+        for (size_t ll=0; ll<n; ll++)
+            if (ll != icol) {
+                const double temp = A[ll][icol];
+                A[ll][icol] = 0.0;
+                for (size_t l=0; l<n; l++) A[ll][l] -= A[icol][l]*temp;}
+    }
+
+    for (size_t i=n; i>0; i--)
+        if (indexr[i-1] != indexc[i-1])
+            for (size_t k=0; k<n; k++)
+                std::swap(A[k][indexr[i-1]], A[k][indexc[i-1]]);
+}
+/** @endcond */
+#endif /* WITH_ALGEBRAICMATRIX */
+
+
 /***********************************************************************************
 *     Non-member functions
+************************************************************************************/
+
+/***********************************************************************************
+*     Coefficient Access Functions
 ************************************************************************************/
 /** Return the constant parts.
     @return An AlgebraicVector<double>
@@ -1084,6 +1113,266 @@ template<typename T> AlgebraicVector<double> cons(const AlgebraicVector<T> &obj)
     return obj.cons();
 }
 
+#ifdef WITH_ALGEBRAICMATRIX
+/** Return the linear part of a AlgebraicVector<T>.
+    @param[in] obj AlgebraicVector<T> to extract linear part from
+    @return An AlgebraicMatrix<double> of dimensions size by nvar, where
+    size is the size of the AlgebraicVector<T> considered and nvar is the
+    number of variables defined during the DACE initialization.
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler
+    error will be the result.
+    @see AlgebraicVector<T>::linear
+ */
+template<typename T> AlgebraicMatrix<double> linear(const AlgebraicVector<T> &obj) {
+#else
+/** Return the linear part of a AlgebraicVector<T>. Only defined for AlgebraicVector<DA>.
+    @param[in] obj AlgebraicVector<T> to extract linear part from
+    @return A std::vector< std::vector<double> > containing the linear parts of
+    each component of the AlgebraicVector<DA> obj
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+    @see AlgebraicVector<T>::linear
+ */
+template<typename T> std::vector<std::vector<double>> linear(const AlgebraicVector<T> &obj) {
+#endif /* WITH_ALGEBRAICMATRIX */
+    return obj.linear();
+}
+
+/***********************************************************************************
+*     Basic Arithmetic Operators
+************************************************************************************/
+/** Componentwise addition between two AlgebraicVectors.
+    @param[in] obj1 first AlgebraicVector
+    @param[in] obj2 second AlgebraicVector
+    @return A new AlgebraicVector
+    @throw std::runtime_error
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator+(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+    if(obj1.size() != obj2.size())
+        throw std::runtime_error("DACE::AlgebraicVector<T>::operator+: Vectors must have the same length.");
+
+    const size_t size = obj1.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1[i] + obj2[i];
+    }
+    return temp;
+}
+
+/** Componentwise addition between a AlgebraicVector and a scalar value.
+    @param[in] obj1 a AlgebraicVector
+    @param[in] obj2 a scalar value
+    @return A new AlgebraicVector
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator+(const AlgebraicVector<T> &obj1, const U &obj2) {
+    const size_t size = obj1.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1[i] + obj2;
+    }
+    return temp;
+}
+
+/** Componentwise addition between a scalar value and a AlgebraicVector.
+    @param[in] obj1 a scalar value
+    @param[in] obj2 a AlgebraicVector
+    @return A new AlgebraicVector
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator+(const T &obj1, const AlgebraicVector<U> &obj2) {
+    const size_t size = obj2.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1 + obj2[i];
+    }
+    return temp;
+}
+
+/** Componentwise subtraction between two AlgebraicVectors.
+    @param[in] obj1 first AlgebraicVector
+    @param[in] obj2 second AlgebraicVector
+    @return A new AlgebraicVector
+    @throw std::runtime_error
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator-(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+    if(obj1.size() != obj2.size())
+        throw std::runtime_error("DACE::AlgebraicVector<T>::operator-: Vectors must have the same length.");
+
+    const size_t size = obj1.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1[i] - obj2[i];
+    }
+    return temp;
+}
+
+/** Componentwise subtraction between a AlgebraicVector and a scalar value.
+    @param[in] obj1 a AlgebraicVector
+    @param[in] obj2 a scalar value
+    @return A new AlgebraicVector
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator-(const AlgebraicVector<T> &obj1, const U &obj2) {
+    const size_t size = obj1.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1[i] - obj2;
+    }
+    return temp;
+}
+
+/** Componentwise subtraction between a scalar value and a AlgebraicVector.
+    @param[in] obj1 a scalar value
+    @param[in] obj2 a AlgebraicVector
+    @return A new AlgebraicVector
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator-(const T &obj1, const AlgebraicVector<U> &obj2) {
+    const size_t size = obj2.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1 - obj2[i];
+    }
+    return temp;
+}
+
+/** Componentwise Componentwise multiplication between two AlgebraicVectors.
+    @param[in] obj1 first AlgebraicVector
+    @param[in] obj2 second AlgebraicVector
+    @return A new AlgebraicVector
+    @throw std::runtime_error
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator*(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+    if(obj1.size() != obj2.size())
+        throw std::runtime_error("DACE::AlgebraicVector<T>::operator*: Vectors must have the same length.");
+
+    const size_t size = obj1.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1[i] * obj2[i];
+    }
+    return temp;
+}
+
+/** Componentwise multiplication between a AlgebraicVector and a scalar value.
+    @param[in] obj1 a AlgebraicVector
+    @param[in] obj2 a scalar value
+    @return A new AlgebraicVector
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator*(const AlgebraicVector<T> &obj1, const U &obj2) {
+    const size_t size = obj1.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1[i] * obj2;
+    }
+    return temp;
+}
+
+/** Componentwise multiplication between a scalar value and a AlgebraicVector.
+    @param[in] obj1 a scalar value
+    @param[in] obj2 a AlgebraicVector
+    @return A new AlgebraicVector
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator*(const T &obj1, const AlgebraicVector<U> &obj2) {
+    const size_t size = obj2.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1 * obj2[i];
+    }
+    return temp;
+}
+
+/** Componentwise division between two AlgebraicVectors.
+    @param[in] obj1 first AlgebraicVector
+    @param[in] obj2 second AlgebraicVector
+    @return A new AlgebraicVector
+    @throw std::runtime_error
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator/(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+    if(obj1.size() != obj2.size())
+        throw std::runtime_error("DACE::AlgebraicVector<T>::operator/: Vectors must have the same length.");
+
+    const size_t size = obj1.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1[i] / obj2[i];
+    }
+    return temp;
+}
+
+/** Componentwise division between a AlgebraicVector and a scalar value.
+    @param[in] obj1 a AlgebraicVector
+    @param[in] obj2 a scalar value
+    @return A new AlgebraicVector
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator/(const AlgebraicVector<T> &obj1, const U &obj2) {
+    const size_t size = obj1.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1[i] / obj2;
+    }
+    return temp;
+}
+
+/** Componentwise division between a scalar value and a AlgebraicVector.
+    @param[in] obj1 a scalar value.
+    @param[in] obj2 a AlgebraicVector.
+    @return A new AlgebraicVector
+ */
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator/(const T &obj1, const AlgebraicVector<U> &obj2) {
+    const size_t size = obj2.size();
+    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = obj1 / obj2[i];
+    }
+    return temp;
+}
+
+/***********************************************************************************
+*     Basic Arithmetic Functions
+************************************************************************************/
+/** Compute the derivative of a AlgebraicVector<T> with respect to variable p.
+    @param[in] obj AlgebraicVector<T>
+    @param[in] p variable with respect to which the derivative is calculated
+    @return A new AlgebraicVector<T>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+    @see AlgebraicVector<T>::deriv
+ */
+template<typename T> AlgebraicVector<T> deriv(const AlgebraicVector<T> &obj, const unsigned int p) {
+    return obj.deriv(p);
+}
+
+/** Compute the integral of a AlgebraicVector<T> with respect to variable p.
+    @param[in] obj AlgebraicVector<T>
+    @param[in] p variable with respect to which the integral is calculated
+    @return A new AlgebraicVector<T> containing the result of the integration
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+    @see AlgebraicVector<T>::integ
+ */
+template<typename T> AlgebraicVector<T> integ(const AlgebraicVector<T> &obj, const unsigned int p) {
+    return obj.integ(p);
+}
+
+/***********************************************************************************
+*     Filtering Functions
+************************************************************************************/
+/** Returns an AlgebraicVector<DA> with all monomials of order less
+    than min and greater than max removed (trimmed).
+    @param[in] obj the AlgebraicVector<DA> to be trimmed
+    @param[in] min minimum order to be preserved
+    @param[in] max maximum order to be preserved
+    @return A new AlgebraicVector<DA>
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+    @see AlgebraicVector<T>::trim
+*/
+template<typename T> AlgebraicVector<T> trim(const AlgebraicVector<T> &obj, unsigned int min, unsigned int max) {
+    return obj.trim(min, max);
+}
+
+/***********************************************************************************
+*     Intrinsic Functions
+************************************************************************************/
 /** Componentwise application of the absolute value function.
     @param[in] obj AlgebraicVector<T>
     @return A new AlgebraicVector
@@ -1379,12 +1668,149 @@ template<typename T> AlgebraicVector<T> atanh(const AlgebraicVector<T> &obj) {
     return obj.atanh();
 }
 
+/***********************************************************************************
+*     Norm & Estimation Functions
+************************************************************************************/
+/** Componentwise application of the norm function.
+    @param[in] obj AlgebraicVector<T>
+    @param[in] type type of norm to be computed
+    @return A new AlgebraicVector
+    @see AlgebraicVector<T>::norm
+    @see DA::norm
+ */
+template<typename T> AlgebraicVector<double> norm(const AlgebraicVector<T> &obj, const unsigned int type) {
+    return obj.norm(type);
+}
+
+/***********************************************************************************
+*     Evaluation Functions
+************************************************************************************/
+/** Evaluate an AlgebraicVector<T> with a vector type U of arguments
+    and return a vector of type U with the results.
+    @param[in] obj An AlgebraicVector<DA>
+    @param[in] args Vector type U containing the arguments
+    @return A new vector of type U containing the results of the evaluation process
+    @see AlgebraicVector<T>::eval()
+ */
+template<typename T, typename U> U eval(const AlgebraicVector<T> &obj, const U &args) {
+    return obj.eval(args);
+}
+
+/** Evaluate an AlgebraicVector<DA> with an braced initializer list of type T
+    and return an AlgebraicVector of type T with the results.
+    @param[in] obj An AlgebraicVector<DA>
+    @param[in] l Braced initializer list containing the arguments
+    @return A new AlgebraicVector of type T containing the results of the evaluation.
+    @note C++ is not able to derive the type of elements of an initializer list automatically.
+    That means eval() must be called explicitly as e.g. eval<double>(x, {1.0, 2.0, 3.0}) when
+    used with initializer lists.
+    @see AlgebraicVector<T>::eval()
+ */
+template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T> &obj, const std::initializer_list<U> l) {
+    return obj.eval(l);
+}
+
+/** Evaluate an AlgebraicVector<DA> with a single scalar argument of type U
+    and return an AlgebraicVector<T> containing the results.
+    @param[in] obj The AlgebraicVector<T> to evaluate
+    @param[in] arg The argument of type T
+    @return A new AlgebraicVector<T> containing the results of the evaluation process
+    @see AlgebraicVector<T>::evalScalar()
+ */
+template<typename T, typename U> AlgebraicVector<U> evalScalar(const AlgebraicVector<T> &obj, const U &arg) {
+    return obj.evalScalar(arg);
+}
+
+/** Compile vector of polynomials and create a compiledDA object.
+    @param[in] obj The AlgebraicVector to compile
+    @return The compiled DA object
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+ */
+template<typename T> compiledDA compile(const AlgebraicVector<T> &obj) {
+    return obj.compile();
+}
+
+/** Partial evaluation of vector of polynomials. In each element of the vector,
+    variable var is replaced by the value val. The resulting vector of DAs
+    is returned.
+    @param[in] obj The vector to partially evaluate
+    @param[in] var Variable number to be replaced
+    @param[in] val Value by which to replace the variable
+    @return A new DA object
+    @note This DA specific function is only available in AlgebraicVector<DA>.
+    When called on AlgebraicVectors of other types (e.g. double), a compiler error will result.
+ */
+template<typename T> AlgebraicVector<T> plug(const AlgebraicVector<T> &obj, const unsigned int var, const double val) {
+    return obj.plug(var, val);
+}
+
+/***********************************************************************************
+*     Input/Output Functions
+************************************************************************************/
+/** Output a vector to a C++ output stream.
+    @param[in] out standard output stream
+    @param[in] obj AlgebraicVector to be written to the stream
+    @return Reference to output stream out
+ */
+template<typename T> std::ostream& operator<<(std::ostream &out, const AlgebraicVector<T> &obj) {
+    const size_t size = obj.size();
+
+    out << "[[[ " << size << " vector" << std::endl;
+    for(size_t i=0; i<size;i++) {
+        out << obj[i] << std::endl;
+    }
+    out << "]]]" << std::endl;
+
+    return out;
+}
+
+/** Read a vector from a C++ input stream.
+    @param[in] in standard input stream
+    @param[in] obj AlgebraicVector to be read from the stream
+    @return Reference to input stream in
+ */
+template<typename T> std::istream& operator>>(std::istream &in, AlgebraicVector<T> &obj) {
+    std::string init_line;
+    size_t vec_size;
+
+    // try to read the first line
+    getline(in, init_line);
+    if(in.good()) {
+        // retrieve the size of the vector to be read
+        std::size_t found = init_line.find_first_of(' ');
+        std::string size_str(init_line,4,found-4);
+        if(!(std::istringstream(size_str) >> vec_size)) vec_size = 0;
+
+        // resize the object to meet the size of the vector to be read
+        obj.resize(vec_size);
+
+        // fill the AlgebraicVector
+        for (size_t i = 0; in.good() && (i < vec_size); i++) {
+            in >> obj[i];
+
+            // check the next character
+            if (in.peek() == '\n')       // the previous operator>> does not consume the \n character when an AlgebraicVector<T> (with T != DA) is considered
+                in.ignore();            // ignore the next character
+        }
+        // skip the line at the end of a AlgebraicVector (containing ]]])
+        getline(in, init_line);
+    } else {
+        obj.resize(0);
+    }
+
+    return in;
+}
+
+/***********************************************************************************
+*     Vector Functions
+************************************************************************************/
 /** Compute the dot product between two AlgebraicVectors.
    @param[in] obj1 a AlgebraicVector
    @param[in] obj2 a AlgebraicVector
    @return A scalar value
  */
-template<typename U, typename V> typename PromotionTrait<U,V>::returnType dot(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2) {
+template<typename T, typename U> typename PromotionTrait<T,U>::returnType dot(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
     return obj1.dot(obj2);
 }
 
@@ -1393,7 +1819,7 @@ template<typename U, typename V> typename PromotionTrait<U,V>::returnType dot(co
     @param[in] obj2 a AlgebraicVector
     @return A new AlgebraicVector
  */
-template<typename U, typename V> AlgebraicVector<typename PromotionTrait<U,V>::returnType> cross(const AlgebraicVector<U> &obj1, const AlgebraicVector<V> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> cross(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
     return obj1.cross(obj2);
 }
 
@@ -1412,53 +1838,6 @@ template<typename T> T length(const AlgebraicVector<T> &obj) {
  */
 template<typename T> AlgebraicVector<T> normalize(const AlgebraicVector<T> &obj) {
     return obj.normalize();
-}
-
-/** Evaluate an AlgebraicVector<DA> with a vector type V of arguments
-    and return a vector of type V with the results.
-    @param[in] obj An AlgebraicVector<DA>
-    @param[in] args Vector type V containing the arguments
-    @return A new vector of type V containing the results of the evaluation process
-    @see AlgebraicVector<T>::eval()
- */
-template<typename V> V eval(const AlgebraicVector<DA> &obj, const V &args) {
-    return obj.eval(args);
-}
-
-/** Evaluate an AlgebraicVector<DA> with an braced initializer list of type T
-    and return an AlgebraicVector of type T with the results.
-    @param[in] obj An AlgebraicVector<DA>
-    @param[in] l Braced initializer list containing the arguments
-    @return A new AlgebraicVector of type T containing the results of the evaluation.
-    @note C++ is not able to derive the type of elements of an initializer list automatically.
-    That means eval() must be called explicitly as e.g. eval<double>(x, {1.0, 2.0, 3.0}) when
-    used with initializer lists.
-    @see AlgebraicVector<T>::eval()
- */
-template<typename T> AlgebraicVector<T> eval(const AlgebraicVector<DA> &obj, const std::initializer_list<T> l) {
-    return obj.eval<T>(l);
-}
-
-/** Evaluate an AlgebraicVector<DA> with a single scalar argument of type U
-    and return an AlgebraicVector<T> containing the results.
-    @param[in] obj The AlgebraicVector<T> to evaluate
-    @param[in] arg The argument of type T
-    @return A new AlgebraicVector<T> containing the results of the evaluation process
-    @see AlgebraicVector<T>::evalScalar()
- */
-template<typename T> AlgebraicVector<T> evalScalar(const AlgebraicVector<DA> &obj, const T &arg) {
-    return obj.evalScalar(arg);
-}
-
-/** Componentwise application of the norm function.
-    @param[in] obj AlgebraicVector<T>
-    @param[in] type type of norm to be computed
-    @return A new AlgebraicVector
-    @see AlgebraicVector<T>::norm
-    @see DA::norm
- */
-template<typename T> AlgebraicVector<double> norm(const AlgebraicVector<T> &obj, const unsigned int type) {
-    return obj.norm(type);
 }
 
 }
