@@ -55,13 +55,13 @@ compiledDA::compiledDA(const compiledDA &cda) {
  */
 compiledDA::compiledDA(const std::vector<DA> &da) {
     dim = (unsigned int)da.size();
-    if(dim<1) DACEException(16,04);
+    if(dim<1) DACEException(16, 04);
 
     ac = new double[DA::getMaxMonomials()*(dim+2)];
     unsigned int nterms, nvars, nord;
     const DACEDA **mb = new const DACEDA*[dim];
     for(unsigned int i=0; i<dim; i++) mb[i] = &(da[i].m_index);
-    daceEvalTree(mb,(int)dim,ac,nterms,nvars,nord);
+    daceEvalTree(mb, (int)dim, ac, nterms, nvars, nord);
     terms = (unsigned int) nterms;
     vars = (unsigned int) nvars;
     ord = (unsigned int) nord;
@@ -78,7 +78,7 @@ compiledDA::compiledDA(const DA &da) {
     dim = 1;
     unsigned int nterms, nvars, nord;
     const DACEDA *mb = &(da.m_index);
-    daceEvalTree(&mb,(int)dim,ac,nterms,nvars,nord);
+    daceEvalTree(&mb, (int)dim, ac, nterms, nvars, nord);
     terms = (unsigned int) nterms;
     vars = (unsigned int) nvars;
     ord = (unsigned int) nord;
@@ -100,13 +100,14 @@ compiledDA::~compiledDA() throw() {
     @return The compiledDA object with the same content of the given compiledDA
  */
 compiledDA& compiledDA::operator=(const compiledDA &cda) {
-    if(this != &cda){
+    if(this != &cda) {
         dim = cda.dim;
         terms = cda.terms;
         vars = cda.vars;
         ord = cda.ord;
         ac = new double[terms*(dim+2)];
-        for(int i=terms*(dim+2)-1; i>=0; i--) ac[i] = cda.ac[i];}
+        for(int i=terms*(dim+2)-1; i>=0; i--) ac[i] = cda.ac[i];
+    }
 
     return *this;
 }
@@ -126,7 +127,7 @@ template<> void compiledDA::eval(const std::vector<double> &args, std::vector<do
     for(unsigned int i=0; i<dim; i++, p++)
         res[i] = (*p);
     // higher order terms
-    for(unsigned int i=1; i<terms; i++){
+    for(unsigned int i=1; i<terms; i++) {
         unsigned int jl = (unsigned int)(*p); p++;
         unsigned int jv = (unsigned int)(*p)-1; p++;
         if(jv < narg)
@@ -158,7 +159,7 @@ template<> void compiledDA::eval(const std::vector<DA> &args, std::vector<DA> &r
     for(unsigned int i=0; i<dim; i++, p++)
         daceCreateConstant(res[i].m_index,*p);
     // higher order terms
-    for(unsigned int i=1; i<terms; i++){
+    for(unsigned int i=1; i<terms; i++) {
         unsigned int jl = (unsigned int)(*p); p++;
         unsigned int jv = (unsigned int)(*p)-1; p++;
         if(jl > jlskip)
