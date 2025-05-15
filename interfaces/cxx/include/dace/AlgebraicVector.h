@@ -55,6 +55,32 @@ template<typename T> class AlgebraicMatrix;
     @ingroup DACECXX
 
     Provides vector-vector, vector-scalar, and componentwise operations.
+
+    This class is templated allowing it to store elements of any algebraic type T.
+    However, some of the member functions (e.g. AlgebraicVector::eval) require the
+    datatype T to be DACE::DA (or something that implements the same interface).
+    Most basic operations that make sense for scalars and DAs will work for both.
+
+    Example:
+    @code
+        #include <dace/dace.h>
+
+        DA::init(5, 3);                         // order 5, 3 variables
+
+        AlgebraicVector<double> dbl(3);         // vector of length 3
+        AlgebraicVector<DA> da(3);
+
+        dbl = {1.0, 2.0, 3.0};                  // braced initializer list notation
+        da = {DA(1), DA(2), DA(3)};
+        //da = AlgebraicVector<DA>::identity(); // same as above
+
+        da = sin(da) + 3.1*dbl - 1.0;           // can mix scalars, vector types, result upcast to DA
+
+        da = da.deriv(1) + vectorDA{0.0, DA(2), DA(3)};     // vectorDA is short for AlgebraicVector<DA>
+        //dbl.deriv(1);                         // compiler error: no derivative of double
+
+        std::cout << da[0] - cos(DA(1));        // prints a zero DA vector
+    @endcode
  */
 template<typename T> class AlgebraicVector : public std::vector<T>
 {
