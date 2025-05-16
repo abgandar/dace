@@ -450,26 +450,67 @@ DACE_API DA translateVariable(const DA &da, const unsigned int var = 0, const do
  */
 DACE_API std::string toString(const DA &da);
 DACE_API void write(const DA &da, std::ostream &os);
-DACE_API std::ostream& operator<< (std::ostream &out, const DA &da);
-DACE_API std::istream& operator>> (std::istream &in, DA &da);
+DACE_API std::ostream& operator<<(std::ostream &out, const DA &da);
+DACE_API std::istream& operator>>(std::istream &in, DA &da);
 /** @} */
 
+/** Implementation of DA comparisons using only the constant part.
+    To use these comparisons import them into the DACE namespace using
+    @code
+        namespace DACE { using namespace DACE::comp_cons; };
+    @endcode
+    @warning These comparisons only use the constant part. This may not be appropriate
+    for all purposes. Read the Manual on @ref DACOMP for further information.
+ */
+namespace comp_cons {
+    DACE_API bool operator<(const DA &lhs, const DA &rhs);
+    DACE_API bool operator<(const double lhs, const DA &rhs);
+    DACE_API bool operator<(const DA &lhs, const double rhs);
+    DACE_API bool operator>(const DA &lhs, const DA &rhs);
+    DACE_API bool operator>(const double lhs, const DA &rhs);
+    DACE_API bool operator>(const DA &lhs, const double rhs);
+    DACE_API bool operator<=(const DA &lhs, const DA &rhs);
+    DACE_API bool operator<=(const double lhs, const DA &rhs);
+    DACE_API bool operator<=(const DA &lhs, const double rhs);
+    DACE_API bool operator>=(const DA &lhs, const DA &rhs);
+    DACE_API bool operator>=(const double lhs, const DA &rhs);
+    DACE_API bool operator>=(const DA &lhs, const double rhs);
+    DACE_API bool operator==(const DA &lhs, const DA &rhs);
+    DACE_API bool operator==(const double lhs, const DA &rhs);
+    DACE_API bool operator==(const DA &lhs, const double rhs);
+    DACE_API bool operator!=(const DA &lhs, const DA &rhs);
+    DACE_API bool operator!=(const double lhs, const DA &rhs);
+    DACE_API bool operator!=(const DA &lhs, const double rhs);
+}
+
 /** Implementation of abs(DA) using only the absolute constant part.
+    To use this function import it into the DACE namespace using
+    @code
+        namespace DACE { using namespace DACE::abs_cons; };
+    @endcode
  */
 namespace abs_cons {
-    double abs(const DA &da);
+    DACE_API double abs(const DA &da);
 }
 
 /** Implementation of abs(DA) using the largest absolute coefficient.
+    To use this function import it into the DACE namespace using
+    @code
+        namespace DACE { using namespace DACE::abs_max; };
+    @endcode
  */
 namespace abs_max {
-    double abs(const DA &da);
+    DACE_API double abs(const DA &da);
 }
 
 /** Implementation of abs(DA) using the sum of all absolute coefficients.
+    To use this function import it into the DACE namespace using
+    @code
+        namespace DACE { using namespace DACE::abs_sum; };
+    @endcode
  */
 namespace abs_sum {
-    double abs(const DA &da);
+    DACE_API double abs(const DA &da);
 }
 
 /** Represents a DA vector in a binary, setup independent format.

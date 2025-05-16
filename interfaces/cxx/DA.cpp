@@ -2709,6 +2709,200 @@ void write(const DA &da, std::ostream &os) {
     return da.write(os);
 }
 
+namespace comp_cons {
+    bool operator<(const DA &lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs DA object
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)<cons(rhs);
+    }
+
+    bool operator<(const double lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs double
+    @param[in] rhs DA object
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return lhs<cons(rhs);
+    }
+
+    bool operator<(const DA &lhs, const double rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs double
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)<rhs;
+    }
+
+    bool operator>(const DA &lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs DA object
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)>cons(rhs);
+    }
+
+    bool operator>(const double lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs double
+    @param[in] rhs DA object
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return lhs>cons(rhs);
+    }
+
+    bool operator>(const DA &lhs, const double rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs double
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)>rhs;
+    }
+
+    bool operator<=(const DA &lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs DA object
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)<=cons(rhs);
+    }
+
+    bool operator<=(const double lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs double
+    @param[in] rhs DA object
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return lhs<=cons(rhs);
+    }
+
+    bool operator<=(const DA &lhs, const double rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs double
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)<=rhs;
+    }
+
+    bool operator>=(const DA &lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs DA object
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)>=cons(rhs);
+    }
+
+    bool operator>=(const double lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs double
+    @param[in] rhs DA object
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return lhs>=cons(rhs);
+    }
+
+    bool operator>=(const DA &lhs, const double rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs double
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)>=rhs;
+    }
+
+    bool operator==(const DA &lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs DA object
+    @warning This operator only compares constant parts! It does not check any higher order terms
+    so DAs comparing equal may still represent different polynomials.
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)==cons(rhs);
+    }
+
+    bool operator==(const double lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs double
+    @param[in] rhs DA object
+    @warning This operator only compares constant parts! It does not check any higher order terms
+    so DAs comparing equal may still represent different polynomials.
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return lhs==cons(rhs);
+    }
+
+    bool operator==(const DA &lhs, const double rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs double
+    @warning This operator only compares constant parts! It does not check any higher order terms
+    so DAs comparing equal may still represent different polynomials.
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)==rhs;
+    }
+
+    bool operator!=(const DA &lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs DA object
+    @warning This operator only compares constant parts! It does not check any higher order terms
+    so DAs comparing equal may still represent different polynomials.
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)!=cons(rhs);
+    }
+
+    bool operator!=(const double lhs, const DA &rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs double
+    @param[in] rhs DA object
+    @warning This operator only compares constant parts! It does not check any higher order terms
+    so DAs comparing equal may still represent different polynomials.
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return lhs!=cons(rhs);
+    }
+
+    bool operator!=(const DA &lhs, const double rhs) {
+/** Compare constant part of DAs.
+    @param[in] lhs DA object
+    @param[in] rhs double
+    @warning This operator only compares constant parts! It does not check any higher order terms
+    so DAs comparing equal may still represent different polynomials.
+    @throw DACE::DACEException
+    @see DA::cons
+ */
+        return cons(lhs)!=rhs;
+    }
+}
+
 namespace abs_cons {
     double abs(const DA &da) {
 /** Absolute value of constant part.
