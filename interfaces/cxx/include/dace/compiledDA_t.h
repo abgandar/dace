@@ -153,7 +153,8 @@ template<class T> void compiledDA::operator()(const std::vector<T> &args, std::v
     with. All remaining independent DA variables are assumed to be zero.
     @return Vector with the result of the evaluation. The vector is of
     type std::vector<V>.
- */
+    @deprecated Replaced by operator() with braced initializer list (e.g. x({arg})).
+*/
 template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
     std::vector<T> args(1);
     std::vector<T> res(dim);
