@@ -252,14 +252,21 @@ public:
     /** @} */
 
     /********************************************************************************
-    *     Polynomial evaluation routines
+    *     Polynomial evaluation operators and routines
     *********************************************************************************/
     /** @name Evaluation
      * @{
      */
+    template<typename U> U operator()(const U &args) const;
+    template<typename U> AlgebraicVector<U> operator()(const std::initializer_list<U> l) const;
+    template<typename U> AlgebraicVector<U> operator()(const U args[], const unsigned int length) const;
+
     template<typename U> U eval(const U &args) const;
     template<typename U> AlgebraicVector<U> eval(const std::initializer_list<U> l) const;
+    template<typename U> AlgebraicVector<U> eval(const U args[], const unsigned int length) const;
+
     template<typename U> AlgebraicVector<U> evalScalar(const U &arg) const;
+
     compiledDA compile() const;
     AlgebraicVector<T> plug(const unsigned int var, const double val = 0.0) const;
     /** @} */
@@ -384,6 +391,7 @@ template<typename T> AlgebraicVector<double> norm(const AlgebraicVector<T> &obj,
  */
 template<typename T, typename U> U eval(const AlgebraicVector<T> &obj, const U &args);
 template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T> &obj, const std::initializer_list<U> l);
+template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T> &obj, const U args[], const unsigned int length);
 template<typename T, typename U> AlgebraicVector<U> evalScalar(const AlgebraicVector<T> &obj, const U &arg);
 template<typename T> compiledDA compile(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> plug(const AlgebraicVector<T> &obj, const unsigned int var, const double val = 0.0);

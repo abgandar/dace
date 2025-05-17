@@ -934,8 +934,8 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::invert() const {
     @see compiledDA
     @see AlgebraicVector::compile()
  */
-template<typename T> template<typename U> U AlgebraicVector<T>::eval(const U &args) const {
-    return compiledDA(*this).eval(args);
+template<typename T> template<typename U> U AlgebraicVector<T>::operator()(const U &args) const {
+    return compiledDA(*this)(args);
 }
 
 /** Evaluate each element of a vector of DA with a braced initializer list of type U
@@ -944,16 +944,80 @@ template<typename T> template<typename U> U AlgebraicVector<T>::eval(const U &ar
     @return A new AlgebraicVector<U> containing the results of the evaluation
     @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-    @note C++ is not able to derive the type U of elements of an initializer list automatically.
-    That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
-    used with initializer lists.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class compiledDA.
     @see compiledDA
     @see AlgebraicVector::compile()
  */
+template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>::operator()(const std::initializer_list<U> l) const {
+    return compiledDA(*this)(l);
+}
+
+/** Evaluate each element of a vector of DA with an array of arithmetic type T arguments.
+    @param[in] args array of arithmetic type T with which the DA vector is evaluated
+    @param[in] length number of elements in the array args
+    @return A new AlgebraicVector<U> containing the results of the evaluation
+    @warning This function only works on AlgebraicVector<DA>. When called on other
+    data types (e.g. double) a compiler error is issued.
+    @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
+    in class compiledDA.
+    @see AlgebraicVector::compile()
+    @see compiledDA
+ */
+template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>::operator()(const U args[], const unsigned int length) const {
+    return compiledDA(*this)(args, length);
+}
+
+/** Evaluate each element of a vector of DA with any vector type U containing the arguments
+    and return a vector of results of the same type U.
+    @param[in] args vector (e.g. AlgebraicVector<> or std::vector<>) of arguments
+    @return A new vector of same type as argument args containing the
+    results of the evaluation
+    @warning This function only works on AlgebraicVector<DA>. When called on other
+    data types (e.g. double) a compiler error is issued.
+    @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
+    in class compiledDA.
+    @deprecated Replaced by AlgebraicVector::operator()().
+    @see AlgebraicVector::operator()()
+    @see AlgebraicVector::compile()
+    @see compiledDA
+ */
+template<typename T> template<typename U> U AlgebraicVector<T>::eval(const U &args) const {
+    return compiledDA(*this)(args);
+}
+
+/** Evaluate each element of a vector of DA with a braced initializer list of type U
+    and return an AlgebraicVector<U> with the results.
+    @param[in] l Braced initializer list containing the arguments of type U
+    @return A new AlgebraicVector<U> containing the results of the evaluation
+    @warning This function only works on AlgebraicVector<DA>. When called on other
+    data types (e.g. double) a compiler error is issued.
+    @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
+    in class compiledDA.
+    @deprecated Replaced by AlgebraicVector::operator()().
+    @see AlgebraicVector::operator()()
+    @see AlgebraicVector::compile()
+    @see compiledDA
+ */
 template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>::eval(const std::initializer_list<U> l) const {
-    return compiledDA(*this).eval<U>(l);
+    return compiledDA(*this)(l);
+}
+
+/** Evaluate each element of a vector of DA with an array of arithmetic type T arguments.
+    @param[in] args array of arithmetic type T with which the DA vector is evaluated
+    @param[in] length number of elements in the array args
+    @return A new AlgebraicVector<U> containing the results of the evaluation
+    @warning This function only works on AlgebraicVector<DA>. When called on other
+    data types (e.g. double) a compiler error is issued.
+    @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
+    in class compiledDA.
+    @deprecated Replaced by AlgebraicVector::operator()().
+    @see AlgebraicVector::operator()()
+    @see AlgebraicVector::compile()
+    @see compiledDA
+ */
+template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>::eval(const U args[], const unsigned int length) const {
+    return compiledDA(*this)(args, length);
 }
 
 /** Evaluate each element of a vector of DA with a single arithmetic type U argument.
@@ -963,11 +1027,12 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
     data types (e.g. double) a compiler error is issued.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class compiledDA.
-    @see compiledDA
+    @deprecated Replaced by AlgebraicVector::operator()() with braced initializer list (e.g. da({arg})).
     @see AlgebraicVector::compile()
+    @see compiledDA
  */
 template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>::evalScalar(const U &arg) const {
-    return compiledDA(*this).evalScalar(arg);
+    return compiledDA(*this)({arg});
 }
 
 /** Compile vector of DA polynomials and create a compiledDA object.
@@ -1724,6 +1789,24 @@ template<typename T, typename U> U eval(const AlgebraicVector<T> &obj, const U &
  */
 template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T> &obj, const std::initializer_list<U> l) {
     return obj.eval(l);
+}
+
+/** Evaluate each element of a vector of DA with an array of arithmetic type T arguments.
+    @param[in] obj An AlgebraicVector<T>
+    @param[in] args array of arithmetic type T with which the DA vector is evaluated
+    @param[in] length number of elements in the array args
+    @return A new AlgebraicVector<U> containing the results of the evaluation
+    @warning This function only works on AlgebraicVector<DA>. When called on other
+    data types (e.g. double) a compiler error is issued.
+    @note C++ is not able to derive the type U of elements of an initializer list automatically.
+    That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
+    used with initializer lists.
+    @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
+    in class compiledDA.
+    @see AlgebraicVector<T>::eval()
+ */
+template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T> &obj, const U args[], const unsigned int length) {
+    return obj.eval(args, length);
 }
 
 /** Evaluate each element of a vector of DA with a single arithmetic type U argument.
