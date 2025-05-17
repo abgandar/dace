@@ -172,7 +172,7 @@ namespace DACE {
         @param[in] ex Exception to be printed to the stream
         @return Output stream
      */
-    std::ostream& operator<< (std::ostream &out, const DACEException &ex) {
+    std::ostream& operator<<(std::ostream &out, const DACEException &ex) {
         return out << ex.what() << std::endl;
     }
 

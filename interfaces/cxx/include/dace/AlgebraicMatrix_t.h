@@ -616,7 +616,7 @@ template<class T> AlgebraicMatrix<double> AlgebraicMatrix<T>::cons() const {
     @param[in] obj AlgebraicMatrix to be printed in the stream
     @return Output stream
  */
-template<typename U> std::ostream& operator<< (std::ostream &out, const AlgebraicMatrix<U> &obj) {
+template<typename U> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<U> &obj) {
     unsigned int nrows = obj.nrows();
     unsigned int ncols = obj.ncols();
 

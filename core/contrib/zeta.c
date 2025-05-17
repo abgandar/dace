@@ -9,7 +9,7 @@ Modified interface by Alexander Wittig, November 2019.
 
 /// @cond CONTRIB
 
-/** @addtogroup DACEContrib Contrib
+/** @addtogroup DACEContrib
     @{
  */
 

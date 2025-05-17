@@ -73,7 +73,7 @@ public:
 /** @name Input/Output Functions
  * @{
  */
-DACE_API std::ostream& operator<< (std::ostream &out, const DACEException &ex);
+DACE_API std::ostream& operator<<(std::ostream &out, const DACEException &ex);
 /** @} */
 
 }

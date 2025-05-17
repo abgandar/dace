@@ -8,7 +8,7 @@
 
 /// @cond CONTRIB
 
-/** @addtogroup DACEContrib Contrib
+/** @addtogroup DACEContrib
     @{
  */
 

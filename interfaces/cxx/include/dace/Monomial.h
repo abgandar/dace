@@ -63,7 +63,7 @@ public:
 /** @name Input/Output Functions
  * @{
  */
-DACE_API std::ostream& operator<< (std::ostream &out, const Monomial &m);
+DACE_API std::ostream& operator<<(std::ostream &out, const Monomial &m);
 /** @} */
 }
 

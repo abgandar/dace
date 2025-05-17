@@ -82,7 +82,7 @@ std::string Monomial::toString() const {
     @param[in] m Monomial to be printed to the stream
     @return Output stream
  */
-std::ostream& operator<< (std::ostream &out, const Monomial &m) {
+std::ostream& operator<<(std::ostream &out, const Monomial &m) {
     return out << m.toString();
 }
 
