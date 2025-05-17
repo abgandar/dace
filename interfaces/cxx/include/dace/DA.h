@@ -271,11 +271,13 @@ public:
     /** @} */
 
     /********************************************************************************
-    *     Polynomial evaluation routines
+    *     Polynomial evaluation routines & operators
     *********************************************************************************/
     /** @name Evaluation
      * @{
      */
+    template<class T> T operator()(const std::vector<T> &args) const;
+    template<class T> T operator()(const T args[], const unsigned int length) const;
     template<class T> T eval(const std::vector<T> &args) const;
     template<class T> T eval(const T args[], const unsigned int length) const;
     template<class T> T evalScalar(const T &arg) const;
@@ -432,7 +434,7 @@ DACE_API Interval bound(const DA &da);
 DACE_API double convRadius(const DA &da, const double eps, const unsigned int type = 1);
 /** @} */
 
-/** @name DA Evaluation Functions
+/** @name DA Evaluation Functions and Operators
  * @{
  */
 template<class T> T eval(const DA &da, const std::vector<T> &args);

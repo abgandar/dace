@@ -52,12 +52,12 @@ namespace DACE {
     compiledDA.
     @note This function can be called with a braced initializer list. However, C++
     is not able to derive the type of elements of an initializer list automatically.
-    That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
+    That means operator() must be called explicitly as e.g. <double>({1.0, 2.0, 3.0}) when
     used with initializer lists.
-    @see compiledDA::eval
+    @see compiledDA::operator()
  */
-template<class T> T DA::eval(const std::vector<T> &args) const {
-    return compiledDA(*this).eval(args)[0];
+template<class T> T DA::operator()(const std::vector<T> &args) const {
+    return compiledDA(*this)(args)[0];
 }
 
 /** Generic evaluation of the DA with an array of arithmetic type T arguments.
@@ -68,10 +68,45 @@ template<class T> T DA::eval(const std::vector<T> &args) const {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @see compiledDA::eval
+    @see compiledDA::operator()
+ */
+template<class T> T DA::operator()(const T args[], const unsigned int length) const {
+    return compiledDA(*this)(args, length)[0];
+}
+
+/** Generic evaluation of the DA with a vector of arithmetic type T arguments.
+    @param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
+    @return The result of the evaluation
+    @throw DACE::DACEException
+    @note To be used only for single polynomial evaluation. For multiple
+    evaluations of the same polynomial use the corresponding method in class
+    compiledDA.
+    @note This function can be called with a braced initializer list. However, C++
+    is not able to derive the type of elements of an initializer list automatically.
+    That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
+    used with initializer lists.
+    @deprecated Replaced by DA::operator().
+    @see DA::operator()
+    @see compiledDA::operator()
+ */
+template<class T> T DA::eval(const std::vector<T> &args) const {
+    return (*this)(args);
+}
+
+/** Generic evaluation of the DA with an array of arithmetic type T arguments.
+    @param[in] args array of arithmetic type T with which the DA vector is evaluated
+    @param[in] length number of elements in the array args
+    @return The result of the evaluation
+    @throw DACE::DACEException
+    @note To be used only for single polynomial evaluation. For multiple
+    evaluations of the same polynomial use the corresponding method in class
+    compiledDA.
+    @deprecated Replaced by DA::operator().
+    @see DA::operator()
+    @see compiledDA::operator()
  */
 template<class T> T DA::eval(const T args[], const unsigned int length) const {
-    return compiledDA(*this).eval(args,length)[0];
+    return (*this)(args, length);
 }
 
 /** Generic evaluation of the DA with a single arithmetic type T argument.
@@ -98,10 +133,10 @@ template<class T> T DA::evalScalar(const T &arg) const {
     is not able to derive the type of elements of an initializer list automatically.
     That means eval() must be called explicitly as e.g. eval<double>(x, {1.0, 2.0, 3.0}) when
     used with initializer lists.
-    @see compiledDA
+    @see compiledDA::operator()
  */
 template<class T> T eval(const DA &da, const std::vector<T> &args) {
-    return da.eval(args);
+    return da(args);
 }
 
 /** Generic evaluation of the DA with an array of arithmetic type T arguments.
@@ -113,10 +148,10 @@ template<class T> T eval(const DA &da, const std::vector<T> &args) {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @see compiledDA::eval
+    @see compiledDA::operator()
  */
 template<class T> T eval(const DA &da, const T args[], const unsigned int length) {
-    return da.eval(args,length);
+    return da(args, length);
 }
 
 /** Generic evaluation of the DA with a single arithmetic type T arguments.

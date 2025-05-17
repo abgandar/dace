@@ -40,7 +40,7 @@
 namespace DACE {
 
 /********************************************************************************
-*     compiledDA evaluation routines
+*     compiledDA evaluation operators
 *********************************************************************************/
 /** Evaluate the compiled polynomial with a vector of any arithmetic type
     (such as DA or double) and return vector of results.
@@ -52,9 +52,9 @@ namespace DACE {
     @return Vector with the result of the evaluation. The vector is of
     the same type as the argument args.
  */
-template<class V> V compiledDA::eval(const V &args) const {
+template<class V> V compiledDA::operator()(const V &args) const {
     V res(dim);
-    eval(args, res);
+    (*this)(args, res);
 
     return res;
 }
@@ -71,9 +71,9 @@ template<class V> V compiledDA::eval(const V &args) const {
     That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
     used with initializer lists.
  */
-template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T> l) const {
+template<class T> std::vector<T> compiledDA::operator()(const std::initializer_list<T> l) const {
     std::vector<T> res(dim);
-    eval(std::vector<T>(l), res);
+    (*this)(std::vector<T>(l), res);
 
     return res;
 }
@@ -88,26 +88,10 @@ template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T>
     @return Vector with the result of the evaluation. The vector is of
     type std::vector<V>.
  */
-template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned int length) const {
+template<class T> std::vector<T> compiledDA::operator()(const T args[], const unsigned int length) const {
     std::vector<T> arg(args,args+length);
     std::vector<T> res(dim);
-    eval(arg, res);
-
-    return res;
-}
-
-/** Evaluate the compiled polynomial with a single argument of any
-    arithmetic type (such as DA or double) and return vector of results.
-    @param[in] arg The value of the first independent DA variable to evaluate
-    with. All remaining independent DA variables are assumed to be zero.
-    @return Vector with the result of the evaluation. The vector is of
-    type std::vector<V>.
- */
-template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
-    std::vector<T> args(1);
-    std::vector<T> res(dim);
-    args[0] = arg;
-    eval(args, res);
+    (*this))(arg, res);
 
     return res;
 }
@@ -128,7 +112,7 @@ template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
      - double multiplication  T::operator*(const double d)\n
      - double addition        T::operator+(const double d)
  */
-template<class T> void compiledDA::eval(const std::vector<T> &args, std::vector<T> &res) const {
+template<class T> void compiledDA::operator()(const std::vector<T> &args, std::vector<T> &res) const {
     const unsigned int narg = args.size();
     unsigned int jlskip = ord+1;
     double *p = ac+2;
@@ -161,6 +145,75 @@ template<class T> void compiledDA::eval(const std::vector<T> &args, std::vector<
     }
 
     delete[] xm;
+}
+
+/********************************************************************************
+*     compiledDA evaluation routines
+*********************************************************************************/
+/** Evaluate the compiled polynomial with a single argument of any
+    arithmetic type (such as DA or double) and return vector of results.
+    @param[in] arg The value of the first independent DA variable to evaluate
+    with. All remaining independent DA variables are assumed to be zero.
+    @return Vector with the result of the evaluation. The vector is of
+    type std::vector<V>.
+ */
+template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
+    std::vector<T> args(1);
+    std::vector<T> res(dim);
+    args[0] = arg;
+    (*this)(args, res);
+
+    return res;
+}
+
+/** Evaluate the compiled polynomial with a vector of any arithmetic type
+    (such as DA or double) and return vector of results.
+    @param[in] args the values of the independent DA variables to evaluate
+    with. Must be a std::vector<> (or derived class) of an arithmetic
+    type. If less than the number of independent DA variables defined
+    during the DACE initialization are given, the missing entries are
+    assumed to be zero.
+    @return Vector with the result of the evaluation. The vector is of
+    the same type as the argument args.
+    @deprecated Replaced by compiledDA::operator().
+    @see compiledDA::operator()
+ */
+template<class V> V compiledDA::eval(const V &args) const {
+    return (*this)(args);
+}
+
+/** Evaluate the compiled polynomial with a braced initializer list of any arithmetic type
+    (such as DA or double) and return vector of results.
+    @param[in] l the values of the independent DA variables to evaluate
+    with. Must be a braced initializer list of an arithmetic
+    type. If less than the number of independent DA variables defined
+    during the DACE initialization are given, the missing entries are
+    assumed to be zero.
+    @return std::vector with the result of the evaluation
+    @note C++ is not able to derive the type of elements of an initializer list automatically.
+    That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
+    used with initializer lists.
+    @deprecated Replaced by compiledDA::operator().
+    @see compiledDA::operator()
+ */
+template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T> l) const {
+    return (*this)(l);
+}
+
+/** Evaluate the compiled polynomial with an array of any arithmetic type
+    (such as DA or double) and return vector of results.
+    @param[in] args array of the values of the independent DA variables to
+    evaluate with
+    @param[in] length Size of the array args[]. If less than the number of
+    variables defined during the DACE initialization are given, the
+    missing entries are assumed to be zero.
+    @return Vector with the result of the evaluation. The vector is of
+    type std::vector<V>.
+    @deprecated Replaced by compiledDA::operator().
+    @see compiledDA::operator()
+ */
+template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned int length) const {
+    return (*this)(args, length);
 }
 
 }

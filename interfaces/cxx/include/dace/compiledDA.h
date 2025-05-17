@@ -26,10 +26,10 @@
  *      Author: Dinamica Srl
  */
 
-/*  DA representation for efficient repeated evaluation.
+/*  DA representation for efficient evaluation.
 
     This header file contains the compiledDA class for a representation of one
-    or more DA objects that is prepared ("compiled") for efficient repeated evaluation.
+    or more DA objects that is prepared ("compiled") for efficient evaluation.
 */
 
 #ifndef DINAMICA_COMPILEDDA_H_
@@ -75,12 +75,20 @@ public:
     compiledDA& operator=(const compiledDA &cda);
 
     /********************************************************************************
+    *     Evaluation operators
+    *********************************************************************************/
+    template<class V> V operator()(const V &args) const;
+    template<class T> std::vector<T> operator()(const std::initializer_list<T> l) const;
+    template<class T> std::vector<T> operator()(const T args[], const unsigned int length) const;
+    template<class T> void operator()(const std::vector<T> &args, std::vector<T> &res) const;
+
+    /********************************************************************************
     *     Evaluation
     *********************************************************************************/
+    template<class T> std::vector<T> evalScalar(const T &arg) const;
     template<class V> V eval(const V &args) const;
     template<class T> std::vector<T> eval(const std::initializer_list<T> l) const;
     template<class T> std::vector<T> eval(const T args[], const unsigned int length) const;
-    template<class T> std::vector<T> evalScalar(const T &arg) const;
     template<class T> void eval(const std::vector<T> &args, std::vector<T> &res) const;
 
     /********************************************************************************
@@ -94,9 +102,10 @@ public:
 };
 
 // specializations for particularly efficient evaluation with double and DA arguments implemented in the library
-template<> DACE_API void compiledDA::eval(const std::vector<DA> &args, std::vector<DA> &res) const;
-template<> DACE_API void compiledDA::eval(const std::vector<double> &args, std::vector<double> &res) const;
-
+/** @{ */
+template<> DACE_API void compiledDA::operator()(const std::vector<DA> &args, std::vector<DA> &res) const;
+template<> DACE_API void compiledDA::operator()(const std::vector<double> &args, std::vector<double> &res) const;
+/** @} */
 }
 
 #endif /* DINAMICA_COMPILEDDA_H_ */

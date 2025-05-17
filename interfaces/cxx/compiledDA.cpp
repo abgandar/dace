@@ -113,10 +113,10 @@ compiledDA& compiledDA::operator=(const compiledDA &cda) {
 }
 
 /********************************************************************************
-*     Evaluation overloads and template specialization
+*     Evaluation operator template specializations
 *********************************************************************************/
 // double evaluation
-template<> void compiledDA::eval(const std::vector<double> &args, std::vector<double> &res) const {
+template<> void compiledDA::operator()(const std::vector<double> &args, std::vector<double> &res) const {
     const size_t narg = args.size();
     double *p = ac+2;
     double *xm = new double[ord+1];
@@ -124,17 +124,17 @@ template<> void compiledDA::eval(const std::vector<double> &args, std::vector<do
     // prepare temporary powers
     xm[0] = 1.0;
     // constant part
-    for(unsigned int i=0; i<dim; i++, p++)
+    for(unsigned int i = 0; i < dim; i++, p++)
         res[i] = (*p);
     // higher order terms
-    for(unsigned int i=1; i<terms; i++) {
+    for(unsigned int i = 1; i < terms; i++) {
         unsigned int jl = (unsigned int)(*p); p++;
         unsigned int jv = (unsigned int)(*p)-1; p++;
         if(jv < narg)
             xm[jl] = xm[jl-1]*args[jv];
         else
             xm[jl] = 0;
-        for(unsigned int j=0; j<dim; j++, p++)
+        for(unsigned int j = 0; j < dim; j++, p++)
             res[j] += xm[jl]*(*p);
     }
 
@@ -142,24 +142,24 @@ template<> void compiledDA::eval(const std::vector<double> &args, std::vector<do
 }
 
 // DA evaluation
-template<> void compiledDA::eval(const std::vector<DA> &args, std::vector<DA> &res) const {
+template<> void compiledDA::operator()(const std::vector<DA> &args, std::vector<DA> &res) const {
     const size_t narg = args.size();
     unsigned int jlskip = ord+1;
     double *p = ac+2;
     DACEDA *xm = new DACEDA[ord+1];
     DACEDA tmp;
 
-    // allocate temporary DA variables in dace
-    for(unsigned int i=0; i<ord+1; i++) daceAllocateDA(xm[i],0);
-    daceAllocateDA(tmp,0);
+    // allocate temporary DA variables in DACE core
+    for(unsigned int i = 0; i < ord+1; i++) daceAllocateDA(xm[i], 0);
+    daceAllocateDA(tmp, 0);
     // prepare temporary powers
-    daceCreateConstant(xm[0],1.0);
+    daceCreateConstant(xm[0], 1.0);
 
     // constant part
-    for(unsigned int i=0; i<dim; i++, p++)
-        daceCreateConstant(res[i].m_index,*p);
+    for(unsigned int i = 0; i < dim; i++, p++)
+        daceCreateConstant(res[i].m_index, *p);
     // higher order terms
-    for(unsigned int i=1; i<terms; i++) {
+    for(unsigned int i = 1; i < terms; i++) {
         unsigned int jl = (unsigned int)(*p); p++;
         unsigned int jv = (unsigned int)(*p)-1; p++;
         if(jl > jlskip)
@@ -174,17 +174,17 @@ template<> void compiledDA::eval(const std::vector<DA> &args, std::vector<DA> &r
             continue;
         }
         jlskip = ord+1;
-        daceMultiply(xm[jl-1],args[jv].m_index,xm[jl]);
-        for(unsigned int j=0; j<dim; j++, p++)
-            if((*p)!=0.0)
+        daceMultiply(xm[jl-1], args[jv].m_index, xm[jl]);
+        for(unsigned int j = 0; j < dim; j++, p++)
+            if((*p) != 0.0)
             {
-                daceMultiplyDouble(xm[jl],*p,tmp);
-                daceAdd(res[j].m_index,tmp,res[j].m_index);
+                daceMultiplyDouble(xm[jl], *p, tmp);
+                daceAdd(res[j].m_index, tmp, res[j].m_index);
             }
     }
     // deallocate memory
     daceFreeDA(tmp);
-    for(int i=ord; i>=0; i--) daceFreeDA(xm[i]);
+    for(int i = ord; i >= 0; i--) daceFreeDA(xm[i]);
     delete[] xm;
 
     if(daceGetError()) DACEException();
