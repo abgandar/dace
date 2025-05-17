@@ -91,7 +91,7 @@ template<class T> std::vector<T> compiledDA::operator()(const std::initializer_l
 template<class T> std::vector<T> compiledDA::operator()(const T args[], const unsigned int length) const {
     std::vector<T> arg(args,args+length);
     std::vector<T> res(dim);
-    (*this))(arg, res);
+    (*this)(arg, res);
 
     return res;
 }
