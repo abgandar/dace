@@ -54,19 +54,48 @@ class DA;
     Example:
     @code
         #include <iostream>
+        #include <chrono>
         #include <dace/dace.h>
 
         DA::init(10, 2);
-        DA x = DA::random(0.7);
 
-        // direct evaluation options
-        std::cout << x({0.1, 0.2}) << std::endl;
-        std::vector v(2);
+        // compiledDA evaluation
+        DA x = DA::random(0.7);
+        compiledDA cda(x);                                  // compile x into a compiledDA
+        std::cout << cda({0.1, 0.2})[0] << std::endl;       // cda() returns vector of size one for single DAs
+        std::vector<double> v(2);
         v[0] = 0.1; v[1] = 0.2;
-        std::cout << x(v) << std::endl;
-        std::vector res(2);
-        x(v, res);
-        std::cout << res << std::endl;
+        std::cout << cda(v)[0] << std::endl;                // identical result using vector argument
+
+        // compiledDA vector evaluation
+        AlgebraicVector<DA> Y(3);
+        Y[0] = DA::random(0.7);
+        Y[1] = DA::random(0.7);
+        Y[2] = DA::random(0.7);
+        compiledDA cY(Y);
+        std::vector<double> res = cda({0.1, 0.2});          // evaluate all 3 components at once
+        std::cout << res[0] << "  " << res[1] << "  " << res[2] << std::endl;
+
+        // performance comparison for repeated compiledDA vs DA evaluation
+        constexpr unsigned int N = 20000;
+        std::vector<double> r(N);
+        auto t0 = std::chrono::high_resolution_clock::now();
+        for(unsigned int i = 0; i < N; i++)
+        {
+            v[0] = 0.1 + (double)i/N;
+            r[i] = cda(v)[0];
+        }
+        auto t1 = std::chrono::high_resolution_clock::now();
+        std::cout << "Time compiledDA (ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(t1-t0).count() << std::endl;
+
+        auto t2 = std::chrono::high_resolution_clock::now();
+        for(unsigned int i = 0; i < N; i++)
+        {
+            v[0] = 0.1 + (double)i/N;
+            r[i] = x(v);
+        }
+        auto t3 = std::chrono::high_resolution_clock::now();
+        std::cout << "Time DA (ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(t3-t2).count() << std::endl;
     @endcode
  */
 class DACE_API compiledDA

@@ -276,9 +276,10 @@ public:
     /** @name Evaluation
      * @{
      */
-    template<class T> T operator()(const std::vector<T> &args) const;
+    template<class T> typename T::value_type operator()(const T &args) const;
+    template<class T> T operator()(const std::initializer_list<T> l) const;
     template<class T> T operator()(const T args[], const unsigned int length) const;
-    template<class T> T eval(const std::vector<T> &args) const;
+    template<class T> typename T::value_type eval(const T &args) const;
     template<class T> T eval(const T args[], const unsigned int length) const;
     template<class T> T evalScalar(const T &arg) const;
     compiledDA compile() const;
@@ -437,7 +438,7 @@ DACE_API double convRadius(const DA &da, const double eps, const unsigned int ty
 /** @name DA Evaluation Functions and Operators
  * @{
  */
-template<class T> T eval(const DA &da, const std::vector<T> &args);
+template<class T> typename T::value_type eval(const DA &da, const T &args);
 template<class T> T eval(const DA &da, const T args[], const unsigned int length);
 template<class T> T evalScalar(const DA &da, const T &arg);
 DACE_API compiledDA compile(const DA &da);

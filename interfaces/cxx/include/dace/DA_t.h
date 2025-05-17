@@ -43,21 +43,32 @@ namespace DACE {
 /********************************************************************************
 *     DA polynomial evaluation routines
 *********************************************************************************/
-/** Generic evaluation of the DA with a vector of arithmetic type T arguments.
-    @param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
+/** Generic evaluation of the DA with a vector-like type T of arguments.
+    @param[in] args vector-like object of arithemtic type (e.g. std::vector<double>)
+    with which the DA vector is evaluated.
     @return The result of the evaluation
     @throw DACE::DACEException
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @note This function can be called with a braced initializer list. However, C++
-    is not able to derive the type of elements of an initializer list automatically.
-    That means operator() must be called explicitly as e.g. <double>({1.0, 2.0, 3.0}) when
-    used with initializer lists.
     @see compiledDA::operator()
  */
-template<class T> T DA::operator()(const std::vector<T> &args) const {
+template<class T> typename T::value_type DA::operator()(const T &args) const {
     return compiledDA(*this)(args)[0];
+}
+
+/** Generic evaluation of the DA with arguments in a braced initializer list of type T.
+    @param[in] l braced initializer list of arithemtic type (e.g. {1.0, 2.0, 3.0})
+    with which the DA vector is evaluated.
+    @return The result of the evaluation
+    @throw DACE::DACEException
+    @note To be used only for single polynomial evaluation. For multiple
+    evaluations of the same polynomial use the corresponding method in class
+    compiledDA.
+    @see compiledDA::operator()
+ */
+template<class T> T DA::operator()(const std::initializer_list<T> l) const {
+    return compiledDA(*this)(l)[0];
 }
 
 /** Generic evaluation of the DA with an array of arithmetic type T arguments.
@@ -74,22 +85,19 @@ template<class T> T DA::operator()(const T args[], const unsigned int length) co
     return compiledDA(*this)(args, length)[0];
 }
 
-/** Generic evaluation of the DA with a vector of arithmetic type T arguments.
-    @param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
+/** Generic evaluation of the DA with a vector-like type T of arguments.
+    @param[in] args vector-like object of arithemtic type (e.g. std::vector<double>)
+    with which the DA vector is evaluated.
     @return The result of the evaluation
     @throw DACE::DACEException
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @note This function can be called with a braced initializer list. However, C++
-    is not able to derive the type of elements of an initializer list automatically.
-    That means eval() must be called explicitly as e.g. eval<double>({1.0, 2.0, 3.0}) when
-    used with initializer lists.
     @deprecated Replaced by DA::operator().
     @see DA::operator()
     @see compiledDA::operator()
  */
-template<class T> T DA::eval(const std::vector<T> &args) const {
+template<class T> typename T::value_type DA::eval(const T &args) const {
     return (*this)(args);
 }
 
@@ -121,21 +129,18 @@ template<class T> T DA::evalScalar(const T &arg) const {
     return compiledDA(*this).evalScalar(arg)[0];
 }
 
-/** Generic evaluation of the DA with a vector of arithmetic type T arguments.
+/** Generic evaluation of the DA with a vector-like type T of arguments.
     @param[in] da a DA object
-    @param[in] args std::vector<T> of arithmetic type T with which the DA vector is evaluated
+    @param[in] args vector-like object of arithemtic type (e.g. std::vector<double>)
+    with which the DA vector is evaluated.
     @return The result of the evaluation
     @throw DACE::DACEException
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @note This function can be called with a braced initializer list. However, C++
-    is not able to derive the type of elements of an initializer list automatically.
-    That means eval() must be called explicitly as e.g. eval<double>(x, {1.0, 2.0, 3.0}) when
-    used with initializer lists.
     @see compiledDA::operator()
  */
-template<class T> T eval(const DA &da, const std::vector<T> &args) {
+template<class T> T::value_type eval(const DA &da, const T &args) {
     return da(args);
 }
 
