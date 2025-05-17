@@ -57,15 +57,22 @@ class DA;
         #include <chrono>
         #include <dace/dace.h>
 
+        std::vector<double> v({0.1, 0.2});
+        double arr[2] = {0.1, 0.2};
+
         DA::init(10, 2);
 
-        // compiledDA evaluation
+        // direct DA evaluations (all identical result)
         DA x = DA::random(0.7);
-        compiledDA cda(x);                                  // compile x into a compiledDA
-        std::cout << cda({0.1, 0.2})[0] << std::endl;       // cda() returns vector of size one for single DAs
-        std::vector<double> v(2);
-        v[0] = 0.1; v[1] = 0.2;
-        std::cout << cda(v)[0] << std::endl;                // identical result using vector argument
+        std::cout << x({0.1, 0.2}) << std::endl;
+        std::cout << x(v) << std::endl;
+        std::cout << x(arr, 2) << std::endl;
+
+        // compiledDA evaluation (all identical result)
+        compiledDA cda(x);
+        std::cout << cda({0.1, 0.2})[0] << std::endl;
+        std::cout << cda(v)[0] << std::endl;
+        std::cout << cda(arr, 2)[0] << std::endl;
 
         // compiledDA vector evaluation
         AlgebraicVector<DA> Y(3);
@@ -73,29 +80,30 @@ class DA;
         Y[1] = DA::random(0.7);
         Y[2] = DA::random(0.7);
         compiledDA cY(Y);
-        std::vector<double> res = cda({0.1, 0.2});          // evaluate all 3 components at once
+        std::vector<double> res = cY({0.1, 0.2});          // evaluate all 3 components at once
         std::cout << res[0] << "  " << res[1] << "  " << res[2] << std::endl;
+        std::cout << Y[0](v) << "  " << Y[1](v) << "  " << Y[2](v) << std::endl;    // identical manual evaluation
 
-        // performance comparison for repeated compiledDA vs DA evaluation
-        constexpr unsigned int N = 20000;
+        // performance comparison
+        constexpr unsigned int N = 10000;
         std::vector<double> r(N);
         auto t0 = std::chrono::high_resolution_clock::now();
         for(unsigned int i = 0; i < N; i++)
         {
             v[0] = 0.1 + (double)i/N;
-            r[i] = cda(v)[0];
+            r[i] = x(v);
         }
         auto t1 = std::chrono::high_resolution_clock::now();
-        std::cout << "Time compiledDA (ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(t1-t0).count() << std::endl;
+        std::cout << "Time DA (ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(t1-t0).count() << std::endl;
 
-        auto t2 = std::chrono::high_resolution_clock::now();
+        t0 = std::chrono::high_resolution_clock::now();
         for(unsigned int i = 0; i < N; i++)
         {
             v[0] = 0.1 + (double)i/N;
-            r[i] = x(v);
+            r[i] = cda(v)[0];
         }
-        auto t3 = std::chrono::high_resolution_clock::now();
-        std::cout << "Time DA (ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(t3-t2).count() << std::endl;
+        t1 = std::chrono::high_resolution_clock::now();
+        std::cout << "Time compiledDA (ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(t1-t0).count() << std::endl;
     @endcode
  */
 class DACE_API compiledDA

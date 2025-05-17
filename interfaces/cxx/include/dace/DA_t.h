@@ -140,7 +140,7 @@ template<class T> T DA::evalScalar(const T &arg) const {
     compiledDA.
     @see compiledDA::operator()
  */
-template<class T> T::value_type eval(const DA &da, const T &args) {
+template<class T> typename T::value_type eval(const DA &da, const T &args) {
     return da(args);
 }
 
