@@ -6,6 +6,7 @@
     - @subpage USAGE
     - @subpage DAABS
     - @subpage DACOMP
+    - @subpage DAEVAL
     - @subpage DAINT
  */
 
@@ -32,6 +33,11 @@
  /**
     @page DACOMP Comparisons
     Discuss DA comparison
+ */
+
+ /**
+    @page DAEVAL Evaluation
+    Discuss DA evaluation
  */
 
  /**

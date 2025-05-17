@@ -50,6 +50,24 @@ class DA;
     Use this class to convert a DACE::DA or vector of DACE::DA into an optimized
     representation for evaluation if you need to evaluate the polynomial repeatedly
     with different arguments. That way the compilation step is only carried out once.
+
+    Example:
+    @code
+        #include <iostream>
+        #include <dace/dace.h>
+
+        DA::init(10, 2);
+        DA x = DA::random(0.7);
+
+        // direct evaluation options
+        std::cout << x({0.1, 0.2}) << std::endl;
+        std::vector v(2);
+        v[0] = 0.1; v[1] = 0.2;
+        std::cout << x(v) << std::endl;
+        std::vector res(2);
+        x(v, res);
+        std::cout << res << std::endl;
+    @endcode
  */
 class DACE_API compiledDA
 {
