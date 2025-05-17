@@ -51,7 +51,7 @@ namespace DACE {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @see compiledDA::operator()
+    @see compiledDA::operator()()
  */
 template<class T> typename T::value_type DA::operator()(const T &args) const {
     return compiledDA(*this)(args)[0];
@@ -65,7 +65,7 @@ template<class T> typename T::value_type DA::operator()(const T &args) const {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @see compiledDA::operator()
+    @see compiledDA::operator()()
  */
 template<class T> T DA::operator()(const std::initializer_list<T> l) const {
     return compiledDA(*this)(l)[0];
@@ -79,7 +79,7 @@ template<class T> T DA::operator()(const std::initializer_list<T> l) const {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @see compiledDA::operator()
+    @see compiledDA::operator()()
  */
 template<class T> T DA::operator()(const T args[], const unsigned int length) const {
     return compiledDA(*this)(args, length)[0];
@@ -93,9 +93,9 @@ template<class T> T DA::operator()(const T args[], const unsigned int length) co
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @deprecated Replaced by DA::operator().
-    @see DA::operator()
-    @see compiledDA::operator()
+    @deprecated Replaced by DA::operator()().
+    @see DA::operator()()
+    @see compiledDA::operator()()
  */
 template<class T> typename T::value_type DA::eval(const T &args) const {
     return (*this)(args);
@@ -109,9 +109,9 @@ template<class T> typename T::value_type DA::eval(const T &args) const {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @deprecated Replaced by DA::operator().
-    @see DA::operator()
-    @see compiledDA::operator()
+    @deprecated Replaced by DA::operator()().
+    @see DA::operator()()
+    @see compiledDA::operator()()
  */
 template<class T> T DA::eval(const std::initializer_list<T> l) const {
     return (*this)(l);
@@ -125,9 +125,9 @@ template<class T> T DA::eval(const std::initializer_list<T> l) const {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @deprecated Replaced by DA::operator().
-    @see DA::operator()
-    @see compiledDA::operator()
+    @deprecated Replaced by DA::operator()().
+    @see DA::operator()()
+    @see compiledDA::operator()()
  */
 template<class T> T DA::eval(const T args[], const unsigned int length) const {
     return (*this)(args, length);
@@ -139,8 +139,8 @@ template<class T> T DA::eval(const T args[], const unsigned int length) const {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @deprecated Replaced by DA::operator() with braced initializer list (e.g. da({arg})).
-    @see compiledDA::operator()
+    @deprecated Replaced by DA::operator()() with braced initializer list (e.g. `da({arg})`).
+    @see compiledDA::operator()()
  */
 template<class T> T DA::evalScalar(const T &arg) const {
     return compiledDA(*this).evalScalar(arg)[0];
@@ -155,7 +155,7 @@ template<class T> T DA::evalScalar(const T &arg) const {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @see compiledDA::operator()
+    @see compiledDA::operator()()
  */
 template<class T> typename T::value_type eval(const DA &da, const T &args) {
     return da(args);
@@ -169,8 +169,8 @@ template<class T> typename T::value_type eval(const DA &da, const T &args) {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @see DA::operator()
-    @see compiledDA::operator()
+    @see DA::operator()()
+    @see compiledDA::operator()()
  */
 template<class T> T eval(const DA &da, const std::initializer_list<T> l) {
     return da(l);
@@ -185,8 +185,8 @@ template<class T> T eval(const DA &da, const std::initializer_list<T> l) {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @see DA::operator()
-    @see compiledDA::operator()
+    @see DA::operator()()
+    @see compiledDA::operator()()
  */
 template<class T> T eval(const DA &da, const T args[], const unsigned int length) {
     return da(args, length);
@@ -200,7 +200,7 @@ template<class T> T eval(const DA &da, const T args[], const unsigned int length
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     compiledDA.
-    @deprecated Replaced by eval() with braced initializer list (e.g. eval(da, {arg})).
+    @deprecated Replaced by eval() with braced initializer list (e.g. `eval(da, {arg})`).
     @see DA::operator()()
  */
 template<class T> T evalScalar(const DA &da, const T &arg) {

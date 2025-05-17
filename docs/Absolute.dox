@@ -1,0 +1,101 @@
+ /**
+    @page DAABS Absolute Value
+    The mathematical real absolute value function is defined as
+    @f[ \usepackage{amsmath}
+     |x| = \begin{cases}
+     x  & x>=0 \\
+     -x & x<0
+    \end{cases}. @f]
+
+    This function is trivial except at 0, where it is not differentiable. That means it can be
+    used with DA as long as the constant part is non-zero. It then returns either the argument
+    or its negative, based on the sign of the constant part. This function is implemented as
+    DACE::DA::absolute() in %DACE.
+
+    @note DACE::DA::absolute() returns another DA object. As with all DA functions, how well this expansion
+    represents the absolute function, i.e. how large its convergence radius is, depends on how far the
+    constant part is from zero. When evaluating the result of DACE::DA::absolute() at points other than 0,
+    it may easily yield negative results.
+    If you need the evaluated points to be positive, you need to do something after evaluation to
+    ensure that.
+
+    Another effect of DACE::DA::absolute() returning a DA object is that the result still cannot
+    be compared to other real numbers (doubles) by default (see @ref DACOMP). Often code uses
+    the built-in abs() function not as a function representation of the absolute value but as a measure
+    of the magnitude of its argument. This is why DACE::DA::absolute() is not named abs().
+
+    @subsection DAMAG DA Magnitude
+    To measure the magnitude of a DACE::DA object, users have several options depending on the application.
+    The choice needs to be made based on what exactly the user wants to measure. The most common
+    measures are:
+    - DA constant part
+    - DA Norm
+
+    @subsubsection DACONS DA Constant Part
+    The constant part of a DACE::DA object can be obtained using DACE::DA::cons() which returns a (signed)
+    double value. To get a measure of the magnitude of a DA, users can use `abs(cons(x))`.
+
+    This measure does not take into account what the polynomial expansion does away from its expansion
+    point, how well it converges, or how large its other coefficients are. It is most suitable when
+    an algorithm initially written for doubles is converted to DA and it is important that double
+    and the constant part of DA evaluations behave the same.
+
+    @subsubsection DANORM DA Norm
+    A measure of magnitude that also includes the non-constant coefficients is the DA norm provided by
+    DACE::DA::norm(p). Depending on the value of integer argument p this computes one of three types
+    of norms all of which return a non-negative double value.
+    - p = 0: maximum ("infinity") norm. Returns the largest absolute value of all the coefficients in the DA.
+    - p = 1: sum norm. Returns the sum of the absolute values of all the coefficients in the DA.
+    - p > 1: p-norm. Returns the expression @f[ \sqrt[p]{\sum \left|a_i\right|^p} @f] over all coefficients
+      @f$a_i@f$.
+
+   Typically the max norm is the most useful when the goal is to ensure that the entire DA expansion
+   is close to the constantly zero function, i.e. all coefficients are small.
+
+    @subsection DAVNORM DA Vectors
+    The DACE::AlgebraicVector class supports similar functions to DACE::DA.
+
+    DACE::AlgebraicVector::absolute() applies the DACE::DA::absolute() function componentwise, returning
+    another AlgebraicVector of DA objects.
+
+    DACE::AlgebraicVector::cons() and DACE::AlgebraicVector::norm(p) apply the DACE::DA::cons() and
+    DACE::DA::norm(p) functions componentwise, respectively. They both return an AlgebraicVector of
+    doubles. To use these as a single measure of magnitude, the user can either use the Cartesian length
+    DACE::AlgebraicVector::length() of the result, or manually find the largest value.
+
+    DACE::AlgebraicVector::length() is only available in the AlgebraicVector class. It represents the Cartesian
+    length of the vector, i.e. the square root of the sum of the squares of all components. The result is a
+    single value of the same type as the data type of the vector, so for example double or DA.
+
+    @note It is not recommended to use some DA norm of the length of an AlgebraicVector<DA> as a measure of
+    magnitude due to the loss of high-order coefficients when calculating the length. Instead, first take the
+    appropriate component-wise norm of the vector, and then calculate the length of the resulting
+    AlgebraicVector<double>.
+
+    @subsection DAABSNS DA %abs() function
+    As described above, the %DACE does not offer any overload of the abs() function by default.
+
+    Users who know exactly what they are doing and require one specifc implementation of abs(DA) to measure
+    the magnitude of DA objects in one of the ways described above can import one of the following
+    implementations into the DACE namespace.
+    - DACE::abs_cons::abs() uses the absolute value of the constant part
+    - DACE::abs_max::abs() uses the max DA norm of the argument (p=0)
+    - DACE::abs_sum::abs() uses the sum DA norm of the argument (p=1)
+
+    To use any one of these in your code use (only!) one of these lines:
+    @code
+    napespace DACE { using namespace DACE::abs_cons; };
+    napespace DACE { using namespace DACE::abs_max; };
+    napespace DACE { using namespace DACE::abs_sum; };
+    @endcode
+
+    @note There are no default implementations provided for DACE::AlgebraicVector.
+
+    This is because depending on the specific application, different code expects abs(x) to return
+    - a double
+    - a vector of doubles (componentwise)
+    - a vector of the same value type as x (e.g. DA)
+
+    You will need to write your own version depending on your needs. Boost ODEINT requires the last one, see
+    include/dace/compat_boost_odeint.h for an example.
+ */

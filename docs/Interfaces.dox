@@ -1,0 +1,4 @@
+ /**
+    @page DAINT Writing Interfaces
+    Discuss how to write high level interfaces to @ref DACE "DACE Core".
+ */

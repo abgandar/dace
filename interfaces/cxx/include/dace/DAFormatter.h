@@ -81,8 +81,8 @@ public:
     /** Format a single DA and return a string representation.
         @param da DA object
         @return Formatted string representation.
-        @deprecated Replaced by DAFormatter::operator().
-        @see DAFormatter::operator()
+        @deprecated Replaced by DAFormatter::operator()().
+        @see DAFormatter::operator()()
      */
     std::string format(const DA &da) {
         return (*this)(da);
@@ -92,8 +92,8 @@ public:
         Usually this just formats each DA one after the other.
         @param da Vector of DA objects
         @return Formatted string representation.
-        @deprecated Replaced by DAFormatter::operator().
-        @see DAFormatter::operator()
+        @deprecated Replaced by DAFormatter::operator()().
+        @see DAFormatter::operator()()
      */
     std::string format(const std::vector<DA> &da) {
         return (*this)(da);

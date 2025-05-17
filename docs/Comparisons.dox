@@ -1,0 +1,18 @@
+ /**
+    @page DACOMP Comparisons
+    Discuss DA comparison
+
+    @subsection DACOMPCONS DA Comparison Operators
+    Users who know exactly what they are doing and want to use an implementation of DA comparison
+    operators as described above can import a provided implementation into the DACE namespace
+    using this code:
+    @code
+    napespace DACE { using namespace DACE::comp_cons; };
+    @endcode
+
+    This makes available the usual C++ comparison operators (`<`, `<=`, `==`, `!=`, `>=`, `>`)
+    between both DA and double arguments. With that, code such as `if(x > 0.0) x = sqrt(x);`
+    works for both DA and double x as expected.
+
+    @note There are no default implementations provided for comparisons involving DACE::AlgebraicVector.
+ */

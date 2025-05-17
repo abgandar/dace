@@ -1027,7 +1027,7 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
     data types (e.g. double) a compiler error is issued.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class compiledDA.
-    @deprecated Replaced by AlgebraicVector::operator()() with braced initializer list (e.g. da({arg})).
+    @deprecated Replaced by AlgebraicVector::operator()() with braced initializer list (e.g. `da({arg})`).
     @see AlgebraicVector::compile()
     @see compiledDA
  */

@@ -1,0 +1,17 @@
+/**
+    @page MAN Manual
+
+    This manual contains further information on different common questions or problems users encounter
+    while using Differential Algebra and the %DACE.
+
+    It is currently incomplete and is expected to grow over time. High quality contributions of additional
+    manual sections are welcome (open a GitHub pull request).
+
+    - @subpage START
+    - @subpage DA
+    - @subpage USAGE
+    - @subpage DAABS
+    - @subpage DACOMP
+    - @subpage DAEVAL
+    - @subpage DAINT
+ */

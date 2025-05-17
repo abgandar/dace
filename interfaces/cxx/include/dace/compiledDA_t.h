@@ -153,7 +153,7 @@ template<class T> void compiledDA::operator()(const std::vector<T> &args, std::v
     with. All remaining independent DA variables are assumed to be zero.
     @return Vector with the result of the evaluation. The vector is of
     type std::vector<V>.
-    @deprecated Replaced by operator() with braced initializer list (e.g. x({arg})).
+    @deprecated Replaced by compiledDA::operator()() with braced initializer list (e.g. `x({arg})`).
 */
 template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
     std::vector<T> args(1);
@@ -173,8 +173,8 @@ template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
     assumed to be zero.
     @return Vector with the result of the evaluation. The vector is of
     the same type as the argument args.
-    @deprecated Replaced by compiledDA::operator().
-    @see compiledDA::operator()
+    @deprecated Replaced by compiledDA::operator()().
+    @see compiledDA::operator()()
  */
 template<class V> V compiledDA::eval(const V &args) const {
     return (*this)(args);
@@ -188,8 +188,8 @@ template<class V> V compiledDA::eval(const V &args) const {
     during the DACE initialization are given, the missing entries are
     assumed to be zero.
     @return std::vector with the result of the evaluation
-    @deprecated Replaced by compiledDA::operator().
-    @see compiledDA::operator()
+    @deprecated Replaced by compiledDA::operator()().
+    @see compiledDA::operator()()
  */
 template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T> l) const {
     return (*this)(l);
@@ -204,8 +204,8 @@ template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T>
     missing entries are assumed to be zero.
     @return Vector with the result of the evaluation. The vector is of
     type std::vector<V>.
-    @deprecated Replaced by compiledDA::operator().
-    @see compiledDA::operator()
+    @deprecated Replaced by compiledDA::operator()().
+    @see compiledDA::operator()()
  */
 template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned int length) const {
     return (*this)(args, length);
