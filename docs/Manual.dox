@@ -1,8 +1,33 @@
 /**
-    @page MAN Manual
+    @mainpage Differential Algebra Core Engine
 
-    This manual contains further information on different common questions or problems users encounter
-    while using Differential Algebra and the %DACE.
+    The %DACE does stuff.
+
+    Document more here.
+
+    The %DACE is split into two main components:
+    - %DACE Core is a compact and portable C library of the basic DA functionality
+    - %DACE C++ Interface is a modern C++ interface to the %DACE Core
+
+    Users commonly would use the @ref DACECXX "DACE C++ Interface" to conveniently write their code using DA.
+    See @ref START for a full walk-through to set up and compile a %DACE program.
+
+    The @ref DACE "DACE Core" is mostly intended to be used through higher level language interfaces.
+    See @ref DAINT for information about how to write interfaces to other languages and some third-party interfaces.
+
+    @subsection CITE Citing %DACE
+    Cite like this:
+
+    @subsection MAN Documentation
+    The Topics section is the main starting point for the full systematic documentation of all functions
+    in the @ref DACE "DACE Core", the @ref DACECXX "DACE C++ Interface", and the
+    @ref DACECOMPAT "DACE C++ Compatibility" layers.
+    Start there to look up specific functions and classes. It also includes short examples showing how
+    to use certain features.
+
+    @subsubsection MANUAL Manual
+    Additionally, the manual contains further information on different common questions or problems users
+    encounter while using Differential Algebra and the %DACE.
 
     It is currently incomplete and is expected to grow over time. High quality contributions of additional
     manual sections are welcome (open a GitHub pull request).

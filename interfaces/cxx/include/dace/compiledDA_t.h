@@ -121,7 +121,8 @@ template<class T> void compiledDA::operator()(const std::vector<T> &args, std::v
     for(unsigned int i=0; i<dim; i++, p++)
         res[i] = args[0]*0.0 + (*p);
     // higher order terms
-    for(unsigned int i=1; i<terms; i++){
+    for(unsigned int i=1; i<terms; i++)
+    {
         unsigned int jl = (unsigned int)(*p); p++;
         unsigned int jv = (unsigned int)(*p)-1; p++;
         if(jl > jlskip)

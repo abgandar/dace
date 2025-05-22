@@ -1,4 +1,175 @@
- /**
+/**
     @page DAINT Writing Interfaces
-    Discuss how to write high level interfaces to @ref DACE "DACE Core".
+    The @ref DACE "DACE Core" provides all DA math routines, but can be more cumbersome to use for writing
+    math expressions directly from C due to the functional style required.
+    This can be largely simplifies by interfacing the %DACE with higher level languages, such as C++, that
+    allow operator overloading so that mathematical DA expressions can be written in the same style as
+    math expressions of built-in types such as double precision floating point.
+
+    How to do this depends on the specific language, and its mechanism for binding to external C code
+    libraries. The basic concept is always the same though:
+    1. %DACE must be initialized
+    2. DA objects must be created
+    3. DA objects are operated on
+    4. DA objects are freed
+
+    @subsection DAINTINIT Initialization
+    Before any other %DACE core operations are performed, the %DACE must be initialized through a
+    call to daceInitialize(). This sets the number of variables and computation order for all following
+    operations. This function must be exposed to the user in some form by the interface that allows calling
+    it without first instantiating a DA object. This could be a static class function or simply a function
+    outside of DA objects (see DACE::DA::init()).
+
+    \note There are also further functions that set or get various state settings in the %DACE core, which can be
+    simply passed through the language interface.
+
+    @subsection DAINTCREATE DA Creation
+    Every DA object needs just a single member variable (referred to as `index` in this document) of type
+    DACEDA. This is an opaque data type (i.e. no assumptions should be made about its internal data structure)
+    that identifies a unique DA object within the %DACE core. It is light weight (small memory footprint) and
+    points to the actual data holding the monomials.
+
+    During instantiation, the object should call daceAllocateDA() on this member variable to allocate
+    memory for the DA. It is strongly recommended to always pass length 0 to this call to let %DACE
+    auto-size the memory to be sufficient to store any DA in the current setup.
+    After allocation, the DA object represents the zero function without any monomials.
+
+    Users also need access to some languge-specific mechanism to create DA identities (i.e. identity
+    functions @f$f_i(x_1,x_2,...x_n)=x_i @f$). These then generate the whole space of DA polynomials through
+    further math operations (e.g. multiplication and addition). Internally this is achieved by calling
+    daceCreateVariable() with the corresponding independent variable number.
+
+    @note In the C++ interface, this is through a particular constructor `DA(int i)` which creates the i-th
+    identity. Due to the possible confusion between `DA(1)` and `DA(1.0)`, with the former creating the
+    identity `f(x)=x_1` and the latter creating the constant `f(x)=1.0`, this style is discouraged. New
+    interfaces should prefer a separate function `id(int i)` that specifically returns a DA object
+    representing the i-th independent variable (see DACE::DA::identity(), DACE::DA()).
+
+    @subsection DAINTASS DA Assignment
+    Another important routine is DA assignment. This can be implemented using the daceCopy() function,
+    which copies all monomials from one DA object into another.
+
+    Depending on the language, there is a significant optimization for assignments in which the object
+    being assigned from is known to not be needed any more, for example because it is a temporary
+    variable. Instead of copying all coefficients, only the DACEDA object (which merely points to the
+    actual memory holding the monomials) can be copied into the object being assigned to.
+    This results in two different DA objects both pointing to a single underlying memory location. Any
+    changes to one of the objects also changes the value of the other. This is only safe if one of the
+    objects is not being used any longer.
+
+    @warning To avoid memory leaking, the DACEDA of the object being assigned to must be properly freed
+    (or not be allocated in the first place) before copying over the DACEDA from the source.
+
+    @note To maximize performance, it is best to avoid copying DA objects unless absolutely needed. Depending
+    on language features, it is strongly recommended to pass DA objects by reference to operators and
+    functions so no unneccessary copies of DAs are created.
+
+    @subsection DAINTDESTROY DA Destruction
+    When a DA object is destroyed (e.g. by leaving the scope of the program) the memory associated with it
+    must be deallocated in the %DACE using daceFreeDA(). Typically, languages provide automatic lifecycle
+    management for objects (through scoping or garbage collection) and this deallocation can be performed
+    in a destructor routine for the object type.
+
+    @subsection DAINTMATH DA Math Operations
+    To perform operations between DA objects, binary operators such as +, -, *, / and unary funtions
+    such as sin(), sqrt(), etc must be overloaded for DA objects. %DACE provides functions for binary
+    operations between DAs and doubles, which should be implemented to match the language features.
+
+    The basic structure of every operation is to create a new DA object to hold the result, and then
+    to call the corresponding %DACE core routine, e.g. daceDivideDouble() or daceSine(), to calculate
+    the result into the new variable:
+
+        function sin(x):
+            result = new DA
+            daceSine(x.index, result.index);
+            if daceGetError() then handleError();
+
+    The %DACE core has a large list of supported functions on DA objects. Exposing all of them is
+    a tedious task and implementors may want to start by exposing simple functionality before exposing
+    the full functionality of the core.
+
+    @subsection DAINTERR %DACE Error Handling
+    Errors during DA operations are reported via the daceGetError() function. If this function returns
+    a non-zero error code, one of the previous DA operations failed. It should be checked after every
+    DA operation and the error reported to the user using a language appropriate mechanism.
+
+    As part of the error handling, daceGetErrorMessage() returns a human-readable string describing
+    the error, and daceGetErrorFunctionName() returns the function name in which the error occured.
+
+    Once handled, the error must be reset using the daceClearError() function. See DACE::DACEException.
+
+    @note If multiple errors occur without clearing the error, only the error with the highest severity
+    is retained and reported.
+
+    @subsection DAINTIO DA Input/Output
+    To integrate %DACE I/O operations into native language I/O, the daceWrite() routine converts a DA
+    object into a human readable string representation. This can then be output in th emost language
+    appropriate way.
+
+    Conversely, daceRead() converts a list of lines containing a human readable DA representation back
+    into a DA object. The lines need to be read in th enative language I/O first. To know when to stop
+    reading input lines to be converted, the code should look for the final line of DA output consisting
+    of 49 dashes ("-").
+
+    Binary DA I/O can be implemented using the daceExportBlob() function, which converts a DA object
+    into a binary blob to be handled in a language appropriate fashion.
+
+    Conversely, reading a binary DA blob back into a DA is achieved using the daceImportBlob() function.
+    To know how much binary data to read from an input data source, the interface should first call
+    daceBlobSize() with a NULL argument to get the DA blob header size and read that many bytes. A second
+    call to daceBlobSize() with the header is then used to determine the full size of the blob, allowing
+    to read the remaining bytes before passing everything (header and additional data) to daceImportBlob().
+
+    @subsection DAINTEVAL DA Evaluation
+    To evaluate the polynomial represented by a DA object, the %DACE core provides the daceEvalTree()
+    function. This function converts an array of DA objects into a specific structure that allows efficient
+    evaluation of the polynomials. The structure is a tree structure where the branches represent
+    multiplications by one of the independent variables and the nodes are individual monomials and their
+    associated coefficients.
+
+    The actual evaluation needs to be implemented in the interface language using this relatively simple
+    algorithm. The values of the independent variables are passed in the array `args`.
+    @code
+        daceEvalTree([...], dim, ac, nterm, nvar, nord)
+
+        function eval(args[nvar]):
+            res[dim], xm[nord+1]
+            xm[1] = 1.0
+            ic = 3
+            loop i = 1 ... dim:
+                res[i] = ac[ic]
+                ic = ic + 1
+            loop i = 2 ... nterm:
+                jl = int(ac[ic])
+                ic = ic + 1
+                jv = int(ac[ic])
+                ic = ic + 1
+                xm[jl+1] = xm[jl]*args[jv]
+                loop j = 1 ... dim:
+                    res[j] = res[j] + xm[jl+1]*ac[ic]
+                    ic = ic + 1
+            return(res)
+    @endcode
+
+    @note The arrays in this pseudo-code are 1-based and loop bounds are inclusive. The types of args,
+    res, and xm can be any algebraic type, but must match.
+
+    See DACE::compiledDA::operator()() in interfaces/cxx/compiledDA.cpp for implementations of this
+    algorithm in C++.
+
+    @subsection DAINTMORE Further Features
+    Depending on the language features and extend of the interface, further functionality may be
+    implemented not directly found in the %DACE core. A good example of this is the DACE::AlgebraicVector
+    class in the C++ interface.
+
+    While we aim to expose all core DA functionality through the %DACE core interface in C, some additional
+    functionality, such as DA inversion, is only implemented in the C++ interface (DACE::AlgebraicVector.invert()).
+    If such functionality is desired, it needs to be reimplemented in other language interfaces.
+
+    @subsection DAINTEXT 3rd Party Interfaces
+    While not directly supported or developed by the %DACE Team, other developers have written
+    %DACE interfaces to languages beyond C++.
+
+    - %DACE Python interface
+    - %DACE Rust interface
  */

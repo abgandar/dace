@@ -54,7 +54,6 @@ class DA;
     Example:
     @code
         #include <iostream>
-        #include <chrono>
         #include <dace/dace.h>
 
         std::vector<double> v({0.1, 0.2});
@@ -83,10 +82,21 @@ class DA;
         std::vector<double> res = cY({0.1, 0.2});          // evaluate all 3 components at once
         std::cout << res[0] << "  " << res[1] << "  " << res[2] << std::endl;
         std::cout << Y[0](v) << "  " << Y[1](v) << "  " << Y[2](v) << std::endl;    // identical manual evaluation
+    @endcode
 
-        // performance comparison
+    Performance example:
+    @code
+        #include <iostream>
+        #include <chrono>
+        #include <dace/dace.h>
+
+        DA::init(10, 2);
+
         constexpr unsigned int N = 10000;
         std::vector<double> r(N);
+        std::vector<double> v({0.0, 0.2});
+
+        DA x = DA::random(0.7);
         auto t0 = std::chrono::high_resolution_clock::now();
         for(unsigned int i = 0; i < N; i++)
         {
@@ -96,6 +106,7 @@ class DA;
         auto t1 = std::chrono::high_resolution_clock::now();
         std::cout << "Time DA (ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(t1-t0).count() << std::endl;
 
+        compiledDA cda(x);
         t0 = std::chrono::high_resolution_clock::now();
         for(unsigned int i = 0; i < N; i++)
         {
@@ -105,6 +116,10 @@ class DA;
         t1 = std::chrono::high_resolution_clock::now();
         std::cout << "Time compiledDA (ms): " << std::chrono::duration_cast<std::chrono::milliseconds>(t1-t0).count() << std::endl;
     @endcode
+
+    On my M3 MacBook Air, the performance comparison shows a difference of about 10:1 in runtime. This will go up
+    even further when evaluating several DAs with the same arguments, as in the case of the AlgebraicVector<DA>
+    evaluation.
  */
 class DACE_API compiledDA
 {
