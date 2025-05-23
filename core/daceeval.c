@@ -349,6 +349,8 @@ void daceTranslateVariable(const DACEDA *ina, const unsigned int nvar, const dou
     @param[out] nvar Pointer where to store the total number of variables in evaluation tree
     @param[out] nord Pointer where to store the maximum order in evaluation tree
     @see DACE::compiledDA
+    @note The size of ac must be daceGetMaxMonomials()*(2+count) to ensure it can store all
+    possible terms in the evaluation tree.
     @note See the C++ interface for a detailed description of the resulting data
     arrays from this routine.
 */

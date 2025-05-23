@@ -123,39 +123,9 @@
     @subsection DAINTEVAL DA Evaluation
     To evaluate the polynomial represented by a DA object, the %DACE core provides the daceEvalTree()
     function. This function converts an array of DA objects into a specific structure that allows efficient
-    evaluation of the polynomials. The structure is a tree structure where the branches represent
-    multiplications by one of the independent variables and the nodes are individual monomials and their
-    associated coefficients.
-
-    The actual evaluation needs to be implemented in the interface language using this relatively simple
-    algorithm. The values of the independent variables are passed in the array `args`.
-    @code
-        daceEvalTree([...], dim, ac, nterm, nvar, nord)
-
-        function eval(args[nvar]):
-            res[dim], xm[nord+1]
-            xm[1] = 1.0
-            ic = 3
-            loop i = 1 ... dim:
-                res[i] = ac[ic]
-                ic = ic + 1
-            loop i = 2 ... nterm:
-                jl = int(ac[ic])
-                ic = ic + 1
-                jv = int(ac[ic])
-                ic = ic + 1
-                xm[jl+1] = xm[jl]*args[jv]
-                loop j = 1 ... dim:
-                    res[j] = res[j] + xm[jl+1]*ac[ic]
-                    ic = ic + 1
-            return(res)
-    @endcode
-
-    @note The arrays in this pseudo-code are 1-based and loop bounds are inclusive. The types of args,
-    res, and xm can be any algebraic type, but must match.
-
-    See DACE::compiledDA::operator()() in interfaces/cxx/compiledDA.cpp for implementations of this
-    algorithm in C++.
+    evaluation of the polynomials.
+    The actual evaluation must be implemented the language interface using the algorithm described in
+    @ref DAEVAL.
 
     @subsection DAINTMORE Further Features
     Depending on the language features and extend of the interface, further functionality may be
