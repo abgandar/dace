@@ -1,7 +1,7 @@
  /**
     @page DAABS Absolute Value
     The mathematical real absolute value function is defined as
-    @f[ \usepackage{amsmath}
+    @f[
      |x| = \begin{cases}
      x  & x>=0 \\
      -x & x<0
