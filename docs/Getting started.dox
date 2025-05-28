@@ -76,7 +76,7 @@
 
         int main() {
             DA::init(5, 3);       // order 5, 3 variables
-            DA x = 1.0 + DA(1);
+            DA x = 1.0 + DA::id(1);
             DA y = f(x);
             std::cout << y;
             return 0;

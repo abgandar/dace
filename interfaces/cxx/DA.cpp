@@ -273,7 +273,9 @@ DA::DA(DA &&da) {
 }
 
 /** Create a DA object with the constant part equal to c.
-    @note This routine MUST be called with a floating point type as the first argument, e.g. DA(1.0). Expressions involving integer data types such as DA(1) will be interpreted as the first independent DA variable instead of the constant DA object of the given value.
+    @note This routine *MUST* be called with a floating point type as the first argument, e.g. DA(1.0).
+    Expressions involving integer data types such as DA(1) will be interpreted as the first independent
+    DA variable instead of the constant DA object of the given value.
     @param[in] c A double value set as constant part of the DA object.
     @throw DACE::DACEException
  */
@@ -284,10 +286,17 @@ DA::DA(const double c) {
 }
 
 /** Create a DA object as c times the independent variable number i.
-    @note When used in its one argument form (with the default argument 1.0 for c), this routine MUST be called with an integer type as the first argument, e.g. DA(1). Expressions involving floating point data types such as DA(1.0) will be interpreted as the constant DA of the given value instead of the first independent variable.
+    @deprecated The single argument version (with default 1.0 for c) is replaced by DA::id().
+    It is recommended to always use DA::id() for consistency.
+    @note When used in its one argument form (with the default argument 1.0 for c), this routine *MUST*
+    be called with an integer type as the first argument, e.g. DA(1).
+    Expressions involving floating point data types such as DA(1.0) will be interpreted as the constant
+    DA of the given value instead of the first independent variable.
     @param[in] i independent variable number (i=0 means the constant part).
-    @param[in] c coefficient corresponding to the given independent variable. By default, this value is assumed to be 1.0.
+    @param[in] c coefficient for the given independent variable.
+    By default, this value is set to 1.0.
     @throw DACE::DACEException
+    @see DA::id
  */
 DA::DA(const unsigned int i, const double c) {
     daceAllocateDA(m_index, 0);
@@ -296,14 +305,21 @@ DA::DA(const unsigned int i, const double c) {
 }
 
 /** Create a DA object as c times the independent variable number i.
-    @note When used in its one argument form (with the default argument 1.0 for c), this routine MUST be called with an integer type as the first argument, e.g. DA(1). Expressions involving floating point data types such as DA(1.0) will be interpreted as the constant DA object of the given value instead of the first independent DA variable.
+    @deprecated Signed int and single argument version (with default 1.0 for c) is replaced by DA::id().
+    It is recommended to always use DA::id() for consistency.
+    @note When used in its one argument form (with the default argument 1.0 for c), this routine *MUST*
+    be called with an integer type as the first argument, e.g. DA(1).
+    Expressions involving floating point data types such as DA(1.0) will be interpreted as the constant
+    DA of the given value instead of the first independent variable.
     @param[in] i independent variable number (i=0 means the constant part).
-    @param[in] c coefficient corresponding to the given independent variable. By default, this value is assumed to be 1.0.
+    @param[in] c coefficient for the given independent variable.
+    By default, this value is set to 1.0.
     @throw DACE::DACEException
- */
+    @see DA::id
+*/
 DA::DA(const int i, const double c) {
     daceAllocateDA(m_index, 0);
-    daceCreateVariable(m_index,(unsigned int) i, c);
+    daceCreateVariable(m_index, (unsigned int)i, c);
     if(daceGetError()) DACEException();
 }
 
@@ -1821,13 +1837,23 @@ DA DA::random(const double cm) {
 }
 
 /** Create a DA object representing the identity function in independent DA
-    variable number var. This is just an alias for DA::DA(var).
+    variable number var.
     @param[in] var The independent DA variable number
     @throw DACE::DACEException
-    @see DA::DA
  */
-DA DA::identity(const unsigned int var) {
-    return DA((int)var);
+DA DA::id(const unsigned int var, const double c) {
+    return DA(var, c);
+}
+
+/** Create a DA object representing the identity function in independent DA
+    variable number var. Legacy alias for DA::id().
+    @deprecated Replaced by DA::id().
+    @param[in] var The independent DA variable number
+    @throw DACE::DACEException
+    @see DA::id
+ */
+DA DA::identity(const unsigned int var, const double c) {
+    return id(var, c);
 }
 
 /** Convert a string to DA object.

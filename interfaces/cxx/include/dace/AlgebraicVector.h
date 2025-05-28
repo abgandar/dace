@@ -71,15 +71,15 @@ template<typename T> class AlgebraicMatrix;
         AlgebraicVector<DA> da(3);
 
         dbl = {1.0, 2.0, 3.0};                  // braced initializer list notation
-        da = {DA(1), DA(2), DA(3)};
+        da = {DA::id(1), DA::id(2), DA::id(3)};
         //da = AlgebraicVector<DA>::identity(); // same as above
 
         da = sin(da) + 3.1*dbl - 1.0;           // can mix scalars, vector types, result upcast to DA
 
-        da = da.deriv(1) + vectorDA{0.0, DA(2), DA(3)};     // vectorDA is short for AlgebraicVector<DA>
+        da = da.deriv(1) + vectorDA{0.0, DA::id(2), DA::id(3)};     // vectorDA is short for AlgebraicVector<DA>
         //dbl.deriv(1);                         // compiler error: no derivative of double
 
-        std::cout << da[0] - cos(DA(1));        // prints a zero DA vector
+        std::cout << da[0] - cos(DA::id(1));        // prints a zero DA vector
     @endcode
  */
 template<typename T> class AlgebraicVector : public std::vector<T>
@@ -286,6 +286,7 @@ public:
     /** @name Creation routines
      *  @{
      */
+    static AlgebraicVector<DA> id(const size_t n = DA::getMaxVariables());
     static AlgebraicVector<DA> identity(const size_t n = DA::getMaxVariables());
     /** @} */
 

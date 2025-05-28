@@ -139,7 +139,7 @@ struct DASimpleFormat {
     Example:
     @code
         DASimpleFormatter sf(DASimpleFormatter::LATEX);
-        DA x = sin(DA(1));
+        DA x = sin(DA::id(1));
         std::string res = sf(x);
         // res now is "+1 \cdot x_{1} -0.1666666666666667 \cdot x_{1}^{3} +0.008333333333333333 \cdot x_{1}^{5}"
     @endcode

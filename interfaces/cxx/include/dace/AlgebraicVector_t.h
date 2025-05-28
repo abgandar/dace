@@ -1103,13 +1103,23 @@ template<typename T> std::string AlgebraicVector<T>::toString() const {
     @param[in] n The dimension
     @return AlgebraicVector<DA> containing the DA identity in n dimensions
  */
-template<typename T> AlgebraicVector<DA> AlgebraicVector<T>::identity(const size_t n) {
+template<typename T> AlgebraicVector<DA> AlgebraicVector<T>::id(const size_t n) {
     AlgebraicVector<DA> temp(n);
     for(size_t i=0; i < n; i++) {
-        temp[i] = DA((int)(i+1));
+        temp[i] = DA::id(i+1);
     }
 
     return temp;
+}
+
+/** Return the DA identity of dimension n.
+    Legacy alias for AlgebraicVector::id().
+    @deprecated Replaced by AlgebraicVector::id().
+    @param[in] n The dimension
+    @return AlgebraicVector<DA> containing the DA identity in n dimensions
+ */
+template<typename T> AlgebraicVector<DA> AlgebraicVector<T>::identity(const size_t n) {
+    return id(n);
 }
 
 /********************************************************************************

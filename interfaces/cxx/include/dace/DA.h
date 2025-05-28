@@ -308,7 +308,8 @@ public:
      * @{
      */
     static DA random(const double cm);
-    static DA identity(const unsigned int var);
+    static DA id(const unsigned int var, const double c = 1.0);
+    static DA identity(const unsigned int var, const double c = 1.0);
     static DA fromString(const std::string &str);
     static DA fromString(const std::vector<std::string> &str);
     static DA read(std::istream &is);
@@ -527,8 +528,8 @@ namespace abs_sum {
 
     Example:
     @code
-        DA x0 = sin(DA(1));
-        DA y0 = cos(DA(1));
+        DA x0 = sin(DA::id(1));
+        DA y0 = cos(DA::id(1));
         std::fstream f("DA.bin", f.binary | f.trunc | f.in | f.out);
         f << storedDA(x0) << storedDA(y0);      // write as binary DAs
         f.seekp(0);

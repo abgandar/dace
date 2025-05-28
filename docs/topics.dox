@@ -44,7 +44,7 @@
         using namespace DACE;
 
         DA::init(10, 1)             // order 10, 1 variable
-        DA x = 1.0 + DA(1);
+        DA x = 1.0 + DA::id(1);
         x = sin(x);
         std::cout << x;             // Prints expansion of sin(1+x) to order 10
     @endcode

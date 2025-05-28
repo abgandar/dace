@@ -35,15 +35,16 @@
     After allocation, the DA object represents the zero function without any monomials.
 
     Users also need access to some languge-specific mechanism to create DA identities (i.e. identity
-    functions @f$f_i(x_1,x_2,...x_n)=x_i @f$). These then generate the whole space of DA polynomials through
+    functions @f$ f_i(\vec x)=x_i @f$ ). These then generate the whole space of DA polynomials through
     further math operations (e.g. multiplication and addition). Internally this is achieved by calling
     daceCreateVariable() with the corresponding independent variable number.
 
-    @note In the C++ interface, this is through a particular constructor `DA(int i)` which creates the i-th
-    identity. Due to the possible confusion between `DA(1)` and `DA(1.0)`, with the former creating the
-    identity `f(x)=x_1` and the latter creating the constant `f(x)=1.0`, this style is discouraged. New
-    interfaces should prefer a separate function `id(int i)` that specifically returns a DA object
-    representing the i-th independent variable (see DACE::DA::identity(), DACE::DA()).
+    @note In the C++ interface, historically this was achieved by the particular constructor
+    `DA(int i)` which creates the i-th identity. Due to the possible confusion between `DA(1)`
+    and `DA(1.0)`, with the former creating the identity @f$ f(\vec x)=x_1 @f$ and the latter creating
+    the constant @f$ f(\vec x)=1.0 @f$, this style is discouraged.
+    New interfaces should prefer a separate function `id(int i)` that specifically returns a DA object
+    representing the i-th independent variable (see DACE::DA::id(), DACE::DA(int i, double c)).
 
     @subsection DAINTASS DA Assignment
     Another important routine is DA assignment. This can be implemented using the daceCopy() function,
