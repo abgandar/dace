@@ -43,10 +43,9 @@ namespace DACE {
 compiledDA::compiledDA(const compiledDA &cda) {
     dim = cda.dim;
     terms = cda.terms;
-    vars = cda.vars;
     ord = cda.ord;
     ac = new double[terms*(dim+2)];
-    for(int i=terms*(dim+2)-1; i>=0; i--) ac[i] = cda.ac[i];
+    for(int i = terms*(dim+2)-1; i >= 0; i--) ac[i] = cda.ac[i];
 }
 
 /** Create a vector of compiledDA objects from a vector of DA objects.
@@ -58,12 +57,11 @@ compiledDA::compiledDA(const std::vector<DA> &da) {
     if(dim<1) DACEException(16, 04);
 
     ac = new double[DA::getMaxMonomials()*(dim+2)];
-    unsigned int nterms, nvars, nord;
+    unsigned int nterms, nord;
     const DACEDA **mb = new const DACEDA*[dim];
-    for(unsigned int i=0; i<dim; i++) mb[i] = &(da[i].m_index);
-    daceEvalTree(mb, (int)dim, ac, nterms, nvars, nord);
+    for(unsigned int i = 0; i < dim; i++) mb[i] = &(da[i].m_index);
+    daceEvalTree(mb, (int)dim, ac, nterms, nord);
     terms = (unsigned int) nterms;
-    vars = (unsigned int) nvars;
     ord = (unsigned int) nord;
     delete[] mb;
     if(daceGetError()) DACEException();
@@ -76,11 +74,10 @@ compiledDA::compiledDA(const std::vector<DA> &da) {
 compiledDA::compiledDA(const DA &da) {
     ac = new double[DA::getMaxMonomials()*3];
     dim = 1;
-    unsigned int nterms, nvars, nord;
+    unsigned int nterms, nord;
     const DACEDA *mb = &(da.m_index);
-    daceEvalTree(&mb, (int)dim, ac, nterms, nvars, nord);
+    daceEvalTree(&mb, (int)dim, ac, nterms, nord);
     terms = (unsigned int) nterms;
-    vars = (unsigned int) nvars;
     ord = (unsigned int) nord;
     if(daceGetError()) DACEException();
 }
@@ -103,10 +100,9 @@ compiledDA& compiledDA::operator=(const compiledDA &cda) {
     if(this != &cda) {
         dim = cda.dim;
         terms = cda.terms;
-        vars = cda.vars;
         ord = cda.ord;
         ac = new double[terms*(dim+2)];
-        for(int i=terms*(dim+2)-1; i>=0; i--) ac[i] = cda.ac[i];
+        for(int i = terms*(dim+2)-1; i >= 0; i--) ac[i] = cda.ac[i];
     }
 
     return *this;
@@ -212,13 +208,6 @@ unsigned int compiledDA::getDim() const {
  */
 unsigned int compiledDA::getOrd() const {
     return this->ord;
-}
-
-/** Return the maximum number of variables.
-    @return maximum number of variables
- */
-unsigned int compiledDA::getVars() const {
-    return this->vars;
 }
 
 /** Return the number of terms.

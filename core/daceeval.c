@@ -342,19 +342,28 @@ void daceTranslateVariable(const DACEDA *ina, const unsigned int nvar, const dou
 }
 
 /** Compute an evaluation tree to efficiently evaluate several DA objects.
+    The size of ac must be (2+count)*nterm to store all possible terms in the evaluation tree.
+    The number of terms nterm is limited by daceGetMaxMonomials(), so an array of size
+    (2+count)*daceGetMaxMonomials() will always be sufficient.
+
+    When called with NULL for ac the remaining outputs are still calculated, but
+    no compiled coefficients are written. This can be used to obtain the required nterm to size
+    the array ac.
+
+    See @ref DAEVAL for a detailed description of the meaning of the resulting ac array and
+    the algorithm to complete the evaluation.
     @param[in] das C array of pointers to DA objects to evaluate
     @param[in] count Number of DA objects in das[]
     @param[out] ac C array of doubles containing compiled coefficients
     @param[out] nterm Pointer where to store the total number of terms in evaluation tree
-    @param[out] nvar Pointer where to store the total number of variables in evaluation tree
     @param[out] nord Pointer where to store the maximum order in evaluation tree
+
+    @see daceEvalTreeDA
+    @see daceEvalTreeDouble
     @see DACE::compiledDA
-    @note The size of ac must be daceGetMaxMonomials()*(2+count) to ensure it can store all
-    possible terms in the evaluation tree.
-    @note See the C++ interface for a detailed description of the resulting data
-    arrays from this routine.
+    @see @ref DAEVAL
 */
-void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], unsigned int *nterm, unsigned int *nvar, unsigned int *nord)
+void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], unsigned int *nterm, unsigned int *nord)
 {
 #if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
     unsigned int nc[DACE_STATIC_NMMAX] = {0};
@@ -379,10 +388,10 @@ void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], un
     nc[0] = 1;  // constant part is the root, doesn't need a parent
     for(unsigned int i = 1; i < DACECom.nmmax; i++)
     {
-        if(nc[i] != 2 ) continue;
+        if(nc[i] != 2) continue;
         nc[i] = 1;
         daceDecode(i, p);
-        // generate a ancestor tree for this entry
+        // generate an ancestor tree for this entry
         int parent = 0;
         while(parent >= 0)
         {
@@ -413,12 +422,14 @@ void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], un
     // constant terms are always stored
     nc[0] = 3;
     *nord = 0;
-    *nvar = 0;
     *nterm = 1;
-    ac[0] = ac[1] = 0.0;
     double *a = ac+2;
-    for(unsigned int i = 0; i < count; i++)
-        *(a++) = daceGetConstant(das[i]);     // evil C pointer magic: a++ evaluates to value of a, then increases it
+    if(ac)
+    {
+        ac[0] = ac[1] = 0.0;    // dummies, constant part has no parent
+        for(unsigned int i = 0; i < count; i++)
+            *(a++) = daceGetConstant(das[i]);     // C pointer magic: a++ evaluates to value of a, then increases it
+    }
 
     // higher order terms
     p[0] = 1;
@@ -433,12 +444,14 @@ void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], un
             // store entry
             nc[ic] = 3;
             *nord = umax(*nord, sp+1);
-            *nvar = umax(*nvar, stack[sp]+1);
             (*nterm)++;
-            *(a++) = sp+1;          // +1 because old Fortran code returned 1 based indices
-            *(a++) = stack[sp]+1;   // same here
-            for(unsigned int i = 0; i < count; i++)
-                *(a++) = daceGetCoefficient0(das[i], ic);
+            if(ac)
+            {
+                *(a++) = sp+1;          // +1 because old Fortran code returned 1 based indices
+                *(a++) = stack[sp]+1;   // same here
+                for(unsigned int i = 0; i < count; i++)
+                    *(a++) = daceGetCoefficient0(das[i], ic);
+            }
 
             // step forward if we can
             if(sp < (int)(DACECom.nomax-1))
@@ -478,5 +491,127 @@ void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], un
     dacefree(nc);
     dacefree(p);
     dacefree(stack);
+#endif
+}
+
+/** Evaluate an evaluation tree with double arguments.
+    Once an evaluation tree has been generated with daceEvalTree, this routine can be used on the
+    outputs to actually evaluate the tree efficiently.
+    @param[out] res C array of doubles to return the results
+    @param[in] count Number of doubles in res, must be same as number of DAs in call to daceEvalTree
+    @param[in] args C array of doubles containing the arguments
+    @param[in] acount Number of doubles in args
+    @param[in] ac C array of doubles containing compiled coefficients from daceEvalTree
+    @param[in] nterm Total number of terms in evaluation tree from daceEvalTree
+    @param[in] nord Maximum order in evaluation tree from daceEvalTree
+
+    @see daceEvalTree
+    @see daceEvalTreeDA
+
+    @note Any missing arguments not specified in args[] are assumed to be zero.
+*/
+void daceEvalTreeDouble(double res[], const unsigned int count, const double args[], const unsigned int acount, const double ac[], const unsigned int nterm, const unsigned int nord)
+{
+#if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
+    double xm[DACE_STATIC_NOMAX+1] = {0.0};
+#else
+    double *xm = dacecalloc(nord+1, sizeof(double));
+#endif
+    const double *p = ac+2;   // skip first 2 dummy values
+
+    xm[0] = 1.0;
+
+    // constant parts
+    for(unsigned int i = 0; i < count; i++, p++)
+        res[i] = (*p);
+
+    // higher order terms
+    for(unsigned int i = 1; i < nterm; i++)
+    {
+        unsigned int jl = (unsigned int)(*p); p++;
+        unsigned int jv = (unsigned int)(*p)-1; p++;
+        if(jv < acount)
+            xm[jl] = xm[jl-1]*args[jv];
+        else
+            xm[jl] = 0;
+        for(unsigned int j = 0; j < count; j++, p++)
+            res[j] += xm[jl]*(*p);
+    }
+
+#if DACE_MEMORY_MODEL != DACE_MEMORY_STATIC
+    dacefree(xm);
+#endif
+}
+
+/** Evaluate an evaluation tree with DA arguments.
+    Once an evaluation tree has been generated with daceEvalTree, this routine can be used on the
+    outputs to actually evaluate the tree efficiently.
+    @param[out] res C array of pointers to DACEDA objects to return the results
+    @param[in] count Number of DACEDA pointers in res, must be same as number of DAs in call to daceEvalTree
+    @param[in] args C array of pointers to DACEDAs containing the arguments
+    @param[in] acount Number of DACEDA pointers in args
+    @param[in] ac C array of doubles containing compiled coefficients from daceEvalTree
+    @param[in] nterm Total number of terms in evaluation tree from daceEvalTree
+    @param[in] nord Maximum order in evaluation tree from daceEvalTree
+
+    @see daceEvalTree
+    @see daceEvalTreeDouble
+
+    @note Any missing arguments not specified in args[] are assumed to be zero.
+*/
+void daceEvalTreeDA(DACEDA *res[], const unsigned int count, const DACEDA *args[], const unsigned int acount, const double ac[], const unsigned int nterm, const unsigned int nord)
+{
+#if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
+    DACEDA xm[DACE_STATIC_NOMAX+1] = {0};
+#else
+    DACEDA *xm = dacecalloc(nord+1, sizeof(DACEDA));
+#endif
+    const double *p = ac+2;   // skip first 2 dummy values
+    unsigned int jlskip = nord+1;
+    DACEDA tmp;
+
+    // allocate temporary DA variables
+    for(unsigned int i = 0; i < nord+1; i++)
+        daceAllocateDA(&xm[i], 0);
+    daceAllocateDA(&tmp, 0);
+
+    daceCreateConstant(&xm[0], 1.0);
+
+    // constant part
+    for(unsigned int i = 0; i < count; i++, p++)
+        daceCreateConstant(res[i], *p);
+
+    // higher order terms
+    for(unsigned int i = 1; i < nterm; i++) {
+        unsigned int jl = (unsigned int)(*p); p++;
+        unsigned int jv = (unsigned int)(*p)-1; p++;
+        if(jl > jlskip)
+        {
+            p += count;     // skip these as xm[jl] is already zero
+            continue;
+        }
+        if(jv >= acount)
+        {
+            jlskip = jl;
+            p += count;     // skip these as xm[jl] is now zero
+            continue;
+        }
+        jlskip = nord+1;    // skip nothing going forward
+        daceMultiply(&xm[jl-1], args[jv], &xm[jl]);
+        for(unsigned int j = 0; j < count; j++, p++)
+            if((*p) != 0.0)
+            {
+                daceMultiplyDouble(&xm[jl], *p, &tmp);
+                daceAdd(res[j], &tmp, res[j]);
+            }
+    }
+
+    // deallocate memory
+    daceFreeDA(&tmp);
+    for(int i = nord; i >= 0; i--)
+        daceFreeDA(&xm[i]);
+
+#if DACE_MEMORY_MODEL != DACE_MEMORY_STATIC
+    dacefree(xm);
 #endif
 }

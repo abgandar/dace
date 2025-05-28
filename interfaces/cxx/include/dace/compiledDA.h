@@ -127,7 +127,6 @@ private:
     double *ac;             //!< Compiled polynomial evaluation data
     unsigned int dim;       //!< Number of polynomials (dimension)
     unsigned int ord;       //!< Maximum order of the polynomial
-    unsigned int vars;      //!< Number of variables in the polynomial
     unsigned int terms;     //!< Number of terms in the polynomial
 
 public:
@@ -167,7 +166,6 @@ public:
     const double* getAc() const;
     unsigned int getDim() const;
     unsigned int getOrd() const;
-    unsigned int getVars() const;
     unsigned int getTerms() const;
 };
 

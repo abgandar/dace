@@ -271,7 +271,9 @@ DACE_API void daceReplaceVariable(const DACEDA REF(ina), const unsigned int from
 DACE_API void daceEvalVariable(const DACEDA REF(ina), const unsigned int nvar, const double val, DACEDA REF(inc));
 DACE_API void daceScaleVariable(const DACEDA REF(ina), const unsigned int nvar, const double val, DACEDA REF(inc));
 DACE_API void daceTranslateVariable(const DACEDA REF(ina), const unsigned int nvar, const double a, const double c, DACEDA REF(inc));
-DACE_API void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], unsigned int REF(nterm), unsigned int REF(nvar), unsigned int REF(nord));
+DACE_API void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], unsigned int REF(nterm), unsigned int REF(nord));
+DACE_API void daceEvalTreeDouble(double res[], const unsigned int count, const double args[], const unsigned int acount, const double ac[], const unsigned int nterm, const unsigned int nord);
+DACE_API void daceEvalTreeDA(DACEDA *res[], const unsigned int count, const DACEDA *args[], const unsigned int acount, const double ac[], const unsigned int nterm, const unsigned int nord);
 /** @} */
 
 /********************************************************************************
