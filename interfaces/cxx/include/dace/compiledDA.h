@@ -118,7 +118,7 @@ class DA;
     @endcode
 
     On my M3 MacBook Air, the performance comparison shows a difference of about 10:1 in runtime. This will go up
-    even further when evaluating several DAs with the same arguments, as in the case of the AlgebraicVector<DA>
+    even further when evaluating multiple DAs with the same arguments, as in the case of the AlgebraicVector<DA>
     evaluation.
  */
 class DACE_API compiledDA

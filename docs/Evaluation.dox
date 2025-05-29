@@ -69,8 +69,9 @@
       - addition
       - double multiplication
 
-    In addition to daceEvalTreeDouble() in core/daceval.c see also DACE::compiledDA::operator()() in
-    interfaces/cxx/compiledDA.cpp for implementations of this algorithm in C++.
+    In addition to daceEvalTreeDouble() and daceEvalTreeDA() in core/daceval.c see also
+    DACE::compiledDA::operator()() in interfaces/cxx/include/compiledDA_t.h for an implementation of
+    this algorithm in C++.
 
     @subsection DAEVALVAL Validation Example
     The following is an example of a vector of 3 DAs, the resulting outputs from daceEvalTree(), and

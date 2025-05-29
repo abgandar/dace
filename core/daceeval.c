@@ -615,3 +615,89 @@ void daceEvalTreeDA(DACEDA *res[], const unsigned int count, const DACEDA *args[
     dacefree(xm);
 #endif
 }
+
+/** Evaluate several DA objects with double arguments.
+    This is a convenience routine combining daceEvalTree() and daceEvalTreeDouble(). It should only be used
+    if the DAs are not evaluated with other arguments again.
+    @param[in] das C array of pointers to DA objects to evaluate
+    @param[out] res C array of doubles to return the results
+    @param[in] count Number of DACEDA pointers in das and doubles in res
+    @param[in] args C array of doubles containing the arguments
+    @param[in] acount Number of doubles in args
+
+    @see daceEvalTree
+    @see daceEvalTreeDouble
+
+    @note Any missing arguments not specified in args[] are assumed to be zero.
+*/
+void daceEvalDouble(const DACEDA *das[], double res[], const unsigned int count, const double args[], const unsigned int acount)
+{
+#if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
+#define DACE_EVAL_MAXCOUNT 6
+    double ac[DACE_STATIC_NMMAX*(2+DACE_EVAL_MAXCOUNT)];
+    unsigned int nterm, nord;
+    unsigned int cnt = count;
+
+    // Evaluate in chunks. Less efficient but preserves (static) memory.
+    while(cnt > 0)
+    {
+        unsigned int c = cnt > DACE_EVAL_MAXCOUNT ? DACE_EVAL_MAXCOUNT : cnt;
+        daceEvalTree(das, c, ac, &nterm, &nord);
+        daceEvalTreeDouble(res, count, args, acount, ac, nterm, nord);
+        das += c;
+        res += c;
+        cnt -= c;
+    }
+#else
+    double *ac = dacecalloc((2+count)*daceGetMaxMonomials(), sizeof(double));
+    unsigned int nterm, nord;
+
+    daceEvalTree(das, count, ac, &nterm, &nord);
+    daceEvalTreeDouble(res, count, args, acount, ac, nterm, nord);
+
+    free(ac);
+#endif
+}
+
+/** Evaluate several DA objects with DA arguments.
+    This is a convenience routine combining daceEvalTree() and daceEvalTreeDA(). It should only be used if
+    the DAs are not evaluated with other arguments again.
+    @param[in] das C array of pointers to DA objects to evaluate
+    @param[out] res C array of pointers to DACEDA objects to return the results
+    @param[in] count Number of DACEDA pointers in das and res
+    @param[in] args C array of pointers to DACEDAs containing the arguments
+    @param[in] acount Number of DACEDA pointers in args
+
+    @see daceEvalTree
+    @see daceEvalTreeDA
+
+    @note Any missing arguments not specified in args[] are assumed to be zero.
+*/
+void daceEvalDA(const DACEDA *das[], DACEDA *res[], const unsigned int count, const DACEDA *args[], const unsigned int acount)
+{
+#if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
+#define DACE_EVAL_MAXCOUNT 6
+    double ac[DACE_STATIC_NMMAX*(2+DACE_EVAL_MAXCOUNT)];
+    unsigned int nterm, nord;
+    unsigned int cnt = count;
+
+    // Evaluate in chunks. Less efficient but preserves (static) memory.
+    while(cnt > 0)
+    {
+        unsigned int c = cnt > DACE_EVAL_MAXCOUNT ? DACE_EVAL_MAXCOUNT : cnt;
+        daceEvalTree(das, c, ac, &nterm, &nord);
+        daceEvalTreeDA(res, count, args, acount, ac, nterm, nord);
+        das += c;
+        res += c;
+        cnt -= c;
+    }
+#else
+    double *ac = dacecalloc((2+count)*daceGetMaxMonomials(), sizeof(double));
+    unsigned int nterm, nord;
+
+    daceEvalTree(das, count, ac, &nterm, &nord);
+    daceEvalTreeDA(res, count, args, acount, ac, nterm, nord);
+
+    free(ac);
+#endif
+}
