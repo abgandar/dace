@@ -371,10 +371,10 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::round() const {
 }
 
 /** Componentwise application of the mod function.
-    @param[in] p
+    @param[in] p divisor
     @return A new AlgebraicVector
  */
-template<typename T> AlgebraicVector<T> AlgebraicVector<T>::mod(const double p) const {
+template<typename T> template<typename U> AlgebraicVector<T> AlgebraicVector<T>::mod(const U &p) const {
     using DACE::mod;
 
     const size_t size = this->size();
@@ -1488,7 +1488,7 @@ template<typename T> AlgebraicVector<T> round(const AlgebraicVector<T> &obj) {
     @return A new AlgebraicVector
     @see AlgebraicVector<T>::mod
  */
-template<typename T> AlgebraicVector<T> mod(const AlgebraicVector<T> &obj, const double p) {
+template<typename T, typename U> AlgebraicVector<T> mod(const AlgebraicVector<T> &obj, const U &p) {
     return obj.mod(p);
 }
 

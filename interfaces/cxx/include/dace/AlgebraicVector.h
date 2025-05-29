@@ -190,7 +190,7 @@ public:
     AlgebraicVector<T> absolute() const;
     AlgebraicVector<T> trunc() const;
     AlgebraicVector<T> round() const;
-    AlgebraicVector<T> mod(const double p) const;
+    template<typename U> AlgebraicVector<T> mod(const U &p) const;
     AlgebraicVector<T> pow(const int p) const;
     AlgebraicVector<T> pow(const double p) const;
     AlgebraicVector<T> root(const int p = 2) const;
@@ -350,7 +350,7 @@ template<typename T> AlgebraicVector<T> trim(const AlgebraicVector<T> &obj, unsi
 template<typename T> AlgebraicVector<T> absolute(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> trunc(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> round(const AlgebraicVector<T> &obj);
-template<typename T> AlgebraicVector<T> mod(const AlgebraicVector<T> &obj, const double p);
+template<typename T, typename U> AlgebraicVector<T> mod(const AlgebraicVector<T> &obj, const U &p);
 template<typename T> AlgebraicVector<T> pow(const AlgebraicVector<T> &obj, const double p);
 template<typename T> AlgebraicVector<T> pow(const AlgebraicVector<T> &obj, const int p);
 template<typename T> AlgebraicVector<T> root(const AlgebraicVector<T> &obj, const int p = 2);

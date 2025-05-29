@@ -217,6 +217,7 @@ public:
     DA trunc() const;
     DA round() const;
     DA mod(const double p) const;
+    DA mod(const DA &da) const;
     DA pow(const int p) const;
     DA pow(const double p) const;
     DA root(const int p = 2) const;
@@ -383,6 +384,7 @@ DACE_API DA absolute(const DA &da);
 DACE_API DA trunc(const DA &da);
 DACE_API DA round(const DA &da);
 DACE_API DA mod(const DA &da, const double p);
+DACE_API DA mod(const DA &da1, const DA &da2);
 DACE_API DA pow(const DA &da, const int p);
 DACE_API DA pow(const DA &da, const double p);
 DACE_API DA root(const DA &da, const int p = 2);

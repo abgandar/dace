@@ -741,16 +741,35 @@ void daceRound(const DACEDA *ina, DACEDA *inc)
     daceSetCoefficient0(inc, 0, round(daceGetConstant(inc)));
 }
 
-/** Modulo the constant part of a DA object by p.
+/** Modulo the constant part of a DA object by double p.
+    The constant part of the result is `fmod(cons(a), p)`.
     @param[in] ina Pointer to the DA object to operate on
     @param[in] p Value with respect to which to compute the modulo
     @param[out] inc Pointer to the DA object to store the result in
     @note This routine is aliasing safe, i.e. inc can be the same as ina.
  */
-void daceModulo(const DACEDA *ina, const double p, DACEDA *inc)
+void daceModuloDouble(const DACEDA *ina, const double p, DACEDA *inc)
 {
     daceCopy(ina, inc);
     daceSetCoefficient0(inc, 0, fmod(daceGetConstant(inc), p));
+}
+
+/** Modulo a DA object by another DA object.
+    This function calculates `a - trunc(cons(a)/cons(b))*b`. The constant part of the result
+    is therefore the same as `fmod(cons(a), cons(b))`.
+    @param[in] ina Pointer to the first DA object to operate on
+    @param[in] inb Pointer to the second DA object to operate on
+    @param[out] inc Pointer to the DA object to store the result in
+    @note This routine is aliasing safe, i.e. inc can be the same as ina.
+ */
+void daceModulo(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
+{
+    DACEDA temp;
+    const double f = trunc(daceGetConstant(ina)/daceGetConstant(inb));
+    daceAllocateDA(&temp, 0);
+    daceMultiplyDouble(inb, f, &temp);
+    daceSubtract(ina, &temp, inc);
+    daceFreeDA(&temp);
 }
 
 /** Raise a DA object to the p-th power.

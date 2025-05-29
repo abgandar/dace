@@ -209,7 +209,8 @@ DACE_API void daceIntegrate(const unsigned int iint, const DACEDA REF(ina), DACE
 DACE_API void daceAbsolute(const DACEDA REF(ina), DACEDA REF(inc));
 DACE_API void daceTruncate(const DACEDA REF(ina), DACEDA REF(inc));
 DACE_API void daceRound(const DACEDA REF(ina), DACEDA REF(inc));
-DACE_API void daceModulo(const DACEDA REF(ina), const double p, DACEDA REF(inc));
+DACE_API void daceModuloDouble(const DACEDA REF(ina), const double p, DACEDA REF(inc));
+DACE_API void daceModulo(const DACEDA REF(ina), const DACEDA REF(inb), DACEDA REF(inc));
 DACE_API void dacePowerDouble(const DACEDA REF(ina), const double p, DACEDA REF(inc));
 DACE_API void dacePower(const DACEDA REF(ina), const int np, DACEDA REF(inc));
 DACE_API void daceRoot(const DACEDA REF(ina), const int np, DACEDA REF(inc));

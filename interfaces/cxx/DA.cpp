@@ -1028,14 +1028,29 @@ DA DA::round() const {
     return temp;
 }
 
-/** Take floating-point remainder of constant part divided by p.
-    @param[in] p the divisor.
+/** Take floating-point remainder of constant part divided by double p.
+    @param[in] p the double divisor.
     @return A new DA object with constant part modulo p.
     @throw DACE::DACEException
  */
 DA DA::mod(const double p) const {
     DA temp;
-    daceModulo(m_index, p, temp.m_index);
+    daceModuloDouble(m_index, p, temp.m_index);
+    if(daceGetError()) DACEException();
+
+    return temp;
+}
+
+/** Take remainder of DA divided by another DA da.
+    This computes `x - trunc(cons(x)/cons(y))*y`.
+    @param[in] da the DA divisor.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see daceModulo()
+ */
+DA DA::mod(const DA &da) const {
+    DA temp;
+    daceModulo(m_index, da.m_index, temp.m_index);
     if(daceGetError()) DACEException();
 
     return temp;
@@ -2117,6 +2132,19 @@ DA round(const DA &da) {
  */
 DA mod(const DA &da, double p) {
     return da.mod(p);
+}
+
+/** Compute remainder of one DA divided by another DA da.
+    This computes `x - trunc(cons(x)/cons(y))*y`.
+    @param[in] da1 DA object
+    @param[in] p costant with respect to which the modulo function is computed
+    @return A new DA object containing the result of the operation
+    @throw DACE::DACEException
+    @see DA::mod
+    @see daceModulo()
+ */
+DA mod(const DA &da1, const DA &da2) {
+    return da1.mod(da2);
 }
 
 /** Raise a DA object to a given integer power.
