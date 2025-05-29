@@ -632,9 +632,8 @@ void daceEvalTreeDA(DACEDA *res[], const unsigned int count, const DACEDA *args[
 */
 void daceEvalDouble(const DACEDA *das[], double res[], const unsigned int count, const double args[], const unsigned int acount)
 {
-#if DACE_MEMORY_MODEL != DACE_MEMORY_STATIC
+#if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
 #define DACE_EVAL_MAXCOUNT 6
-#define DACE_STATIC_NMMAX 100000
     double ac[DACE_STATIC_NMMAX*(2+DACE_EVAL_MAXCOUNT)];
     unsigned int nterm, nord;
     unsigned int cnt = count;
@@ -642,13 +641,14 @@ void daceEvalDouble(const DACEDA *das[], double res[], const unsigned int count,
     // Evaluate in chunks. Less efficient but preserves (static) memory.
     while(cnt > 0)
     {
-        unsigned int c = cnt > DACE_EVAL_MAXCOUNT ? DACE_EVAL_MAXCOUNT : cnt;
+        const unsigned int c = cnt > DACE_EVAL_MAXCOUNT ? DACE_EVAL_MAXCOUNT : cnt;
         daceEvalTree(das, c, ac, &nterm, &nord);
-        daceEvalTreeDouble(res, count, args, acount, ac, nterm, nord);
+        daceEvalTreeDouble(res, c, args, acount, ac, nterm, nord);
         das += c;
         res += c;
         cnt -= c;
     }
+#undef DACE_EVAL_MAXCOUNT
 #else
     double *ac = dacecalloc((2+count)*daceGetMaxMonomials(), sizeof(double));
     unsigned int nterm, nord;
@@ -685,13 +685,14 @@ void daceEvalDA(const DACEDA *das[], DACEDA *res[], const unsigned int count, co
     // Evaluate in chunks. Less efficient but preserves (static) memory.
     while(cnt > 0)
     {
-        unsigned int c = cnt > DACE_EVAL_MAXCOUNT ? DACE_EVAL_MAXCOUNT : cnt;
+        const unsigned int c = cnt > DACE_EVAL_MAXCOUNT ? DACE_EVAL_MAXCOUNT : cnt;
         daceEvalTree(das, c, ac, &nterm, &nord);
-        daceEvalTreeDA(res, count, args, acount, ac, nterm, nord);
+        daceEvalTreeDA(res, c, args, acount, ac, nterm, nord);
         das += c;
         res += c;
         cnt -= c;
     }
+#undef DACE_EVAL_MAXCOUNT
 #else
     double *ac = dacecalloc((2+count)*daceGetMaxMonomials(), sizeof(double));
     unsigned int nterm, nord;
