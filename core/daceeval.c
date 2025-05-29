@@ -632,8 +632,9 @@ void daceEvalTreeDA(DACEDA *res[], const unsigned int count, const DACEDA *args[
 */
 void daceEvalDouble(const DACEDA *das[], double res[], const unsigned int count, const double args[], const unsigned int acount)
 {
-#if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
+#if DACE_MEMORY_MODEL != DACE_MEMORY_STATIC
 #define DACE_EVAL_MAXCOUNT 6
+#define DACE_STATIC_NMMAX 100000
     double ac[DACE_STATIC_NMMAX*(2+DACE_EVAL_MAXCOUNT)];
     unsigned int nterm, nord;
     unsigned int cnt = count;
