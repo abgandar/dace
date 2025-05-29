@@ -7,10 +7,38 @@
     multiplications by one of the independent variables and the nodes are individual monomials and their
     associated coefficients.
 
+    @subsection DAEVALCORE Evaluation in %DACE Core
+    Typical use may look like this:
+    @code
+    const unsigned int count = 3;
+    DACEDA *das[] = { &x, &y, &z };      // all of these need to be allocated elsewhere
+
+    // compile the DAs
+    unsigned int nterm, nord;
+    daceEvalTree(das, count, NULL, &nterm, &nord);
+    double *ac = calloc(nterm*(count+2), sizeof(double));
+    daceEvalTree(das, count, ac, &nterm, &nord);
+
+    // evaluate with doubles
+    const unsigned int acount = 4;
+    double darg[] = { 0.1, 0.2, 0.3, 0.4 };
+    double dres[count];
+    daceEvalTreeDouble(dres, count, darg, acount, ac, nterm, nord);
+
+    // evaluate with DAs
+    DACEDA *arg[] = { &ax, &ay, &az, &aw };
+    DACEDA *res[] = { &rx, &ry, &rz };
+    daceEvalTreeDA(res, count, arg, acount, ac, nterm, nord);
+
+    free(ac);
+    @endcode
+
+    @subsection DAEVALCPP Evaluation in C++ Interface
     C++ interface: see DACE::compiledDA
 
     @subsection DAEVALALG Algorithm
-    The actual evaluation can be implemented in any language using this relatively simple algorithm.
+    Instead of relying on daceEvalTreeDA and daceEvalTreeDouble in the %DACE Core, language interfaces
+    can implement the actual evaluation in any language using this relatively simple algorithm.
     The values of the independent variables are passed in the array `args`.
     @code
         daceEvalTree([...], count, ac, nterm, nvar, nord)
@@ -41,8 +69,8 @@
       - addition
       - double multiplication
 
-    See DACE::compiledDA::operator()() in interfaces/cxx/compiledDA.cpp for implementations of this
-    algorithm in C++.
+    In addition to daceEvalTreeDouble() in core/daceval.c see also DACE::compiledDA::operator()() in
+    interfaces/cxx/compiledDA.cpp for implementations of this algorithm in C++.
 
     @subsection DAEVALVAL Validation Example
     The following is an example of a vector of 3 DAs, the resulting outputs from daceEvalTree(), and

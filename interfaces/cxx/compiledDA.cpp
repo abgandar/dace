@@ -54,13 +54,13 @@ compiledDA::compiledDA(const compiledDA &cda) {
  */
 compiledDA::compiledDA(const std::vector<DA> &da) {
     dim = (unsigned int)da.size();
-    if(dim<1) DACEException(16, 04);
+    if(dim < 1) DACEException(16, 04);
 
     ac = new double[DA::getMaxMonomials()*(dim+2)];
     unsigned int nterms, nord;
     const DACEDA **mb = new const DACEDA*[dim];
     for(unsigned int i = 0; i < dim; i++) mb[i] = &(da[i].m_index);
-    daceEvalTree(mb, (int)dim, ac, nterms, nord);
+    daceEvalTree(mb, dim, ac, nterms, nord);
     terms = (unsigned int) nterms;
     ord = (unsigned int) nord;
     delete[] mb;
@@ -76,7 +76,7 @@ compiledDA::compiledDA(const DA &da) {
     dim = 1;
     unsigned int nterms, nord;
     const DACEDA *mb = &(da.m_index);
-    daceEvalTree(&mb, (int)dim, ac, nterms, nord);
+    daceEvalTree(&mb, dim, ac, nterms, nord);
     terms = (unsigned int) nterms;
     ord = (unsigned int) nord;
     if(daceGetError()) DACEException();
@@ -97,10 +97,12 @@ compiledDA::~compiledDA() throw() {
     @return The compiledDA object with the same content of the given compiledDA
  */
 compiledDA& compiledDA::operator=(const compiledDA &cda) {
-    if(this != &cda) {
+    if(this != &cda)
+    {
         dim = cda.dim;
         terms = cda.terms;
         ord = cda.ord;
+        if(ac) delete[] ac;
         ac = new double[terms*(dim+2)];
         for(int i = terms*(dim+2)-1; i >= 0; i--) ac[i] = cda.ac[i];
     }
@@ -113,77 +115,93 @@ compiledDA& compiledDA::operator=(const compiledDA &cda) {
 *********************************************************************************/
 // double evaluation
 template<> void compiledDA::operator()(const std::vector<double> &args, std::vector<double> &res) const {
-    const size_t narg = args.size();
-    double *p = ac+2;
-    double *xm = new double[ord+1];
+    res.reserve(dim);
+    daceEvalTreeDouble(res.data(), dim, args.data(), args.size(), ac, terms, ord);
+    // const size_t narg = args.size();
+    // double *p = ac+2;
+    // double *xm = new double[ord+1];
 
-    // prepare temporary powers
-    xm[0] = 1.0;
-    // constant part
-    for(unsigned int i = 0; i < dim; i++, p++)
-        res[i] = (*p);
-    // higher order terms
-    for(unsigned int i = 1; i < terms; i++) {
-        unsigned int jl = (unsigned int)(*p); p++;
-        unsigned int jv = (unsigned int)(*p)-1; p++;
-        if(jv < narg)
-            xm[jl] = xm[jl-1]*args[jv];
-        else
-            xm[jl] = 0;
-        for(unsigned int j = 0; j < dim; j++, p++)
-            res[j] += xm[jl]*(*p);
-    }
+    // make sure there's enough space for results
+    // res.reserve(dim);
+    //
+    // // prepare temporary powers
+    // xm[0] = 1.0;
+    // // constant part
+    // for(unsigned int i = 0; i < dim; i++, p++)
+    //     res[i] = (*p);
+    // // higher order terms
+    // for(unsigned int i = 1; i < terms; i++)
+    // {
+    //     unsigned int jl = (unsigned int)(*p); p++;
+    //     unsigned int jv = (unsigned int)(*p)-1; p++;
+    //     if(jv < narg)
+    //         xm[jl] = xm[jl-1]*args[jv];
+    //     else
+    //         xm[jl] = 0;
+    //     for(unsigned int j = 0; j < dim; j++, p++)
+    //         res[j] += xm[jl]*(*p);
+    // }
 
-    delete[] xm;
+    // delete[] xm;
 }
 
 // DA evaluation
 template<> void compiledDA::operator()(const std::vector<DA> &args, std::vector<DA> &res) const {
-    const size_t narg = args.size();
-    unsigned int jlskip = ord+1;
-    double *p = ac+2;
-    DACEDA *xm = new DACEDA[ord+1];
-    DACEDA tmp;
+    res.reserve(dim);
+    DACEDA **r = new DACEDA*[dim];
+    for(unsigned int i = 0; i < dim; i++) r[i] = &res[i].m_index;
+    const DACEDA **a = new const DACEDA*[args.size()];
+    for(unsigned int i = 0; i < args.size(); i++) a[i] = &args[i].m_index;
+    daceEvalTreeDA(r, dim, a, args.size(), ac, terms, ord);
+    delete[] r;
+    delete[] a;
+    // const size_t narg = args.size();
+    // unsigned int jlskip = ord+1;
+    // double *p = ac+2;
+    // DACEDA *xm = new DACEDA[ord+1];
+    // DACEDA tmp;
 
-    // allocate temporary DA variables in DACE core
-    for(unsigned int i = 0; i < ord+1; i++) daceAllocateDA(xm[i], 0);
-    daceAllocateDA(tmp, 0);
-    // prepare temporary powers
-    daceCreateConstant(xm[0], 1.0);
+    // res.reserve(dim);
+    // // allocate temporary DA variables in DACE core
+    // for(unsigned int i = 0; i < ord+1; i++) daceAllocateDA(xm[i], 0);
+    // daceAllocateDA(tmp, 0);
+    // // prepare temporary powers
+    // daceCreateConstant(xm[0], 1.0);
 
-    // constant part
-    for(unsigned int i = 0; i < dim; i++, p++)
-        daceCreateConstant(res[i].m_index, *p);
-    // higher order terms
-    for(unsigned int i = 1; i < terms; i++) {
-        unsigned int jl = (unsigned int)(*p); p++;
-        unsigned int jv = (unsigned int)(*p)-1; p++;
-        if(jl > jlskip)
-        {
-            p += dim;
-            continue;
-        }
-        if(jv >= narg)
-        {
-            jlskip = jl;
-            p += dim;
-            continue;
-        }
-        jlskip = ord+1;
-        daceMultiply(xm[jl-1], args[jv].m_index, xm[jl]);
-        for(unsigned int j = 0; j < dim; j++, p++)
-            if((*p) != 0.0)
-            {
-                daceMultiplyDouble(xm[jl], *p, tmp);
-                daceAdd(res[j].m_index, tmp, res[j].m_index);
-            }
-    }
-    // deallocate memory
-    daceFreeDA(tmp);
-    for(int i = ord; i >= 0; i--) daceFreeDA(xm[i]);
-    delete[] xm;
+    // // constant part
+    // for(unsigned int i = 0; i < dim; i++, p++)
+    //     daceCreateConstant(res[i].m_index, *p);
+    // // higher order terms
+    // for(unsigned int i = 1; i < terms; i++)
+    // {
+    //     unsigned int jl = (unsigned int)(*p); p++;
+    //     unsigned int jv = (unsigned int)(*p)-1; p++;
+    //     if(jl > jlskip)
+    //     {
+    //         p += dim;
+    //         continue;
+    //     }
+    //     if(jv >= narg)
+    //     {
+    //         jlskip = jl;
+    //         p += dim;
+    //         continue;
+    //     }
+    //     jlskip = ord+1;
+    //     daceMultiply(xm[jl-1], args[jv].m_index, xm[jl]);
+    //     for(unsigned int j = 0; j < dim; j++, p++)
+    //         if((*p) != 0.0)
+    //         {
+    //             daceMultiplyDouble(xm[jl], *p, tmp);
+    //             daceAdd(res[j].m_index, tmp, res[j].m_index);
+    //         }
+    // }
+    // // deallocate memory
+    // daceFreeDA(tmp);
+    // for(int i = ord; i >= 0; i--) daceFreeDA(xm[i]);
+    // delete[] xm;
 
-    if(daceGetError()) DACEException();
+    // if(daceGetError()) DACEException();
 }
 
 /********************************************************************************

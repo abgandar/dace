@@ -115,6 +115,9 @@ template<class T> void compiledDA::operator()(const std::vector<T> &args, std::v
     double *p = ac+2;
     T *xm = new T[ord+1];
 
+    // make sure there's enough space for results
+    res.reserve(dim);
+
     // prepare temporary powers
     xm[0] = args[0]*0.0 + 1.0;
     // constant part
