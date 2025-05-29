@@ -86,7 +86,7 @@ template<class T> std::vector<T> compiledDA::operator()(const std::initializer_l
     type std::vector<V>.
  */
 template<class T> std::vector<T> compiledDA::operator()(const T args[], const unsigned int length) const {
-    std::vector<T> arg(args,args+length);
+    std::vector<T> arg(args, args+length);
     std::vector<T> res(dim);
     (*this)(arg, res);
 
@@ -121,10 +121,10 @@ template<class T> void compiledDA::operator()(const std::vector<T> &args, std::v
     // prepare temporary powers
     xm[0] = args[0]*0.0 + 1.0;
     // constant part
-    for(unsigned int i=0; i<dim; i++, p++)
+    for(unsigned int i = 0; i < dim; i++, p++)
         res[i] = args[0]*0.0 + (*p);
     // higher order terms
-    for(unsigned int i=1; i<terms; i++)
+    for(unsigned int i = 1; i < terms; i++)
     {
         unsigned int jl = (unsigned int)(*p); p++;
         unsigned int jv = (unsigned int)(*p)-1; p++;
@@ -141,8 +141,8 @@ template<class T> void compiledDA::operator()(const std::vector<T> &args, std::v
         }
         jlskip = ord+1;
         xm[jl] = xm[jl-1]*args[jv];
-        for(unsigned int j=0; j<dim; j++, p++)
-            if((*p)!=0.0) res[j] += xm[jl]*(*p);
+        for(unsigned int j = 0; j < dim; j++, p++)
+            if((*p) != 0.0) res[j] += xm[jl]*(*p);
     }
 
     delete[] xm;
@@ -160,12 +160,7 @@ template<class T> void compiledDA::operator()(const std::vector<T> &args, std::v
     @deprecated Replaced by compiledDA::operator()() with braced initializer list (e.g. `x({arg})`).
 */
 template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
-    std::vector<T> args(1);
-    std::vector<T> res(dim);
-    args[0] = arg;
-    (*this)(args, res);
-
-    return res;
+    return (*this)({arg});
 }
 
 /** Evaluate the compiled polynomial with a vector of any arithmetic type
