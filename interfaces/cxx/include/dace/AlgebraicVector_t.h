@@ -1843,7 +1843,7 @@ template<typename T> AlgebraicVector<T> atanh(const AlgebraicVector<T> &obj) {
     @see AlgebraicVector<T>::erf
 */
 template<typename T> AlgebraicVector<T> erf(const AlgebraicVector<T> &obj) {
-    return obj.erf(obj);
+    return obj.erf();
 }
 
 /** Componentwise application of the complementary error function.
@@ -1852,7 +1852,7 @@ template<typename T> AlgebraicVector<T> erf(const AlgebraicVector<T> &obj) {
     @see AlgebraicVector<T>::erfc
  */
 template<typename T> AlgebraicVector<T> erfc(const AlgebraicVector<T> &obj) {
-    return obj.erfc(obj);
+    return obj.erfc();
 }
 
 /** Componentwise application of the @e n-th Bessel function of first type @f$J_n@f$.
@@ -1862,7 +1862,7 @@ template<typename T> AlgebraicVector<T> erfc(const AlgebraicVector<T> &obj) {
     @see AlgebraicVector<T>::BesselJFunction
  */
 template<typename T> AlgebraicVector<T> BesselJFunction(const AlgebraicVector<T> &obj, const int n) {
-    return obj.BesselJFunction(obj, n);
+    return obj.BesselJFunction(n);
 }
 
 /** Componentwise application of the @e n-th Bessel function of second type @f$Y_n@f$ function.
@@ -1872,7 +1872,7 @@ template<typename T> AlgebraicVector<T> BesselJFunction(const AlgebraicVector<T>
     @see AlgebraicVector<T>::BesselYFunction
  */
 template<typename T> AlgebraicVector<T> BesselYFunction(const AlgebraicVector<T> &obj, const int n) {
-    return obj.BesselYFunction(obj, n);
+    return obj.BesselYFunction(n);
 }
 
 /** Componentwise application of the @e n-th modified Bessel function of first type @f$I_n@f$.
@@ -1884,7 +1884,7 @@ template<typename T> AlgebraicVector<T> BesselYFunction(const AlgebraicVector<T>
     @see AlgebraicVector<T>::BesselIFunction
  */
 template<typename T> AlgebraicVector<T> BesselIFunction(const AlgebraicVector<T> &obj, const int n, const bool scaled) {
-    return obj.BesselIFunction(obj, n, scaled);
+    return obj.BesselIFunction(n, scaled);
 }
 
 /** Componentwise application of the @e n-th modified Bessel function of second type @f$K_n@f$.
@@ -1896,7 +1896,7 @@ template<typename T> AlgebraicVector<T> BesselIFunction(const AlgebraicVector<T>
     @see AlgebraicVector<T>::BesselKFunction
  */
 template<typename T> AlgebraicVector<T> BesselKFunction(const AlgebraicVector<T> &obj, const int n, const bool scaled) {
-    return obj.BesselKFunction(obj, n, scaled);
+    return obj.BesselKFunction(n, scaled);
 }
 
 /** Componentwise application of the gamma function.
@@ -1905,7 +1905,7 @@ template<typename T> AlgebraicVector<T> BesselKFunction(const AlgebraicVector<T>
     @see AlgebraicVector<T>::GammaFunction
  */
 template<typename T> AlgebraicVector<T> GammaFunction(const AlgebraicVector<T> &obj) {
-    return obj.GammaFunction(obj);
+    return obj.GammaFunction();
 }
 
 /** Componentwise application of the logarithmic gamma function.
@@ -1914,7 +1914,7 @@ template<typename T> AlgebraicVector<T> GammaFunction(const AlgebraicVector<T> &
     @see AlgebraicVector<T>::LogGammaFunction
  */
 template<typename T> AlgebraicVector<T> LogGammaFunction(const AlgebraicVector<T> &obj) {
-    return obj.LogGammaFunction(obj);
+    return obj.LogGammaFunction();
 }
 
 /** Componentwise application of the gamma function.
@@ -1924,7 +1924,7 @@ template<typename T> AlgebraicVector<T> LogGammaFunction(const AlgebraicVector<T
     @see AlgebraicVector<T>::GammaFunction
  */
 template<typename T> AlgebraicVector<T> tgamma(const AlgebraicVector<T> &obj) {
-    return obj.GammaFunction(obj);
+    return obj.GammaFunction();
 }
 
 /** Componentwise application of the logarithmic gamma function.
@@ -1934,7 +1934,7 @@ template<typename T> AlgebraicVector<T> tgamma(const AlgebraicVector<T> &obj) {
     @see AlgebraicVector<T>::LogGammaFunction
  */
 template<typename T> AlgebraicVector<T> lgamma(const AlgebraicVector<T> &obj) {
-    return obj.LogGammaFunction(obj);
+    return obj.LogGammaFunction();
 }
 
 /** Componentwise application of the Psi function.
@@ -1944,7 +1944,7 @@ template<typename T> AlgebraicVector<T> lgamma(const AlgebraicVector<T> &obj) {
     @see AlgebraicVector<T>::PsiFunction
  */
 template<typename T> AlgebraicVector<T> PsiFunction(const AlgebraicVector<T> &obj, const unsigned int n) {
-    return obj.PsiFunction(obj, n);
+    return obj.PsiFunction(n);
 }
 
 /***********************************************************************************
