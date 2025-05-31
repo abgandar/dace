@@ -805,7 +805,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::BesselJFunction(cons
     const size_t size = this->size();
     AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
-        temp[i] = BesselJFunction((*this)[i], n);
+        temp[i] = BesselJFunction(n, (*this)[i]);
     }
     return temp;
 }
@@ -820,7 +820,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::BesselYFunction(cons
     const size_t size = this->size();
     AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
-        temp[i] = BesselYFunction((*this)[i], n);
+        temp[i] = BesselYFunction(n, (*this)[i]);
     }
     return temp;
 }
@@ -837,7 +837,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::BesselIFunction(cons
     const size_t size = this->size();
     AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
-        temp[i] = BesselIFunction((*this)[i], n, scaled);
+        temp[i] = BesselIFunction(n, (*this)[i], scaled);
     }
     return temp;
 }
@@ -854,7 +854,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::BesselKFunction(cons
     const size_t size = this->size();
     AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
-        temp[i] = BesselKFunction((*this)[i], n, scaled);
+        temp[i] = BesselKFunction(n, (*this)[i], scaled);
     }
     return temp;
 }
@@ -1861,7 +1861,7 @@ template<typename T> AlgebraicVector<T> erfc(const AlgebraicVector<T> &obj) {
     @return A new AlgebraicVector.
     @see AlgebraicVector<T>::BesselJFunction
  */
-template<typename T> AlgebraicVector<T> BesselJFunction(const AlgebraicVector<T> &obj, const int n) {
+template<typename T> AlgebraicVector<T> BesselJFunction(const int n, const AlgebraicVector<T> &obj) {
     return obj.BesselJFunction(n);
 }
 
@@ -1871,7 +1871,7 @@ template<typename T> AlgebraicVector<T> BesselJFunction(const AlgebraicVector<T>
     @return A new AlgebraicVector.
     @see AlgebraicVector<T>::BesselYFunction
  */
-template<typename T> AlgebraicVector<T> BesselYFunction(const AlgebraicVector<T> &obj, const int n) {
+template<typename T> AlgebraicVector<T> BesselYFunction(const int n, const AlgebraicVector<T> &obj) {
     return obj.BesselYFunction(n);
 }
 
@@ -1883,7 +1883,7 @@ template<typename T> AlgebraicVector<T> BesselYFunction(const AlgebraicVector<T>
     @return A new AlgebraicVector.
     @see AlgebraicVector<T>::BesselIFunction
  */
-template<typename T> AlgebraicVector<T> BesselIFunction(const AlgebraicVector<T> &obj, const int n, const bool scaled) {
+template<typename T> AlgebraicVector<T> BesselIFunction(const int n, const AlgebraicVector<T> &obj, const bool scaled) {
     return obj.BesselIFunction(n, scaled);
 }
 
@@ -1895,7 +1895,7 @@ template<typename T> AlgebraicVector<T> BesselIFunction(const AlgebraicVector<T>
     @return A new AlgebraicVector.
     @see AlgebraicVector<T>::BesselKFunction
  */
-template<typename T> AlgebraicVector<T> BesselKFunction(const AlgebraicVector<T> &obj, const int n, const bool scaled) {
+template<typename T> AlgebraicVector<T> BesselKFunction(const int n, const AlgebraicVector<T> &obj, const bool scaled) {
     return obj.BesselKFunction(n, scaled);
 }
 

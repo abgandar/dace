@@ -111,42 +111,42 @@ double norm(const double x, const int type) {
 }
 
 /** Bessel J function of x.
-    @param[in] x The function argument.
     @param[in] n The order of the Bessel function.
+    @param[in] x The function argument.
  */
-double BesselJFunction(const double x, const int n) {
+double BesselJFunction(const int n, const double x) {
     double res;
     BesselWrapper(x, n, n, -1, &res);
     return res;
 }
 
 /** Bessel Y function of x.
-    @param[in] x The function argument.
     @param[in] n The order of the Bessel function.
+    @param[in] x The function argument.
  */
-double BesselYFunction(const double x, const int n) {
+double BesselYFunction(const int n, const double x) {
     double res;
     BesselWrapper(x, n, n, 1, &res);
     return res;
 }
 
 /** Bessel I function of x.
-    @param[in] x The function argument.
     @param[in] n The order of the Bessel function.
+    @param[in] x The function argument.
     @param[in] scaled If true the result is scaled by `exp(x)`.
  */
-double BesselIFunction(const double x, const int n, const bool scaled) {
+double BesselIFunction(const int n, const double x, const bool scaled) {
     double res;
     ModifiedBesselWrapper(x, n, n, scaled ? -2 : -1, &res);
     return res;
 }
 
 /** Bessel K function of x.
-    @param[in] x The function argument.
     @param[in] n The order of the Bessel function.
+    @param[in] x The function argument.
     @param[in] scaled If true the result is scaled by `exp(x)`.
  */
-double BesselKFunction(const double x, const int n, const bool scaled) {
+double BesselKFunction(const int n, const double x, const bool scaled) {
     double res;
     ModifiedBesselWrapper(x, n, n, scaled ? 2 : 1, &res);
     return res;
