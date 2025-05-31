@@ -40,9 +40,9 @@
 
 /** Compute a norm of a DA object.
     @param[in] ina A pointer to the DA object to take norm of.
-    @param[in] ityp The type of norm to compute.
-     0 = max norm
-     1 = sum norm
+    @param[in] ityp The type of norm to compute:\n
+     0 = max norm\n
+     1 = sum norm\n
     >1 = corresponding vector norm
     @return The norm of @e ina.
 */
@@ -77,12 +77,12 @@ double daceNorm(const DACEDA *ina, const unsigned int ityp)
 
 /** Compute an order sorted norm of a DA object.
     @param[in] ina A pointer to the DA object to take norm of.
-    @param[in] ivar The independent variable with respect to which to group.
-     0 = group by monomial order
+    @param[in] ivar The independent variable with respect to which to group:\n
+     0 = group by monomial order\n
     >1 = group by given independent variable
-    @param[in] ityp The type of norm to compute.
-     0 = max norm
-     1 = sum norm
+    @param[in] ityp The type of norm to compute:\n
+     0 = max norm\n
+     1 = sum norm\n
     >1 = corresponding vector norm
     @param[out] onorm A C array of length @p nomax+1 containing the grouped estimates.
 */
@@ -175,21 +175,20 @@ void daceOrderedNorm(const DACEDA *ina, const unsigned int ivar, const unsigned 
     }
 }
 
-/** Estimate order sorted norms of DA object ina up to given order.
+/** Estimate order sorted norms of DA object @e ina up to given order.
     @note If estimation is not possible, zero is returned for all
     requested orders. In most cases this is actually not too far off.
-
-    @param[in] ina A pointer to the DA object to take norm of.
-    @param[in] ivar The independent variable with respect to which to group:
-     0 = group by monomial order
+    @param[in] ina A pointer to the DA object to estimate norm of.
+    @param[in] ivar The independent variable with respect to which to group:\n
+     0 = group by monomial order\n
     >1 = group by given independent variable
-    @param[in] ityp The type of norm to compute:
-     0 = max norm
-     1 = sum norm
+    @param[in] ityp The type of norm to compute:\n
+     0 = max norm\n
+     1 = sum norm\n
     >1 = corresponding vector norm
     @param[in] nc The maximum order to estimate.
-    @param[out] c A C array of length @p nc+1 containing the grouped estimates.
-    @param[out] err A C array of length @p min(nc,nomax)+1 containing the residuals.
+    @param[out] c A C array of length `nc+1` containing the grouped estimates.
+    @param[out] err A C array of length `min(nc,nomax)+1` containing the residuals.
     of the exponential fit at each order. If @p NULL is passed in, no residuals
     are computed and returned.
 */
@@ -261,7 +260,7 @@ void daceEstimate(const DACEDA *ina, const unsigned int ivar, const unsigned int
 #endif
 }
 
-/** Compute an upper and lower bound of DA object @e ina over the domain @f$ [-1,1]^n @f$.
+/** Compute an upper and lower bound of DA object @e ina over the domain @f$[-1,1]^n@f$.
     @param[in] ina A pointer to the DA object to bound.
     @param[out] alo A pointer where to store the lower bound.
     @param[out] aup A pointer where to store the upper bound.

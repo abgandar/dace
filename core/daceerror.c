@@ -155,7 +155,6 @@ static const errstrings DACEerr[] = {
 /** Return the current error ID.
     The error ID is 100*severity + error code, where severity is between 0 - 10
     and the error code between 0 - 99.
-
     @return The current error ID.
 */
 unsigned int daceGetError()

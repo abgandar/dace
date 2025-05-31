@@ -56,8 +56,8 @@ namespace DACE {
     }
 
     /** Create and execute a DACEException object with given severity and ID codes.
-        @param exc_sv The severity code of the error plus 10 to indicate it originated in the C++ interface.
-        @param exc_id The ID code of the error.
+        @param[in] exc_sv The severity code of the error plus 10 to indicate it originated in the C++ interface.
+        @param[in] exc_id The ID code of the error.
      */
     DACEException::DACEException(const int exc_sv, const int exc_id) {
         m_x = exc_sv;

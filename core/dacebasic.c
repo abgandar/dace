@@ -43,9 +43,8 @@
 
 /** Create a DA object to be @e ckon times the @e i-th independent variable.
     @note Independent DA variable indices are 1-based, i.e. the first independent
-    variable is i=1. The case of i=0 corresponds to the constant part of the polynomial.
-
-    @param[in] ina A pointer to DA object to store the resulting DA in.
+    variable is @e i=1. The case of @e i=0 corresponds to the constant part of the polynomial.
+    @param[out] ina A pointer to the DA object to store the resulting DA in.
     @param[in] i The number of the independent variable to create.
     @param[in] ckon The coefficient of the independent DA variable created.
 */
@@ -97,8 +96,8 @@ void daceCreateVariable(DACEDA *ina, const unsigned int i, const double ckon)
     ipoa->ii = DACECom.ia1[ic1]+DACECom.ia2[ic2];
 }
 
-/** Create a DA object to be @e ckon times the monomial given by the exponents in @e jj[].
-    @param[in] ina A pointer to DA object to store the resulting DA in.
+/** Create a DA object to be @e ckon times the monomial given by the exponents in @e jj.
+    @param[out] ina A pointer to DA object to store the resulting DA in.
     @param[in] jj A C array with @e nvmax exponents indicating the monomial to create.
     @param[in] ckon The coefficient of the monomial created.
 */
@@ -128,7 +127,7 @@ void daceCreateMonomial(DACEDA *ina, const unsigned int jj[], const double ckon)
 }
 
 /** Create a DA object with all coefficients set to the constant value @e ckon.
-    @param[in] ina A pointer to DA object to store the resulting DA in.
+    @param[out] ina A pointer to DA object to store the resulting DA in.
     @param[in] ckon The coefficient of the monomials.
 */
 void daceCreateFilled(DACEDA *ina, const double ckon)
@@ -148,7 +147,7 @@ void daceCreateFilled(DACEDA *ina, const double ckon)
 }
 
 /** Create a DA object with constant part equal to @e ckon.
-    @param[in] ina A pointer to DA object to store the resulting DA in.
+    @param[out] ina A pointer to DA object to store the resulting DA in.
     @param[in] ckon A coefficient of the constant part of the result.
 */
 void daceCreateConstant(DACEDA *ina, const double ckon)
@@ -166,7 +165,7 @@ void daceCreateConstant(DACEDA *ina, const double ckon)
 
     If cm is negative, all coefficients are chosen to be between -1.0 and 1.0.
 
-    @param[in] ina A pointer to DA object to store the resulting DA in.
+    @param[out] ina A pointer to DA object to store the resulting DA in.
     @param[in] cm The filling factor between -1.0 and 1.0.
 */
 void daceCreateRandom(DACEDA *ina, const double cm)
@@ -231,7 +230,7 @@ double daceGetConstant(const DACEDA *ina)
 
 /** Extract the linear part of a DA object.
     @param[in] ina A pointer to DA object to extract linear part from.
-    @param[in] c A C array of length @e nvmax containing the linear coefficients in order.
+    @param[out] c A C array of length @e nvmax containing the linear coefficients in order.
 */
 void daceGetLinear(const DACEDA *ina, double c[])
 {
@@ -315,7 +314,7 @@ double daceGetCoefficient0(const DACEDA *ina, const unsigned int ic)
 }
 
 /** Set coefficient of a monomial in a DA object.
-    @param[in] ina A pointer to DA object to set monomial in.
+    @param[out] ina A pointer to DA object to set monomial in.
     @param[in] jj A C array of @e nvmax exponents identifying the monomial.
     @param[in] cjj The value of the corresponding coefficient.
 */
@@ -325,9 +324,9 @@ void daceSetCoefficient(DACEDA *ina, const unsigned int jj[], const double cjj)
 }
 
 /** Set coefficient of a monomial in a DA object.
-    @param[in] ina A pointer to DA object to set monomial in.
+    @param[out] ina A pointer to DA object to set monomial in.
     @param[in] ic The DA coding integer of the monomial to set.
-    @param[in] cjj the value of the corresponding coefficient.
+    @param[in] cjj The value of the corresponding coefficient.
 */
 void daceSetCoefficient0(DACEDA *ina, const unsigned int ic, const double cjj)
 {
@@ -429,7 +428,6 @@ void daceSetCoefficient0(DACEDA *ina, const unsigned int ic, const double cjj)
     Extract the coefficient at position @e npos (starting with 1) in the list of
     non-zero coefficients in the DA object and return its exponents and
     coefficient. If the monomial does not exist, the value 0.0 is returned.
-
     @param[in] ina A pointer to DA object to extract monomial from.
     @param[in] npos The index of the monomial to extract.
     @param[out] jj A C array of @e nvmax elements for returning the exponents of the monomial.
@@ -505,7 +503,7 @@ int daceGetDegree(const DACEDA *ina)
 
 /** Copy content of one DA object into another DA object.
     @param[in] ina A pointer to DA object to copy from.
-    @param[in] inb A pointer to DA object to copy to.
+    @param[out] inb A pointer to DA object to copy to.
 */
 void daceCopy(const DACEDA *ina, DACEDA *inb)
 {
@@ -532,7 +530,7 @@ void daceCopy(const DACEDA *ina, DACEDA *inb)
     @note This routine is slightly slower than non-filtering daceCopy() (about 10%).
 
     @param[in] ina A pointer to DA object to copy from.
-    @param[in] inb A pointer to DA object to copy to.
+    @param[out] inb A pointer to DA object to copy to.
 */
 void daceCopyFiltering(const DACEDA *ina, DACEDA *inb)
 {
@@ -577,7 +575,7 @@ void daceCopyFiltering(const DACEDA *ina, DACEDA *inb)
     @param[in] ina A pointer to DA object to trim.
     @param[in] imin The minimum order to keep.
     @param[in] imax The maximum order to keep.
-    @param[in] inc A pointer to DA object to store the truncated result in.
+    @param[out] inc A pointer to DA object to store the truncated result in.
 */
 void daceTrim(const DACEDA *ina, const unsigned int imin, const unsigned int imax, DACEDA *inc)
 {
@@ -610,9 +608,9 @@ void daceTrim(const DACEDA *ina, const unsigned int imin, const unsigned int ima
 
 /** Copy monomials from a DA object @e ina to DA object @e inb if the same monomial
     is non-zero in DA object @e inc.
-    @note This function also filters out terms below the current cutoff.
+    This function also filters out terms below the current cutoff.
     @param[in] ina A pointer to DA object to filter.
-    @param[in] inb A pointer to DA object to store the filtered result in.
+    @param[out] inb A pointer to DA object to store the filtered result in.
     @param[in] inc A pointer to DA object providing the filter template.
 */
 void daceFilter(const DACEDA *ina, DACEDA *inb, const DACEDA *inc)

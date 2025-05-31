@@ -42,9 +42,9 @@ namespace DACE {
 *     Input/Output routines
 ************************************************************************************/
 /** Output operator for DA matrices.
-    @param[in] out Output stream
-    @param[in] obj AlgebraicMatrix<DA> to be output to the stream
-    @return Output stream
+    @param[in] out A C++ output stream.
+    @param[in] obj The AlgebraicMatrix<DA> to be output to the stream.
+    @return The C++ output stream.
  */
 template<> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA> &obj)
 {
@@ -63,9 +63,9 @@ template<> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<DA>
 }
 
 /** Input operator for DA matrices.
-    @param[in] in Input stream
-    @param[out] obj AlgebraicMatrix<DA> to be read from the stream
-    @return Input stream
+    @param[in] in A C++ input stream.
+    @param[out] obj The AlgebraicMatrix<DA> to be read from the stream.
+    @return The C++ input stream.
 */
 template<> std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj){
     // read the first line

@@ -41,9 +41,9 @@
 
 /** Set up the ordering and addressing arrays in the common data structure
     and initialize DA memory.
-    @warning MUST BE CALLED BEFORE ANY OTHER DA ROUTINE CAN BE USED.
-    @note Also initializes the truncation order to the maximum computation order
+    Also initializes the truncation order to the maximum computation order
     and disables the DA epsilon cutoff by setting it to 0.0.
+    @warning MUST BE CALLED BEFORE ANY OTHER DA ROUTINE CAN BE USED.
 
     @param[in] no The order of the Taylor polynomials.
     @param[in] nv The number of variables considered.
@@ -188,10 +188,11 @@ void daceInitialize(unsigned int no, unsigned int nv)
     All spawned threads must then call daceInitializeThread() to initialize the
     thread before performing any other operations.
 
-    @warning daceInitialize MUST NOT be called again by any thread while other threads
-    are active.
-    @note Also initializes the truncation order to the maximum computation order
+    Also initializes the truncation order to the maximum computation order
     and disables the DA epsilon cutoff by setting it to 0.0.
+
+    @warning daceInitialize *MUST NOT* be called again by any thread while other threads
+    are active.
 
     @see daceInitialize
     @see daceTruncationOrder
@@ -245,7 +246,6 @@ void daceInitializeThread0()
 
 /** Returns the major and minor version number of the DACE.
     These values can be checked by the interface to ensure compatibility.
-
     @param[out] imaj the major version number.
     @param[out] imin the minor version number.
     @param[out] ipat The patch version number.

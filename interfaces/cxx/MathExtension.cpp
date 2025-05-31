@@ -103,7 +103,7 @@ double root(const double x, const int p) {
 
 /** norm of x.
     @param[in] x The function argument.
-    @param[in] type the type of norm (ignored for double).
+    @param[in] type The type of norm (ignored for double).
  */
 double norm(const double x, const int type) {
     return std::abs(x);

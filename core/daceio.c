@@ -41,9 +41,8 @@
 /** Print the DA object @e ina to string @e strs (of line length @p DACE_STRLEN).
     The format of the output is written in DACE format which is loosely
     based on the format used by COSY INFINITY but is not fully compatible to it.
-
     @param[in] ina A pointer to the DA object to be printed.
-    @param[out] strs A C array of size @p (nmmax+2)*DACE_STRLEN containing the
+    @param[out] strs A C array of size `(nmmax+2)*DACE_STRLEN` containing the
     zero-terminated lines of length @p DACE_STRLEN.
     @param[out] nstrs A pointer where to store the final number of strings printed.
 
@@ -115,7 +114,7 @@ void daceWrite(const DACEDA *ina, char *strs, unsigned int *nstrs)
     (i.e. a single line per coefficient).
 
     @param[in] ina A pointer to the DA object to read into.
-    @param[in] strs A C array of size @p nstrs*DACE_STRLEN containing the
+    @param[in] strs A C array of size `nstrs*DACE_STRLEN` containing the
     zero-terminated lines of length @p DACE_STRLEN.
     @param[in] nstrs Number of lines in @e strs.
 
@@ -440,7 +439,7 @@ unsigned int daceExportBlob(const DACEDA *ina, void *blob, unsigned int *size)
     of the blob header to read, and then a second time with the header to determine
     the size of the remaining data.
 
-    @param[in] blob A pointer to memory where the data is stored.
+    @param[inout] blob A pointer to memory where the data is stored.
     @return The total size (in bytes) of the DACE blob, or 0 on error (e.g. when
     the data pointed to by blob is not a DACE blob at all). If blob is NULL, the
     minimum size (in bytes) of a blob (i.e. the blob header size) is returned.
@@ -467,7 +466,7 @@ unsigned int daceBlobSize(const void *blob)
     maximum computation order as well as any extra variables present.
 
     @param[in] blob A pointer to memory where the data is stored.
-    @param[in] inc The DA object to import into.
+    @param[out] inc The DA object to import into.
 */
 void daceImportBlob(const void *blob, DACEDA *inc)
 {
