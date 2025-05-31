@@ -40,9 +40,9 @@
 #include <stdexcept>
 #include <algorithm>
 #include <string>
+#include <type_traits>
 
 // DACE classes
-#include "dace/PromotionTrait.h"
 #include "dace/AlgebraicVector.h"
 #include "dace/AlgebraicMatrix.h"
 
@@ -53,11 +53,11 @@ namespace DACE {
     @param[in] obj2 An AlgebraicMatrix.
     @return A new AlgebraicVector.
  */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicVector<U> &obj1, const AlgebraicMatrix<V> &obj2 ) {
+template<typename U,typename V> AlgebraicVector<typename std::common_type_t<U, V >> operator*( const AlgebraicVector<U> &obj1, const AlgebraicMatrix<V> &obj2 ) {
     if(obj1.size() != obj2.nrows())
         throw std::runtime_error("DACE::AlgebraicMatrix<T>::operator*: objects in vector/matrix multiplication must have compatible size.");
 
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(obj2.ncols());
+    AlgebraicVector<typename std::common_type_t<U,V >> temp(obj2.ncols());
 
     for(unsigned int i=0; i < obj2.ncols(); i++) {
         temp[i] = 0.;
@@ -73,11 +73,11 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
     @param[in] obj2 An AlgebraicVector.
     @return A new AlgebraicVector.
  */
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicVector<V> &obj2 ) {
+template<typename U,typename V> AlgebraicVector<typename std::common_type_t<U, V>> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicVector<V> &obj2 ) {
     if(obj1.ncols() != obj2.size())
         throw std::runtime_error("DACE::AlgebraicMatrix<T>::operator*: objects in vector/matrix multiplication must have compatible size.");
 
-    AlgebraicVector<typename PromotionTrait< U, V >::returnType> temp(obj1.nrows());
+    AlgebraicVector<typename std::common_type_t<U, V>> temp(obj1.nrows());
 
     for(unsigned int i=0; i < obj1.nrows(); i++) {
         temp[i] = 0.;
@@ -277,14 +277,14 @@ template<class T> AlgebraicMatrix<T> AlgebraicMatrix<T>::submat(const unsigned i
     @param[in] obj2 the second AlgebraicMatrix.
     @return A new AlgebraicMatrix.
  */
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2) {
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator+( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2) {
     if((obj1.ncols() != obj2.ncols()) || (obj1.nrows() != obj2.nrows()))
         throw std::runtime_error("DACE::AlgebraicMatrix<T>::operator+: Inputs must have the same size, unless one is a scalar value.");
 
     unsigned int n_rows = obj1.nrows();
     unsigned int n_cols = obj1.ncols();
 
-    AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> temp(n_rows, n_cols);
+    AlgebraicMatrix<typename std::common_type_t<U, V>> temp(n_rows, n_cols);
 
     for(unsigned int i=0; i < n_rows; i++)
         for(unsigned int j=0; j < n_cols; j++)
@@ -298,11 +298,11 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
     @param[in] obj2 A scalar value.
     @return A new AlgebraicMatrix.
  */
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const AlgebraicMatrix<U> &obj1, const V &obj2 ) {
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator+( const AlgebraicMatrix<U> &obj1, const V &obj2 ) {
     unsigned int n_rows = obj1.nrows();
     unsigned int n_cols = obj1.ncols();
 
-    AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> temp(n_rows, n_cols);
+    AlgebraicMatrix<typename std::common_type_t<U, V>> temp(n_rows, n_cols);
 
     for(unsigned int i=0; i < n_rows; i++)
         for(unsigned int j=0; j < n_cols; j++)
@@ -316,11 +316,11 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
     @param[in] obj2 An AlgebraicMatrix.
     @return A new AlgebraicMatrix.
  */
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const U &obj1, const AlgebraicMatrix<V> &obj2 ) {
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator+( const U &obj1, const AlgebraicMatrix<V> &obj2 ) {
     unsigned int n_rows = obj2.nrows();
     unsigned int n_cols = obj2.ncols();
 
-    AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> temp(n_rows, n_cols);
+    AlgebraicMatrix<typename std::common_type_t<U, V>> temp(n_rows, n_cols);
 
     for(unsigned int i=0; i < n_rows; i++)
         for(unsigned int j=0; j < n_cols; j++)
@@ -334,14 +334,14 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
     @param[in] obj2 second AlgebraicMatrix.
     @return A new AlgebraicMatrix.
  */
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator-( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2) {
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator-( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2) {
     if((obj1.ncols() != obj2.ncols()) || (obj1.nrows() != obj2.nrows()))
         throw std::runtime_error("DACE::AlgebraicMatrix<T>::operator-: Inputs must have the same size, unless one is a scalar value.");
 
     unsigned int n_rows = obj1.nrows();
     unsigned int n_cols = obj1.ncols();
 
-    AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> temp(n_rows, n_cols);
+    AlgebraicMatrix<typename std::common_type_t<U, V>> temp(n_rows, n_cols);
 
     for(unsigned int i=0; i < n_rows; i++)
         for(unsigned int j=0; j < n_cols; j++)
@@ -355,11 +355,11 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
     @param[in] obj2 A scalar value.
     @return A new AlgebraicMatrix.
  */
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator-( const AlgebraicMatrix<U> &obj1, const V &obj2 ) {
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator-( const AlgebraicMatrix<U> &obj1, const V &obj2 ) {
     unsigned int n_rows = obj1.nrows();
     unsigned int n_cols = obj1.ncols();
 
-    AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> temp(n_rows, n_cols);
+    AlgebraicMatrix<typename std::common_type_t<U, V>> temp(n_rows, n_cols);
 
     for(unsigned int i=0; i < n_rows; i++)
         for(unsigned int j=0; j < n_cols; j++)
@@ -373,11 +373,11 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
     @param[in] obj2 An AlgebraicMatrix.
     @return A new AlgebraicMatrix.
  */
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator-( const U &obj1, const AlgebraicMatrix<V> &obj2 ) {
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator-( const U &obj1, const AlgebraicMatrix<V> &obj2 ) {
     unsigned int n_rows = obj2.nrows();
     unsigned int n_cols = obj2.ncols();
 
-    AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> temp(n_rows, n_cols);
+    AlgebraicMatrix<typename std::common_type_t<U, V>> temp(n_rows, n_cols);
 
     for(unsigned int i=0; i < n_rows; i++)
         for(unsigned int j=0; j < n_cols; j++)
@@ -391,7 +391,7 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
     @param[in] obj2 second AlgebraicMatrix (m x p).
     @return A new AlgebraicMatrix (n x p).
 */
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2 ) {
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2 ) {
     if(obj1.ncols() != obj2.nrows())
         throw std::runtime_error("DACE::AlgebraicMatrix<T>::operator*: Number of columns of first matrix must be equal to num,ber of rows of second matrix.");
 
@@ -399,7 +399,7 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
     unsigned int M = obj1.ncols();
     unsigned int P = obj2.ncols();
 
-    AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> temp(N,P);
+    AlgebraicMatrix<typename std::common_type_t<U, V>> temp(N,P);
 
     for(unsigned int i=0; i < N; i++)
         for(unsigned int j=0; j < P; j++) {
@@ -416,11 +416,11 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
     @param[in] obj2 A scalar value.
     @return A new AlgebraicMatrix.
  */
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicMatrix<U> &obj1, const V &obj2 ) {
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator*( const AlgebraicMatrix<U> &obj1, const V &obj2 ) {
     unsigned int n_rows = obj1.nrows();
     unsigned int n_cols = obj1.ncols();
 
-    AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> temp(n_rows, n_cols);
+    AlgebraicMatrix<typename std::common_type_t<U, V>> temp(n_rows, n_cols);
 
     for(unsigned int i=0; i < n_rows; i++)
         for(unsigned int j=0; j < n_cols; j++)
@@ -434,11 +434,11 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
     @param[in] obj2 An AlgebraicMatrix.
     @return A new AlgebraicMatrix.
  */
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator*( const U &obj1, const AlgebraicMatrix<V> &obj2 ) {
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator*( const U &obj1, const AlgebraicMatrix<V> &obj2 ) {
     unsigned int n_rows = obj2.nrows();
     unsigned int n_cols = obj2.ncols();
 
-    AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> temp(n_rows, n_cols);
+    AlgebraicMatrix<typename std::common_type_t<U, V>> temp(n_rows, n_cols);
 
     for(unsigned int i=0; i < n_rows; i++)
         for(unsigned int j=0; j < n_cols; j++)

@@ -39,9 +39,9 @@
 // C++ stdlib classes required for interface definition
 #include <vector>
 #include <initializer_list>
+#include <type_traits>
 
 // DACE classes required for interface definition (DA.h needed for DA::getMaxOrder(), DA::getMaxVariables() default arguments)
-#include "dace/PromotionTrait.h"
 #include "dace/DA.h"
 
 namespace DACE {
@@ -133,7 +133,7 @@ public:
      * @{
      */
     AlgebraicVector<T> extract(const size_t first, const size_t last) const;
-    template<typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> concat(const std::vector<U> &obj) const;
+    template<typename U> AlgebraicVector<typename std::common_type_t<T, U>> concat(const std::vector<U> &obj) const;
     template<typename U> AlgebraicVector<T>& operator<<(const std::vector<U> &obj);
     /** @} */
 
@@ -228,8 +228,8 @@ public:
     /** @name Vector routines
      * @{
      */
-    template<typename U> typename PromotionTrait<T,U>::returnType dot(const AlgebraicVector<U> &obj) const;
-    template<typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> cross(const AlgebraicVector<U> &obj) const;
+    template<typename U> typename std::common_type_t<T, U> dot(const AlgebraicVector<U> &obj) const;
+    template<typename U> AlgebraicVector<typename std::common_type_t<T, U>> cross(const AlgebraicVector<U> &obj) const;
     T length() const;
     AlgebraicVector<T> normalize() const;
     AlgebraicVector<T> invert() const;
@@ -314,21 +314,21 @@ template<typename T> std::vector<std::vector<double>> linear(const AlgebraicVect
  * @name Vector Basic Arithmetic Operators
  * @{
  */
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator+( const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator+( const AlgebraicVector<T> &obj1, const U &obj2);
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator+( const T &obj1, const AlgebraicVector<U> &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator+( const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator+( const AlgebraicVector<T> &obj1, const U &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator+( const T &obj1, const AlgebraicVector<U> &obj2);
 
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator-( const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator-( const AlgebraicVector<T> &obj1, const U &obj2);
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator-( const T &obj1, const AlgebraicVector<U> &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator-( const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator-( const AlgebraicVector<T> &obj1, const U &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator-( const T &obj1, const AlgebraicVector<U> &obj2);
 
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator*( const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator*( const AlgebraicVector<T> &obj1, const U &obj2);
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator*( const T &obj1, const AlgebraicVector<U> &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator*( const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator*( const AlgebraicVector<T> &obj1, const U &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator*( const T &obj1, const AlgebraicVector<U> &obj2);
 
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator/( const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator/( const AlgebraicVector<T> &obj1, const U &obj2);
-template<typename T,typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> operator/( const T &obj1, const AlgebraicVector<U> &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator/( const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator/( const AlgebraicVector<T> &obj1, const U &obj2);
+template<typename T,typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator/( const T &obj1, const AlgebraicVector<U> &obj2);
 /** @} */
 
 /** @name Vector Basic Arithmetic
@@ -408,8 +408,8 @@ template<typename T> std::istream& operator>>(std::istream &in, AlgebraicVector<
 /** @name Vector Functions
  *  @{
  */
-template<typename T, typename U> typename PromotionTrait<T,U>::returnType dot(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> cross(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
+template<typename T, typename U> typename std::common_type_t<T, U> dot(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> cross(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2);
 template<typename T> T length(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> normalize(const AlgebraicVector<T> &obj);
 /** @} */

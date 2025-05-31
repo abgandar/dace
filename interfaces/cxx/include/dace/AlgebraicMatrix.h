@@ -38,9 +38,7 @@
 // C++ stdlib classes required for interface definition
 #include <vector>
 #include <iostream>
-
-// DACE classes required for interface definition
-#include "dace/PromotionTrait.h"
+#include <type_traits>
 
 namespace DACE {
 
@@ -140,19 +138,19 @@ template<> DACE_API  std::ostream& operator<<(std::ostream &out, const Algebraic
 template<typename U> std::istream& operator>>(std::istream &in, AlgebraicMatrix<U> &obj);
 template<> DACE_API  std::istream& operator>>(std::istream &in, AlgebraicMatrix<DA> &obj);
 
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2);
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const AlgebraicMatrix<U> &obj1, const V &obj2 );
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const U &obj1, const AlgebraicMatrix<V> &obj2 );
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator+( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2);
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator+( const AlgebraicMatrix<U> &obj1, const V &obj2 );
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator+( const U &obj1, const AlgebraicMatrix<V> &obj2 );
 
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator-( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2);
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator-( const AlgebraicMatrix<U> &obj1, const V &obj2 );
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator-( const U &obj1, const AlgebraicMatrix<V> &obj2 );
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator-( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2);
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator-( const AlgebraicMatrix<U> &obj1, const V &obj2 );
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator-( const U &obj1, const AlgebraicMatrix<V> &obj2 );
 
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2);
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicMatrix<U> &obj1, const V &obj2 );
-template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator*( const U &obj1, const AlgebraicMatrix<V> &obj2 );
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicVector<U> &obj1, const AlgebraicMatrix<V> &obj2 );
-template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicVector<V> &obj2 );
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2);
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator*( const AlgebraicMatrix<U> &obj1, const V &obj2 );
+template<typename U,typename V> AlgebraicMatrix<typename std::common_type_t<U, V>> operator*( const U &obj1, const AlgebraicMatrix<V> &obj2 );
+template<typename U,typename V> AlgebraicVector<typename std::common_type_t<U, V>> operator*( const AlgebraicVector<U> &obj1, const AlgebraicMatrix<V> &obj2 );
+template<typename U,typename V> AlgebraicVector<typename std::common_type_t<U, V>> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicVector<V> &obj2 );
 
 /***********************************************************************************
  *     Functional style wrappers

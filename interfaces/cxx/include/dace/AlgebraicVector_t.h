@@ -39,9 +39,9 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <type_traits>
 
 // DACE classes
-#include "dace/PromotionTrait.h"
 #include "dace/MathExtension.h"
 #include "dace/compiledDA.h"
 #include "dace/AlgebraicVector.h"
@@ -73,10 +73,10 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::extract(const size_t
     @param[in] obj The AlgebraicVector to be appended.
     @return A new AlgebraicVector containing the elements of both vectors, cast upwards if necessary.
 */
-template<typename T> template<typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> AlgebraicVector<T>::concat(const std::vector<U> &obj) const {
+template<typename T> template<typename U> AlgebraicVector<typename std::common_type_t<T, U>> AlgebraicVector<T>::concat(const std::vector<U> &obj) const {
     const size_t size1 = this->size();
     const size_t size2 = obj.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> res(size1+size2);
+    AlgebraicVector<typename std::common_type_t<T, U>> res(size1+size2);
 
     for(size_t i=0; i<size1; i++)
         res[i] = (*this)[i];
@@ -798,12 +798,12 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::atanh() const {
     @return A scalar value representing dot (inner) product.
     @throw std::runtime_error
  */
-template<typename T> template<typename U> typename PromotionTrait<T,U>::returnType AlgebraicVector<T>::dot(const AlgebraicVector<U> &obj) const {
+template<typename T> template<typename U> typename std::common_type_t<T, U> AlgebraicVector<T>::dot(const AlgebraicVector<U> &obj) const {
     const size_t size = this->size();
     if(size != obj.size())
           throw std::runtime_error("DACE::AlgebraicVector<T>::dot(): Vectors must have the same length.");
 
-    typename PromotionTrait<T,U>::returnType temp = 0.0;
+    typename std::common_type_t<T, U> temp = 0.0;
     for(size_t i=0; i<size; i++) {
         temp += (*this)[i] * obj[i];
     }
@@ -815,11 +815,11 @@ template<typename T> template<typename U> typename PromotionTrait<T,U>::returnTy
     @return A new AlgebraicVector.
     @throw std::runtime_error
  */
-template<typename T> template<typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> AlgebraicVector<T>::cross(const AlgebraicVector<U> &obj) const {
+template<typename T> template<typename U> AlgebraicVector<typename std::common_type_t<T, U>> AlgebraicVector<T>::cross(const AlgebraicVector<U> &obj) const {
     if((this->size() != 3) || (obj.size() != 3))
         throw std::runtime_error("DACE::AlgebraicVector<T>::cross(): Inputs must be 3 element AlgebraicVectors.");
 
-    AlgebraicVector<typename PromotionTrait<T,U>::returnType> temp(3);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(3);
 
     temp[0] = ((*this)[1] * obj[2]) - ((*this)[2] * obj[1]);
     temp[1] = ((*this)[2] * obj[0]) - ((*this)[0] * obj[2]);
@@ -1229,12 +1229,12 @@ template<typename T> std::vector<std::vector<double>> linear(const AlgebraicVect
     @return A new AlgebraicVector.
     @throw std::runtime_error
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator+(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator+(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
     if(obj1.size() != obj2.size())
         throw std::runtime_error("DACE::AlgebraicVector<T>::operator+: Vectors must have the same length.");
 
     const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1[i] + obj2[i];
     }
@@ -1246,9 +1246,9 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @param[in] obj2 A scalar value.
     @return A new AlgebraicVector.
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator+(const AlgebraicVector<T> &obj1, const U &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator+(const AlgebraicVector<T> &obj1, const U &obj2) {
     const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1[i] + obj2;
     }
@@ -1260,9 +1260,9 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @param[in] obj2 A AlgebraicVector.
     @return A new AlgebraicVector.
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator+(const T &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator+(const T &obj1, const AlgebraicVector<U> &obj2) {
     const size_t size = obj2.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1 + obj2[i];
     }
@@ -1275,12 +1275,12 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @return A new AlgebraicVector.
     @throw std::runtime_error
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator-(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator-(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
     if(obj1.size() != obj2.size())
         throw std::runtime_error("DACE::AlgebraicVector<T>::operator-: Vectors must have the same length.");
 
     const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1[i] - obj2[i];
     }
@@ -1292,9 +1292,9 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @param[in] obj2 A scalar value.
     @return A new AlgebraicVector.
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator-(const AlgebraicVector<T> &obj1, const U &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator-(const AlgebraicVector<T> &obj1, const U &obj2) {
     const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1[i] - obj2;
     }
@@ -1306,9 +1306,9 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @param[in] obj2 A AlgebraicVector.
     @return A new AlgebraicVector.
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator-(const T &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator-(const T &obj1, const AlgebraicVector<U> &obj2) {
     const size_t size = obj2.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1 - obj2[i];
     }
@@ -1321,12 +1321,12 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @return A new AlgebraicVector.
     @throw std::runtime_error
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator*(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator*(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
     if(obj1.size() != obj2.size())
         throw std::runtime_error("DACE::AlgebraicVector<T>::operator*: Vectors must have the same length.");
 
     const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1[i] * obj2[i];
     }
@@ -1338,9 +1338,9 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @param[in] obj2 A scalar value.
     @return A new AlgebraicVector.
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator*(const AlgebraicVector<T> &obj1, const U &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator*(const AlgebraicVector<T> &obj1, const U &obj2) {
     const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1[i] * obj2;
     }
@@ -1352,9 +1352,9 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @param[in] obj2 A AlgebraicVector.
     @return A new AlgebraicVector.
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator*(const T &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator*(const T &obj1, const AlgebraicVector<U> &obj2) {
     const size_t size = obj2.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1 * obj2[i];
     }
@@ -1367,12 +1367,12 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @return A new AlgebraicVector.
     @throw std::runtime_error
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator/(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator/(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
     if(obj1.size() != obj2.size())
         throw std::runtime_error("DACE::AlgebraicVector<T>::operator/: Vectors must have the same length.");
 
     const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1[i] / obj2[i];
     }
@@ -1384,9 +1384,9 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @param[in] obj2 A scalar value.
     @return A new AlgebraicVector.
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator/(const AlgebraicVector<T> &obj1, const U &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator/(const AlgebraicVector<T> &obj1, const U &obj2) {
     const size_t size = obj1.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1[i] / obj2;
     }
@@ -1398,9 +1398,9 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
     @param[in] obj2 A AlgebraicVector..
     @return A new AlgebraicVector.
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::returnType> operator/(const T &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> operator/(const T &obj1, const AlgebraicVector<U> &obj2) {
     const size_t size = obj2.size();
-    AlgebraicVector<typename PromotionTrait<T, U>::returnType> temp(size);
+    AlgebraicVector<typename std::common_type_t<T, U>> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = obj1 / obj2[i];
     }
@@ -1917,7 +1917,7 @@ template<typename T> std::istream& operator>>(std::istream &in, AlgebraicVector<
    @param[in] obj2 An AlgebraicVector.
    @return A scalar value.
  */
-template<typename T, typename U> typename PromotionTrait<T,U>::returnType dot(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> typename std::common_type_t<T, U> dot(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
     return obj1.dot(obj2);
 }
 
@@ -1926,7 +1926,7 @@ template<typename T, typename U> typename PromotionTrait<T,U>::returnType dot(co
     @param[in] obj2 An AlgebraicVector.
     @return A new AlgebraicVector.
  */
-template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T,U>::returnType> cross(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
+template<typename T, typename U> AlgebraicVector<typename std::common_type_t<T, U>> cross(const AlgebraicVector<T> &obj1, const AlgebraicVector<U> &obj2) {
     return obj1.cross(obj2);
 }
 
