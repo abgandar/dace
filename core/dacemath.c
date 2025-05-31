@@ -1592,13 +1592,13 @@ void daceComplementaryErrorFunction(const DACEDA *ina, DACEDA *inc)
 
 // Wrappers for contributed netlib Bessel functions (not for public use)
 
-/** Compute value of Bessel functions J_n, Y_n for n in [n0, n1].
+/** Compute value of Bessel functions @f$J_n, Y_n@f$ for @f$n \in [n0, n1]@f$.
     @param[in] x The function argument (non-negative).
     @param[in] n0 The lowest order of the Bessel functions to calculate (n0 <= n1).
     @param[in] n1 The highest order of the Bessel functions to calculate (n0 <= n1).
     @param[in] type The type of function to evaluate:\n
               -1: Bessel J function\n
-               1: Bessel Y function\n
+               1: Bessel Y function
     @param[out] bz A C array of size `n1-n0+1` containing the values of @f$B_{n0}, B_{n0+1}, ..., B_{n1}@f$ .
     @return Returns 0 if all values are calculated accurately, -1 if x is too large
            to calculate the result or another error occured, or +1 if some of the
@@ -1645,16 +1645,16 @@ int BesselWrapper(const double x, const int n0, const int n1, const int type, do
     return ncalc < 0 ? -1 : ncalc;
 }
 
-/** Compute value of modified Bessel functions @f$ I_n @f$ , @f$ K_n @f$ for @f$ n \in [n0, n1] @f$ .
+/** Compute value of modified Bessel functions @f$I_n@f$, @f$K_n@f$ for @f$n \in [n0, n1]@f$.
     @param[in] x The function argument (non-negative).
     @param[in] n0 The lowest order of the Bessel functions to calculate (n0 <= n1).
     @param[in] n1 The highest order of the Bessel functions to calculate (n0 <= n1).
-    @param[in] type The type of function to evaluate:
-              -2: Bessel I function, scaled (i.e. @p exp(-x)*I_n(x) )
-              -1: Bessel I function
-               1: Bessel K function
-               2: Bessel K function, scaled (i.e. @p exp(x)*K_n(x) )
-    @param[out] bz Array of size @p n1-n0+1 containing the values of @f$ B_{n0}, B_{n0+1}, ..., B_{n1} @f$ .
+    @param[in] type The type of function to evaluate:\n
+              -2: Bessel I function, scaled (i.e. `exp(-x)*I_n(x)`)\n
+              -1: Bessel I function\n
+               1: Bessel K function\n
+               2: Bessel K function, scaled (i.e. `exp(x)*K_n(x)`)
+    @param[out] bz Array of size `n1-n0+1` containing the values of @f$B_{n0}, B_{n0+1}, ..., B_{n1}@f$.
     @return Returns 0 if all values are calculated accurately, -1 if x is too large
            to calculate the result or another error occured, or +1 if some of the
            results are of reduced accuracy.

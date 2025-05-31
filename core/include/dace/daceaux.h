@@ -131,10 +131,8 @@ unsigned int daceNextOrderedMonomial(unsigned int p[], const unsigned int no, co
 // internal routines
 void daceInitializeThread0();
 void daceSetError(const char *c, const unsigned int ix, const unsigned int iyy);
-void dacePack(double *restrict cc, DACEDA *restrict inc);
+void dacePack(double * restrict cc, DACEDA * restrict inc);
 void daceMultiplicativeInverse0(const DACEDA *ina, DACEDA *inc, const double a0);
-int BesselWrapper(const double x, const int n0, const int n1, const int type, double *bz);
-int ModifiedBesselWrapper(const double x, const int n0, const int n1, const int type, double *bz);
 void daceEvaluateBesselFunction(const DACEDA *ina, const double bz[], const double type, const double ktype, DACEDA *inc);
 void daceEvaluateScaledModifiedBesselFunction(const DACEDA *ina, const double bz[], const double type, DACEDA *inc);
 void daceLogGammaFunction0(const DACEDA *ina, const double a0, DACEDA *inc);

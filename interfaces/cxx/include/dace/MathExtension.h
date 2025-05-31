@@ -51,6 +51,12 @@ DACE_API double minv(const double x);
 DACE_API double mod(const double x, const double p);
 DACE_API double root(const double x, const int p = 2);
 DACE_API double norm(const double x, const int type = 0);
+DACE_API double BesselJFunction(const double x, const int n);
+DACE_API double BesselYFunction(const double x, const int n);
+DACE_API double BesselIFunction(const double x, const int n, const bool scaled = false);
+DACE_API double BesselKFunction(const double x, const int n, const bool scaled = false);
+DACE_API double GammaFunction(const double x);
+DACE_API double LogGammaFunction(const double x);
 /** @} */
 
 }

@@ -1455,7 +1455,7 @@ DA DA::BesselYFunction(const int n) const {
 /** Compute the @e n-th modified Bessel function of first type @f$I_n@f$ of a DA object.
     @note The DA must have non-negative constant part while the order is allowed to be negative.
     @note This function fails if the result is too large to be represented in double precision.
-    @param[in] n order of the Bessel function.
+    @param[in] n The order of the Bessel function.
     @param[in] scaled If true, the modified Bessel function is scaled
     by a factor `exp(-x)`, i.e. `exp(-x)I_n(x)` is returned.
     @return A new DA object.
@@ -1472,8 +1472,8 @@ DA DA::BesselIFunction(const int n, const bool scaled) const {
 /** Compute the @e n-th modified Bessel function of second type @f$K_n@f$ of a DA object.
     @note The DA must have non-negative constant part while the order is allowed to be negative.
     @note This function fails if the result is too large to be represented in double precision.
-    @param[in] n order of the Bessel function.
-    @param[in] scaled if true, the modified Bessel function is scaled.
+    @param[in] n The order of the Bessel function.
+    @param[in] scaled If true, the modified Bessel function is scaled.
     by a factor `exp(x)`, i.e. `exp(x)K_n(x)` is returned.
     @return A new DA object.
     @throw DACE::DACEException
@@ -1861,6 +1861,7 @@ DA DA::random(const double cm) {
 /** Create a DA object representing the identity function in independent DA
     variable number @e var.
     @param[in] var The independent DA variable number.
+    @param[in] c The coefficient for the independent variable.
     @throw DACE::DACEException
  */
 DA DA::id(const unsigned int var, const double c) {
@@ -1872,6 +1873,7 @@ DA DA::id(const unsigned int var, const double c) {
     Legacy alias for DA::id().
     @deprecated Replaced by DA::id().
     @param[in] var The independent DA variable number.
+    @param[in] c The coefficient for the independent variable.
     @throw DACE::DACEException
     @see DA::id
  */

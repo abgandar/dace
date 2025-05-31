@@ -32,6 +32,7 @@
 // DACE classes
 #include "dace/config.h"
 #include "dace/MathExtension.h"
+#include "dace/dacecore.h"
 
 namespace DACE {
 
@@ -107,6 +108,62 @@ double root(const double x, const int p) {
  */
 double norm(const double x, const int type) {
     return std::abs(x);
+}
+
+/** Bessel J function of x.
+    @param[in] x The function argument.
+    @param[in] n The order of the Bessel function.
+ */
+double BesselJFunction(const double x, const int n) {
+    double res;
+    BesselWrapper(x, n, n, -1, &res);
+    return res;
+}
+
+/** Bessel Y function of x.
+    @param[in] x The function argument.
+    @param[in] n The order of the Bessel function.
+ */
+double BesselYFunction(const double x, const int n) {
+    double res;
+    BesselWrapper(x, n, n, 1, &res);
+    return res;
+}
+
+/** Bessel I function of x.
+    @param[in] x The function argument.
+    @param[in] n The order of the Bessel function.
+    @param[in] scaled If true the result is scaled by `exp(x)`.
+ */
+double BesselIFunction(const double x, const int n, const bool scaled) {
+    double res;
+    ModifiedBesselWrapper(x, n, n, scaled ? -2 : -1, &res);
+    return res;
+}
+
+/** Bessel K function of x.
+    @param[in] x The function argument.
+    @param[in] n The order of the Bessel function.
+    @param[in] scaled If true the result is scaled by `exp(x)`.
+ */
+double BesselKFunction(const double x, const int n, const bool scaled) {
+    double res;
+    ModifiedBesselWrapper(x, n, n, scaled ? 2 : 1, &res);
+    return res;
+}
+
+/** Gamma function of x.
+    @param[in] x The function argument.
+ */
+double GammaFunction(const double x) {
+    return std::tgamma(x);
+}
+
+/** Log gamma function of x.
+    @param[in] x The function argument.
+ */
+double LogGammaFunction(const double x) {
+    return std::lgamma(x);
 }
 
 }

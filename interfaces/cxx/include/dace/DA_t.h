@@ -165,6 +165,7 @@ template<class T> typename T::value_type eval(const DA &da, const T &args) {
     @note To be used only for single polynomial evaluation. For multiple
     evaluations of the same polynomial use the corresponding method in class
     DACE::compiledDA.
+    @param[in] da A DA object.
     @param[in] l A braced initializer list of arithemtic type (e.g. `{1.0, 2.0, 3.0}`)
     with which the DA vector is evaluated.
     @return The result of the evaluation.

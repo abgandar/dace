@@ -302,6 +302,14 @@ DACE_API void daceImportBlob(const void *blob, DACEDA REF(inc));
 DACE_API double daceRandom();
 /** @} */
 
+/********************************************************************************
+*     DACE undocumented non-public routines
+*********************************************************************************/
+/** @cond */
+int BesselWrapper(const double x, const int n0, const int n1, const int type, double *bz);
+int ModifiedBesselWrapper(const double x, const int n0, const int n1, const int type, double *bz);
+/** @endcond */
+
 /** @} */
 
 #ifdef __cplusplus

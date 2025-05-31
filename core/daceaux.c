@@ -330,7 +330,7 @@ void daceDecode(const unsigned int jc, unsigned int jj[])
     @param[in] cc A C array of @e nmmax monomials.
     @param[in] inc A pointer to DA object to pack the monomials into.
 */
-void dacePack(double *restrict cc, DACEDA *restrict inc)
+void dacePack(double * restrict cc, DACEDA * restrict inc)
 {
     monomial *ipoc; unsigned int ilmc, illc;
 

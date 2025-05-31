@@ -46,11 +46,6 @@
 
 namespace DACE {
 
-// forward declarations
-#ifdef WITH_ALGEBRAICMATRIX
-template<typename T> class AlgebraicMatrix;
-#endif
-
 /** Vector of any algebraic type.
     @ingroup DACECXX
 
@@ -144,11 +139,7 @@ public:
      * @{
      */
     AlgebraicVector<double> cons() const;
-#ifdef WITH_ALGEBRAICMATRIX
-    AlgebraicMatrix<double> linear() const;
-#else
     std::vector<std::vector<double>> linear() const;
-#endif /* WITH_ALGEBRAICMATRIX */
     /** @} */
 
     /********************************************************************************
@@ -219,7 +210,15 @@ public:
     AlgebraicVector<T> asinh() const;
     AlgebraicVector<T> acosh() const;
     AlgebraicVector<T> atanh() const;
-    // XXX: add the remaining intrinsic DA functions
+    AlgebraicVector<T> erf() const;
+    AlgebraicVector<T> erfc() const;
+    AlgebraicVector<T> BesselJFunction(const int n) const;
+    AlgebraicVector<T> BesselYFunction(const int n) const;
+    AlgebraicVector<T> BesselIFunction(const int n, const bool scaled = false) const;
+    AlgebraicVector<T> BesselKFunction(const int n, const bool scaled = false) const;
+    AlgebraicVector<T> GammaFunction() const;
+    AlgebraicVector<T> LogGammaFunction() const;
+    AlgebraicVector<T> PsiFunction(const unsigned int n) const;
     /** @} */
 
     /***********************************************************************************
@@ -291,9 +290,7 @@ public:
     /** @} */
 
 private:
-#ifndef WITH_ALGEBRAICMATRIX
     static void matrix_inverse(std::vector<std::vector<double>> &A);        // Private helper routine for double precision matrix inversion
-#endif /* WITH_ALGEBRAICMATRIX */
 };
 
 /********************************************************************************
@@ -303,11 +300,7 @@ private:
  *  @{
  */
 template<typename T> AlgebraicVector<double> cons(const AlgebraicVector<T> &obj);
-#ifdef WITH_ALGEBRAICMATRIX
-template<typename T> AlgebraicMatrix<double> linear(const AlgebraicVector<T> &obj);
-#else
 template<typename T> std::vector<std::vector<double>> linear(const AlgebraicVector<T> &obj);
-#endif /* WITH_ALGEBRAICMATRIX */
 /** @} */
 
 /** @anchor AlgebraicVectorBasicArithmeticOperators
@@ -379,6 +372,17 @@ template<typename T> AlgebraicVector<T> tanh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> asinh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> acosh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> atanh(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> erf(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> erfc(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> BesselJFunction(const AlgebraicVector<T> &obj, const int n);
+template<typename T> AlgebraicVector<T> BesselYFunction(const AlgebraicVector<T> &obj, const int n);
+template<typename T> AlgebraicVector<T> BesselIFunction(const AlgebraicVector<T> &obj, const int n, const bool scaled = false);
+template<typename T> AlgebraicVector<T> BesselKFunction(const AlgebraicVector<T> &obj, const int n, const bool scaled = false);
+template<typename T> AlgebraicVector<T> GammaFunction(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> LogGammaFunction(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> tgamma(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> lgamma(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> PsiFunction(const AlgebraicVector<T> &obj, const unsigned int n);
 /** @} */
 
 /** @name Vector Norm & Estimation Functions

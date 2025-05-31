@@ -45,10 +45,6 @@
 #include "dace/MathExtension.h"
 #include "dace/compiledDA.h"
 #include "dace/AlgebraicVector.h"
-#ifdef WITH_ALGEBRAICMATRIX
-#include "dace/AlgebraicMatrix.h"
-#include "dace/AlgebraicMatrix_t.h"
-#endif /* WITH_ALGEBRAICMATRIX */
 
 namespace DACE {
 
@@ -116,42 +112,21 @@ template<typename T> AlgebraicVector<double> AlgebraicVector<T>::cons() const {
     return temp;
 }
 
-#ifdef WITH_ALGEBRAICMATRIX
 /** Return the linear part of a polynomial map in AlgebraicVector<T>.
     @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-    @return A @p AlgebraicMatrix<double> of dimension size by nvar, where size is the
-    size of the @p AlgebraicVector<T> considered and nvar is the number of variables defined
-    during the DACE initialization. Each row contains the linear part of the corresponding
-    DA included in the original @p AlgebraicVector<T>.
- */
-template<typename T> AlgebraicMatrix<double> AlgebraicVector<T>::linear() const {
-    const size_t size = this->size();
-    const int nvar = DA::getMaxVariables();
-
-    AlgebraicMatrix<double> out(size, nvar);
-    for(size_t i=0; i<size; i++) {
-          out.setrow(i, (*this)[i].linear());
-    }
-    return out;
-}
-#else
-/** Return the linear part of a polynomial map in AlgebraicVector<T>.
-    @warning This function only works on AlgebraicVector<DA>. When called on other
-    data types (e.g. double) a compiler error is issued.
-    @return A std::vector<std::vector<double>>, where each std::vector<double> contains.
-    the linear part of the corresponding element in the original AlgebraicVector<T>.
+    @return A std::vector<std::vector<double>>, where each std::vector<double> contains
+    the linear coefficients of the corresponding element in the original AlgebraicVector<T>.
  */
 template<typename T> std::vector<std::vector<double>> AlgebraicVector<T>::linear() const {
     const size_t size = this->size();
 
-    std::vector< std::vector<double> > out(size);
+    std::vector<std::vector<double>> out(size);
     for(size_t i=0; i<size; i++) {
           out[i] = (*this)[i].linear();
     }
     return out;
 }
-#endif /* WITH_ALGEBRAICMATRIX */
 
 /********************************************************************************
 *     Assignments, Copying & Filtering
@@ -215,6 +190,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
 /** Multiply ourselves with the given AlgebraicVector componentwise.
     @param[in] obj An AlgebraicVector.
     @return A reference to ourselves.
+    @throw std::runtime_error
  */
 template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>::operator*=(const AlgebraicVector<U> &obj) {
     const size_t size = this->size();
@@ -517,6 +493,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::icbrt() const {
 /** Componentwise application of the hypotenuse function hypot(x,y).
     @param[in] Y The AlgebraicVector<T> second argument.
     @return A new AlgebraicVector.
+    @throw std::runtime_error
 */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::hypot(const AlgebraicVector<T> &Y) const {
     using std::hypot;
@@ -790,6 +767,140 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::atanh() const {
     return temp;
 }
 
+/** Componentwise application of the error function.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::erf() const {
+    using std::erf;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = erf((*this)[i]);
+    }
+    return temp;
+}
+
+/** Componentwise application of the complementary error function.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::erfc() const {
+    using std::erfc;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = erfc((*this)[i]);
+    }
+    return temp;
+}
+
+/** Componentwise application of the @e n-th Bessel function of first type @f$J_n@f$.
+    @param[in] n The order of the Bessel function.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::BesselJFunction(const int n) const {
+    using DACE::BesselJFunction;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = BesselJFunction((*this)[i], n);
+    }
+    return temp;
+}
+
+/** Componentwise application of the @e n-th Bessel function of second type @f$Y_n@f$ function.
+    @param[in] n The order of the Bessel function.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::BesselYFunction(const int n) const {
+    using DACE::BesselYFunction;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = BesselYFunction((*this)[i], n);
+    }
+    return temp;
+}
+
+/** Componentwise application of the @e n-th modified Bessel function of first type @f$I_n@f$.
+    @param[in] n The order of the Bessel function.
+    @param[in] scaled If true, the modified Bessel function is scaled
+    by a factor `exp(-x)`, i.e. `exp(-x)I_n(x)` is returned.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::BesselIFunction(const int n, const bool scaled) const {
+    using DACE::BesselIFunction;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = BesselIFunction((*this)[i], n, scaled);
+    }
+    return temp;
+}
+
+/** Componentwise application of the @e n-th modified Bessel function of second type @f$K_n@f$.
+    @param[in] n The order of the Bessel function.
+    @param[in] scaled If true, the modified Bessel function is scaled
+    by a factor `exp(-x)`, i.e. `exp(-x)K_n(x)` is returned.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::BesselKFunction(const int n, const bool scaled) const {
+    using DACE::BesselKFunction;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = BesselKFunction((*this)[i], n, scaled);
+    }
+    return temp;
+}
+
+/** Componentwise application of the gamma function.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::GammaFunction() const {
+    using DACE::GammaFunction;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = GammaFunction((*this)[i]);
+    }
+    return temp;
+}
+
+/** Componentwise application of the logarithmic gamma function.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::LogGammaFunction() const {
+    using DACE::LogGammaFunction;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = LogGammaFunction((*this)[i]);
+    }
+    return temp;
+}
+
+/** Componentwise application of the Psi function.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::PsiFunction(const unsigned int n) const {
+    using DACE::PsiFunction;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = PsiFunction((*this)[i], n);
+    }
+    return temp;
+}
+
 /***********************************************************************************
 *    Vector routines
 ************************************************************************************/
@@ -877,17 +988,6 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::invert() const {
     AlgebraicVector<T> M = this->trim(1);
     AlgebraicVector<T> AN = M.trim(2);
 
-#ifdef WITH_ALGEBRAICMATRIX
-    // Extract the linear coefficients matrix
-    AlgebraicMatrix<double> AL = M.linear();
-
-    // Compute the inverse of linear coefficients matrix
-    AlgebraicMatrix<double> AI = AL.inv();
-
-    // Compute DA representation of the inverse of the linear part of the map and its composition with non-linear part AN
-    compiledDA AIoAN(AI*AN);
-    AlgebraicVector<DA> Linv = AI*DDA;
-#else
     // Compute the inverse of linear coefficients matrix
     std::vector<std::vector<double>> AI = M.linear();
     matrix_inverse(AI);
@@ -907,7 +1007,6 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::invert() const {
         for(size_t j=0; j<nvar; j++)
             Linv[i] += AI[i][j]*DDA[j];
     }
-#endif /* WITH_ALGEBRAICMATRIX */
 
     // Iterate to obtain the inverse map
     AlgebraicVector<T> MI = Linv;
@@ -928,8 +1027,9 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::invert() const {
     in class DACE::compiledDA.
     @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-    @param[in] args A vector (e.g. AlgebraicVector<> or std::vector<>) of arguments.
-    @return A new vector of same type as argument args containing the results of the evaluation.
+    @param[in] args A vector of arguments.
+    @tparam U A vector-like type of an algebraic type (e.g. AlgebraicVector<double> or std::vector<DA>).
+    @return A new vector of type @e U containing the results of the evaluation.
     @see compiledDA
     @see AlgebraicVector::compile()
  */
@@ -938,13 +1038,14 @@ template<typename T> template<typename U> U AlgebraicVector<T>::operator()(const
 }
 
 /** Evaluate each element of a vector of DA with a braced initializer list of type @e U
-    and return an AlgebraicVector<U> with the results.
+    and return an AlgebraicVector@<U> with the results.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
     @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-    @param[in] l A braced initializer list containing the arguments of type U.
-    @return A new AlgebraicVector<U> containing the results of the evaluation.
+    @param[in] l A braced initializer list containing the arguments of type @e U.
+    @tparam U An algebraic data type (e.g. double or DA).
+    @return A new AlgebraicVector@<U> with the results of the evaluation.
     @see compiledDA
     @see AlgebraicVector::compile()
  */
@@ -959,7 +1060,8 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
     data types (e.g. double) a compiler error is issued.
     @param[in] args A C array of arithmetic type @e T with which the DA vector is evaluated.
     @param[in] length The number of elements in the array @e args.
-    @return A new AlgebraicVector<U> containing the results of the evaluation.
+    @tparam U An algebraic data type (e.g. double or DA).
+    @return A new AlgebraicVector@<U> containing the results of the evaluation.
     @see AlgebraicVector::compile()
     @see compiledDA
  */
@@ -974,7 +1076,8 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
     in class DACE::compiledDA.
     @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-    @param[in] args A vector (e.g. AlgebraicVector<> or std::vector<>) of arguments.
+    @param[in] args A vector of arguments.
+    @tparam U A vector-like type of an algebraic type (e.g. AlgebraicVector<double> or std::vector<DA>).
     @return A new vector of same type as argument @e args containing the results of the evaluation
     @see AlgebraicVector::operator()()
     @see AlgebraicVector::compile()
@@ -985,14 +1088,15 @@ template<typename T> template<typename U> U AlgebraicVector<T>::eval(const U &ar
 }
 
 /** Evaluate each element of a vector of DA with a braced initializer list of type @e U
-    and return an AlgebraicVector<U> with the results.
+    and return an AlgebraicVector@<U> with the results.
     @deprecated Replaced by AlgebraicVector::operator()().
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
     @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] l A braced initializer list containing the arguments of type @e U.
-    @return A new AlgebraicVector<U> containing the results of the evaluation.
+    @tparam U An algebraic data type (e.g. double or DA).
+    @return A new AlgebraicVector@<U> containing the results of the evaluation.
     @see AlgebraicVector::operator()()
     @see AlgebraicVector::compile()
     @see compiledDA
@@ -1009,7 +1113,8 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
     data types (e.g. double) a compiler error is issued.
     @param[in] args A C array of arithmetic type T with which the DA vector is evaluated.
     @param[in] length The number of elements in the array args.
-    @return A new AlgebraicVector<U> containing the results of the evaluation.
+    @tparam U An algebraic data type (e.g. double or DA).
+    @return A new AlgebraicVector@<U> containing the results of the evaluation.
     @see AlgebraicVector::operator()()
     @see AlgebraicVector::compile()
     @see compiledDA
@@ -1018,13 +1123,14 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
     return compiledDA(*this)(args, length);
 }
 
-/** Evaluate each element of a vector of DA with a single arithmetic type U argument.
+/** Evaluate each element of a vector of DA with a single arithmetic type @e U argument.
     @deprecated Replaced by AlgebraicVector::operator()() with braced initializer list (e.g. `da({arg})`).
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
     @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-    @param[in] arg A single variable of arithmetic type @e U representing the first independent DA variable.
+    @param[in] arg A single variable representing the first independent DA variable.
+    @tparam U An algebraic data type (e.g. double or DA).
     @return The result of the evaluation.
     @see AlgebraicVector::compile()
     @see compiledDA
@@ -1124,12 +1230,10 @@ template<typename T> AlgebraicVector<DA> AlgebraicVector<T>::identity(const size
 /********************************************************************************
 *     Private routines
 *********************************************************************************/
-#ifndef WITH_ALGEBRAICMATRIX
 /** @cond */
 /* Internal routine to compute a matrix inverse of a double precision matrix.
    Algorithm based on the Gauss elimination with full pivot (from the Numerical
-   Cookbook) adapted for C++. This is the same algorithm but a different
-   implementation than in the AlgebraicMatrix class.
+   Cookbook) adapted for C++.
    This is NOT intended for public use. Limited error checking is performed
    in accordance with the exclusive use of this routine in map inversion.
  */
@@ -1139,43 +1243,41 @@ template<typename T> void AlgebraicVector<T>::matrix_inverse(std::vector<std::ve
     const size_t n = A.size();
     std::vector<size_t> indexc(n), indexr(n), ipiv(n, 0);
 
-    for (size_t i=0; i<n; i++) {
+    for(size_t i=0; i<n; i++) {
         size_t icol = 0, irow = 0;
         double big = 0.0;
-        for (size_t j=0; j<n; j++)
-            if (ipiv[j] == 0)
-                for (size_t k=0; k<n; k++)
-                    if (ipiv[k] == 0)
-                        if (abs(A[j][k]) >= big) {
+        for(size_t j=0; j<n; j++)
+            if(ipiv[j] == 0)
+                for(size_t k=0; k<n; k++)
+                    if(ipiv[k] == 0)
+                        if(abs(A[j][k]) >= big) {
                             big = abs(A[j][k]);
                             irow = j;
                             icol = k;
                         }
         ipiv[icol] = 1;
-        if (irow != icol)
-            for (size_t l=0; l<n; l++) std::swap(A[irow][l], A[icol][l]);
+        if(irow != icol)
+            for(size_t l=0; l<n; l++) std::swap(A[irow][l], A[icol][l]);
         indexr[i] = irow;
         indexc[i] = icol;
-        if (A[icol][icol] == 0.0) throw std::runtime_error("DACE::AlgebraicVector<T>::inverse: linear matrix inverse does not exist.");
+        if(A[icol][icol] == 0.0) throw std::runtime_error("DACE::AlgebraicVector<T>::inverse: linear matrix inverse does not exist.");
         const double pivinv = 1.0/A[icol][icol];
         A[icol][icol] = 1.0;
-        for (size_t l=0; l<n; l++) A[icol][l] *= pivinv;
-        for (size_t ll=0; ll<n; ll++)
-            if (ll != icol) {
+        for(size_t l=0; l<n; l++) A[icol][l] *= pivinv;
+        for(size_t ll=0; ll<n; ll++)
+            if(ll != icol) {
                 const double temp = A[ll][icol];
                 A[ll][icol] = 0.0;
                 for (size_t l=0; l<n; l++) A[ll][l] -= A[icol][l]*temp;
             }
     }
 
-    for (size_t i=n; i>0; i--)
-        if (indexr[i-1] != indexc[i-1])
-            for (size_t k=0; k<n; k++)
+    for(size_t i=n; i>0; i--)
+        if(indexr[i-1] != indexc[i-1])
+            for(size_t k=0; k<n; k++)
                 std::swap(A[k][indexr[i-1]], A[k][indexc[i-1]]);
 }
 /** @endcond */
-#endif /* WITH_ALGEBRAICMATRIX */
-
 
 /***********************************************************************************
 *
@@ -1194,29 +1296,15 @@ template<typename T> AlgebraicVector<double> cons(const AlgebraicVector<T> &obj)
     return obj.cons();
 }
 
-#ifdef WITH_ALGEBRAICMATRIX
 /** Return the linear part of a polynomial map in AlgebraicVector<T>.
     @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] obj The AlgebraicVector<T> to extract linear part from.
-    @return A AlgebraicMatrix<double> of dimension @e size by @e nvar, where @e size is the
-    size of the AlgebraicVector<T> considered and @e nvar is the number of variables defined
-    during the DACE initialization. Each row contains the linear part of the corresponding
-    DA included in the original AlgebraicVector<T>.
-    @see AlgebraicVector<T>::linear
- */
-template<typename T> AlgebraicMatrix<double> linear(const AlgebraicVector<T> &obj) {
-#else
-/** Return the linear part of a polynomial map in AlgebraicVector<T>.
-    @warning This function only works on AlgebraicVector<DA>. When called on other
-    data types (e.g. double) a compiler error is issued.
-    @param[in] obj The AlgebraicVector<T> to extract linear part from.
-    @return A std::vector<std::vector<double>>, where each std::vector<double> contains.
-    the linear part of the corresponding element in the original AlgebraicVector<T>.
+    @return A std::vector<std::vector<double>>, where each std::vector<double> contains
+    the linear coefficients of the corresponding element in the original AlgebraicVector<T>.
     @see AlgebraicVector<T>::linear
  */
 template<typename T> std::vector<std::vector<double>> linear(const AlgebraicVector<T> &obj) {
-#endif /* WITH_ALGEBRAICMATRIX */
     return obj.linear();
 }
 
@@ -1749,6 +1837,116 @@ template<typename T> AlgebraicVector<T> atanh(const AlgebraicVector<T> &obj) {
     return obj.atanh();
 }
 
+/** Componentwise application of the error function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::erf
+*/
+template<typename T> AlgebraicVector<T> erf(const AlgebraicVector<T> &obj) {
+    return obj.erf(obj);
+}
+
+/** Componentwise application of the complementary error function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::erfc
+ */
+template<typename T> AlgebraicVector<T> erfc(const AlgebraicVector<T> &obj) {
+    return obj.erfc(obj);
+}
+
+/** Componentwise application of the @e n-th Bessel function of first type @f$J_n@f$.
+    @param[in] obj An AlgebraicVector<T>.
+    @param[in] n The order of the Bessel function.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselJFunction
+ */
+template<typename T> AlgebraicVector<T> BesselJFunction(const AlgebraicVector<T> &obj, const int n) {
+    return obj.BesselJFunction(obj, n);
+}
+
+/** Componentwise application of the @e n-th Bessel function of second type @f$Y_n@f$ function.
+    @param[in] obj An AlgebraicVector<T>.
+    @param[in] n The order of the Bessel function.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselYFunction
+ */
+template<typename T> AlgebraicVector<T> BesselYFunction(const AlgebraicVector<T> &obj, const int n) {
+    return obj.BesselYFunction(obj, n);
+}
+
+/** Componentwise application of the @e n-th modified Bessel function of first type @f$I_n@f$.
+    @param[in] obj An AlgebraicVector<T>.
+    @param[in] n The order of the Bessel function.
+    @param[in] scaled If true, the modified Bessel function is scaled
+    by a factor `exp(-x)`, i.e. `exp(-x)I_n(x)` is returned.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselIFunction
+ */
+template<typename T> AlgebraicVector<T> BesselIFunction(const AlgebraicVector<T> &obj, const int n, const bool scaled) {
+    return obj.BesselIFunction(obj, n, scaled);
+}
+
+/** Componentwise application of the @e n-th modified Bessel function of second type @f$K_n@f$.
+    @param[in] obj An AlgebraicVector<T>.
+    @param[in] n The order of the Bessel function.
+    @param[in] scaled If true, the modified Bessel function is scaled
+    by a factor `exp(-x)`, i.e. `exp(-x)K_n(x)` is returned.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselKFunction
+ */
+template<typename T> AlgebraicVector<T> BesselKFunction(const AlgebraicVector<T> &obj, const int n, const bool scaled) {
+    return obj.BesselKFunction(obj, n, scaled);
+}
+
+/** Componentwise application of the gamma function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::GammaFunction
+ */
+template<typename T> AlgebraicVector<T> GammaFunction(const AlgebraicVector<T> &obj) {
+    return obj.GammaFunction(obj);
+}
+
+/** Componentwise application of the logarithmic gamma function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::LogGammaFunction
+ */
+template<typename T> AlgebraicVector<T> LogGammaFunction(const AlgebraicVector<T> &obj) {
+    return obj.LogGammaFunction(obj);
+}
+
+/** Componentwise application of the gamma function.
+    Alias for C library compatibility.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::GammaFunction
+ */
+template<typename T> AlgebraicVector<T> tgamma(const AlgebraicVector<T> &obj) {
+    return obj.GammaFunction(obj);
+}
+
+/** Componentwise application of the logarithmic gamma function.
+    Alias for C library compatibility.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::LogGammaFunction
+ */
+template<typename T> AlgebraicVector<T> lgamma(const AlgebraicVector<T> &obj) {
+    return obj.LogGammaFunction(obj);
+}
+
+/** Componentwise application of the Psi function.
+    @param[in] obj An AlgebraicVector<T>.
+    @param[in] n The order of the Psi function.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::PsiFunction
+ */
+template<typename T> AlgebraicVector<T> PsiFunction(const AlgebraicVector<T> &obj, const unsigned int n) {
+    return obj.PsiFunction(obj, n);
+}
+
 /***********************************************************************************
 *     Norm & Estimation Functions
 ************************************************************************************/
@@ -1783,14 +1981,14 @@ template<typename T, typename U> U eval(const AlgebraicVector<T> &obj, const U &
 }
 
 /** Evaluate each element of a vector of DA with a braced initializer list of type @e U
-    and return an AlgebraicVector<U> with the results.
+    and return an AlgebraicVector@<U> with the results.
     @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
     @param[in] obj An AlgebraicVector<T>.
     @param[in] l A braced initializer list containing the arguments.
-    @return A new AlgebraicVector<U> containing the results of the evaluation.
+    @return A new AlgebraicVector@<U> containing the results of the evaluation.
     @see AlgebraicVector<T>::eval()
  */
 template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T> &obj, const std::initializer_list<U> l) {
@@ -1805,7 +2003,7 @@ template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T
     @param[in] obj An AlgebraicVector<T>.
     @param[in] args A C array of arithmetic type T with which the DA vector is evaluated.
     @param[in] length The number of elements in the array args.
-    @return A new AlgebraicVector<U> containing the results of the evaluation.
+    @return A new AlgebraicVector@<U> containing the results of the evaluation.
     @see AlgebraicVector<T>::eval()
  */
 template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T> &obj, const U args[], const unsigned int length) {
