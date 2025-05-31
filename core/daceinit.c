@@ -48,7 +48,7 @@
     @param[in] no The order of the Taylor polynomials.
     @param[in] nv The number of variables considered.
 
-    @see daceTruncationOrder
+    @see daceSetTruncationOrder
     @see daceSetEpsilon
  */
 void daceInitialize(unsigned int no, unsigned int nv)
@@ -195,7 +195,7 @@ void daceInitialize(unsigned int no, unsigned int nv)
     are active.
 
     @see daceInitialize
-    @see daceTruncationOrder
+    @see daceSetTruncationOrder
     @see daceSetEpsilon
  */
 void daceInitializeThread()

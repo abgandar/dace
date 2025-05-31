@@ -45,6 +45,11 @@ class DA;
 
 /***********************************************************************************
       PromotionTrait template class
+
+      Alternative in C++11 / C++14
+      #include<type_traits>
+      std::common_type<DA, double>::type
+      std::common_type_t<DA, double>
 ************************************************************************************/
 /* General template implementation:
    By default, everything is a double and two things of the same type return that type. */
