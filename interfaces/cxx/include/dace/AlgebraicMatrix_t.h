@@ -49,9 +49,9 @@
 namespace DACE {
 
 /** Compute the multiplication between a AlgebraicVector (row) and a AlgebraicMatrix.
-    @param[in] obj1 a AlgebraicVector
-    @param[in] obj2 a AlgebraicMatrix
-    @return A new AlgebraicVector
+    @param[in] obj1 An AlgebraicVector.
+    @param[in] obj2 An AlgebraicMatrix.
+    @return A new AlgebraicVector.
  */
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicVector<U> &obj1, const AlgebraicMatrix<V> &obj2 ) {
     if(obj1.size() != obj2.nrows())
@@ -69,9 +69,9 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
 }
 
 /** Compute the multiplication between a AlgebraicMatrix and a AlgebraicVector (column) .
-    @param[in] obj1 a AlgebraicMatrix
-    @param[in] obj2 a AlgebraicVector
-    @return A new AlgebraicVector
+    @param[in] obj1 An AlgebraicMatrix.
+    @param[in] obj2 An AlgebraicVector.
+    @return A new AlgebraicVector.
  */
 template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicVector<V> &obj2 ) {
     if(obj1.ncols() != obj2.size())
@@ -89,8 +89,9 @@ template<typename U,typename V> AlgebraicVector<typename PromotionTrait< U, V >:
 }
 
 /** Resize AlgeraicMatrix to a square AlgebraicMatrix of size.
-    Original values are kept at the original location ifthey are inside bounds of the new matrix.
-    @param[in] size Size of the matrix (number of rows/columns)
+    Original values are kept at the original location if they are inside bounds of the new matrix.
+
+    @param[in] size Size of the matrix (number of rows/columns).
  */
 template<class T> void AlgebraicMatrix<T>::resize(int size) {
     unsigned int oldrows = nrows();
@@ -112,9 +113,10 @@ template<class T> void AlgebraicMatrix<T>::resize(int size) {
 }
 
 /** Resize AlgeraicMatrix to a rectangular AlgebraicMatrix with size rows x cols.
-    Original values are kept at the original location ifthey are inside bounds of the new matrix.
-    @param[in] rows Number of rows of the resized AlgebraicMatrix
-    @param[in] cols Number of columns of the resized AlgebraicMatrix
+    Original values are kept at the original location if they are inside bounds of the new matrix.
+
+    @param[in] rows The number of rows of the resized AlgebraicMatrix.
+    @param[in] cols The number of columns of the resized AlgebraicMatrix.
  */
 template<class T> void AlgebraicMatrix<T>::resize(int rows, int cols) {
     unsigned int oldrows = nrows();
@@ -138,9 +140,9 @@ template<class T> void AlgebraicMatrix<T>::resize(int rows, int cols) {
 *     Element access routines
 ************************************************************************************/
 /** Reads/write element from/to AlgebraicMatrix.
-    @param[in] irow row index
-    @param[in] icol column index
-    @return The element of the AlgebraicMatrix
+    @param[in] irow The row index.
+    @param[in] icol The column index.
+    @return The element of the AlgebraicMatrix.
  */
 template<class T> T& AlgebraicMatrix<T>::at(const unsigned int irow, const unsigned int icol) {
     if(!(irow < _nrows) && !(icol < _ncols))
@@ -150,9 +152,9 @@ template<class T> T& AlgebraicMatrix<T>::at(const unsigned int irow, const unsig
 }
 
 /** Reads/write element from/to AlgebraicMatrix.
-    @param[in] irow row index
-    @param[in] icol column index
-    @return The element of the AlgebraicMatrix
+    @param[in] irow The row index.
+    @param[in] icol The column index.
+    @return The element of the AlgebraicMatrix.
  */
 template<class T> const T& AlgebraicMatrix<T>::at(const unsigned int irow, const unsigned int icol) const {
     if(!(irow < _nrows) && !(icol < _ncols))
@@ -162,8 +164,8 @@ template<class T> const T& AlgebraicMatrix<T>::at(const unsigned int irow, const
 }
 
 /** Extracts a row of an AlgebraicMatrix.
-    @param[in] irow index of the row to be extracted
-    @return A new std::vector containing the row of the AlgebraicMatrix
+    @param[in] irow The index of the row to be extracted.
+    @return A new std::vector containing the row of the AlgebraicMatrix.
     @see AlgebraicMatrix<T>::getcol
  */
 template<class T> std::vector<T> AlgebraicMatrix<T>::getrow(const unsigned int irow) const {
@@ -182,9 +184,9 @@ template<class T> std::vector<T> AlgebraicMatrix<T>::getrow(const unsigned int i
 }
 
 /** Extracts a column of an AlgebraicMatrix.
-    The result is copied in a new std::vector.
-    @param[in] icol index of the column to be extracted
-    @return A new std::vector containing the column of the AlgebraicMatrix
+    @param[in] icol The index of the column to be extracted.
+    @return A new std::vector containing the column of the AlgebraicMatrix.
+
     @see AlgebraicMatrix<T>::getrow
  */
 template<class T> std::vector<T> AlgebraicMatrix<T>::getcol(const unsigned int icol) const {
@@ -203,8 +205,8 @@ template<class T> std::vector<T> AlgebraicMatrix<T>::getcol(const unsigned int i
 }
 
 /** Insert std::vector into row of AlgebraicMatrix of the same type.
-    @param[in] irow row to be written
-    @param[in] obj  std::vector to be inserted as a row
+    @param[in] irow The row to be written.
+    @param[in] obj  A std::vector to be inserted as a row.
     @see AlgebraicMatrix<T>::setcol
  */
 template<class T> void AlgebraicMatrix<T>::setrow(const unsigned int irow, const std::vector< T >& obj) {
@@ -217,8 +219,8 @@ template<class T> void AlgebraicMatrix<T>::setrow(const unsigned int irow, const
 }
 
 /** Insert std::vector into column of AlgebraicMatrix of the same type.
-    @param[in] icol column to be written
-    @param[in] obj  std::vector to be written
+    @param[in] icol The column to be written.
+    @param[in] obj  A std::vector to be written.
     @see AlgebraicMatrix<T>::setrow
  */
 template<class T>  void AlgebraicMatrix<T>::setcol(const unsigned int icol, const std::vector< T >& obj) {
@@ -231,11 +233,11 @@ template<class T>  void AlgebraicMatrix<T>::setcol(const unsigned int icol, cons
 }
 
 /** Extracts submatrix of AlgebraicMatrix. The result is stored into a new AlgebraicMatrix.
-    @param[in] first_row index of the first row to be extracted
-    @param[in] last_row  index of the last row to be extracted
-    @param[in] first_col index of the first column to be extracted
-    @param[in] last_col  index of the last column to be extracted
-    @return AlgebraicMatrix containing the desired submatrix
+    @param[in] first_row The index of the first row to be extracted.
+    @param[in] last_row  The index of the last row to be extracted.
+    @param[in] first_col The index of the first column to be extracted.
+    @param[in] last_col  The index of the last column to be extracted.
+    @return AlgebraicMatrix containing the desired submatrix.
  */
 template<class T> AlgebraicMatrix<T> AlgebraicMatrix<T>::submat(const unsigned int first_row, const unsigned int first_col, const unsigned int last_row, const unsigned int last_col) const {
     if((last_row < first_row) || (last_col < first_col))
@@ -259,10 +261,9 @@ template<class T> AlgebraicMatrix<T> AlgebraicMatrix<T>::submat(const unsigned i
 }
 
 /** Extracts submatrix of AlgebraicMatrix, starting from element (0,0).
-    The result is stored into a new AlgebraicMatrix.
-    @param[in] last_row  index of the last row to be extracted
-    @param[in] last_col  index of the last column to be extracted
-    @return AlgebraicMatrix containing the desired submatrix
+    @param[in] last_row  The index of the last row to be extracted.
+    @param[in] last_col  The index of the last column to be extracted.
+    @return A new AlgebraicMatrix containing the desired submatrix.
  */
 template<class T> AlgebraicMatrix<T> AlgebraicMatrix<T>::submat(const unsigned int last_row, const unsigned int last_col) const {
   return submat(0,0,last_row,last_col);
@@ -272,9 +273,9 @@ template<class T> AlgebraicMatrix<T> AlgebraicMatrix<T>::submat(const unsigned i
 *     Algebraic operations
 ************************************************************************************/
 /** Compute the addition between two AlgebraicMatrices.
-    @param[in] obj1 the first AlgebraicMatrix
-    @param[in] obj2 the second AlgebraicMatrix
-    @return A new AlgebraicMatrix
+    @param[in] obj1 the first AlgebraicMatrix.
+    @param[in] obj2 the second AlgebraicMatrix.
+    @return A new AlgebraicMatrix.
  */
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2) {
     if((obj1.ncols() != obj2.ncols()) || (obj1.nrows() != obj2.nrows()))
@@ -293,9 +294,9 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
 }
 
 /** Compute the addition between a AlgebraicMatrix and a scalar value.
-    @param[in] obj1 a AlgebraicMatrix
-    @param[in] obj2 a scalar value
-    @return A new AlgebraicMatrix
+    @param[in] obj1 An AlgebraicMatrix.
+    @param[in] obj2 A scalar value.
+    @return A new AlgebraicMatrix.
  */
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const AlgebraicMatrix<U> &obj1, const V &obj2 ) {
     unsigned int n_rows = obj1.nrows();
@@ -311,9 +312,9 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
 }
 
 /** Compute the addition between a scalar value and a AlgebraicMatrix.
-    @param[in] obj1 a scalar value
-    @param[in] obj2 a AlgebraicMatrix
-    @return A new AlgebraicMatrix
+    @param[in] obj1 An scalar value.
+    @param[in] obj2 An AlgebraicMatrix.
+    @return A new AlgebraicMatrix.
  */
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator+( const U &obj1, const AlgebraicMatrix<V> &obj2 ) {
     unsigned int n_rows = obj2.nrows();
@@ -329,9 +330,9 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
 }
 
 /** Compute the subtraction between two AlgebraicMatrices.
-    @param[in] obj1 first AlgebraicMatrix
-    @param[in] obj2 second AlgebraicMatrix
-    @return A new AlgebraicMatrix
+    @param[in] obj1 first AlgebraicMatrix.
+    @param[in] obj2 second AlgebraicMatrix.
+    @return A new AlgebraicMatrix.
  */
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator-( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2) {
     if((obj1.ncols() != obj2.ncols()) || (obj1.nrows() != obj2.nrows()))
@@ -350,9 +351,9 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
 }
 
 /** Compute the subtraction between a AlgebraicMatrix and a scalar value.
-    @param[in] obj1 a AlgebraicMatrix
-    @param[in] obj2 a scalar value
-    @return A new AlgebraicMatrix
+    @param[in] obj1 An AlgebraicMatrix.
+    @param[in] obj2 A scalar value.
+    @return A new AlgebraicMatrix.
  */
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator-( const AlgebraicMatrix<U> &obj1, const V &obj2 ) {
     unsigned int n_rows = obj1.nrows();
@@ -368,9 +369,9 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
 }
 
 /** Compute the subtraction between a scalar value and a AlgebraicMatrix.
-    @param[in] obj1 a scalar value
-    @param[in] obj2 a AlgebraicMatrix
-    @return A new AlgebraicMatrix
+    @param[in] obj1 An scalar value.
+    @param[in] obj2 An AlgebraicMatrix.
+    @return A new AlgebraicMatrix.
  */
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator-( const U &obj1, const AlgebraicMatrix<V> &obj2 ) {
     unsigned int n_rows = obj2.nrows();
@@ -386,9 +387,9 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
 }
 
 /** Compute the multiplication between two AlgebraicMatrices.
-    @param[in] obj1 first AlgebraicMatrix (n x m)
-    @param[in] obj2 second AlgebraicMatrix (m x p)
-    @return A new AlgebraicMatrix (n x p)
+    @param[in] obj1 first AlgebraicMatrix (n x m).
+    @param[in] obj2 second AlgebraicMatrix (m x p).
+    @return A new AlgebraicMatrix (n x p).
 */
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicMatrix<U> &obj1, const AlgebraicMatrix<V> &obj2 ) {
     if(obj1.ncols() != obj2.nrows())
@@ -411,9 +412,9 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
 }
 
 /** Compute the multiplication between a AlgebraicMatrix and a scalar value.
-    @param[in] obj1 a AlgebraicMatrix
-    @param[in] obj2 a scalar value
-    @return A new AlgebraicMatrix
+    @param[in] obj1 An AlgebraicMatrix.
+    @param[in] obj2 A scalar value.
+    @return A new AlgebraicMatrix.
  */
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator*( const AlgebraicMatrix<U> &obj1, const V &obj2 ) {
     unsigned int n_rows = obj1.nrows();
@@ -429,9 +430,9 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
 }
 
 /** Compute the multiplication between a scalar value and a AlgebraicMatrix.
-    @param[in] obj1 a scalar value
-    @param[in] obj2 a AlgebraicMatrix
-    @return A new AlgebraicMatrix
+    @param[in] obj1 An scalar value.
+    @param[in] obj2 An AlgebraicMatrix.
+    @return A new AlgebraicMatrix.
  */
 template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >::returnType> operator*( const U &obj1, const AlgebraicMatrix<V> &obj2 ) {
     unsigned int n_rows = obj2.nrows();
@@ -450,7 +451,7 @@ template<typename U,typename V> AlgebraicMatrix<typename PromotionTrait< U, V >:
 *     Matrix operations
 ************************************************************************************/
 /** Transpose matrix
-    @return A new AlgebraicMatrix that is the transpose of the original
+    @return A new AlgebraicMatrix that is the transpose of the original.
  */
 template<class T> AlgebraicMatrix<T> AlgebraicMatrix<T>::transpose() const {
     AlgebraicMatrix<T> temp(_ncols,_nrows);
@@ -528,7 +529,7 @@ template<class T> void AlgebraicMatrix<T>::eliminate( const unsigned int k, Alge
 
 /** Compute the inverse of an AlgebraicMatrix.
     Algorithm based on the Gauss elimination with full pivot (from the Numerical Cookbook).
-    @return A new AlgebraicMatrix that is the inverse of the original
+    @return A new AlgebraicMatrix that is the inverse of the original.
  */
 template<class T> AlgebraicMatrix<T> AlgebraicMatrix<T>::inv() const {
     if(_nrows != _ncols)
@@ -564,7 +565,7 @@ template<class T> AlgebraicMatrix<T> AlgebraicMatrix<T>::inv() const {
 }
 
 /** Compute the determinant of an AlgebraicMatrix.
-    @return Scalar that is the determinant of the matrix
+    @return Scalar that is the determinant of the matrix.
  */
 template<class T> T AlgebraicMatrix<T>::det() const {
     if(_nrows != _ncols)
@@ -595,8 +596,8 @@ template<class T> T AlgebraicMatrix<T>::det() const {
 /***********************************************************************************
 *     Coefficient access routines
 ************************************************************************************/
-/** Extract the constant part of a AlgebraicMatrix
-    @return A new AlgebraicMatrix that contains the constant part of the original
+/** Extract the constant part of a AlgebraicMatrix.
+    @return A new AlgebraicMatrix that contains the constant part of the original.
  */
 template<class T> AlgebraicMatrix<double> AlgebraicMatrix<T>::cons() const {
     AlgebraicMatrix<double> temp(_nrows, _ncols);
@@ -612,9 +613,9 @@ template<class T> AlgebraicMatrix<double> AlgebraicMatrix<T>::cons() const {
 *     Input/Output routines
 ************************************************************************************/
 /** Output operator.
-    @param[in] out output stream
-    @param[in] obj AlgebraicMatrix to be printed in the stream
-    @return Output stream
+    @param[in] out output stream.
+    @param[in] obj AlgebraicMatrix to be printed in the stream.
+    @return Output stream.
  */
 template<typename U> std::ostream& operator<<(std::ostream &out, const AlgebraicMatrix<U> &obj) {
     unsigned int nrows = obj.nrows();
@@ -637,9 +638,9 @@ template<typename U> std::ostream& operator<<(std::ostream &out, const Algebraic
 }
 
 /** Input operator.
-    @param[in] in Input stream
-    @param[in] obj AlgebraicMatrix to be created from the stream
-    @return Input stream
+    @param[in] in Input stream.
+    @param[in] obj AlgebraicMatrix to be created from the stream.
+    @return Input stream.
  */
 template<typename U> std::istream& operator>> (std::istream &in, AlgebraicMatrix<U> &obj) {
     // read the first line
@@ -700,8 +701,8 @@ template<typename U> std::istream& operator>> (std::istream &in, AlgebraicMatrix
 *     Matrix operations
 ************************************************************************************/
 /** Compute the transpose of an AlgebraicMatrix.
-    @param[in] obj An AlgebraicMatrix
-    @return An AlgebraicMatrix that is the transpose of the original AlgebraicMatrix
+    @param[in] obj An AlgebraicMatrix.
+    @return An AlgebraicMatrix that is the transpose of the original AlgebraicMatrix.
     @see AlgebraicMatrix::transpose
  */
 template<class T> AlgebraicMatrix<T> transpose(const AlgebraicMatrix<T>& obj) {
@@ -709,8 +710,8 @@ template<class T> AlgebraicMatrix<T> transpose(const AlgebraicMatrix<T>& obj) {
 }
 
 /** Compute the determinant of an AlgebraicMatrix.
-    @param[in] obj An AlgebraicMatrix
-    @return A variable that is the determinant of the AlgebraiMatrix
+    @param[in] obj An AlgebraicMatrix.
+    @return A variable that is the determinant of the AlgebraiMatrix.
     @see AlgebraicMatrix::det
  */
 template<class T> T det(const AlgebraicMatrix<T>& obj) {
@@ -718,8 +719,8 @@ template<class T> T det(const AlgebraicMatrix<T>& obj) {
 }
 
 /** Compute the inverse of an AlgebraicMatrix.
-    @param[in] obj An AlgebraicMatrix
-    @return An AlgebraicMatrix that is the inverse of the original AlgebraicMatrix
+    @param[in] obj An AlgebraicMatrix.
+    @return An AlgebraicMatrix that is the inverse of the original AlgebraicMatrix.
     @see AlgebraicMatrix::inv
  */
 template<class T> AlgebraicMatrix<T> inv(const AlgebraicMatrix<T>& obj) {
@@ -730,8 +731,8 @@ template<class T> AlgebraicMatrix<T> inv(const AlgebraicMatrix<T>& obj) {
 *     Coefficient access routines
 ************************************************************************************/
 /** Extract the constant part of a AlgebraicMatrix
-    @param[in] obj An AlgebraicMatrix
-    @return A new AlgebraicMatrix that contains the constant part of the original
+    @param[in] obj An AlgebraicMatrix.
+    @return A new AlgebraicMatrix that contains the constant part of the original.
     @see AlgebraicMatrix::cons
  */
 template<class T> AlgebraicMatrix<double> cons(const AlgebraicMatrix<T>& obj) {

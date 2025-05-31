@@ -37,12 +37,14 @@
  *     DACE polynomial evaluation routines
  *********************************************************************************/
 
-/** Evaluate DA object ina by providing the value to use for each monomial in
-    DA object inb.
+/** Evaluate DA object @e ina by providing the value to use for each monomial in
+    DA object @e inb.
     This is equivalent to a monomial-wise DA dot product.
-    @param[in] ina Pointer to first DA object to evaluate
-    @param[in] inb Pointer to second DA object to provide monomial values
-    @return Monomial-wise dot product of both DA objects
+
+    @param[in] ina A pointer to first DA object to evaluate.
+    @param[in] inb A pointer to second DA object to provide monomial values.
+    @return The monomial-wise dot product of both DA objects.
+
     @see daceMultiplyMonomials()
 */
 double daceEvalMonomials(const DACEDA *ina, const DACEDA *inb)
@@ -68,12 +70,12 @@ double daceEvalMonomials(const DACEDA *ina, const DACEDA *inb)
 	return res;
 }
 
-/** Perform partial evaluation of DA object ina by replacing independent variable
-    number nvar by the value val.
-    @param[in] ina Pointer to DA object to evaluate
-    @param[in] nvar Number of the independent variable to replace (one-based)
-    @param[in] val Value to replace independent variable with
-    @param[out] inc Pointer to DA object to store the result of the partial evaluation
+/** Perform partial evaluation of DA object @e ina by replacing independent variable
+    number @e nvar by the value @e val.
+    @param[in] ina A pointer to DA object to evaluate.
+    @param[in] nvar The number of the independent variable to replace (one-based).
+    @param[in] val The value to replace the independent variable with.
+    @param[out] inc A pointer to DA object to store the result of the partial evaluation.
 */
 void daceEvalVariable(const DACEDA *ina, const unsigned int nvar, const double val, DACEDA *inc)
 {
@@ -142,13 +144,13 @@ void daceEvalVariable(const DACEDA *ina, const unsigned int nvar, const double v
 #endif
 }
 
-/** Replace independent variable with index from by val times the independent
-    variable with index to.
-    @param[in] ina Pointer to DA object to evaluate
-    @param[in] from Number of the independent variable to replace
-    @param[in] to Number of the independent variable to change to
-    @param[in] val Value to scale new independent variable with
-    @param[out] inc Pointer to DA object to store the result of the replacement
+/** Replace independent variable with index @e from by @e val times the independent
+    variable with index @e to.
+    @param[in] ina A pointer to DA object to evaluate.
+    @param[in] from The number of the independent variable to replace.
+    @param[in] to The number of the independent variable to change to.
+    @param[in] val The value to scale new independent variable by.
+    @param[out] inc A pointer to DA object to store the result of the replacement.
 */
 void daceReplaceVariable(const DACEDA *ina, const unsigned int from, const unsigned int to, const double val, DACEDA *inc)
 {
@@ -200,11 +202,11 @@ void daceReplaceVariable(const DACEDA *ina, const unsigned int from, const unsig
 #endif
 }
 
-/** Scale independent variable nvar by val.
-    @param[in] ina Pointer to DA object to scale
-    @param[in] nvar Number of the independent variable to scale
-    @param[in] val Value to scale independent variable with
-    @param[out] inc Pointer to DA object to store the result of the scaling
+/** Scale independent variable @e nvar by @e val.
+    @param[in] ina A pointer to DA object to scale.
+    @param[in] nvar The number of the independent variable to scale.
+    @param[in] val The value to scale independent variable with.
+    @param[out] inc A pointer to DA object to store the result of the scaling.
 */
 void daceScaleVariable(const DACEDA *ina, const unsigned int nvar, const double val, DACEDA *inc)
 {
@@ -259,12 +261,12 @@ void daceScaleVariable(const DACEDA *ina, const unsigned int nvar, const double 
 #endif
 }
 
-/** Translate independent variable nvar to (a*x + c).
-    @param[in] ina Pointer to DA object to translate
-    @param[in] nvar Number of the independent variable to translate
-    @param[in] a Linear value to scale independent variable by
-    @param[in] c Constant value to translate independent variable by
-    @param[out] inc Pointer to DA object to store the result of the translation
+/** Translate independent variable @e nvar to @p (a*x+c).
+    @param[in] ina A pointer to DA object to translate.
+    @param[in] nvar The number of the independent variable to translate.
+    @param[in] a The linear value to scale independent variable by.
+    @param[in] c The constant value to translate independent variable by.
+    @param[out] inc A pointer to DA object to store the result of the translation.
 */
 void daceTranslateVariable(const DACEDA *ina, const unsigned int nvar, const double a, const double c, DACEDA *inc)
 {
@@ -342,21 +344,22 @@ void daceTranslateVariable(const DACEDA *ina, const unsigned int nvar, const dou
 }
 
 /** Compute an evaluation tree to efficiently evaluate several DA objects.
-    The size of ac must be (2+count)*nterm to store all possible terms in the evaluation tree.
+    The size of @e ac[] must be @p (2+count)*nterm to store all possible terms in the evaluation tree.
     The number of terms nterm is limited by daceGetMaxMonomials(), so an array of size
-    (2+count)*daceGetMaxMonomials() will always be sufficient.
+    @p (2+count)*daceGetMaxMonomials() will always be sufficient.
 
-    When called with NULL for ac the remaining outputs are still calculated, but
-    no compiled coefficients are written. This can be used to obtain the required nterm to size
-    the array ac.
+    When called with @p NULL for @e ac[] the remaining outputs are still calculated, but
+    no compiled coefficients are written. This can be used to obtain the required @e nterm to size
+    the array @e ac[].
 
-    See @ref DAEVAL for a detailed description of the meaning of the resulting ac array and
+    See @ref DAEVAL for a detailed description of the meaning of the resulting @e ac[] array and
     the algorithm to complete the evaluation.
-    @param[in] das C array of pointers to DA objects to evaluate
-    @param[in] count Number of DA objects in das[]
-    @param[out] ac C array of doubles containing compiled coefficients
-    @param[out] nterm Pointer where to store the total number of terms in evaluation tree
-    @param[out] nord Pointer where to store the maximum order in evaluation tree
+
+    @param[in] das A C array of pointers to DA objects to evaluate.
+    @param[in] count The number of DA objects in @e das[].
+    @param[out] ac A C array of doubles containing compiled coefficients.
+    @param[out] nterm A pointer where to store the total number of terms in evaluation tree.
+    @param[out] nord A pointer where to store the maximum order in evaluation tree.
 
     @see daceEvalTreeDA
     @see daceEvalTreeDouble
@@ -495,20 +498,20 @@ void daceEvalTree(const DACEDA *das[], const unsigned int count, double ac[], un
 }
 
 /** Evaluate an evaluation tree with double arguments.
-    Once an evaluation tree has been generated with daceEvalTree, this routine can be used on the
+    Once an evaluation tree has been generated with daceEvalTree(), this routine can be used on the
     outputs to actually evaluate the tree efficiently.
-    @param[out] res C array of doubles to return the results
-    @param[in] count Number of doubles in res, must be same as number of DAs in call to daceEvalTree
-    @param[in] args C array of doubles containing the arguments
-    @param[in] acount Number of doubles in args
-    @param[in] ac C array of doubles containing compiled coefficients from daceEvalTree
-    @param[in] nterm Total number of terms in evaluation tree from daceEvalTree
-    @param[in] nord Maximum order in evaluation tree from daceEvalTree
+    @note Any missing arguments not specified in @e args[] are assumed to be zero.
+
+    @param[out] res A C array of doubles to return the results.
+    @param[in] count The number of doubles in @e res, must be same as number of DAs in call to daceEvalTree().
+    @param[in] args A C array of doubles containing the arguments.
+    @param[in] acount The number of doubles in @e args.
+    @param[in] ac A C array of doubles containing compiled coefficients from daceEvalTree().
+    @param[in] nterm The total number of terms in evaluation tree from daceEvalTree().
+    @param[in] nord The maximum order in evaluation tree from daceEvalTree().
 
     @see daceEvalTree
     @see daceEvalTreeDA
-
-    @note Any missing arguments not specified in args[] are assumed to be zero.
 */
 void daceEvalTreeDouble(double res[], const unsigned int count, const double args[], const unsigned int acount, const double ac[], const unsigned int nterm, const unsigned int nord)
 {
@@ -544,20 +547,20 @@ void daceEvalTreeDouble(double res[], const unsigned int count, const double arg
 }
 
 /** Evaluate an evaluation tree with DA arguments.
-    Once an evaluation tree has been generated with daceEvalTree, this routine can be used on the
+    Once an evaluation tree has been generated with daceEvalTree(), this routine can be used on the
     outputs to actually evaluate the tree efficiently.
-    @param[out] res C array of pointers to DACEDA objects to return the results
-    @param[in] count Number of DACEDA pointers in res, must be same as number of DAs in call to daceEvalTree
-    @param[in] args C array of pointers to DACEDAs containing the arguments
-    @param[in] acount Number of DACEDA pointers in args
-    @param[in] ac C array of doubles containing compiled coefficients from daceEvalTree
-    @param[in] nterm Total number of terms in evaluation tree from daceEvalTree
-    @param[in] nord Maximum order in evaluation tree from daceEvalTree
+    @note Any missing arguments not specified in @e args[] are assumed to be zero.
+
+    @param[out] res A C array of pointers to DACEDA objects to return the results.
+    @param[in] count The number of DACEDA pointers in @e res, must be same as number of DAs in call to daceEvalTree().
+    @param[in] args A C array of pointers to DACEDAs containing the arguments.
+    @param[in] acount The number of DACEDA pointers in @e args.
+    @param[in] ac A C array of doubles containing compiled coefficients from daceEvalTree().
+    @param[in] nterm The total number of terms in evaluation tree from daceEvalTree().
+    @param[in] nord The maximum order in evaluation tree from daceEvalTree().
 
     @see daceEvalTree
     @see daceEvalTreeDouble
-
-    @note Any missing arguments not specified in args[] are assumed to be zero.
 */
 void daceEvalTreeDA(DACEDA *res[], const unsigned int count, const DACEDA *args[], const unsigned int acount, const double ac[], const unsigned int nterm, const unsigned int nord)
 {
@@ -619,16 +622,16 @@ void daceEvalTreeDA(DACEDA *res[], const unsigned int count, const DACEDA *args[
 /** Evaluate several DA objects with double arguments.
     This is a convenience routine combining daceEvalTree() and daceEvalTreeDouble(). It should only be used
     if the DAs are not evaluated with other arguments again.
-    @param[in] das C array of pointers to DA objects to evaluate
-    @param[out] res C array of doubles to return the results
-    @param[in] count Number of DACEDA pointers in das and doubles in res
-    @param[in] args C array of doubles containing the arguments
-    @param[in] acount Number of doubles in args
+    @note Any missing arguments not specified in args[] are assumed to be zero.
+
+    @param[in] das A C array of pointers to DA objects to evaluate.
+    @param[out] res A C array of doubles to return the results.
+    @param[in] count The number of DACEDA pointers in @e das and doubles in @e res.
+    @param[in] args A C array of doubles containing the arguments.
+    @param[in] acount The number of doubles in @e args.
 
     @see daceEvalTree
     @see daceEvalTreeDouble
-
-    @note Any missing arguments not specified in args[] are assumed to be zero.
 */
 void daceEvalDouble(const DACEDA *das[], double res[], const unsigned int count, const double args[], const unsigned int acount)
 {
@@ -663,16 +666,16 @@ void daceEvalDouble(const DACEDA *das[], double res[], const unsigned int count,
 /** Evaluate several DA objects with DA arguments.
     This is a convenience routine combining daceEvalTree() and daceEvalTreeDA(). It should only be used if
     the DAs are not evaluated with other arguments again.
-    @param[in] das C array of pointers to DA objects to evaluate
-    @param[out] res C array of pointers to DACEDA objects to return the results
-    @param[in] count Number of DACEDA pointers in das and res
-    @param[in] args C array of pointers to DACEDAs containing the arguments
-    @param[in] acount Number of DACEDA pointers in args
+    @note Any missing arguments not specified in @e args[] are assumed to be zero.
+
+    @param[in] das A C array of pointers to DA objects to evaluate.
+    @param[out] res A C array of pointers to DACEDA objects to return the results.
+    @param[in] count The number of DACEDA pointers in @e das and @e res.
+    @param[in] args A C array of pointers to DACEDAs containing the arguments.
+    @param[in] acount The number of DACEDA pointers in @e args.
 
     @see daceEvalTree
     @see daceEvalTreeDA
-
-    @note Any missing arguments not specified in args[] are assumed to be zero.
 */
 void daceEvalDA(const DACEDA *das[], DACEDA *res[], const unsigned int count, const DACEDA *args[], const unsigned int acount)
 {

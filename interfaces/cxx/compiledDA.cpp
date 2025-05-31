@@ -38,7 +38,7 @@ namespace DACE {
 *     Constructors & Destructors
 *********************************************************************************/
 /** Create a copy of a compiledDA object.
-    @param[in] cda compiled DA object to be copied
+    @param[in] cda The compiled DA object to be copied.
  */
 compiledDA::compiledDA(const compiledDA &cda) {
     dim = cda.dim;
@@ -49,7 +49,7 @@ compiledDA::compiledDA(const compiledDA &cda) {
 }
 
 /** Create a vector of compiledDA objects from a vector of DA objects.
-    @param[in] da vector of DA objects
+    @param[in] da A vector of DA objects.
     @throw DACE::DACEException
  */
 compiledDA::compiledDA(const std::vector<DA> &da) {
@@ -65,7 +65,7 @@ compiledDA::compiledDA(const std::vector<DA> &da) {
 }
 
 /** Create a compiledDA object from a DA object.
-    @param[in] da vector
+    @param[in] da A DA object.
     @throw DACE::DACEException
  */
 compiledDA::compiledDA(const DA &da) {
@@ -87,8 +87,8 @@ compiledDA::~compiledDA() throw() {
 *********************************************************************************/
 /** Copy the content of a given compiledDA object into the current
     compiledDA.
-    @param[in] cda compiledDA vector to be copied
-    @return The compiledDA object with the same content of the given compiledDA
+    @param[in] cda The compiledDA vector to be copied.
+    @return The compiledDA object with the same content of the given compiledDA.
  */
 compiledDA& compiledDA::operator=(const compiledDA &cda) {
     if(this != &cda)
@@ -129,28 +129,28 @@ template<> void compiledDA::operator()(const std::vector<DA> &args, std::vector<
 *     Member access routines
 *********************************************************************************/
 /** Return the coefficient array.
-    @return coefficient array
+    @return The coefficient array.
  */
 const double* compiledDA::getAc() const {
     return this->ac;
 }
 
 /** Return the number of DAs (dimension).
-    @return dimension
+    @return The dimension.
  */
 unsigned int compiledDA::getDim() const {
     return this->dim;
 }
 
 /** Return the maximum order.
-    @return maximum order
+    @return The maximum order.
  */
 unsigned int compiledDA::getOrd() const {
     return this->ord;
 }
 
 /** Return the number of terms.
-    @return number of terms
+    @return the number of terms.
  */
 unsigned int compiledDA::getTerms() const {
     return this->terms;

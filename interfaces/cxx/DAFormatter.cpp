@@ -39,8 +39,8 @@ namespace DACE {
 
 /*! Format a vector of DAs and return a string representation.
     By default, this function just formats each DA separated by std::endl.
-    @param da Vector of DA objects
-    @return Formatted string representation.
+    @param da A vector of DA objects.
+    @return The formatted string representation.
  */
 std::string DAFormatter::operator()(const std::vector<DA> &da){
     std::ostringstream res;
@@ -52,8 +52,8 @@ std::string DAFormatter::operator()(const std::vector<DA> &da){
 }
 
 /*! Format a single DA using DA::toString() and return the string representation.
-    @param da DA object
-    @return Formatted string representation.
+    @param da A DA object.
+    @return The formatted string representation.
  */
 std::string DADefaultFormatter::operator()(const DA &da) {
     return da.toString();
@@ -81,8 +81,8 @@ const DASimpleFormat DASimpleFormatter::PYTHON_POW =  { "+",  "-",  "*",        
 const DASimpleFormat DASimpleFormatter::LATEX =       { " +", " -", " \\cdot ", "",     "x", "_{", "}", "^{",  "}", " \n\t",       1,  0, 20, true  };
 
 /** Format a single DA and return a string representation.
-    @param da DA object
-    @return Formatted string representation.
+    @param da A DA object.
+    @return The formatted string representation.
  */
 std::string DASimpleFormatter::operator()(const DA &da){
     const std::vector<Monomial> monomials = da.getMonomials();

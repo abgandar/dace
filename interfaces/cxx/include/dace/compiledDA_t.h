@@ -44,7 +44,7 @@ namespace DACE {
 *********************************************************************************/
 /** Evaluate the compiled polynomial with a vector of any arithmetic type
     (such as DA or double) and return vector of results.
-    @param[in] args the values of the independent DA variables to evaluate
+    @param[in] args The values of the independent DA variables to evaluate
     with. Must be a std::vector<> (or derived class) of an arithmetic
     type. If less than the number of independent DA variables defined
     during the DACE initialization are given, the missing entries are
@@ -61,12 +61,12 @@ template<class V> V compiledDA::operator()(const V &args) const {
 
 /** Evaluate the compiled polynomial with a braced initializer list of any arithmetic type
     (such as DA or double) and return vector of results.
-    @param[in] l the values of the independent DA variables to evaluate
+    @param[in] l The values of the independent DA variables to evaluate
     with. Must be a braced initializer list of an arithmetic
     type. If less than the number of independent DA variables defined
     during the DACE initialization are given, the missing entries are
     assumed to be zero.
-    @return std::vector with the result of the evaluation
+    @return A std::vector with the result of the evaluation.
  */
 template<class T> std::vector<T> compiledDA::operator()(const std::initializer_list<T> l) const {
     std::vector<T> res(dim);
@@ -77,13 +77,11 @@ template<class T> std::vector<T> compiledDA::operator()(const std::initializer_l
 
 /** Evaluate the compiled polynomial with an array of any arithmetic type
     (such as DA or double) and return vector of results.
-    @param[in] args array of the values of the independent DA variables to
-    evaluate with
-    @param[in] length Size of the array args[]. If less than the number of
-    variables defined during the DACE initialization are given, the
-    missing entries are assumed to be zero.
-    @return Vector with the result of the evaluation. The vector is of
-    type std::vector<V>.
+    @param[in] args The array of the values of the independent DA variables to
+    evaluate with.
+    @param[in] length The size of the array @e args[]. If less than the number of
+    variables defined during the DACE initialization are given, the missing entries are assumed to be zero.
+    @return A std::vector with the result of the evaluation.
  */
 template<class T> std::vector<T> compiledDA::operator()(const T args[], const unsigned int length) const {
     std::vector<T> arg(args, args+length);
@@ -95,13 +93,12 @@ template<class T> std::vector<T> compiledDA::operator()(const T args[], const un
 
 /** Evaluate the compiled polynomial with a vector of arithmetic type T
     (such as DA or double) and return the result in the vector res.
-    @param[in] args the values of the independent DA variables to evaluate
+    @param[in] args The values of the independent DA variables to evaluate
     with. Must be a std::vector<> (or derived class) of an arithmetic
     type. If less than the number of independent DA variables defined
     during the DACE initialization are given, the missing entries are
     assumed to be zero.
-    @param[out] res the vector containing the result of the evaluation.
-    Must be at least of length dim.
+    @param[out] res A vector receiving the result of the evaluation.
     @tparam T Any arithmetic type. Must support at least:\n
      - default constructor    T::T()\n
      - assignment             T::operator=(const T& t)\n
@@ -153,11 +150,10 @@ template<class T> void compiledDA::operator()(const std::vector<T> &args, std::v
 *********************************************************************************/
 /** Evaluate the compiled polynomial with a single argument of any
     arithmetic type (such as DA or double) and return vector of results.
+    @deprecated Replaced by compiledDA::operator()() with braced initializer list (e.g. `x({arg})`).
     @param[in] arg The value of the first independent DA variable to evaluate
     with. All remaining independent DA variables are assumed to be zero.
-    @return Vector with the result of the evaluation. The vector is of
-    type std::vector<V>.
-    @deprecated Replaced by compiledDA::operator()() with braced initializer list (e.g. `x({arg})`).
+    @return A std::vector with the result of the evaluation.
 */
 template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
     return (*this)({arg});
@@ -165,14 +161,14 @@ template<class T> std::vector<T> compiledDA::evalScalar(const T &arg) const {
 
 /** Evaluate the compiled polynomial with a vector of any arithmetic type
     (such as DA or double) and return vector of results.
-    @param[in] args the values of the independent DA variables to evaluate
+    @deprecated Replaced by compiledDA::operator()().
+    @param[in] args The values of the independent DA variables to evaluate
     with. Must be a std::vector<> (or derived class) of an arithmetic
     type. If less than the number of independent DA variables defined
     during the DACE initialization are given, the missing entries are
     assumed to be zero.
-    @return Vector with the result of the evaluation. The vector is of
-    the same type as the argument args.
-    @deprecated Replaced by compiledDA::operator()().
+    @return A vector with the result of the evaluation. The vector is of
+    the same type as the argument @e args.
     @see compiledDA::operator()()
  */
 template<class V> V compiledDA::eval(const V &args) const {
@@ -181,13 +177,13 @@ template<class V> V compiledDA::eval(const V &args) const {
 
 /** Evaluate the compiled polynomial with a braced initializer list of any arithmetic type
     (such as DA or double) and return vector of results.
-    @param[in] l the values of the independent DA variables to evaluate
+    @deprecated Replaced by compiledDA::operator()().
+    @param[in] l The values of the independent DA variables to evaluate
     with. Must be a braced initializer list of an arithmetic
     type. If less than the number of independent DA variables defined
     during the DACE initialization are given, the missing entries are
     assumed to be zero.
-    @return std::vector with the result of the evaluation
-    @deprecated Replaced by compiledDA::operator()().
+    @return std::vector with the result of the evaluation.
     @see compiledDA::operator()()
  */
 template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T> l) const {
@@ -196,14 +192,13 @@ template<class T> std::vector<T> compiledDA::eval(const std::initializer_list<T>
 
 /** Evaluate the compiled polynomial with an array of any arithmetic type
     (such as DA or double) and return vector of results.
-    @param[in] args array of the values of the independent DA variables to
-    evaluate with
-    @param[in] length Size of the array args[]. If less than the number of
+    @deprecated Replaced by compiledDA::operator()().
+    @param[in] args The array of the values of the independent DA variables to
+    evaluate with.
+    @param[in] length The size of the array @e args[]. If less than the number of
     variables defined during the DACE initialization are given, the
     missing entries are assumed to be zero.
-    @return Vector with the result of the evaluation. The vector is of
-    type std::vector<V>.
-    @deprecated Replaced by compiledDA::operator()().
+    @return A std::vector with the result of the evaluation.
     @see compiledDA::operator()()
  */
 template<class T> std::vector<T> compiledDA::eval(const T args[], const unsigned int length) const {

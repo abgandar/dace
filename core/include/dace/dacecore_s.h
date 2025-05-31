@@ -27,9 +27,8 @@
  */
 
 /** @file
-    @ingroup DACE
-
     @brief Public %DACE core header for static linking.
+    @ingroup DACE
 
     This file contains all routines in the public interface to the @ref DACE "DACE core".
     It is identical to include/dace/dacecore.h except on Windows where it explicitly

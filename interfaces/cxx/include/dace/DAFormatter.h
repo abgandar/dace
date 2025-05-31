@@ -70,8 +70,8 @@ class DACE_API DAFormatter
 {
 public:
     /** Format a single DA and return a string representation.
-        @param da DA object
-        @return Formatted string representation.
+        @param da A DA object.
+        @return The formatted string representation.
         @pure This function must be implemented by any derived DA formatter at a minimum.
      */
     virtual std::string operator()(const DA &da) = 0;
@@ -79,9 +79,9 @@ public:
     virtual std::string operator()(const std::vector<DA> &da);
 
     /** Format a single DA and return a string representation.
-        @param da DA object
-        @return Formatted string representation.
         @deprecated Replaced by DAFormatter::operator()().
+        @param da A DA object.
+        @return The formatted string representation.
         @see DAFormatter::operator()()
      */
     std::string format(const DA &da) {
@@ -90,9 +90,11 @@ public:
 
     /** Format a vector of DAs and return a string representation.
         Usually this just formats each DA one after the other.
-        @param da Vector of DA objects
-        @return Formatted string representation.
         @deprecated Replaced by DAFormatter::operator()().
+
+        @param da A vector of DA objects.
+        @return Formatted string representation.
+
         @see DAFormatter::operator()()
      */
     std::string format(const std::vector<DA> &da) {
@@ -127,10 +129,10 @@ public:
 */
 struct DASimpleFormat {
     std::string pos, neg, mul, pre_pow, var, pre_var, post_var, pow, post_pow, linebreak;
-    int first_var,              ///< number of the first independent DA variable (e.g. start counting at 0 or 1)
-        first_pow;              ///< offset added to the power of an independent DA variable
-    unsigned int monperline;    ///< number of monomials formatted per line before a line break is output
-    bool shorten;               ///< if true, exponents equal to one are output using the short format
+    int first_var,              ///< Number of the first independent DA variable (e.g. start counting at 0 or 1)
+        first_pow;              ///< Offset added to the power of an independent DA variable
+    unsigned int monperline;    ///< Number of monomials formatted per line before a line break is output
+    bool shorten;               ///< If true, exponents equal to one are output using the short format
 };
 
 /** Formats a DA vector using simple rules to output code suitable for various programming languages.

@@ -155,7 +155,8 @@ static const errstrings DACEerr[] = {
 /** Return the current error ID.
     The error ID is 100*severity + error code, where severity is between 0 - 10
     and the error code between 0 - 99.
-    @return The current error ID
+
+    @return The current error ID.
 */
 unsigned int daceGetError()
 {
@@ -163,7 +164,7 @@ unsigned int daceGetError()
 }
 
 /** Return current error severity (between 0 - 10).
-    @return The current error severity
+    @return The current error severity.
 */
 unsigned int daceGetErrorX()
 {
@@ -171,7 +172,7 @@ unsigned int daceGetErrorX()
 }
 
 /** Return the current error code (between 0 - 99).
-    @return The current error code
+    @return The current error code.
 */
 unsigned int daceGetErrorYY()
 {
@@ -207,11 +208,10 @@ void daceClearError()
 }
 
 /** Set DACE error state for errors within the DACE.
+    The error codes are defined as @p XYY with @p X indicating the severity and
+    @p YY corresponding to the actual error code.
 
-    The error codes are defined as XYY with X indicating the severity and
-    YY corresponding to the actual error code
-
-    Severity Levels X
+    Severity Levels @p X
 
     0  = OK:       No error
 
@@ -228,10 +228,10 @@ void daceClearError()
     10 = Critical: Crash in the DACE, just printing as much as possible
                    and die.
 
-    @param[in] c name of function where the error happened
-    @param[in] ix is the error severity code
-    @param[in] iyy is the error code
- */
+    @param[in] c The name of the function where the error happened.
+    @param[in] ix The error severity code.
+    @param[in] iyy The error code.
+*/
 void daceSetError(const char *c, const unsigned int ix, const unsigned int iyy)
 {
     // check if it is a critical error

@@ -27,9 +27,8 @@
  */
 
 /** @file
-    @ingroup DACE
-
     @brief Public %DACE core header.
+    @ingroup DACE
 
     This file contains all routines in the public interface to the @ref DACE "DACE core".
     %DACE core users or high level interfaces should only include this file.

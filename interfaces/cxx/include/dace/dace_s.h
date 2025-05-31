@@ -27,9 +27,8 @@
  */
 
 /** @file
-    @ingroup DACECXX
-
     @brief Public %DACE C++ header file for static linking.
+    @ingroup DACECXX
 
     This header file just includes all other %DACE C++ headers in the right order.
     It is identical to dace.h except on Windows where it explicitly sets the linkage

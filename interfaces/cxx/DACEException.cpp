@@ -55,10 +55,9 @@ namespace DACE {
         execute();
     }
 
-    /** Create a DACEException object with given severity and ID codes.
-        Execute the appropriate action for the exception based on current settings.
-        @param exc_sv severity code of the error plus 10 to indicate it originated in the C++ interface
-        @param exc_id ID code of the error
+    /** Create and execute a DACEException object with given severity and ID codes.
+        @param exc_sv The severity code of the error plus 10 to indicate it originated in the C++ interface.
+        @param exc_id The ID code of the error.
      */
     DACEException::DACEException(const int exc_sv, const int exc_id) {
         m_x = exc_sv;
@@ -132,7 +131,7 @@ namespace DACE {
     *     Public member functions
     *********************************************************************************/
     /** Return a human readable error string representing this exception.
-        @return A C string containing the error message
+        @return A C string containing the error message.
      */
     const char* DACEException::what() const throw() {
         return msg.c_str();
@@ -141,7 +140,8 @@ namespace DACE {
     /********************************************************************************
     *     Static member functions
     *********************************************************************************/
-    /** Set severity level. Errors with severity code greater or equal to this
+    /** Set severity level.
+        Errors with severity code greater or equal to this
         value will throw an exception.
         Severity levels are:\n
         0 = Warning:   Informative, no action required\n
@@ -151,14 +151,14 @@ namespace DACE {
                        reinitialize DACE, interface objects are no longer valid\n
         10 = Critical: Crash in the DACE, just printing as much as possible
                        and dying.
-        @param n severity value
+        @param n The new severity level value.
      */
     void DACEException::setSeverity(const int n) {
         severity = n;
     }
 
     /** Set the current mode for printing of warnings.
-        @param w warning status: print warnings if true
+        @param w The new warning status (prints warnings if true).
      */
     void DACEException::setWarning(const bool w) {
         warning = w;
@@ -168,9 +168,9 @@ namespace DACE {
     *     Related functions
     *********************************************************************************/
     /** DACEException stream output operator.
-        @param[in] out Output stream
-        @param[in] ex Exception to be printed to the stream
-        @return Output stream
+        @param[in] out A C++ output stream.
+        @param[in] ex The DACEException to be printed to the stream.
+        @return The C++ output stream.
      */
     std::ostream& operator<<(std::ostream &out, const DACEException &ex) {
         return out << ex.what() << std::endl;

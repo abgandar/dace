@@ -43,7 +43,7 @@ Monomial::Monomial() : m_jj(DA::getMaxVariables()), m_coeff(0.0) {
 }
 
 /** Compute the order of the monomial.
-    @return Order of the monomial
+    @return Order of the monomial.
  */
 unsigned int Monomial::order() const {
     unsigned int ord = 0;
@@ -78,9 +78,9 @@ std::string Monomial::toString() const {
 }
 
 /** Monomial stream output operator.
-    @param[in] out Output stream
-    @param[in] m Monomial to be printed to the stream
-    @return Output stream
+    @param[in] out C++ output stream.
+    @param[in] m The Monomial to be printed to the stream.
+    @return The C++ output stream.
  */
 std::ostream& operator<<(std::ostream &out, const Monomial &m) {
     return out << m.toString();
