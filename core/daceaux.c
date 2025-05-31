@@ -151,11 +151,11 @@ int npown(int a, unsigned int b)
     }
 #endif      // DACE_MEMORY_MODEL != DACE_MEMORY_STATIC
 
-/** Return a single integer containing all @e nv exponents in @e p[] with maximum order @e no.
+/** Return a single integer containing all @e nv exponents in @e p with maximum order @e no.
     @note No checking is performed to see if this operation will overflow! This check is done in daceInit().
-    @param[in] p A C array of nv exponents.
+    @param[in] p A C array of @e nv exponents.
     @param[in] no The maximum computation order used for encoding. Must be strictly positive!
-    @param[in] nv The number of exponents in @e p[]. May be zero, in which case zero is returned.
+    @param[in] nv The number of exponents in @e p. May be zero, in which case zero is returned.
     @return The corresponding exponents combined in one integer.
 */
 unsigned int daceEncodeExponents(const unsigned int p[], const unsigned int no, const unsigned int nv)
@@ -169,12 +169,12 @@ unsigned int daceEncodeExponents(const unsigned int p[], const unsigned int no, 
     return res;
 }
 
-/** Decode a single integer containing @e nv exponents of maximum order @e no into @e p[].
+/** Decode a single integer containing @e nv exponents of maximum order @e no into @e p.
     @note No checking is performed to see if this operation will overflow! This check is done in daceInit().
     @param[in] ic The encoded integer to decode.
     @param[in] no The maximum computation order used for encoding. Must be strictly positive!
-    @param[in] nv The number of exponents in @e p[]. May be zero, in which case zero is returned.
-    @param[out] p A C array of nv exponents.
+    @param[in] nv The number of exponents in @e p. May be zero, in which case zero is returned.
+    @param[out] p A C array of @e nv exponents.
     @return The sum of the decoded exponents (i.e. the order).
 */
 unsigned int daceDecodeExponents(unsigned int ic, const unsigned int no, const unsigned int nv, unsigned int p[])
@@ -199,23 +199,20 @@ unsigned int daceDecodeExponents(unsigned int ic, const unsigned int no, const u
     return order;
 }
 
-/** Enumerate all monomials with @e nv variables and up to maximum order @e no in @e p[].
-    When called the first time, @e p[] should be all zeros (i.e. the constant or zeroth
-    order monomial). Then call it repeatedly with the previous state of @e p[]
-    and it will put the next monomial in @e p[] as well as return the order of that monomial.
+/** Enumerate all monomials with @e nv variables and up to maximum order @e no in @e p.
+    When called the first time, @e p should be all zeros (i.e. the constant or zeroth
+    order monomial). Then call it repeatedly with the previous state of @e p and it will
+    put the next monomial in @e p as well as return the order of that monomial.
 
-    When there are no more monomials left, the funcion will cycle back to the constant monomial
+    When there are no more monomials left, the function will cycle back to the constant monomial
     of order zero.
-
-    @note The sequence of monomials is deterministic but NOT sorted by order. It
-    depends on both @e nv and @e no.
-
+    @note The sequence of monomials is deterministic but NOT sorted by order. It depends on both
+    @e nv and @e no.
     @note This function handles the cases nv=0 and no=0 correctly (i.e. returning 0).
-
     @param[out] p A C array of @e nv exponents.
     @param[in] no The maximum order of monomials being enumerated.
-    @param[in] nv The number of exponents in @e p[].
-    @return The order of the next monomial returned in @e p[].
+    @param[in] nv The number of exponents in @e p.
+    @return The order of the next monomial returned in @e p.
 */
 unsigned int daceNextMonomial(unsigned int p[], const unsigned int no, const unsigned int nv)
 {
@@ -239,23 +236,19 @@ unsigned int daceNextMonomial(unsigned int p[], const unsigned int no, const uns
 }
 
 /** Enumerate all monomials with nv variables and up to maximum order no in p.
-    When called first, @e p[] should be all zeros (i.e. the constant or zeroth
-    order monomial). Then call it repeatedly with the previous state of @e p[]
-    and it will put the next monomial in @e p[] as well as return the
-    order of that monomial.
+    When called the first time, @e p should be all zeros (i.e. the constant or zeroth
+    order monomial). Then call it repeatedly with the previous state of @e p and
+    it will put the next monomial in @e p as well as return the order of that monomial.
 
     When there are no more monomials left, the funcion will cycle back to
     the constant monomial of order zero.
-
     @note The sequence of monomials is sorted by order, i.e. first all first order
     monomials are returned, then all second order and so on.
-
     @note This function handles the cases nv=0 and no=0 correctly (i.e. returning 0).
-
     @param[out] p A C array of @e nv exponents.
     @param[in] no The maximum order of monomials being enumerated.
-    @param[in] nv The number of exponents in @e p[].
-    @return The order of the next monomial returned in @e p[].
+    @param[in] nv The number of exponents in @e p.
+    @return The order of the next monomial returned in @e p.
 */
 unsigned int daceNextOrderedMonomial(unsigned int p[], const unsigned int no, const unsigned int nv)
 {
@@ -286,9 +279,9 @@ unsigned int daceCountMonomials(unsigned int no, unsigned int nv)
     return (unsigned int)dnumda;
 }
 
-/** Encode the given exponents in @e jj[] into a DA coding integer as stored in @p monomial.ii.
+/** Encode the given exponents in @e jj into a DA coding integer as stored in `monomial.ii`.
     @param[in] jj A C array of @e nvmax exponents to encode.
-    @return The DA coding integer as stored in @p monomial.ii.
+    @return The DA coding integer as stored in `monomial.ii`.
 */
 unsigned int daceEncode(const unsigned int jj[])
 {
@@ -316,8 +309,8 @@ unsigned int daceEncode(const unsigned int jj[])
     return DACECom.ia1[ic1] + DACECom.ia2[ic2];
 }
 
-/** Decode the given DA coding integer as stored in @p monomial.ii into @e jj[].
-    @param[in] jc A DA coding integer as stored in @p monomial.ii to decode.
+/** Decode the given DA coding integer as stored in `monomial.ii` into @e jj.
+    @param[in] jc A DA coding integer as stored in `monomial.ii` to decode.
     @param[out] jj A C array of @e nvmax exponents.
 */
 void daceDecode(const unsigned int jc, unsigned int jj[])
@@ -333,7 +326,7 @@ void daceDecode(const unsigned int jc, unsigned int jj[])
     }
 }
 
-/** Pack monomials in @e cc[] into DA object @e inc.
+/** Pack monomials in @e cc into DA object @e inc.
     @param[in] cc A C array of @e nmmax monomials.
     @param[in] inc A pointer to DA object to pack the monomials into.
 */
@@ -408,7 +401,7 @@ void dacePack(double *restrict cc, DACEDA *restrict inc)
 }
 
 /** Return a pseudo-random number between 0.0 and 1.0.
-    @return A pseudo-random number in [0.0, 1.0].
+    @return A pseudo-random number in @f$[0.0, 1.0]@f$.
 */
 double daceRandom()
 {

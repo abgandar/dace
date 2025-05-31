@@ -118,7 +118,7 @@ template<typename T> AlgebraicVector<double> AlgebraicVector<T>::cons() const {
 
 #ifdef WITH_ALGEBRAICMATRIX
 /** Return the linear part of a polynomial map in AlgebraicVector<T>.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @return A @p AlgebraicMatrix<double> of dimension size by nvar, where size is the
     size of the @p AlgebraicVector<T> considered and nvar is the number of variables defined
@@ -137,7 +137,7 @@ template<typename T> AlgebraicMatrix<double> AlgebraicVector<T>::linear() const 
 }
 #else
 /** Return the linear part of a polynomial map in AlgebraicVector<T>.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @return A std::vector<std::vector<double>>, where each std::vector<double> contains.
     the linear part of the corresponding element in the original AlgebraicVector<T>.
@@ -269,7 +269,7 @@ template<typename T> template<typename U> AlgebraicVector<T>& AlgebraicVector<T>
 
 /** Returns an AlgebraicVector<T> with all monomials of order less than @e min and greater
     than @e max removed (trimmed).
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] min The minimum order to be preserved.
     @param[in] max The maximum order to be preserved.
@@ -296,7 +296,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::operator-() const {
 }
 
 /** Compute the derivative of a AlgebraicVector<T> with respect to variable @e p.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] p The independent variable number with respect to which the derivative is calculated.
     @return A new AlgebraicVector<T>.
@@ -312,7 +312,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::deriv(const unsigned
 }
 
 /** Compute the integral of a AlgebraicVector<T> with respect to variable @e p.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] p The independent variable number with respect to which the integral is calculated.
     @return A new AlgebraicVector<T>.
@@ -371,7 +371,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::round() const {
 }
 
 /** Componentwise application of the mod function.
-    @param[in] p divisor.
+    @param[in] p The divisor.
     @return A new AlgebraicVector.
  */
 template<typename T> template<typename U> AlgebraicVector<T> AlgebraicVector<T>::mod(const U &p) const {
@@ -857,9 +857,8 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::normalize() const {
 
 /** Invert the polynomial map represented by this AlgebraicVector<DA>.
     Map inversion requires that the linear part of this polynomial map is invertible.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @return The inverted polynomial map.
     @throw std::runtime_error
  */
@@ -927,12 +926,10 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::invert() const {
     and return a vector of results of the same type @e U.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] args A vector (e.g. AlgebraicVector<> or std::vector<>) of arguments.
-    @return A new vector of same type as argument args containing the results of the evaluation
-
+    @return A new vector of same type as argument args containing the results of the evaluation.
     @see compiledDA
     @see AlgebraicVector::compile()
  */
@@ -944,12 +941,10 @@ template<typename T> template<typename U> U AlgebraicVector<T>::operator()(const
     and return an AlgebraicVector<U> with the results.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] l A braced initializer list containing the arguments of type U.
     @return A new AlgebraicVector<U> containing the results of the evaluation.
-
     @see compiledDA
     @see AlgebraicVector::compile()
  */
@@ -960,13 +955,11 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
 /** Evaluate each element of a vector of DA with an array of arithmetic type @e T arguments.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] args A C array of arithmetic type @e T with which the DA vector is evaluated.
     @param[in] length The number of elements in the array @e args.
     @return A new AlgebraicVector<U> containing the results of the evaluation.
-
     @see AlgebraicVector::compile()
     @see compiledDA
  */
@@ -979,12 +972,10 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
     @deprecated Replaced by AlgebraicVector::operator()().
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] args A vector (e.g. AlgebraicVector<> or std::vector<>) of arguments.
     @return A new vector of same type as argument @e args containing the results of the evaluation
-
     @see AlgebraicVector::operator()()
     @see AlgebraicVector::compile()
     @see compiledDA
@@ -998,12 +989,10 @@ template<typename T> template<typename U> U AlgebraicVector<T>::eval(const U &ar
     @deprecated Replaced by AlgebraicVector::operator()().
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] l A braced initializer list containing the arguments of type @e U.
     @return A new AlgebraicVector<U> containing the results of the evaluation.
-
     @see AlgebraicVector::operator()()
     @see AlgebraicVector::compile()
     @see compiledDA
@@ -1016,13 +1005,11 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
     @deprecated Replaced by AlgebraicVector::operator()().
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] args A C array of arithmetic type T with which the DA vector is evaluated.
     @param[in] length The number of elements in the array args.
     @return A new AlgebraicVector<U> containing the results of the evaluation.
-
     @see AlgebraicVector::operator()()
     @see AlgebraicVector::compile()
     @see compiledDA
@@ -1035,12 +1022,10 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
     @deprecated Replaced by AlgebraicVector::operator()() with braced initializer list (e.g. `da({arg})`).
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] arg A single variable of arithmetic type @e U representing the first independent DA variable.
     @return The result of the evaluation.
-
     @see AlgebraicVector::compile()
     @see compiledDA
  */
@@ -1049,7 +1034,7 @@ template<typename T> template<typename U> AlgebraicVector<U> AlgebraicVector<T>:
 }
 
 /** Compile vector of DA polynomials and create a compiledDA object.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @return The compiled DA object.
     @see DA::compile()
@@ -1060,13 +1045,11 @@ template<typename T> compiledDA AlgebraicVector<T>::compile() const {
 
 /** Partial evaluation of vector of DA polynomials. For each element of the vector,
     variable @e var is replaced by the value @e val. The resulting vector of DA is returned.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] var The independent variable number to be replaced.
     @param[in] val The value by which to replace the variable.
     @return A new AlgebraicVector<DA>.
-
     @see DA::plug()
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::plug(const unsigned int var, const double val) const {
@@ -1213,27 +1196,23 @@ template<typename T> AlgebraicVector<double> cons(const AlgebraicVector<T> &obj)
 
 #ifdef WITH_ALGEBRAICMATRIX
 /** Return the linear part of a polynomial map in AlgebraicVector<T>.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] obj The AlgebraicVector<T> to extract linear part from.
     @return A AlgebraicMatrix<double> of dimension @e size by @e nvar, where @e size is the
     size of the AlgebraicVector<T> considered and @e nvar is the number of variables defined
     during the DACE initialization. Each row contains the linear part of the corresponding
     DA included in the original AlgebraicVector<T>.
-
     @see AlgebraicVector<T>::linear
  */
 template<typename T> AlgebraicMatrix<double> linear(const AlgebraicVector<T> &obj) {
 #else
 /** Return the linear part of a polynomial map in AlgebraicVector<T>.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
-
     @param[in] obj The AlgebraicVector<T> to extract linear part from.
     @return A std::vector<std::vector<double>>, where each std::vector<double> contains.
     the linear part of the corresponding element in the original AlgebraicVector<T>.
-
     @see AlgebraicVector<T>::linear
  */
 template<typename T> std::vector<std::vector<double>> linear(const AlgebraicVector<T> &obj) {
@@ -1432,12 +1411,11 @@ template<typename T, typename U> AlgebraicVector<typename PromotionTrait<T, U>::
 *     Basic Arithmetic Functions
 ************************************************************************************/
 /** Compute the derivative of a AlgebraicVector<T> with respect to variable p.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] obj An AlgebraicVector<T>.
     @param[in] p The independent variable number with respect to which the derivative is calculated.
     @return A new AlgebraicVector<T>.
-
     @see AlgebraicVector<T>::deriv
  */
 template<typename T> AlgebraicVector<T> deriv(const AlgebraicVector<T> &obj, const unsigned int p) {
@@ -1445,7 +1423,7 @@ template<typename T> AlgebraicVector<T> deriv(const AlgebraicVector<T> &obj, con
 }
 
 /** Compute the integral of a AlgebraicVector<T> with respect to variable p.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] obj An AlgebraicVector<T>.
     @param[in] p The independent variable number with respect to which the integral is calculated.
@@ -1461,7 +1439,7 @@ template<typename T> AlgebraicVector<T> integ(const AlgebraicVector<T> &obj, con
 ************************************************************************************/
 /** Returns an AlgebraicVector<T> with all monomials of order less than @e min and greater
     than @e max removed (trimmed).
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] obj The AlgebraicVector<T> to be trimmed.
     @param[in] min The minimum order to be preserved.
@@ -1792,7 +1770,7 @@ template<typename T> AlgebraicVector<double> norm(const AlgebraicVector<T> &obj,
     and return a vector of results of the same type @e U.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] obj An AlgebraicVector<T>.
     @param[in] args A vector (e.g. AlgebraicVector<> or std::vector<>) of arguments.
@@ -1806,7 +1784,7 @@ template<typename T, typename U> U eval(const AlgebraicVector<T> &obj, const U &
 
 /** Evaluate each element of a vector of DA with a braced initializer list of type @e U
     and return an AlgebraicVector<U> with the results.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
@@ -1820,7 +1798,7 @@ template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T
 }
 
 /** Evaluate each element of a vector of DA with an array of arithmetic type @e T arguments.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
@@ -1835,7 +1813,7 @@ template<typename T, typename U> AlgebraicVector<U> eval(const AlgebraicVector<T
 }
 
 /** Evaluate each element of a vector of DA with a single arithmetic type @e U argument.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @note For efficient repeated evaluation of the same AlgebraicVector use the corresponding method
     in class DACE::compiledDA.
@@ -1849,7 +1827,7 @@ template<typename T, typename U> AlgebraicVector<U> evalScalar(const AlgebraicVe
 }
 
 /** Compile vector of polynomials and create a compiledDA object.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] obj The AlgebraicVector to compile.
     @return The compiled DA object.
@@ -1862,7 +1840,7 @@ template<typename T> compiledDA compile(const AlgebraicVector<T> &obj) {
 /** Partial evaluation of vector of polynomials. In each element of the vector,
     variable @e var is replaced by the value @e val. The resulting vector of DAs
     is returned.
-    @warning This function only works on @p AlgebraicVector<DA>. When called on other
+    @warning This function only works on AlgebraicVector<DA>. When called on other
     data types (e.g. double) a compiler error is issued.
     @param[in] obj The vector to partially evaluate.
     @param[in] var The independent variable number to be replaced.

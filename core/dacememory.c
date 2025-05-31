@@ -122,8 +122,8 @@ void daceReallocateMemory(const unsigned int nvar, const unsigned int nmem)
 
 /** Allocate storage for a DA vector with memory length @e len.
     @param[out] inc The index of the newly created variable.
-    @param[in] len The length of the variable to allocate. If @p len=0 the length is
-    automatically determined to be large enough for any DA vector (i.e. @p len=nmmax).
+    @param[in] len The length of the variable to allocate. If @e len = 0 the length is
+    automatically determined to be large enough for any DA vector (i.e. @e len = nmmax).
  */
 void daceAllocateDA(DACEDA *inc, const unsigned int len)
 {
@@ -181,7 +181,7 @@ void daceAllocateDA(DACEDA *inc, const unsigned int len)
 }
 
 /** Deallocate DA vector inc.
-    @param[in] inc The index of the DA variable to free.
+    @param[out] inc The index of the DA variable to free.
  */
 void daceFreeDA(DACEDA *inc)
 {
@@ -238,7 +238,7 @@ void daceFreeDA(DACEDA *inc)
 }
 
 /** Invalidate DA vector @e inc without deallocating associated memory.
-    @param[in] inc the index of the DA variable to invalidate.
+    @param[out] inc the index of the DA variable to invalidate.
  */
 void daceInvalidateDA(DACEDA *inc)
 {
@@ -308,7 +308,7 @@ void daceVariableInformation(const DACEDA *inc, monomial **ipoc, unsigned int *i
 }
 
 /** Set the length of a DACE DA object.
-    @param[in] inc The DACE DA object to operate on.
+    @param[out] inc The DACE DA object to operate on.
     @param[in] len The new length of the object.
 */
 void daceSetLength(DACEDA *inc, const size_t len)
@@ -382,7 +382,7 @@ void daceAllocateDA(DACEDA *inc, const unsigned int len)
 }
 
 /** Deallocate DA vector @e inc.
-    @param[in] inc The index of the DA variable to free.
+    @param[out] inc The index of the DA variable to free.
  */
 void daceFreeDA(DACEDA *inc)
 {
@@ -392,7 +392,7 @@ void daceFreeDA(DACEDA *inc)
 }
 
 /** Invalidate DA vector @e inc without deallocating associated memory.
-    @param[in] inc The index of the DA variable to invalidate.
+    @param[out] inc The index of the DA variable to invalidate.
  */
 void daceInvalidateDA(DACEDA *inc)
 {
@@ -430,7 +430,7 @@ void daceVariableInformation(const DACEDA *inc, monomial **ipoc, unsigned int *i
 }
 
 /** Set the length of a DACE DA object.
-    @param[in] inc The DACE DA object to operate on.
+    @param[out] inc The DACE DA object to operate on.
     @param[in] len The new length of the object.
 */
 void daceSetLength(DACEDA *inc, const size_t len)

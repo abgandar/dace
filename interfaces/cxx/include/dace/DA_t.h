@@ -123,7 +123,7 @@ template<class T> T DA::eval(const std::initializer_list<T> l) const {
     evaluations of the same polynomial use the corresponding method in class
     DACE::compiledDA.
     @param[in] args A C array of arithmetic type @e T with which the DA vector is evaluated.
-    @param[in] length the number of elements in the array @e args.
+    @param[in] length The number of elements in the array @e args.
     @return The result of the evaluation.
     @throw DACE::DACEException
     @see DA::operator()()
@@ -198,7 +198,7 @@ template<class T> T eval(const DA &da, const T args[], const unsigned int length
     evaluations of the same polynomial use the corresponding method in class
     DACE::compiledDA.
     @param[in] da A DA object.
-    @param[in] arg single variable of arithmetic type @e T of the first independent DA variable.
+    @param[in] arg A single variable of arithmetic type @e T of the first independent DA variable.
     @return The result of the evaluation.
     @throw DACE::DACEException
     @see DA::operator()()

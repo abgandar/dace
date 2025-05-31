@@ -706,10 +706,8 @@ void daceIntegrate(const unsigned int iint, const DACEDA *ina, DACEDA *inc)
 /** Absolute value of a DA object.
     Returns either the DA or the negative of the DA based on the constant part.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
-
     @param[in] ina A pointer to the DA object to operate on.
     @param[out] inc A pointer to the DA object to store the result in.
-
     @see daceNorm
  */
 void daceAbsolute(const DACEDA *ina, DACEDA *inc)
@@ -745,7 +743,6 @@ void daceRound(const DACEDA *ina, DACEDA *inc)
 /** Modulo the constant part of a DA object by a double.
     The constant part of the result is `fmod(cons(a), p)`.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
-
     @param[in] ina A pointer to the DA object to operate on.
     @param[in] p Value with respect to which to compute the modulo.
     @param[out] inc A pointer to the DA object to store the result in.
@@ -760,11 +757,9 @@ void daceModuloDouble(const DACEDA *ina, const double p, DACEDA *inc)
     This function calculates `a - trunc(cons(a)/cons(b))*b`. The constant part of the result
     is therefore the same as `fmod(cons(a), cons(b))`.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
-
     @param[in] ina A pointer to the first DA object to operate on.
     @param[in] inb A pointer to the second DA object to operate on.
     @param[out] inc A pointer to the DA object to store the result in.
-
  */
 void daceModulo(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
 {
@@ -1318,10 +1313,9 @@ void daceArcTangent(const DACEDA *ina, DACEDA *inc)
 #endif
 }
 
-/** Arctangent of @e ina / @e inb with proper sign in @f$ [-pi, pi] @f$.
-    This function follows the C standard @p atan2(y,x) function syntax.
+/** Arctangent of @e ina / @e inb with proper sign in @f$[-pi, pi]@f$.
+    This function follows the C standard `atan2(y,x)` function syntax.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
-
     @param[in] ina A pointer to the first DA object to operate on.
     @param[in] inb A pointer to the second DA object to operate on.
     @param[out] inc A pointer to the DA object to store the result in.
@@ -1602,10 +1596,10 @@ void daceComplementaryErrorFunction(const DACEDA *ina, DACEDA *inc)
     @param[in] x The function argument (non-negative).
     @param[in] n0 The lowest order of the Bessel functions to calculate (n0 <= n1).
     @param[in] n1 The highest order of the Bessel functions to calculate (n0 <= n1).
-    @param[in] type The type of function to evaluate:
-              -1: Bessel J function
-               1: Bessel Y function
-    @param[out] bz A C array of size @p n1-n0+1 containing the values of @f$ B_{n0}, B_{n0+1}, ..., B_{n1} @f$ .
+    @param[in] type The type of function to evaluate:\n
+              -1: Bessel J function\n
+               1: Bessel Y function\n
+    @param[out] bz A C array of size `n1-n0+1` containing the values of @f$B_{n0}, B_{n0+1}, ..., B_{n1}@f$ .
     @return Returns 0 if all values are calculated accurately, -1 if x is too large
            to calculate the result or another error occured, or +1 if some of the
            results are of reduced accuracy.
@@ -1699,11 +1693,11 @@ int ModifiedBesselWrapper(const double x, const int n0, const int n1, const int 
 
 /// @endcond
 
-/** Compute the modified Bessel function I_n of a DA object.
+/** Compute the modified Bessel function @f$I_n@f$ of a DA object.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on (constant part >= 0).
     @param[in] n The order of the Bessel function.
-    @param[in] scaled If true, the scaled Bessel function is computed (i.e. @p exp(-x)*I_n(x) ).
+    @param[in] scaled If true, the scaled Bessel function is computed (i.e. `exp(-x)*I_n(x)`).
     @param[out] inc A pointer to the DA object to store the result in.
  */
 void daceBesselIFunction(const DACEDA *ina, const int n, const bool scaled, DACEDA *inc)
@@ -1741,11 +1735,11 @@ void daceBesselIFunction(const DACEDA *ina, const int n, const bool scaled, DACE
 #endif
 }
 
-/** Compute the modified Bessel function K_n of a DA object.
+/** Compute the modified Bessel function @f$K_n@f$ of a DA object.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on (constant part >= 0).
     @param[in] n The order of the Bessel function.
-    @param[in] scaled If true, the scaled Bessel function is computed (i.e. @p exp(x)*K_n(x) ).
+    @param[in] scaled If true, the scaled Bessel function is computed (i.e. `exp(x)*K_n(x)`).
     @param[out] inc A pointer to the DA object to store the result in.
  */
 void daceBesselKFunction(const DACEDA *ina, const int n, const bool scaled, DACEDA *inc)
@@ -1783,7 +1777,7 @@ void daceBesselKFunction(const DACEDA *ina, const int n, const bool scaled, DACE
 #endif
 }
 
-/** Compute the Bessel function J_n of a DA object.
+/** Compute the Bessel function @f$J_n@f$ of a DA object.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on (constant part >= 0).
     @param[in] n The order of the Bessel function.
@@ -1819,7 +1813,7 @@ void daceBesselJFunction(const DACEDA *ina, const int n, DACEDA *inc)
 #endif
 }
 
-/** Compute the Bessel function Y_n of a DA object.
+/** Compute the Bessel function @f$Y_n@f$ of a DA object.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on (constant part >= 0).
     @param[in] n The order of the Bessel function.
@@ -1858,7 +1852,7 @@ void daceBesselYFunction(const DACEDA *ina, const int n, DACEDA *inc)
 /** Evaluate a Bessel function with coefficients @e bz with the non-constant part of @e ina.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on.
-    @param[in] bz A C array of @p 2*nocut+1 elements containing Bessel functions of orders @p n-nocut, @p ..., @p n+nocut.
+    @param[in] bz A C array of `2*nocut+1` elements containing Bessel functions of orders `n-nocut, ..., n+nocut`.
     @param[in] type Either -1.0 for normal Bessel functions, or +1.0 for modified Bessel functions.
     @param[in] ktype Either -1.0 for modified Bessel K function, or +1.0 for all other Bessel functions.
     @param[out] inc A pointer to the DA object to store the result in.
@@ -1911,7 +1905,7 @@ void daceEvaluateBesselFunction(const DACEDA *ina, const double bz[], const doub
 /** Evaluate a scaled modified Bessel function with coefficients @e bz with the non-constant part of @e ina.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on.
-    @param[in] bz A C array of @p 2*nocut+1 elements containing modified Bessel functions of orders @p n-nocut, @p ..., @p n+nocut.
+    @param[in] bz A C array of `2*nocut+1` elements containing modified Bessel functions of orders `n-nocut, ..., n+nocut`.
     @param[in] ktype Either -1.0 for scaled Bessel K function, or +1.0 for scaled Bessel I function.
     @param[out] inc A pointer to the DA object to store the result in.
  */
@@ -1966,11 +1960,9 @@ void daceEvaluateScaledModifiedBesselFunction(const DACEDA *ina, const double bz
 
 /** Compute the partial Logarithmic Gamma function of a DA object (without constant part).
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
-
     @note No argument checking is performed to ensure values are within allowable range.
-
     @param[in] ina A pointer to the DA object to operate on.
-    @param[in] a0 The constant part.
+    @param[in] a0 The constant part of @e ina.
     @param[out] inc A pointer to the DA object to store the result in.
  */
 void daceLogGammaFunction0(const DACEDA *ina, const double a0, DACEDA *inc)
@@ -2089,7 +2081,7 @@ void dacePsiFunction(const DACEDA *ina, const unsigned int n, DACEDA *inc)
 /** Evaluate a polynomial with coefficients @e xf with the non-constant part of @e ina.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on.
-    @param[in] xf A C array of @p nocut+1 elements containing the coefficients of the polynomial.
+    @param[in] xf A C array of `nocut+1` elements containing the coefficients of the polynomial.
     @param[out] inc A pointer to the DA object to store the result in.
  */
 void daceEvaluateSeries(const DACEDA *ina, const double xf[], DACEDA *inc)
