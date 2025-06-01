@@ -2129,15 +2129,17 @@ void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
         // calculate omax derivatives of Legendre polynomials up to degree n at a0
         // any higher derivatives are either not needed or zero (xf is already zeroed)
         double fact = 1.0;
+        K1[0] = 0.0;
+        K1[1] = 1.0;
         for(unsigned int k = 1; k <= omax; k++)
         {
-            K1[0] = 0.0;
-            K1[1] = 0.0;
             for(unsigned int i = 2; i <= n; i++)
                 K1[i] = (2*i-1)*K0[i-1] + K1[i-2];
             fact *= k;
             xf[k] = K1[n]/fact;
             double *temp = K0; K0 = K1; K1 = temp;      // swap pointers
+            K1[0] = 0.0;
+            K1[1] = 0.0;
         }
 
         daceEvaluateSeries0(ina, xf, omax, inc);
