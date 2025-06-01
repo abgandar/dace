@@ -137,5 +137,6 @@ void daceEvaluateBesselFunction(const DACEDA *ina, const double bz[], const doub
 void daceEvaluateScaledModifiedBesselFunction(const DACEDA *ina, const double bz[], const double type, DACEDA *inc);
 void daceLogGammaFunction0(const DACEDA *ina, const double a0, DACEDA *inc);
 void daceEvaluateSeries(const DACEDA *ina, const double xf[], DACEDA *inc);
+void daceEvaluateSeries0(const DACEDA *ina, const double xf[], const unsigned int n, DACEDA *inc);
 
 #endif /* DINAMICA_DACEAUX_H_ */

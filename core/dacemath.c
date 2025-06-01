@@ -2078,6 +2078,80 @@ void dacePsiFunction(const DACEDA *ina, const unsigned int n, DACEDA *inc)
 #endif
 }
 
+/** Compute the Legendre polynomial of degree @e n.
+    @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
+    @param[in] ina A pointer to the DA object to operate on.
+    @param[in] n The degree of the Legendre polynomial (@e n >= 0).
+    @param[out] inc A pointer to the DA object to store the result in.
+ */
+void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc)
+{
+    if(n == 0)
+    {
+        daceCreateConstant(inc, 1.0);
+        return;
+    }
+    else if(n == 1)
+    {
+        daceCopy(ina, inc);
+        return;
+    }
+    else
+    {
+        const double a0 = daceGetConstant(ina);
+        const unsigned int omax = umin(DACECom_t.nocut, n);
+#if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
+        #define DACE_STATIC_MAX_LEGENDRE_ORDER 100
+        if(DACE_STATIC_MAX_LEGENDRE_ORDER < omax)
+        {
+            daceSetError(__func__, DACE_ERROR, 50);
+            daceCreateConstant(inc, 0.0);
+            return;
+        }
+        double KK0[DACE_STATIC_MAX_LEGENDRE_ORDER+1];
+        double KK1[DACE_STATIC_MAX_LEGENDRE_ORDER+1];
+        double *K0 = KK0;
+        double *K1 = KK1;
+        double xf[DACE_STATIC_NOMAX+1];
+#else
+        double* K0 = (double*) dacecalloc(omax+1, sizeof(double));
+        double* K1 = (double*) dacecalloc(omax+1, sizeof(double));
+        double* xf = (double*) dacecalloc(DACECom_t.nocut+1, sizeof(double));
+#endif
+
+        // calculate initial Legrendre polynomials up to degree n at a0
+        K0[0] = 1.0;
+        K0[1] = a0;
+        for(unsigned int i = 2; i <= n; i++)
+            K0[i] = ((2*i-1)*a0*K0[i-1] - (n-1)*K0[i-2])/i;
+        xf[0] = K0[n];
+
+        // calculate omax derivatives of Legendre polynomials up to degree n at a0
+        // any higher derivatives are either not needed or zero (xf is already zeroed)
+        double fact = 1.0;
+        K1[0] = 0.0;
+        K1[1] = 1.0;
+        for(unsigned int k = 1; k <= omax; k++)
+        {
+            for(unsigned int i = 2; i <= n; i++)
+                K1[i] = (2*i-1)*K0[i-1] + K0[i-2];
+            fact *= k;
+            xf[k] = K1[n]/fact;
+            double *temp = K0; K0 = K1; K1 = temp;      // swap pointers
+            K1[0] = 0.0;
+            K1[1] = 0.0;
+        }
+
+        daceEvaluateSeries0(ina, xf, omax, inc);
+
+#if DACE_MEMORY_MODEL != DACE_MEMORY_STATIC
+        dacefree(xf);
+        dacefree(K1);
+        dacefree(K0);
+#endif
+    }
+}
+
 /** Evaluate a polynomial with coefficients @e xf with the non-constant part of @e ina.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on.
@@ -2086,19 +2160,32 @@ void dacePsiFunction(const DACEDA *ina, const unsigned int n, DACEDA *inc)
  */
 void daceEvaluateSeries(const DACEDA *ina, const double xf[], DACEDA *inc)
 {
+    daceEvaluateSeries0(ina, xf, DACECom_t.nocut, inc);
+}
+
+/** Evaluate a polynomial with coefficients @e xf with the non-constant part of @e ina.
+    @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
+    @param[in] ina A pointer to the DA object to operate on.
+    @param[in] xf A C array of @e n+1 elements containing the coefficients of the polynomial.
+    @param[in] n The order of the polynomial with coefficients in @e xf.
+    @param[out] inc A pointer to the DA object to store the result in.
+ */
+void daceEvaluateSeries0(const DACEDA *ina, const double xf[], const unsigned int n, DACEDA *inc)
+{
     DACEDA inon;
     const unsigned int nocut = DACECom_t.nocut;
+    const unsigned int nmax = umin(nocut, n);
 
     daceAllocateDA(&inon, 0);
     daceCopy(ina, &inon);
     daceSetCoefficient0(&inon, 0, 0.0);
 
-    DACECom_t.nocut = 1;
-    daceMultiplyDouble(&inon, xf[nocut], inc);
-    daceAddDouble(inc, xf[nocut-1], inc);
+    DACECom_t.nocut = nocut-nmax+1;
+    daceMultiplyDouble(&inon, xf[nmax], inc);
+    daceAddDouble(inc, xf[nmax-1], inc);
 
     // evaluate series
-    for(int i = nocut-2; i >= 0; i--)
+    for(int i = nmax-2; i >= 0; i--)
     {
         DACECom_t.nocut = nocut-i;
         daceMultiply(&inon, inc, inc);
