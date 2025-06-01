@@ -2102,7 +2102,7 @@ void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
         const unsigned int omax = umin(DACECom_t.nocut, n);
 #if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
         #define DACE_STATIC_MAX_LEGENDRE_ORDER 100
-        if(DACE_STATIC_MAX_LEGENDRE_ORDER < omax)
+        if(DACE_STATIC_MAX_LEGENDRE_ORDER < n)
         {
             daceSetError(__func__, DACE_ERROR, 50);
             daceCreateConstant(inc, 0.0);
@@ -2114,9 +2114,9 @@ void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
         double *K1 = KK1;
         double xf[DACE_STATIC_NOMAX+1];
 #else
-        double* K0 = (double*) dacecalloc(omax+1, sizeof(double));
-        double* K1 = (double*) dacecalloc(omax+1, sizeof(double));
-        double* xf = (double*) dacecalloc(DACECom_t.nocut+1, sizeof(double));
+        double* K0 = (double*) dacecalloc(n+1, sizeof(double));
+        double* K1 = (double*) dacecalloc(n+1, sizeof(double));
+        double* xf = (double*) dacecalloc(omax+1, sizeof(double));
 #endif
 
         // calculate initial Legrendre polynomials up to degree n at a0
