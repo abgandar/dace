@@ -374,6 +374,8 @@ template<typename T> AlgebraicVector<T> acosh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> atanh(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> erf(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> erfc(const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> jn(const int n, const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> yn(const int n, const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> BesselJFunction(const int n, const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> BesselYFunction(const int n, const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> BesselIFunction(const int n, const AlgebraicVector<T> &obj, const bool scaled = false);

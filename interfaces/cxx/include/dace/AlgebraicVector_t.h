@@ -1856,6 +1856,28 @@ template<typename T> AlgebraicVector<T> erfc(const AlgebraicVector<T> &obj) {
 }
 
 /** Componentwise application of the @e n-th Bessel function of first type @f$J_n@f$.
+    Alias to match C library.
+    @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselJFunction
+ */
+template<typename T> AlgebraicVector<T> jn(const int n, const AlgebraicVector<T> &obj) {
+    return obj.BesselJFunction(n);
+}
+
+/** Componentwise application of the @e n-th Bessel function of second type @f$Y_n@f$ function.
+    Alias to match C library.
+    @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselYFunction
+ */
+template<typename T> AlgebraicVector<T> yn(const int n, const AlgebraicVector<T> &obj) {
+    return obj.BesselYFunction(n);
+}
+
+/** Componentwise application of the @e n-th Bessel function of first type @f$J_n@f$.
     @param[in] n The order of the Bessel function.
     @param[in] obj An AlgebraicVector<T>.
     @return A new AlgebraicVector.
