@@ -1856,8 +1856,8 @@ template<typename T> AlgebraicVector<T> erfc(const AlgebraicVector<T> &obj) {
 }
 
 /** Componentwise application of the @e n-th Bessel function of first type @f$J_n@f$.
-    @param[in] obj An AlgebraicVector<T>.
     @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
     @return A new AlgebraicVector.
     @see AlgebraicVector<T>::BesselJFunction
  */
@@ -1866,8 +1866,8 @@ template<typename T> AlgebraicVector<T> BesselJFunction(const int n, const Algeb
 }
 
 /** Componentwise application of the @e n-th Bessel function of second type @f$Y_n@f$ function.
-    @param[in] obj An AlgebraicVector<T>.
     @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
     @return A new AlgebraicVector.
     @see AlgebraicVector<T>::BesselYFunction
  */
@@ -1876,8 +1876,8 @@ template<typename T> AlgebraicVector<T> BesselYFunction(const int n, const Algeb
 }
 
 /** Componentwise application of the @e n-th modified Bessel function of first type @f$I_n@f$.
-    @param[in] obj An AlgebraicVector<T>.
     @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
     @param[in] scaled If true, the modified Bessel function is scaled
     by a factor `exp(-x)`, i.e. `exp(-x)I_n(x)` is returned.
     @return A new AlgebraicVector.
@@ -1888,8 +1888,8 @@ template<typename T> AlgebraicVector<T> BesselIFunction(const int n, const Algeb
 }
 
 /** Componentwise application of the @e n-th modified Bessel function of second type @f$K_n@f$.
-    @param[in] obj An AlgebraicVector<T>.
     @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
     @param[in] scaled If true, the modified Bessel function is scaled
     by a factor `exp(-x)`, i.e. `exp(-x)K_n(x)` is returned.
     @return A new AlgebraicVector.
