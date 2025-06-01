@@ -1523,6 +1523,18 @@ DA DA::PsiFunction(const unsigned int n) const {
     return temp;
 }
 
+/** Evaluate the Legendre Polynomial of order @e n.
+    @return A new DA object.
+    @throw DACE::DACEException
+ */
+DA DA::LegendrePolynomial(const unsigned int n) const {
+    DA temp;
+    daceLegendrePolynomial(m_index, n, temp.m_index);
+    if(daceGetError()) DACEException();
+
+    return temp;
+}
+
 /********************************************************************************
 *    Norm and estimation routines
 *********************************************************************************/

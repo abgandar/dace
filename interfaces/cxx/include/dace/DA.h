@@ -255,6 +255,7 @@ public:
     DA GammaFunction() const;
     DA LogGammaFunction() const;
     DA PsiFunction(const unsigned int n) const;
+    DA LegendrePolynomial(const unsigned int n) const;
     /** @} */
 
     /********************************************************************************
