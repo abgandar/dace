@@ -2464,7 +2464,8 @@ DA erfc(const DA &da) {
 }
 
 /** Compute the @e n-th Bessel function of first type @f$J_n@f$ of a DA object.
-    Alias of BesselJFunction for C compatible naming.
+    Alias of BesselJFunction for C compatible naming. The name is historical and refers to the
+    cylindrical @f$J_n@f$, not the spherical @f$j_n@f$.
     @note The DA must have non-negative constant part while the order is allowed to be negative.
     @param[in] n The order of the Bessel function.
     @param[in] da A DA object.
@@ -2477,7 +2478,8 @@ DA jn(const int n, const DA &da) {
 }
 
 /** Compute the @e n-th Bessel function of second type @f$Y_n@f$ of a DA object.
-    Alias of BesselYFunction for C compatible naming.
+    Alias of BesselYFunction for C compatible naming. The name is historical and refers to the
+    cylindrical @f$Y_n@f$, not the spherical @f$y_n@f$.
     @note The DA must have non-negative constant part while the order is allowed to be negative.
     @param[in] n The order of the Bessel function.
     @param[in] da A DA object.
@@ -2486,6 +2488,62 @@ DA jn(const int n, const DA &da) {
     @see DA::BesselYFunction
  */
 DA yn(const int n, const DA &da) {
+    return da.BesselYFunction(n);
+}
+
+/** Compute the @e n-th modified Bessel function of first type @f$I_n@f$ of a DA object.
+    Alias of BesselIFunction for C++17 compatible naming.
+    @warning Unlike the C++17 double functions, this function only takes integer arguments for @e n.
+    @note The DA must have non-negative constant part while the order is allowed to be negative.
+    @param[in] n The order of the Bessel function.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::BesselIFunction
+ */
+DA cyl_bessel_i(const int n, const DA &da) {
+    return da.BesselIFunction(n, false);
+}
+
+/** Compute the @e n-th Bessel function of first type @f$J_n@f$ of a DA object.
+    Alias of BesselJFunction for C++17 compatible naming.
+    @warning Unlike the C++17 double functions, this function only takes integer arguments for @e n.
+    @note The DA must have non-negative constant part while the order is allowed to be negative.
+    @param[in] n The order of the Bessel function.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::BesselJFunction
+ */
+DA cyl_bessel_j(const int n, const DA &da) {
+    return da.BesselJFunction(n);
+}
+
+/** Compute the @e n-th modified Bessel function of second type @f$K_n@f$ of a DA object.
+    Alias of BesselKFunction for C++17 compatible naming.
+    @warning Unlike the C++17 double functions, this function only takes integer arguments for @e n.
+    @note The DA must have non-negative constant part while the order is allowed to be negative.
+    @param[in] n The order of the Bessel function.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::BesselKFunction
+ */
+DA cyl_bessel_k(const int n, const DA &da) {
+    return da.BesselKFunction(n, false);
+}
+
+/** Compute the @e n-th Bessel function of second type @f$Y_n@f$ of a DA object.
+    Alias of BesselYFunction for C++17 compatible naming.
+    @warning Unlike the C++17 double functions, this function only takes integer arguments for @e n.
+    @note The DA must have non-negative constant part while the order is allowed to be negative.
+    @param[in] n The order of the Bessel function.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::BesselYFunction
+ */
+DA cyl_neumann(const int n, const DA &da) {
     return da.BesselYFunction(n);
 }
 

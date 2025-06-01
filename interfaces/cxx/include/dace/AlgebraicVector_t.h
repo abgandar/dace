@@ -1856,7 +1856,8 @@ template<typename T> AlgebraicVector<T> erfc(const AlgebraicVector<T> &obj) {
 }
 
 /** Componentwise application of the @e n-th Bessel function of first type @f$J_n@f$.
-    Alias to match C library.
+    Alias of BesselJFunction for C compatible naming. The name is historical and refers to the
+    cylindrical @f$J_n@f$, not the spherical @f$j_n@f$.
     @param[in] n The order of the Bessel function.
     @param[in] obj An AlgebraicVector<T>.
     @return A new AlgebraicVector.
@@ -1867,13 +1868,62 @@ template<typename T> AlgebraicVector<T> jn(const int n, const AlgebraicVector<T>
 }
 
 /** Componentwise application of the @e n-th Bessel function of second type @f$Y_n@f$ function.
-    Alias to match C library.
+    Alias of BesselYFunction for C compatible naming. The name is historical and refers to the
+    cylindrical @f$Y_n@f$, not the spherical @f$y_n@f$.
     @param[in] n The order of the Bessel function.
     @param[in] obj An AlgebraicVector<T>.
     @return A new AlgebraicVector.
     @see AlgebraicVector<T>::BesselYFunction
  */
 template<typename T> AlgebraicVector<T> yn(const int n, const AlgebraicVector<T> &obj) {
+    return obj.BesselYFunction(n);
+}
+
+/** Componentwise application of the @e n-th modified Bessel function of first type @f$I_n@f$.
+    Alias of BesselIFunction for C++17 compatible naming.
+    @warning Unlike the C++17 double functions, this function only takes integer arguments for @e n.
+    @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselIFunction
+ */
+template<typename T> AlgebraicVector<T> cyl_bessel_i(const int n, const AlgebraicVector<T> &obj) {
+    return obj.BesselIFunction(n, false);
+}
+
+/** Componentwise application of the @e n-th Bessel function of first type @f$J_n@f$.
+    Alias of BesselJFunction for C++17 compatible naming.
+    @warning Unlike the C++17 double functions, this function only takes integer arguments for @e n.
+    @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselJFunction
+ */
+template<typename T> AlgebraicVector<T> cyl_bessel_j(const int n, const AlgebraicVector<T> &obj) {
+    return obj.BesselJFunction(n);
+}
+
+/** Componentwise application of the @e n-th modified Bessel function of second type @f$K_n@f$.
+    Alias of BesselKFunction for C++17 compatible naming.
+    @warning Unlike the C++17 double functions, this function only takes integer arguments for @e n.
+    @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselKFunction
+ */
+template<typename T> AlgebraicVector<T> cyl_bessel_k(const int n, const AlgebraicVector<T> &obj) {
+    return obj.BesselKFunction(n, false);
+}
+
+/** Componentwise application of the @e n-th Bessel function of second type @f$Y_n@f$.
+    Alias of BesselYFunction for C++17 compatible naming.
+    @warning Unlike the C++17 double functions, this function only takes integer arguments for @e n.
+    @param[in] n The order of the Bessel function.
+    @param[in] obj An AlgebraicVector<T>.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BesselYFunction
+ */
+template<typename T> AlgebraicVector<T> cyl_neumann(const int n, const AlgebraicVector<T> &obj) {
     return obj.BesselYFunction(n);
 }
 

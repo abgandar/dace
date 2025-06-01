@@ -2031,7 +2031,7 @@ void daceGammaFunction(const DACEDA *ina, DACEDA *inc)
 /** Compute the @e n-th Psi function (the @e n+1 derivative of the logarithmic gamma function) of a DA object.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on (constant part != 0, -1, -2, ...).
-    @param[in] n The order of the Psi function ( @e n >= 0).
+    @param[in] n The order of the Psi function (@e n >= 0).
     @param[out] inc A pointer to the DA object to store the result in.
  */
 void dacePsiFunction(const DACEDA *ina, const unsigned int n, DACEDA *inc)
