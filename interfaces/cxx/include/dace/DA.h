@@ -256,6 +256,8 @@ public:
     DA LogGammaFunction() const;
     DA PsiFunction(const unsigned int n) const;
     DA LegendrePolynomial(const unsigned int n) const;
+    DA HermitePolynomial(const unsigned int n) const;
+    DA LaguerrePolynomial(const unsigned int n) const;
     /** @} */
 
     /********************************************************************************
@@ -428,6 +430,8 @@ DACE_API DA GammaFunction(const DA &da);
 DACE_API DA LogGammaFunction(const DA &da);
 DACE_API DA PsiFunction(const unsigned int n, const DA &da);
 DACE_API DA LegendrePolynomial(const unsigned int n, const DA &da);
+DACE_API DA HermitePolynomial(const unsigned int n, const DA &da);
+DACE_API DA LaguerrePolynomial(const unsigned int n, const DA &da);
 /** @} */
 
 /** @name DA Norm & Estimation Functions

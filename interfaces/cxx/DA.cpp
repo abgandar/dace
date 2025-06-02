@@ -1537,6 +1537,32 @@ DA DA::LegendrePolynomial(const unsigned int n) const {
     return temp;
 }
 
+/** Evaluate the Hermite polynomial of order @e n.
+    @param[in] n The degree of the Hermite polynomial.
+    @return A new DA object.
+    @throw DACE::DACEException
+ */
+DA DA::HermitePolynomial(const unsigned int n) const {
+    DA temp;
+    daceHermitePolynomial(m_index, n, temp.m_index);
+    if(daceGetError()) DACEException();
+
+    return temp;
+}
+
+/** Evaluate the Laguerre polynomial of order @e n.
+    @param[in] n The degree of the Laguerre polynomial.
+    @return A new DA object.
+    @throw DACE::DACEException
+ */
+DA DA::LaguerrePolynomial(const unsigned int n) const {
+    DA temp;
+    daceLaguerrePolynomial(m_index, n, temp.m_index);
+    if(daceGetError()) DACEException();
+
+    return temp;
+}
+
 /********************************************************************************
 *    Norm and estimation routines
 *********************************************************************************/
@@ -2617,6 +2643,28 @@ DA PsiFunction(const unsigned int n, const DA &da) {
  */
 DA LegendrePolynomial(const unsigned int n, const DA &da) {
     return da.LegendrePolynomial(n);
+}
+
+/** Evaluate the Hermite polynomial of order @e n.
+    @param[in] n The degree of the Hermite polynomial to compute.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::HermitePolynomial
+ */
+DA HermitePolynomial(const unsigned int n, const DA &da) {
+    return da.HermitePolynomial(n);
+}
+
+/** Evaluate the Laguerre polynomial of order @e n.
+    @param[in] n The degree of the Laguerre polynomial to compute.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::LaguerrePolynomial
+ */
+DA LaguerrePolynomial(const unsigned int n, const DA &da) {
+    return da.LaguerrePolynomial(n);
 }
 
 /** Compute different types of norms for a DA object.

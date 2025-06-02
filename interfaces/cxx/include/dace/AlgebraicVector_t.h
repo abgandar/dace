@@ -887,7 +887,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::LogGammaFunction() c
     return temp;
 }
 
-/** Componentwise application of the Psi function.
+/** Componentwise application of the Psi function of order @e n.
     @param[in] n The order of the Psi function.
     @return A new AlgebraicVector.
  */
@@ -902,8 +902,8 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::PsiFunction(const un
     return temp;
 }
 
-/** Componentwise application of the Psi function.
-    @param[in] n The degree of the Legendre polynomial function.
+/** Componentwise application of the Legendre polynomial of degree @e n.
+    @param[in] n The degree of the Legendre polynomial.
     @return A new AlgebraicVector.
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::LegendrePolynomial(const unsigned int n) const {
@@ -913,6 +913,36 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::LegendrePolynomial(c
     AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = LegendrePolynomial(n, (*this)[i]);
+    }
+    return temp;
+}
+
+/** Componentwise application of the Hermite polynomial of degree @e n.
+    @param[in] n The degree of the Hermite polynomial.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::HermitePolynomial(const unsigned int n) const {
+    using DACE::HermitePolynomial;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = HermitePolynomial(n, (*this)[i]);
+    }
+    return temp;
+}
+
+/** Componentwise application of the Laguerre polynomial of degree @e n.
+    @param[in] n The degree of the Laguerre polynomial.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::LaguerrePolynomial(const unsigned int n) const {
+    using DACE::LaguerrePolynomial;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = LaguerrePolynomial(n, (*this)[i]);
     }
     return temp;
 }
@@ -1975,7 +2005,7 @@ template<typename T> AlgebraicVector<T> lgamma(const AlgebraicVector<T> &obj) {
     return obj.LogGammaFunction();
 }
 
-/** Componentwise application of the Psi function.
+/** Componentwise application of the Psi function of order @e n.
     @param[in] n The order of the Psi function.
     @param[in] obj An AlgebraicVector<T>.
     @return A new AlgebraicVector.
@@ -1985,7 +2015,7 @@ template<typename T> AlgebraicVector<T> PsiFunction(const unsigned int n, const 
     return obj.PsiFunction(n);
 }
 
-/** Evaluate the Legendre polynomial of order @e n.
+/** Evaluate the Legendre polynomial of degree @e n.
     @param[in] n The degree of the Legendre polynomial to compute.
     @param[in] da A DA object.
     @return A new AlgebraicVector.
@@ -1993,6 +2023,26 @@ template<typename T> AlgebraicVector<T> PsiFunction(const unsigned int n, const 
  */
 template<typename T> AlgebraicVector<T> LegendrePolynomial(const unsigned int n, const AlgebraicVector<T> &obj) {
     return obj.LegendrePolynomial(n);
+}
+
+/** Evaluate the Hermite polynomial of degree @e n.
+    @param[in] n The degree of the Hermite polynomial to compute.
+    @param[in] da A DA object.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::HermitePolynomial
+ */
+template<typename T> AlgebraicVector<T> HermitePolynomial(const unsigned int n, const AlgebraicVector<T> &obj) {
+    return obj.HermitePolynomial(n);
+}
+
+/** Evaluate the Laguerre polynomial of degree @e n.
+    @param[in] n The degree of the Laguerre polynomial to compute.
+    @param[in] da A DA object.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::LaguerrePolynomial
+ */
+template<typename T> AlgebraicVector<T> LaguerrePolynomial(const unsigned int n, const AlgebraicVector<T> &obj) {
+    return obj.LaguerrePolynomial(n);
 }
 
 /***********************************************************************************
