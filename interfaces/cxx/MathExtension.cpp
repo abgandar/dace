@@ -36,21 +36,21 @@
 
 namespace DACE {
 
-/** Absolute value.
+/** Absolute value of @e x.
     @param[in] x The function argument.
  */
 double absolute(const double x) {
     return std::abs(x);
 }
 
-/** Constant part. For double type this is just x.
+/** Constant part. For double type this is just @e x.
     @param[in] x The function argument.
  */
 double cons(const double x) {
     return x;
 }
 
-/** Logarithm relative to base b.
+/** Logarithm relative to base @e b.
     @param[in] x The function argument.
     @param[in] b The base of the logarithm (must be positive).
  */
@@ -72,7 +72,7 @@ double icbrt(const double x) {
     return 1.0/std::cbrt(x);
 }
 
-/** Square of x.
+/** Square of @e x.
     @param[in] x The function argument.
  */
 double sqr(const double x) {
@@ -94,7 +94,7 @@ double mod(const double x, const double p) {
     return std::fmod(x, p);
 }
 
-/** p-th root of x.
+/** p-th root of @e x.
     @param[in] x The function argument.
     @param[in] p The root to take.
  */
@@ -102,7 +102,7 @@ double root(const double x, const int p) {
     return std::pow(x, 1.0/p);
 }
 
-/** norm of x.
+/** norm of @e x.
     @param[in] x The function argument.
     @param[in] type The type of norm (ignored for double).
  */
@@ -110,7 +110,7 @@ double norm(const double x, const int type) {
     return std::abs(x);
 }
 
-/** Bessel J function of x.
+/** Bessel J function of @e x.
     @param[in] n The order of the Bessel function.
     @param[in] x The function argument.
  */
@@ -120,7 +120,7 @@ double BesselJFunction(const int n, const double x) {
     return res;
 }
 
-/** Bessel Y function of x.
+/** Bessel Y function of @e x.
     @param[in] n The order of the Bessel function.
     @param[in] x The function argument.
  */
@@ -130,7 +130,7 @@ double BesselYFunction(const int n, const double x) {
     return res;
 }
 
-/** Bessel I function of x.
+/** Bessel I function of @e x.
     @param[in] n The order of the Bessel function.
     @param[in] x The function argument.
     @param[in] scaled If true the result is scaled by `exp(x)`.
@@ -141,7 +141,7 @@ double BesselIFunction(const int n, const double x, const bool scaled) {
     return res;
 }
 
-/** Bessel K function of x.
+/** Bessel K function of @e x.
     @param[in] n The order of the Bessel function.
     @param[in] x The function argument.
     @param[in] scaled If true the result is scaled by `exp(x)`.
@@ -152,18 +152,33 @@ double BesselKFunction(const int n, const double x, const bool scaled) {
     return res;
 }
 
-/** Gamma function of x.
+/** Gamma function of @e x.
     @param[in] x The function argument.
  */
 double GammaFunction(const double x) {
     return std::tgamma(x);
 }
 
-/** Log gamma function of x.
+/** Log gamma function of @e x.
     @param[in] x The function argument.
  */
 double LogGammaFunction(const double x) {
     return std::lgamma(x);
+}
+
+/** Legendre polynomial of degree @e n of @e x.
+    @param[in] n The degree of the Legendre polynomial.
+    @param[in] x The function argument.
+ */
+double LegendrePolynomial(const unsigned int n, const double x) {
+//    return std::legendre(n, x);   // not yet widely available
+    if(n == 0) return 1.0;
+    if(n == 1) return x;
+
+    double P[3] = {1.0, x, 0.0};
+    for(unsigned int i = 2; i <= n; i++)
+        P[i%3] = ((2*i-1)*x*P[(i-1)%3] - (i-1)*P[(i-2)%3])/i;
+    return P[n%3];
 }
 
 }
