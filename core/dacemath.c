@@ -2106,7 +2106,7 @@ void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
         for(unsigned int i = 2; i <= n; i++)
         {
             daceMultiply(ina, &P[(i-1)%3], &itemp);
-            daceWeightedSum(&itemp, (2*i-1)/(double)i, &P[(i-2)%3], -(i-1)/(double)i, &P[i%3]);
+            daceWeightedSum(&itemp, (2*i-1)/(double)i, &P[(i-2)%3], -((i-1)/(double)i), &P[i%3]);
         }
         daceCopy(&P[n%3], inc);
 
