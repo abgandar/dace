@@ -2106,7 +2106,84 @@ void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
         for(unsigned int i = 2; i <= n; i++)
         {
             daceMultiply(ina, &P[(i-1)%3], &itemp);
-            daceWeightedSum(&itemp, (2*i-1)/(double)i, &P[(i-2)%3], -((i-1)/(double)i), &P[i%3]);
+            daceWeightedSum(&itemp, (2*i-1)/(double)i, &P[(i-2)%3], -(double)(i-1)/i, &P[i%3]);
+        }
+        daceCopy(&P[n%3], inc);
+
+        for(unsigned int i = 0; i < 3; i++)
+            daceFreeDA(&P[i]);
+        daceFreeDA(&itemp);
+    }
+}
+
+/** Compute the (physicist's) Hermite polynomial of degree @e n.
+    @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
+    @param[in] ina A pointer to the DA object to operate on.
+    @param[in] n The degree of the Hermite polynomial (@e n >= 0).
+    @param[out] inc A pointer to the DA object to store the result in.
+ */
+void daceHermitePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc)
+{
+    if(n == 0)
+    {
+        daceCreateConstant(inc, 1.0);
+    }
+    else if(n == 1)
+    {
+        daceMultiplyDouble(ina, 2.0, inc);
+    }
+    else
+    {
+        DACEDA P[3], itemp;
+        for(unsigned int i = 0; i < 3; i++)
+            daceAllocateDA(&P[i], 0);
+        daceAllocateDA(&itemp, 0);
+
+        daceCreateConstant(&P[0], 1.0);
+        daceMultiplyDouble(ina, 2.0, inc);
+        for(unsigned int i = 2; i <= n; i++)
+        {
+            daceMultiply(ina, &P[(i-1)%3], &itemp);
+            daceWeightedSum(&itemp, 2.0, &P[(i-2)%3], -(double)(i-1), &P[i%3]);
+        }
+        daceCopy(&P[n%3], inc);
+
+        for(unsigned int i = 0; i < 3; i++)
+            daceFreeDA(&P[i]);
+        daceFreeDA(&itemp);
+    }
+}
+
+/** Compute the Laguerre polynomial of degree @e n.
+    @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
+    @param[in] ina A pointer to the DA object to operate on.
+    @param[in] n The degree of the Laguerre polynomial (@e n >= 0).
+    @param[out] inc A pointer to the DA object to store the result in.
+ */
+void daceLaguerrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc)
+{
+    if(n == 0)
+    {
+        daceCreateConstant(inc, 1.0);
+    }
+    else if(n == 1)
+    {
+        daceDoubleSubtract(ina, 1.0, inc);
+    }
+    else
+    {
+        DACEDA P[3], itemp;
+        for(unsigned int i = 0; i < 3; i++)
+            daceAllocateDA(&P[i], 0);
+        daceAllocateDA(&itemp, 0);
+
+        daceCreateConstant(&P[0], 1.0);
+        daceDoubleSubtract(ina, 1.0, inc);
+        for(unsigned int i = 2; i <= n; i++)
+        {
+            daceDoubleSubtract(ina, 2*i-1, &itemp);
+            daceMultiply(&itemp, &P[(i-1)%3], &itemp);
+            daceWeightedSum(&itemp, 1.0, &P[(i-2)%3], -(double)(i-1)/i, &P[i%3]);
         }
         daceCopy(&P[n%3], inc);
 
