@@ -2140,7 +2140,7 @@ void daceHermitePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc)
         daceAllocateDA(&itemp, 0);
 
         daceCreateConstant(&P[0], 1.0);
-        daceMultiplyDouble(ina, 2.0, inc);
+        daceMultiplyDouble(ina, 2.0, &P[1]);
         for(unsigned int i = 2; i <= n; i++)
         {
             daceMultiply(ina, &P[(i-1)%3], &itemp);
@@ -2178,7 +2178,7 @@ void daceLaguerrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
         daceAllocateDA(&itemp, 0);
 
         daceCreateConstant(&P[0], 1.0);
-        daceDoubleSubtract(ina, 1.0, inc);
+        daceDoubleSubtract(ina, 1.0, &P[1]);
         for(unsigned int i = 2; i <= n; i++)
         {
             daceDoubleSubtract(ina, 2*i-1, &itemp);
