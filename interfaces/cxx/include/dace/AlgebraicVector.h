@@ -219,6 +219,7 @@ public:
     AlgebraicVector<T> GammaFunction() const;
     AlgebraicVector<T> LogGammaFunction() const;
     AlgebraicVector<T> PsiFunction(const unsigned int n) const;
+    AlgebraicVector<T> LegendrePolynomial(const unsigned int n) const;
     /** @} */
 
     /***********************************************************************************
@@ -384,7 +385,8 @@ template<typename T> AlgebraicVector<T> GammaFunction(const AlgebraicVector<T> &
 template<typename T> AlgebraicVector<T> LogGammaFunction(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> tgamma(const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> lgamma(const AlgebraicVector<T> &obj);
-template<typename T> AlgebraicVector<T> PsiFunction(const AlgebraicVector<T> &obj, const unsigned int n);
+template<typename T> AlgebraicVector<T> PsiFunction(const unsigned int n, const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> LegendrePolynomial(const unsigned int n, const AlgebraicVector<T> &obj);
 /** @} */
 
 /** @name Vector Norm & Estimation Functions

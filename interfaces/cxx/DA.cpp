@@ -1512,6 +1512,7 @@ DA DA::LogGammaFunction() const {
 
 /** Compute the @e n-th order Psi function, i.e. the (n+1)st derivative of the Logarithmic Gamma
     function, of a DA object.
+    @param[in] n The order of the Psi function.
     @return A new DA object.
     @throw DACE::DACEException
  */
@@ -1523,7 +1524,8 @@ DA DA::PsiFunction(const unsigned int n) const {
     return temp;
 }
 
-/** Evaluate the Legendre Polynomial of order @e n.
+/** Evaluate the Legendre polynomial of order @e n.
+    @param[in] n The degree of the Legendre polynomial.
     @return A new DA object.
     @throw DACE::DACEException
  */
@@ -2603,7 +2605,19 @@ DA LogGammaFunction(const DA &da) {
     @see DA::PsiFunction
  */
 DA PsiFunction(const unsigned int n, const DA &da) {
-    return da.PsiFunction(n);}
+    return da.PsiFunction(n);
+}
+
+/** Evaluate the Legendre polynomial of order @e n.
+    @param[in] n The degree of the Legendre polynomial to compute.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::LegendrePolynomial
+ */
+DA LegendrePolynomial(const unsigned int n, const DA &da) {
+    return da.LegendrePolynomial(n);
+}
 
 /** Compute different types of norms for a DA object.
     @param[in] da A DA object.

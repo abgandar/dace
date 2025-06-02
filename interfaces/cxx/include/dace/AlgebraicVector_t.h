@@ -888,6 +888,7 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::LogGammaFunction() c
 }
 
 /** Componentwise application of the Psi function.
+    @param[in] n The order of the Psi function.
     @return A new AlgebraicVector.
  */
 template<typename T> AlgebraicVector<T> AlgebraicVector<T>::PsiFunction(const unsigned int n) const {
@@ -896,7 +897,22 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::PsiFunction(const un
     const size_t size = this->size();
     AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
-        temp[i] = PsiFunction((*this)[i], n);
+        temp[i] = PsiFunction(n, (*this)[i]);
+    }
+    return temp;
+}
+
+/** Componentwise application of the Psi function.
+    @param[in] n The degree of the Legendre polynomial function.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::LegendrePolynomial(const unsigned int n) const {
+    using DACE::LegendrePolynomial;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = LegendrePolynomial(n, (*this)[i]);
     }
     return temp;
 }
@@ -1960,13 +1976,23 @@ template<typename T> AlgebraicVector<T> lgamma(const AlgebraicVector<T> &obj) {
 }
 
 /** Componentwise application of the Psi function.
-    @param[in] obj An AlgebraicVector<T>.
     @param[in] n The order of the Psi function.
+    @param[in] obj An AlgebraicVector<T>.
     @return A new AlgebraicVector.
     @see AlgebraicVector<T>::PsiFunction
  */
-template<typename T> AlgebraicVector<T> PsiFunction(const AlgebraicVector<T> &obj, const unsigned int n) {
+template<typename T> AlgebraicVector<T> PsiFunction(const unsigned int n, const AlgebraicVector<T> &obj) {
     return obj.PsiFunction(n);
+}
+
+/** Evaluate the Legendre polynomial of order @e n.
+    @param[in] n The degree of the Legendre polynomial to compute.
+    @param[in] da A DA object.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::LegendrePolynomial
+ */
+template<typename T> AlgebraicVector<T> LegendrePolynomial(const unsigned int n, const AlgebraicVector<T> &obj) {
+    return obj.LegendrePolynomial(n);
 }
 
 /***********************************************************************************

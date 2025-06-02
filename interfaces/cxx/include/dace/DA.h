@@ -427,6 +427,7 @@ DACE_API DA lgamma(const DA &da);
 DACE_API DA GammaFunction(const DA &da);
 DACE_API DA LogGammaFunction(const DA &da);
 DACE_API DA PsiFunction(const unsigned int n, const DA &da);
+DACE_API DA LegendrePolynomial(const unsigned int n, const DA &da);
 /** @} */
 
 /** @name DA Norm & Estimation Functions
