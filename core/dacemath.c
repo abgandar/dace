@@ -2134,9 +2134,9 @@ void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
         for(unsigned int k = 1; k <= omax; k++)
         {
             for(unsigned int i = 2; i <= n; i++)
-                K1[i] = (2*i-1)*K0[i-1] + K1[i-2];
-            fact *= k;
-            xf[k] = K1[n]/fact;
+                K1[i] = (2*i-1)*K0[i-1]/k + K1[i-2];
+            //fact *= k;
+            xf[k] = K1[n];// /fact;
             double *temp = K0; K0 = K1; K1 = temp;      // swap pointers
             K1[0] = 0.0;
             K1[1] = 0.0;
