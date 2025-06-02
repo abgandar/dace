@@ -2098,57 +2098,23 @@ void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
     }
     else
     {
-        const double a0 = daceGetConstant(ina);
-        const unsigned int omax = umin(DACECom_t.nocut, n);
-#if DACE_MEMORY_MODEL == DACE_MEMORY_STATIC
-        #define DACE_STATIC_MAX_LEGENDRE_ORDER 100
-        if(DACE_STATIC_MAX_LEGENDRE_ORDER < n)
-        {
-            daceSetError(__func__, DACE_ERROR, 50);
-            daceCreateConstant(inc, 0.0);
-            return;
-        }
-        double KK0[DACE_STATIC_MAX_LEGENDRE_ORDER+1];
-        double KK1[DACE_STATIC_MAX_LEGENDRE_ORDER+1];
-        double *K0 = KK0;
-        double *K1 = KK1;
-        double xf[DACE_STATIC_NOMAX+1];
-#else
-        double* K0 = (double*) dacecalloc(n+1, sizeof(double));
-        double* K1 = (double*) dacecalloc(n+1, sizeof(double));
-        double* xf = (double*) dacecalloc(omax+1, sizeof(double));
-#endif
+        DACEDA P[3], itemp;
+        for(unsigned int i = 0; i < 3; i++)
+            daceAllocateDA(&P[i], 0);
+        daceAllocateDA(&itemp, 0);
 
-        // calculate initial Legrendre polynomials up to degree n at a0
-        K0[0] = 1.0;
-        K0[1] = a0;
+        daceCreateConstant(&P[0], 1.0);
+        daceCopy(ina, &P[1]);
         for(unsigned int i = 2; i <= n; i++)
-            K0[i] = ((2*i-1)*a0*K0[i-1] - (i-1)*K0[i-2])/i;
-        xf[0] = K0[n];
-
-        // calculate omax derivatives of Legendre polynomials up to degree n at a0
-        // any higher derivatives are either not needed or zero (xf is already zeroed)
-        double fact = 1.0;
-        K1[0] = 0.0;
-        K1[1] = 1.0;
-        for(unsigned int k = 1; k <= omax; k++)
         {
-            for(unsigned int i = 2; i <= n; i++)
-                K1[i] = (2*i-1)*K0[i-1]/k + K1[i-2];
-            //fact *= k;
-            xf[k] = K1[n];// /fact;
-            double *temp = K0; K0 = K1; K1 = temp;      // swap pointers
-            K1[0] = 0.0;
-            K1[1] = 0.0;
+            daceMultiply(ina, &P[(i-1)%3], &itemp);
+            daceWeightedSum(&itemp, (2*i-1)/(double)i, &P[(i-2)%3], -(i-1)/(double)i, &P[i%3]);
         }
+        daceCopy(&P[n%3], inc);
 
-        daceEvaluateSeries0(ina, xf, omax, inc);
-
-#if DACE_MEMORY_MODEL != DACE_MEMORY_STATIC
-        dacefree(xf);
-        dacefree(K1);
-        dacefree(K0);
-#endif
+        for(unsigned int i = 0; i < 3; i++)
+            daceFreeDA(&P[i]);
+        daceFreeDA(&itemp);
     }
 }
 
