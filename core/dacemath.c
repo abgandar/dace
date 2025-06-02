@@ -2183,7 +2183,7 @@ void daceLaguerrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
         {
             daceDoubleSubtract(ina, 2*i-1, &itemp);
             daceMultiply(&itemp, &P[(i-1)%3], &itemp);
-            daceWeightedSum(&itemp, 1.0, &P[(i-2)%3], -(double)(i-1)/i, &P[i%3]);
+            daceWeightedSum(&itemp, 1.0/i, &P[(i-2)%3], -(double)(i-1)/i, &P[i%3]);
         }
         daceCopy(&P[n%3], inc);
 
