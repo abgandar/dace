@@ -2089,12 +2089,10 @@ void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
     if(n == 0)
     {
         daceCreateConstant(inc, 1.0);
-        return;
     }
     else if(n == 1)
     {
         daceCopy(ina, inc);
-        return;
     }
     else
     {
