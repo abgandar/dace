@@ -181,4 +181,34 @@ double LegendrePolynomial(const unsigned int n, const double x) {
     return P[n%3];
 }
 
+/** Hermite polynomial of degree @e n of @e x.
+    @param[in] n The degree of the Hermite polynomial.
+    @param[in] x The function argument.
+ */
+double HermitePolynomial(const unsigned int n, const double x) {
+//    return std::hermite(n, x);   // not yet widely available
+    if(n == 0) return 1.0;
+    if(n == 1) return 2.0*x;
+
+    double P[3] = {1.0, 2.0*x, 0.0};
+    for(unsigned int i = 2; i <= n; i++)
+        P[i%3] = 2.0*x*P[(i-1)%3] - 2.0*(i-1)*P[(i-2)%3];
+    return P[n%3];
+}
+
+/** Laguerre polynomial of degree @e n of @e x.
+    @param[in] n The degree of the Laguerre polynomial.
+    @param[in] x The function argument.
+ */
+double LaguerrePolynomial(const unsigned int n, const double x) {
+//    return std::laguerre(n, x);   // not yet widely available
+    if(n == 0) return 1.0;
+    if(n == 1) return 1.0-x;
+
+    double P[3] = {1.0, 1.0-x, 0.0};
+    for(unsigned int i = 2; i <= n; i++)
+        P[i%3] = ((2*i-1-x)*P[(i-1)%3] - (i-1)*P[(i-2)%3])/i;
+    return P[n%3];
+}
+
 }

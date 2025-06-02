@@ -58,6 +58,8 @@ DACE_API double BesselKFunction(const int n, const double x, const bool scaled =
 DACE_API double GammaFunction(const double x);
 DACE_API double LogGammaFunction(const double x);
 DACE_API double LegendrePolynomial(const unsigned int n, const double x);
+DACE_API double HermitePolynomial(const unsigned int n, const double x);
+DACE_API double LaguerrePolynomial(const unsigned int n, const double x);
 /** @} */
 
 }
