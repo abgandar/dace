@@ -2151,7 +2151,7 @@ void daceAssociatedLegendrePolynomial(const DACEDA *ina, const unsigned int n, c
         // calculate P_m,m
         daceSquare(ina, &itemp);
         daceDoubleSubtract(&itemp, 1.0, &itemp);
-        dacePowerDouble(&itemp, m/2.0, &itemp);
+        dacePowerDouble(&itemp, 0.5*m, &itemp);
         daceMultiplyDouble(&itemp, (m%2 ? -1.0 : 1.0)*ffact(2*(int)m-1), &P[m%3]);
         if(m == n)
         {
@@ -2162,7 +2162,7 @@ void daceAssociatedLegendrePolynomial(const DACEDA *ina, const unsigned int n, c
             return;
         }
 
-        // calculate P_m,m+1
+        // calculate P_m+1,m
         daceMultiply(ina, &P[m%3], &P[(m+1)%3]);
         daceMultiplyDouble(&P[(m+1)%3], 2*m+1, &P[(m+1)%3]);
         if(m+1 == n)
@@ -2174,7 +2174,7 @@ void daceAssociatedLegendrePolynomial(const DACEDA *ina, const unsigned int n, c
             return;
         }
 
-        // iterate to P_m,n
+        // iterate to P_n,m
         for(unsigned int i = m+2; i <= n; i++)
         {
             daceMultiply(ina, &P[(i-1)%3], &itemp);
