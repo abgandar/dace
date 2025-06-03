@@ -1524,7 +1524,7 @@ DA DA::PsiFunction(const unsigned int n) const {
     return temp;
 }
 
-/** Evaluate the Legendre polynomial of order @e n.
+/** Evaluate the Legendre polynomial of degree @e n.
     @param[in] n The degree of the Legendre polynomial.
     @return A new DA object.
     @throw DACE::DACEException
@@ -1537,7 +1537,21 @@ DA DA::LegendrePolynomial(const unsigned int n) const {
     return temp;
 }
 
-/** Evaluate the Hermite polynomial of order @e n.
+/** Evaluate the associated Legendre polynomial of degree @e n and order @e m.
+    @param[in] n The degree of the associated Legendre polynomial.
+    @param[in] m The order of the associated Legendre polynomial.
+    @return A new DA object.
+    @throw DACE::DACEException
+ */
+DA DA::AssociatedLegendrePolynomial(const unsigned int n, const unsigned int m) const {
+    DA temp;
+    daceAssociatedLegendrePolynomial(m_index, n, m, temp.m_index);
+    if(daceGetError()) DACEException();
+
+    return temp;
+}
+
+/** Evaluate the Hermite polynomial of degree @e n.
     @param[in] n The degree of the Hermite polynomial.
     @return A new DA object.
     @throw DACE::DACEException
@@ -1550,7 +1564,7 @@ DA DA::HermitePolynomial(const unsigned int n) const {
     return temp;
 }
 
-/** Evaluate the Laguerre polynomial of order @e n.
+/** Evaluate the Laguerre polynomial of degree @e n.
     @param[in] n The degree of the Laguerre polynomial.
     @return A new DA object.
     @throw DACE::DACEException
@@ -1558,6 +1572,20 @@ DA DA::HermitePolynomial(const unsigned int n) const {
 DA DA::LaguerrePolynomial(const unsigned int n) const {
     DA temp;
     daceLaguerrePolynomial(m_index, n, temp.m_index);
+    if(daceGetError()) DACEException();
+
+    return temp;
+}
+
+/** Evaluate the associated Laguerre polynomial of degree @e n and order @e m.
+    @param[in] n The degree of the associated Laguerre polynomial.
+    @param[in] m The order of the associated Laguerre polynomial.
+    @return A new DA object.
+    @throw DACE::DACEException
+ */
+DA DA::AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m) const {
+    DA temp;
+    daceAssociatedLaguerrePolynomial(m_index, n, m, temp.m_index);
     if(daceGetError()) DACEException();
 
     return temp;

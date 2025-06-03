@@ -248,8 +248,10 @@ DACE_API void daceLogGammaFunction(const DACEDA REF(ina), DACEDA REF(inc));
 DACE_API void daceGammaFunction(const DACEDA REF(ina), DACEDA REF(inc));
 DACE_API void dacePsiFunction(const DACEDA REF(ina), const unsigned int n, DACEDA REF(inc));
 DACE_API void daceLegendrePolynomial(const DACEDA REF(ina), const unsigned int n, DACEDA REF(inc));
+DACE_API void daceAssociatedLegendrePolynomial(const DACEDA REF(ina), const unsigned int n, const unsigned int m, DACEDA REF(inc));
 DACE_API void daceHermitePolynomial(const DACEDA REF(ina), const unsigned int n, DACEDA REF(inc));
 DACE_API void daceLaguerrePolynomial(const DACEDA REF(ina), const unsigned int n, DACEDA REF(inc));
+DACE_API void daceAssociatedLaguerrePolynomial(const DACEDA REF(ina), const unsigned int n, const unsigned int m, DACEDA REF(inc));
 /** @} */
 
 /********************************************************************************

@@ -256,8 +256,10 @@ public:
     DA LogGammaFunction() const;
     DA PsiFunction(const unsigned int n) const;
     DA LegendrePolynomial(const unsigned int n) const;
+    DA AssociatedLegendrePolynomial(const unsigned int n, const unsigned int m) const;
     DA HermitePolynomial(const unsigned int n) const;
     DA LaguerrePolynomial(const unsigned int n) const;
+    DA AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m) const;
     /** @} */
 
     /********************************************************************************
