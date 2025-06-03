@@ -917,6 +917,22 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::LegendrePolynomial(c
     return temp;
 }
 
+/** Componentwise application of the associated Legendre polynomial of degree @e n and order @e m.
+    @param[in] n The degree of the associated Legendre polynomial.
+    @param[in] m The order of the associated Legendre polynomial.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::AssociatedLegendrePolynomial(const unsigned int n, const unsigned int m) const {
+    using DACE::AssociatedLegendrePolynomial;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = AssociatedLegendrePolynomial(n, m, (*this)[i]);
+    }
+    return temp;
+}
+
 /** Componentwise application of the Hermite polynomial of degree @e n.
     @param[in] n The degree of the Hermite polynomial.
     @return A new AlgebraicVector.
@@ -943,6 +959,22 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::LaguerrePolynomial(c
     AlgebraicVector<T> temp(size);
     for(size_t i=0; i<size; i++) {
         temp[i] = LaguerrePolynomial(n, (*this)[i]);
+    }
+    return temp;
+}
+
+/** Componentwise application of the associated Laguerre polynomial of degree @e n and order @e m.
+    @param[in] n The degree of the associated Laguerre polynomial.
+    @param[in] m The order of the associated Laguerre polynomial.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m) const {
+    using DACE::AssociatedLaguerrePolynomial;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = AssociatedLaguerrePolynomial(n, m, (*this)[i]);
     }
     return temp;
 }
@@ -2025,6 +2057,17 @@ template<typename T> AlgebraicVector<T> LegendrePolynomial(const unsigned int n,
     return obj.LegendrePolynomial(n);
 }
 
+/** Evaluate the associated Legendre polynomial of degree @e n and order @e m.
+    @param[in] n The degree of the Legendre polynomial to compute.
+    @param[in] m The order of the Legendre polynomial to compute.
+    @param[in] da A DA object.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::AssociatedLegendrePolynomial
+ */
+template<typename T> AlgebraicVector<T> AssociatedLegendrePolynomial(const unsigned int n, const unsigned int m, const AlgebraicVector<T> &obj) {
+    return obj.AssociatedLegendrePolynomial(n, m);
+}
+
 /** Evaluate the Hermite polynomial of degree @e n.
     @param[in] n The degree of the Hermite polynomial to compute.
     @param[in] da A DA object.
@@ -2043,6 +2086,17 @@ template<typename T> AlgebraicVector<T> HermitePolynomial(const unsigned int n, 
  */
 template<typename T> AlgebraicVector<T> LaguerrePolynomial(const unsigned int n, const AlgebraicVector<T> &obj) {
     return obj.LaguerrePolynomial(n);
+}
+
+/** Evaluate the associated Laguerre polynomial of degree @e n and order @e m.
+    @param[in] n The degree of the associated Laguerre polynomial to compute.
+    @param[in] m The order of the associated Laguerre polynomial to compute.
+    @param[in] da A DA object.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::AssociatedLaguerrePolynomial
+ */
+template<typename T> AlgebraicVector<T> AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const AlgebraicVector<T> &obj) {
+    return obj.AssociatedLaguerrePolynomial(n, m);
 }
 
 /***********************************************************************************

@@ -2662,7 +2662,7 @@ DA PsiFunction(const unsigned int n, const DA &da) {
     return da.PsiFunction(n);
 }
 
-/** Evaluate the Legendre polynomial of order @e n.
+/** Evaluate the Legendre polynomial of degree @e n.
     @param[in] n The degree of the Legendre polynomial to compute.
     @param[in] da A DA object.
     @return A new DA object.
@@ -2673,7 +2673,19 @@ DA LegendrePolynomial(const unsigned int n, const DA &da) {
     return da.LegendrePolynomial(n);
 }
 
-/** Evaluate the Hermite polynomial of order @e n.
+/** Evaluate the associated Legendre polynomial of degree @e n and order @e m.
+    @param[in] n The degree of the associated Legendre polynomial to compute.
+    @param[in] m The order of the associated Legendre polynomial to compute.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::AssociatedLegendrePolynomial
+ */
+DA AssociatedLegendrePolynomial(const unsigned int n, const unsigned int m, const DA &da) {
+    return da.AssociatedLegendrePolynomial(n, m);
+}
+
+/** Evaluate the Hermite polynomial of degree @e n.
     @param[in] n The degree of the Hermite polynomial to compute.
     @param[in] da A DA object.
     @return A new DA object.
@@ -2684,7 +2696,7 @@ DA HermitePolynomial(const unsigned int n, const DA &da) {
     return da.HermitePolynomial(n);
 }
 
-/** Evaluate the Laguerre polynomial of order @e n.
+/** Evaluate the Laguerre polynomial of degree @e n.
     @param[in] n The degree of the Laguerre polynomial to compute.
     @param[in] da A DA object.
     @return A new DA object.
@@ -2693,6 +2705,18 @@ DA HermitePolynomial(const unsigned int n, const DA &da) {
  */
 DA LaguerrePolynomial(const unsigned int n, const DA &da) {
     return da.LaguerrePolynomial(n);
+}
+
+/** Evaluate the Laguerre polynomial of degree @e n and order @e m.
+    @param[in] n The degree of the associated Laguerre polynomial to compute.
+    @param[in] m The degree of the associated Laguerre polynomial to compute.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::AssociatedLaguerrePolynomial
+ */
+DA AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const DA &da) {
+    return da.AssociatedLaguerrePolynomial(n, m);
 }
 
 /** Compute different types of norms for a DA object.

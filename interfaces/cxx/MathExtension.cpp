@@ -181,6 +181,36 @@ double LegendrePolynomial(const unsigned int n, const double x) {
     return P[n%3];
 }
 
+/* Double factorial of @e n.
+ */
+inline double ffact(const int n)
+{
+    double res = 1.0;
+    for(int i = n; i >= 2; i -= 2)
+        res *= i;
+    return res;
+}
+
+/** Associated Legendre polynomial of degree @e n and order @e m of @e x.
+    @param[in] n The degree of the associated Legendre polynomial.
+    @param[in] m The order of the associated Legendre polynomial.
+    @param[in] x The function argument.
+ */
+double AssociatedLegendrePolynomial(const unsigned int n, const unsigned int m, const double x) {
+//    return std::assoc_legendre(n, m, x);   // not yet widely available
+    if(m > n) return 0.0;
+    if(n == 0) return 1.0;
+
+    double P[3];
+    P[m%3] = (m%2 ? -1.0 : 1.0)*ffact(2*(int)m-1)*pow(1-x*x, 0.5*m);
+    if(m == n) return P[m%3];
+    P[(m+1)%3] = (2*m+1)*x*P[m%3];
+    if(m+1 == n) return P[(m+1)%3];
+    for(unsigned int i = m+2; i <= n; i++)
+        P[i%3] = ((2*i-1)*x*P[(i-1)%3] - (double)(i+m-1)*P[(i-2)%3])/((double)i-m);
+    return P[n%3];
+}
+
 /** Hermite polynomial of degree @e n of @e x.
     @param[in] n The degree of the Hermite polynomial.
     @param[in] x The function argument.
@@ -202,13 +232,22 @@ double HermitePolynomial(const unsigned int n, const double x) {
  */
 double LaguerrePolynomial(const unsigned int n, const double x) {
 //    return std::laguerre(n, x);   // not yet widely available
-    if(n == 0) return 1.0;
-    if(n == 1) return 1.0-x;
-
-    double P[3] = {1.0, 1.0-x, 0.0};
-    for(unsigned int i = 2; i <= n; i++)
-        P[i%3] = ((2*i-1-x)*P[(i-1)%3] - (i-1)*P[(i-2)%3])/i;
-    return P[n%3];
+    return AssociatedLaguerrePolynomial(n, 0, x);
 }
 
+/** Associated Laguerre polynomial of degree @e n and order @e m of @e x.
+    @param[in] n The degree of the associated Laguerre polynomial.
+    @param[in] m The order of the associated Laguerre polynomial.
+    @param[in] x The function argument.
+ */
+double AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const double x) {
+//    return std::assoc_laguerre(n, m, x);   // not yet widely available
+    if(n == 0) return 1.0;
+    if(n == 1) return 1.0+m-x;
+
+    double P[3] = {1.0, 1.0+m-x, 0.0};
+    for(unsigned int i = 2; i <= n; i++)
+        P[i%3] = ((2*i+m-1-x)*P[(i-1)%3] - (i+m-1)*P[(i-2)%3])/i;
+    return P[n%3];
+}
 }

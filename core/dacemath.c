@@ -2116,6 +2116,8 @@ void daceLegendrePolynomial(const DACEDA *ina, const unsigned int n, DACEDA *inc
     }
 }
 
+/* Double factorial of @e n.
+ */
 inline double ffact(const int n)
 {
     double res = 1.0;
@@ -2125,6 +2127,7 @@ inline double ffact(const int n)
 }
 
 /** Compute the associated Legendre polynomial of degree @e n and order @e m.
+    This function is only a polynomial if @m is even.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on.
     @param[in] n The degree of the associated Legendre polynomial (@e n >= 0).
