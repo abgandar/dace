@@ -2128,7 +2128,7 @@ inline double ffact(const int n)
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on.
     @param[in] n The degree of the associated Legendre polynomial (@e n >= 0).
-    @param[in] m The order of the associated Legendre polynomial (@e m >= 0).
+    @param[in] m The order of the associated Legendre polynomial (@e n >= @e m >= 0).
     @param[out] inc A pointer to the DA object to store the result in.
  */
 void daceAssociatedLegendrePolynomial(const DACEDA *ina, const unsigned int n, const unsigned int m, DACEDA *inc)
@@ -2167,7 +2167,7 @@ void daceAssociatedLegendrePolynomial(const DACEDA *ina, const unsigned int n, c
         daceMultiplyDouble(&P[(m+1)%3], 2*m+1, &P[(m+1)%3]);
         if(m+1 == n)
         {
-            daceCopy(&P[1], inc);
+            daceCopy(&P[(m+1)%3], inc);
             for(unsigned int i = 0; i < 3; i++)
                 daceFreeDA(&P[i]);
             daceFreeDA(&itemp);
