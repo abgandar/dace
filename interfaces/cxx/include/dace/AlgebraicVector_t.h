@@ -979,6 +979,24 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::AssociatedLaguerrePo
     return temp;
 }
 
+/** Componentwise application of the Beta function.
+    @param[in] obj The second argument.
+    @return A new AlgebraicVector.
+    @throw std::runtime_error
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::BetaFunction(const AlgebraicVector<T> &obj) const {
+    using DACE::BetaFunction;
+
+    const size_t size = this->size();
+    if(size != obj.size())
+          throw std::runtime_error("DACE::AlgebraicVector<T>::BetaFunction(): Vectors must have the same length.");
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = BetaFunction((*this)[i], obj[i]);
+    }
+    return temp;
+}
+
 /***********************************************************************************
 *    Vector routines
 ************************************************************************************/
@@ -2047,7 +2065,7 @@ template<typename T> AlgebraicVector<T> PsiFunction(const unsigned int n, const 
     return obj.PsiFunction(n);
 }
 
-/** Evaluate the Legendre polynomial of degree @e n.
+/** Componentwise application of the Legendre polynomial of degree @e n.
     @param[in] n The degree of the Legendre polynomial to compute.
     @param[in] da A DA object.
     @return A new AlgebraicVector.
@@ -2057,7 +2075,7 @@ template<typename T> AlgebraicVector<T> LegendrePolynomial(const unsigned int n,
     return obj.LegendrePolynomial(n);
 }
 
-/** Evaluate the associated Legendre polynomial of degree @e n and order @e m.
+/** Componentwise application of the associated Legendre polynomial of degree @e n and order @e m.
     @param[in] n The degree of the Legendre polynomial to compute.
     @param[in] m The order of the Legendre polynomial to compute.
     @param[in] da A DA object.
@@ -2068,7 +2086,7 @@ template<typename T> AlgebraicVector<T> AssociatedLegendrePolynomial(const unsig
     return obj.AssociatedLegendrePolynomial(n, m);
 }
 
-/** Evaluate the Hermite polynomial of degree @e n.
+/** Componentwise application of the Hermite polynomial of degree @e n.
     @param[in] n The degree of the Hermite polynomial to compute.
     @param[in] da A DA object.
     @return A new AlgebraicVector.
@@ -2078,7 +2096,7 @@ template<typename T> AlgebraicVector<T> HermitePolynomial(const unsigned int n, 
     return obj.HermitePolynomial(n);
 }
 
-/** Evaluate the Laguerre polynomial of degree @e n.
+/** Componentwise application of the Laguerre polynomial of degree @e n.
     @param[in] n The degree of the Laguerre polynomial to compute.
     @param[in] da A DA object.
     @return A new AlgebraicVector.
@@ -2088,7 +2106,7 @@ template<typename T> AlgebraicVector<T> LaguerrePolynomial(const unsigned int n,
     return obj.LaguerrePolynomial(n);
 }
 
-/** Evaluate the associated Laguerre polynomial of degree @e n and order @e m.
+/** Componentwise application of the associated Laguerre polynomial of degree @e n and order @e m.
     @param[in] n The degree of the associated Laguerre polynomial to compute.
     @param[in] m The order of the associated Laguerre polynomial to compute.
     @param[in] da A DA object.
@@ -2097,6 +2115,16 @@ template<typename T> AlgebraicVector<T> LaguerrePolynomial(const unsigned int n,
  */
 template<typename T> AlgebraicVector<T> AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const AlgebraicVector<T> &obj) {
     return obj.AssociatedLaguerrePolynomial(n, m);
+}
+
+/** Componentwise application of the Beta function.
+    @param[in] obj1 The first argument.
+    @param[in] obj2 The second argument.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::BetaFunction
+ */
+template<typename T> AlgebraicVector<T> BetaFunction(const AlgebraicVector<T> &obj1, const AlgebraicVector<T> &obj2) {
+    return obj1.BetaFunction(obj2);
 }
 
 /***********************************************************************************

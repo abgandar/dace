@@ -250,4 +250,13 @@ double AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, 
         P[i%3] = ((2*i+m-1-x)*P[(i-1)%3] - (i+m-1)*P[(i-2)%3])/i;
     return P[n%3];
 }
+
+/** Beta function (Euler integral of first kind) of @e a and @e b.
+    @param[in] a The first function argument.
+    @param[in] b The second function argument.
+ */
+double BetaFunction(const double a, const double b) {
+    return std::exp(std::lgamma(a) + std::lgamma(b) - std::lgamma(a + b));
+}
+
 }

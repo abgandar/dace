@@ -1591,6 +1591,19 @@ DA DA::AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m) 
     return temp;
 }
 
+/** Beta function (Euler integral of first kind).
+    @param[in] da2 A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+ */
+DA DA::BetaFunction(const DA &da2) const {
+    DA temp;
+    daceBetaFunction(m_index, da2.m_index, temp.m_index);
+    if(daceGetError()) DACEException();
+
+    return temp;
+}
+
 /********************************************************************************
 *    Norm and estimation routines
 *********************************************************************************/
@@ -2717,6 +2730,17 @@ DA LaguerrePolynomial(const unsigned int n, const DA &da) {
  */
 DA AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const DA &da) {
     return da.AssociatedLaguerrePolynomial(n, m);
+}
+
+/** Beta function (Euler integral of first kind).
+    @param[in] da1 A DA object.
+    @param[in] da2 A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::BetaFunction
+ */
+DA BetaFunction(const DA &da1, const DA &da2) {
+    return da1.BetaFunction(da2);
 }
 
 /** Compute different types of norms for a DA object.

@@ -2029,6 +2029,7 @@ void daceGammaFunction(const DACEDA *ina, DACEDA *inc)
 }
 
 /** Compute the @e n-th Psi function (the @e n+1 derivative of the logarithmic gamma function) of a DA object.
+    For @e n = 0 this is the digamma function.
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
     @param[in] ina A pointer to the DA object to operate on (constant part != 0, -1, -2, ...).
     @param[in] n The order of the Psi function ( @e n >= 0).
@@ -2282,6 +2283,34 @@ void daceAssociatedLaguerrePolynomial(const DACEDA *ina, const unsigned int n, c
             daceFreeDA(&P[i]);
         daceFreeDA(&itemp);
     }
+}
+
+/** Compute the Beta function (Euler integral of the first kind).
+    @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina or @e inb.
+    @param[in] inb A pointer to the first DA object to operate on.
+    @param[in] ina A pointer to the second DA object to operate on.
+    @param[out] inc A pointer to the DA object to store the result in.
+ */
+void daceBetaFunction(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
+{
+    DACEDA itemp1, itemp2, itemp3;
+
+    daceAllocateDA(&itemp1, 0);
+    daceAllocateDA(&itemp2, 0);
+    daceAllocateDA(&itemp3, 0);
+
+    // exp(LogGamma(a) + LogGamma(b) - LogGamma(a+b))
+    daceLogGammaFunction(ina, &itemp1);
+    daceLogGammaFunction(inb, &itemp2);
+    daceAdd(&itemp1, &itemp2, &itemp3);
+    daceAdd(ina, inb, &itemp1);
+    daceLogGammaFunction(&itemp1, &itemp1);
+    daceSubtract(&itemp3, &itemp1, &itemp2);
+    daceExponential(&itemp2, inc);
+
+    daceFreeDA(&itemp3);
+    daceFreeDA(&itemp2);
+    daceFreeDA(&itemp1);
 }
 
 /** Evaluate a polynomial with coefficients @e xf with the non-constant part of @e ina.

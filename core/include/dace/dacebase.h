@@ -252,6 +252,7 @@ DACE_API void daceAssociatedLegendrePolynomial(const DACEDA REF(ina), const unsi
 DACE_API void daceHermitePolynomial(const DACEDA REF(ina), const unsigned int n, DACEDA REF(inc));
 DACE_API void daceLaguerrePolynomial(const DACEDA REF(ina), const unsigned int n, DACEDA REF(inc));
 DACE_API void daceAssociatedLaguerrePolynomial(const DACEDA REF(ina), const unsigned int n, const unsigned int m, DACEDA REF(inc));
+DACE_API void daceBetaFunction(const DACEDA REF(ina), const DACEDA REF(inb), DACEDA REF(inc));
 /** @} */
 
 /********************************************************************************

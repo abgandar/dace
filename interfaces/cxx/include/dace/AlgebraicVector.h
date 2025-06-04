@@ -224,6 +224,7 @@ public:
     AlgebraicVector<T> HermitePolynomial(const unsigned int n) const;
     AlgebraicVector<T> LaguerrePolynomial(const unsigned int n) const;
     AlgebraicVector<T> AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m) const;
+    AlgebraicVector<T> BetaFunction(const AlgebraicVector<T> &obj) const;
     /** @} */
 
     /***********************************************************************************
@@ -395,6 +396,7 @@ template<typename T> AlgebraicVector<T> AssociatedLegendrePolynomial(const unsig
 template<typename T> AlgebraicVector<T> HermitePolynomial(const unsigned int n, const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> LaguerrePolynomial(const unsigned int n, const AlgebraicVector<T> &obj);
 template<typename T> AlgebraicVector<T> AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const AlgebraicVector<T> &obj);
+template<typename T> AlgebraicVector<T> BetaFunction(const AlgebraicVector<T> &obj1, const AlgebraicVector<T> &obj2);
 /** @} */
 
 /** @name Vector Norm & Estimation Functions

@@ -260,6 +260,7 @@ public:
     DA HermitePolynomial(const unsigned int n) const;
     DA LaguerrePolynomial(const unsigned int n) const;
     DA AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m) const;
+    DA BetaFunction(const DA &da2) const;
     /** @} */
 
     /********************************************************************************
@@ -436,6 +437,7 @@ DACE_API DA AssociatedLegendrePolynomial(const unsigned int n, const unsigned in
 DACE_API DA HermitePolynomial(const unsigned int n, const DA &da);
 DACE_API DA LaguerrePolynomial(const unsigned int n, const DA &da);
 DACE_API DA AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const DA &da);
+DACE_API DA BetaFunction(const DA &da1, const DA &da2);
 /** @} */
 
 /** @name DA Norm & Estimation Functions
