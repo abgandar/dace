@@ -27,6 +27,7 @@
  */
 
 // C++ stdlib classes
+#define _USE_MATH_DEFINES
 #include <cmath>
 
 // DACE classes

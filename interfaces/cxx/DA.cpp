@@ -60,7 +60,7 @@ std::stack<unsigned int> DA::TOstack;   // truncation order stack, initially emp
     of the C++ interface used to compile the program to the version of the
     DACE library that is linked dynamically at runtime.
     @param[in] ord The order of the Taylor polynomials.
-    @param[in] nvar The number of idnependent variables.
+    @param[in] nvar The number of independent variables.
     @see DA::checkVersion
  */
 void DA::init(const unsigned int ord, const unsigned int nvar) {

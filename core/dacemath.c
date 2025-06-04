@@ -258,7 +258,7 @@ void daceDivide(const DACEDA *ina, const DACEDA *inb, DACEDA *inc)
 }
 
 /** Square a DA object.
-    @note This routine is aliasing safe, i.e. inb can be the same as ina.
+    @note This routine is aliasing safe, i.e. @e inb can be the same as @e ina.
     @param[in] ina A pointer to the DA object to square.
     @param[out] inb A pointer to the DA object to store the result in.
  */
@@ -268,7 +268,7 @@ void daceSquare(const DACEDA *ina, DACEDA *inb)
 }
 
 /** Add constant to a DA object.
-    @note This routine is aliasing safe, i.e. inb can be the same as ina.
+    @note This routine is aliasing safe, i.e. @e inb can be the same as @e ina.
     @param[in] ina A pointer to the first DA object to operate on.
     @param[in] ckon The constant value to add.
     @param[out] inb A pointer to the DA object to store the result in.
@@ -282,7 +282,7 @@ void daceAddDouble(const DACEDA *ina, const double ckon, DACEDA *inb)
 }
 
 /** Subtract DA object from constant.
-    @note This routine is aliasing safe, i.e. inb can be the same as ina.
+    @note This routine is aliasing safe, i.e. @e inb can be the same as @e ina.
     @param[in] ina A pointer to the first DA object to operate on.
     @param[in] ckon The constant value to subtract from.
     @param[out] inb A pointer to the DA object to store the result in.
@@ -294,7 +294,7 @@ void daceDoubleSubtract(const DACEDA *ina, const double ckon, DACEDA *inb)
 }
 
 /** Subtract constant from a DA object.
-    @note This routine is aliasing safe, i.e. inb can be the same as ina.
+    @note This routine is aliasing safe, i.e. @e inb can be the same as @e ina.
     @param[in] ina A pointer to the first DA object to operate on.
     @param[in] ckon The constant value to subtract.
     @param[out] inb A pointer to the DA object to store the result in.
@@ -305,7 +305,7 @@ void daceSubtractDouble(const DACEDA *ina, const double ckon, DACEDA *inb)
 }
 
 /** Multiply constant and DA object.
-    @note This routine is aliasing safe, i.e. inb can be the same as ina.
+    @note This routine is aliasing safe, i.e. @e inb can be the same as @e ina.
     @param[in] ina A pointer to the first DA object to operate on.
     @param[in] ckon The constant value to multiply by.
     @param[out] inb A pointer to the DA object to store the result in.
@@ -363,7 +363,7 @@ void daceMultiplyDouble(const DACEDA *ina, const double ckon, DACEDA *inb)
 }
 
 /** Divide DA object by a constant.
-    @note This routine is aliasing safe, i.e. inb can be the same as ina.
+    @note This routine is aliasing safe, i.e. @e inb can be the same as @e ina.
     @param[in] ina A pointer to the first DA object to operate on.
     @param[in] ckon The constant value to divide by.
     @param[out] inb A pointer to the DA object to store the result in.
