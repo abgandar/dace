@@ -2285,6 +2285,33 @@ void daceAssociatedLaguerrePolynomial(const DACEDA *ina, const unsigned int n, c
     }
 }
 
+/** Compute the spherical harmonic of degree @e n and order @e m.
+    This is the spherical harmonic @f$Y_n^m(\theta, \varphi)@f$ for @f$\varphi = 0@f$
+    sometimes also called the spherical associated Legendre functions.
+    To obtain the full complex spherical harmonic, multiply by @f$e^{im\varphi}@f$.
+    @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina.
+    @param[in] ina A pointer to the DA object containing the polar angle @f$\theta@f$.
+    @param[in] n The degree of the spherical harmonic (@e n >= 0).
+    @param[in] m The order of the spherical harmonic (@e n >= @e m >= 0).
+    @param[out] inc A pointer to the DA object to store the result in.
+    @see daceLegendrePolynomial
+ */
+void daceSphericalHarmonic(const DACEDA *ina, const unsigned int n, const unsigned int m, DACEDA *inc)
+{
+    if(m > n)
+    {
+        daceCreateConstant(inc, 0.0);
+        return;
+    }
+
+    daceCosine(ina, inc);
+    daceAssociatedLegendrePolynomial(inc, n, m, inc);
+    double fact = (m%2 ? -1.0 : 1.0)*(2*n+1)/(4*M_PI);
+    for(unsigned int i = n+m; i > n-m; i--)
+        fact /= i;
+    daceMultiplyDouble(inc, sqrt(fact), inc);
+}
+
 /** Compute the Beta function (Euler integral of the first kind).
     @note This routine is aliasing safe, i.e. @e inc can be the same as @e ina or @e inb.
     @param[in] inb A pointer to the first DA object to operate on.

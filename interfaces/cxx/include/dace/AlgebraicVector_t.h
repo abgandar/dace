@@ -979,6 +979,25 @@ template<typename T> AlgebraicVector<T> AlgebraicVector<T>::AssociatedLaguerrePo
     return temp;
 }
 
+/** Componentwise application of the spherical harmonic of degree @e n and order @e m.
+    This is the spherical harmonic @f$Y_n^m(\theta, \varphi)@f$ for @f$\varphi = 0@f$,
+    sometimes also called the spherical associated Legendre functions.
+    To obtain the full complex spherical harmonic, multiply by @f$e^{im\varphi}@f$.
+    @param[in] n The degree of the spherical harmonic.
+    @param[in] m The order of the spherical harmonic.
+    @return A new AlgebraicVector.
+ */
+template<typename T> AlgebraicVector<T> AlgebraicVector<T>::SphericalHarmonic(const unsigned int n, const unsigned int m) const {
+    using DACE::SphericalHarmonic;
+
+    const size_t size = this->size();
+    AlgebraicVector<T> temp(size);
+    for(size_t i=0; i<size; i++) {
+        temp[i] = SphericalHarmonic(n, m, (*this)[i]);
+    }
+    return temp;
+}
+
 /** Componentwise application of the Beta function.
     @param[in] obj The second argument.
     @return A new AlgebraicVector.
@@ -2115,6 +2134,17 @@ template<typename T> AlgebraicVector<T> LaguerrePolynomial(const unsigned int n,
  */
 template<typename T> AlgebraicVector<T> AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const AlgebraicVector<T> &obj) {
     return obj.AssociatedLaguerrePolynomial(n, m);
+}
+
+/** Componentwise application of the spherical harmonic of degree @e n and order @e m.
+    @param[in] n The degree of the spherical harmonic to compute.
+    @param[in] m The order of the spherical harmonic to compute.
+    @param[in] da A DA object.
+    @return A new AlgebraicVector.
+    @see AlgebraicVector<T>::SphericalHarmonic
+ */
+template<typename T> AlgebraicVector<T> SphericalHarmonic(const unsigned int n, const unsigned int m, const AlgebraicVector<T> &obj) {
+    return obj.SphericalHarmonic(n, m);
 }
 
 /** Componentwise application of the Beta function.

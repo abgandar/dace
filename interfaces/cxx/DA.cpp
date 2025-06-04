@@ -1591,6 +1591,23 @@ DA DA::AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m) 
     return temp;
 }
 
+/** Evaluate the spherical harmonic of degree @e n and order @e m.
+    This is the spherical harmonic @f$Y_n^m(\theta, \varphi)@f$ for @f$\varphi = 0@f$
+    sometimes also called the spherical associated Legendre functions.
+    To obtain the full complex spherical harmonic, multiply by @f$e^{im\varphi}@f$.
+    @param[in] n The degree of the spherical harmonic.
+    @param[in] m The order of the spherical harmonic.
+    @return A new DA object.
+    @throw DACE::DACEException
+ */
+DA DA::SphericalHarmonic(const unsigned int n, const unsigned int m) const {
+    DA temp;
+    daceSphericalHarmonic(m_index, n, m, temp.m_index);
+    if(daceGetError()) DACEException();
+
+    return temp;
+}
+
 /** Beta function (Euler integral of first kind).
     @param[in] da2 A DA object.
     @return A new DA object.
@@ -2730,6 +2747,18 @@ DA LaguerrePolynomial(const unsigned int n, const DA &da) {
  */
 DA AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const DA &da) {
     return da.AssociatedLaguerrePolynomial(n, m);
+}
+
+/** Evaluate the spherical harmonic of degree @e n and order @e m.
+    @param[in] n The degree of the spherical harmonic to compute.
+    @param[in] m The degree of the spherical harmonic to compute.
+    @param[in] da A DA object.
+    @return A new DA object.
+    @throw DACE::DACEException
+    @see DA::SphericalHarmonic
+ */
+DA SphericalHarmonic(const unsigned int n, const unsigned int m, const DA &da) {
+    return da.SphericalHarmonic(n, m);
 }
 
 /** Beta function (Euler integral of first kind).

@@ -251,11 +251,27 @@ double AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, 
     return P[n%3];
 }
 
+/** Spherical harmonic of degree @e n and order @e m at polar angle @e x and phi = 0.
+    This function is also known as the spherical associated Legendre functions (std::sph_legendre).
+    @param[in] n The degree of the spherical harmonic polynomial.
+    @param[in] m The order of the spherical harmonic polynomial.
+    @param[in] x The argument theta.
+ */
+double SphericalHarmonic(const unsigned int n, const unsigned int m, const double x) {
+//    return std::sph_legendre(n, m, x);   // not yet widely available
+    if(m > n) return 0.0;
+    double fact = (m%2 ? -1.0 : 1.0)*(2*n+1)/(4*M_PI);
+    for(unsigned int i = n+m; i > n-m; i--)
+        fact /= i;
+    return std::sqrt(fact)*AssociatedLegendrePolynomial(n, m, std::cos(x));
+}
+
 /** Beta function (Euler integral of first kind) of @e a and @e b.
     @param[in] a The first function argument.
     @param[in] b The second function argument.
  */
 double BetaFunction(const double a, const double b) {
+//    return std::beta(a, b);   // not yet widely available
     return std::exp(std::lgamma(a) + std::lgamma(b) - std::lgamma(a + b));
 }
 

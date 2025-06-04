@@ -62,6 +62,7 @@ DACE_API double AssociatedLegendrePolynomial(const unsigned int n, const unsigne
 DACE_API double HermitePolynomial(const unsigned int n, const double x);
 DACE_API double LaguerrePolynomial(const unsigned int n, const double x);
 DACE_API double AssociatedLaguerrePolynomial(const unsigned int n, const unsigned int m, const double x);
+DACE_API double SphericalHarmonic(const unsigned int n, const unsigned int m, const double x);
 DACE_API double BetaFunction(const double a, const double b);
 /** @} */
 
